@@ -1,0 +1,12 @@
+{
+  "data": {
+    "drtNodes": "",
+    "dstNodes": "",
+    "id": "string",
+    "isDetails": "",
+    "isNodes": "",
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

@@ -1,0 +1,17 @@
+@import 'src/styles/variables';
+
+.text-gray {
+  color: zeplin-lighten($black, 0.5);
+}
+
+:host ::ng-deep {
+  .ta-accordion {
+    margin-bottom: 1rem;
+    .ta-accordion-header h5 {
+      border-bottom: 0px;
+    }
+    .card-body {
+      padding: 0;
+    }
+  }
+}

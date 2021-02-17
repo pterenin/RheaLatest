@@ -1,0 +1,58 @@
+{
+  "systemName": {
+    "selector": "[data-cy='system-name']",
+    "alias": "@bdf-system-name"
+  },
+  "tableSystemName": {
+    "selector": "[data-cy='table-system-name']",
+    "alias": "@bdf-table-system-name"
+  },
+  "addSystemButton": {
+    "selector": "[data-cy='btn-add-system-record']",
+    "alias": "@bdf-btn-add-system-record"
+  },
+  "saveSystemButton": {
+    "selector": "[data-cy='system-record-save']",
+    "alias": "@bdf-system-record-save"
+  },
+  "dataElementsTable": {
+    "selector": "[data-cy='data-elements-table']",
+    "alias": "@bdf-data-elements-table"
+  },
+  "dataSubjectSendingTable": {
+    "selector": "[data-cy='data-subject-sending-table']",
+    "alias": "@bdf-data-subject-sending-table"
+  },
+  "SystemSendingTable": {
+    "selector": "[data-cy='system-sending-table']",
+    "alias": "@bdf-system-sending-table"
+  },
+  "dataRecipientsTable": {
+    "selector": "[data-cy='data-recipient-table']",
+    "alisa": "@bdf-data-recipient-table"
+  },
+  "systemReceivingTable": {
+    "selector": "[data-cy='system-receiving-table']",
+    "alias": "@bdf-system-receiving-table"
+  },
+  "selectAllDataTransfer": {
+    "selector": "[data-cy='select-all-data-transfer']",
+    "alias": "@bdf-select-all-data-transfer"
+  },
+  "saveDataTransferTable": {
+    "selector": "[data-cy='data-transfer-table-save']",
+    "alias": "@bdf-data-transfer-table-save"
+  },
+  "cancelDataTransferTable": {
+    "selector": "[data-cy='data-transfer-table-cancel']",
+    "alias": "@bdf-data-transfer-table-cancel"
+  },
+  "collapseExpandButton": {
+    "selector": "[data-cy='collapse-expand-build-data-flow']",
+    "alias": "@bdf-collapse-expand-build-data-flow"
+  },
+  "leftSideMenuDataFlow": {
+    "selector": "[data-cy='left-side-menu-data-flow']",
+    "alias": "@bdf-left-side-menu-data-flow"
+  }
+}

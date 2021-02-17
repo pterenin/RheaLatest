@@ -1,0 +1,12 @@
+@import 'src/styles/variables';
+
+ta-popover-filter-body-simple-list {
+  padding: 0 1rem 0.3rem 1rem;
+  display: inline-block;
+  width: 100%;
+
+  .list-wrapper {
+    max-height: 255px;
+    overflow: auto;
+  }
+}

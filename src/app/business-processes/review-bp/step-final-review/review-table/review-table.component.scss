@@ -1,0 +1,44 @@
+@import 'src/styles/variables';
+
+.legal-basis-item {
+  overflow: visible;
+}
+
+.legal-basis-item .wraptext {
+  overflow: visible !important;
+}
+.custom-dropDownButton {
+  max-width: 182px;
+}
+
+ta-table-cell.ta-table-cell.legal-basis-item {
+  padding: 0 !important;
+}
+
+.legal-basis-popover-class {
+  width: 400px;
+  max-width: 400px;
+  margin-top: 0 !important;
+
+  .arrow {
+    display: none;
+  }
+
+  .popover-body {
+    padding: 0;
+  }
+}
+
+ta-table-cell > span > ta-badge > .badge-custom {
+  background-color: $amethyst;
+  text-transform: uppercase;
+  margin-left: 5px;
+  height: 16px;
+  width: 58px;
+}
+
+ta-review-table {
+  .legal-basis-dropdown {
+    max-width: 160px;
+  }
+}

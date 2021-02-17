@@ -1,0 +1,38 @@
+<div class="fadeInApp">
+  <div class="record-details-container ta-label-badge-clickable">
+    <h3 class="bp-title" data-cy="title-it-systems">
+      <ta-risk-field-indicator
+        [showIndicator]="showRiskFields"
+        class="align-bottom"
+      ></ta-risk-field-indicator>
+      <!--- [i18n-tobeinternationalized] -->
+      Select systems that this business process uses
+    </h3>
+
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-step-4-selected-items-container
+      data-cy="bp-step-4"
+      #itSystemsSelector
+      [height]="containerHeight"
+      [close]="true"
+      (itemAdded)="openItSystemModal($event, 'added')"
+      (itemClicked)="openItSystemModal($event, 'edited')"
+      (itemDeleted)="delete($event)"
+      (allItemsDeleted)="deleteAll($event)"
+      (addNewSystem)="addSystem()"
+    >
+    </ta-step-4-selected-items-container>
+  </div>
+  <button
+    data-cy="next"
+    *taSlotView
+    taButton
+    type="button"
+    taType="primary"
+    class="page-next btn-lg"
+    (click)="onSubmit()"
+    [disabled]="false"
+  >
+    Next
+  </button>
+</div>

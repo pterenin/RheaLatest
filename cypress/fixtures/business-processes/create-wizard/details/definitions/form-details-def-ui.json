@@ -1,0 +1,94 @@
+{
+  "navigation": {
+    "selector": "[data-cy='bp-wizard-navigation']",
+    "alias": "@bp-navigation"
+  },
+  "title": {
+    "selector": "[data-cy='title-details']",
+    "alias": "@title-details"
+  },
+  "tagsButton": {
+    "selector": "[data-cy='bp-tags-button']",
+    "alias": "@bp-tags-button"
+  },
+  "attachmentsButton": {
+    "selector": "[data-cy='bp-attachments-button']",
+    "alias": "@bp-attachments-button"
+  },
+  "tagsModal": {
+    "selector": "[data-cy='bp-tags-modal']",
+    "alias": "@bp-tags-modal"
+  },
+  "attachmentsModal": {
+    "selector": "[data-cy='bp-attachments-modal']",
+    "alias": "@bp-attachments-modal"
+  },
+  "owingOrganizationsTitle": {
+    "selector": "[data-cy='bp-owing-organizations-title']",
+    "alias": "@bp-owing-organizations-title"
+  },
+  "formDetails": {
+    "selector": "[data-cy='bp-wizard-form-details']",
+    "alias": "@bp-details-form"
+  },
+  "processName": {
+    "selector": "[data-cy='process-name']",
+    "alias": "@process-name"
+  },
+  "peopleRange": {
+    "selector": "[data-cy='people-range']",
+    "alias": "@people-range"
+  },
+  "description": {
+    "selector": "[data-cy='description']",
+    "alias": "@description"
+  },
+  "notes": {
+    "selector": "[data-cy='notes']",
+    "alias": "@notes"
+  },
+  "emptyOwingOrganizationsAndContacts": {
+    "selector": "[data-cy='bp-owing-organizations-contacts-empty']",
+    "alias": "@bp-owing-organizations-contact-empty"
+  },
+  "addOwnerButton": {
+    "selector": "[data-cy='bp-add-owner-button']",
+    "alias": "@bp-add-owner-button"
+  },
+  "table": {
+    "selector": "[data-cy='bp-owing-organizations-contacts-table']",
+    "alias": "@bp-owing-organizations-contacts-table"
+  },
+  "addEditOwnerModalDef": {
+    "addEditOwnerModal": {
+      "selector": "[data-cy='bp-wizard-form-details']",
+      "alias": "@bp-wizard-form-details"
+    },
+    "addOwnerModalButton": {
+      "selector": "[data-cy='bp-add-owner-modal-button']",
+      "alias": "@bp-add-owner-modal-button"
+    },
+    "ownerDef": {
+      "company": {
+        "selector": "[data-cy='bp-owner-company']",
+        "alias": "@entity"
+      },
+      "role": {
+        "selector": "[data-cy='bp-owner-role']",
+        "alias": "@entity-role"
+      },
+      "fullName": {
+        "selector": "[data-cy='bp-owner-full-name']",
+        "alias": "@full-name"
+      },
+      "email": {
+        "selector": "[data-cy='bp-owner-email']",
+        "alias": "@email"
+      },
+      "department": {
+        "selector": "[data-cy='bp-owner-department']",
+        "alias": "@department"
+      }
+    }
+  }
+}

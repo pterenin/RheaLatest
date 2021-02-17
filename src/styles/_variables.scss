@@ -1,0 +1,47 @@
+@import '~@trustarc/ui-toolkit/scss/variables';
+
+$modal-transition: none;
+
+/**
+ * Below is IN-APP Variables
+ */
+$max-width: 1366px;
+$border-default: 1px solid $border-default-color;
+$border-default-600: 1px solid $gray-600;
+$border-radius: 0.2rem;
+$border-radius-lg: 0.2rem;
+$box-shadow-default: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+
+/**
+ * Colors
+ */
+$turquoise-blue: $primary;
+$super-light-grey: #eaeaea;
+$turquoise-blue: #00b4dd;
+$prussian-blue: #004575;
+$azure-radiance: #0082ff;
+$zircon: #f5f9ff;
+$quartz: #d0cbec;
+$red-light: #fff6f6;
+
+/**
+ * Font sizes
+ */
+$form-label-font-size: $font-size-12;
+$custom-tag-font-size: $font-size-10;
+$yellow-orange: #ffc100;
+$orange-default: #ff5630;
+$purple-default: #6554c0;
+$apple-green: #5fc323;
+$bilbao: #387515;
+$frost: #dff3d3;
+$cognac: #99331c;
+$peach-schnapps: #ffddd5;
+$scorpion-grey: #595959;
+$silver-grey: #c2c2c2;
+$seashell-grey: #f1f1f1;
+$fair-pink: #ffeeea;
+$dark-hot-pink: #d7006d;
+$nice-blue: $blue; // Defaulted to the current blue
+$cornflower-blue: #064676;
+$gallery-grey: #eeeeee;

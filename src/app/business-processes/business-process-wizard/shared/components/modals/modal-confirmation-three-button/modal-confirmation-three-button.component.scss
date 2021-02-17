@@ -1,0 +1,61 @@
+@import 'src/styles/variables';
+:host-context {
+  height: 500px;
+}
+ta-modal-confirmation-three-button {
+  .default-icon-background {
+    width: 48px;
+    height: 48px;
+    background-color: $zircon;
+  }
+
+  .delete-icon-background {
+    width: 48px;
+    height: 48px;
+    background-color: $red-light;
+    svg {
+      color: $red;
+    }
+  }
+
+  .modal-title {
+    min-height: 40px;
+    margin: auto auto;
+    font-size: $font-size-16;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: $black;
+    // margin-bottom: 5px;
+  }
+
+  .modal-description {
+    width: 380px;
+    height: 15px;
+    margin: auto;
+    font-size: $font-size-12;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: $gray-800;
+
+    // margin-top: 5px;
+    // margin-bottom: 10px;
+  }
+
+  .modal-scroll {
+    max-height: 240px;
+  }
+
+  .ta-table-cell {
+    height: 40px;
+    // overriding default height 48px;
+    min-height: 40px;
+  }
+}

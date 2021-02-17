@@ -1,0 +1,51 @@
+@import 'src/styles/variables';
+
+ta-step-4-selected-items-container {
+  $input-border-grey: zeplin-lighten($gray-700, 0.5);
+  display: block;
+  position: relative;
+
+  ta-async-categorical-dropdown {
+    margin-bottom: 8px;
+    margin-top: 38px;
+    width: 50%;
+  }
+
+  .remove-all-icon {
+    cursor: pointer;
+    position: absolute;
+    top: -1px;
+    right: 0;
+  }
+
+  .selected-items-box {
+    border-radius: 3px;
+    border: $border-default-600;
+    background-color: $white;
+    padding: 0;
+    overflow: auto;
+    margin: 0 1px;
+  }
+
+  button[taDropdownToggle] {
+    min-width: 160px;
+  }
+
+  .empty-image {
+    background-image: url('/assets/images/no-data.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    display: block;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    margin-top: -10px;
+  }
+
+  .empty-subtext {
+    position: relative;
+    top: 50%;
+    padding-top: 60px;
+  }
+}

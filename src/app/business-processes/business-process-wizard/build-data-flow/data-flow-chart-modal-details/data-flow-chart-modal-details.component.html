@@ -1,0 +1,596 @@
+<ng-container *ngIf="isLoading">
+  <div class="modal-header skeleton">
+    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ width: '50%' }">
+    </ngx-skeleton-loader>
+  </div>
+  <div class="modal-body">
+    <ngx-skeleton-loader
+      count="1"
+      appearance="line"
+      [theme]="{ height: '50px' }"
+    >
+    </ngx-skeleton-loader>
+  </div>
+</ng-container>
+<div *ngIf="!isLoading">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" taAutoFocus>
+      {{ nodeInfo ? nodeInfo.title : '' }}
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="handleCloseModal()"
+    >
+      <ta-icon icon="close"></ta-icon>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <header class="d-flex align-items-center mb-3">
+        <div
+          class="w-100 d-flex align-items-center"
+          [ngClass]="{
+            'ta-system-name':
+              nodeInfo.type === 'IT_SYSTEM' || nodeInfo.type === 'SYSTEM'
+          }"
+        >
+          <h3
+            class="h6 m-0 d-inline-block text-truncate"
+            [taTooltip]="nodeInfo.node.name"
+            tooltipClass="animated fadeIn record-name-tooltip"
+            tooltipTheme="light"
+            container="body"
+            placement="bottom"
+          >
+            {{ nodeInfo.node.name }}
+          </h3>
+          <div
+            *ngIf="nodeInfo.type === 'IT_SYSTEM' || nodeInfo.type === 'SYSTEM'"
+            class="d-flex align-items-center"
+          >
+            <div class="line ml-2 mr-2">|</div>
+            <div class="d-inline-block">
+              <ta-record-icon
+                [type]="nodeInfo.node.legalEntityType"
+                [small]="true"
+              ></ta-record-icon>
+            </div>
+            <div
+              class="d-inline-block pl-1 text-black-50 text-truncate"
+              style="max-width: 170px"
+              [taTooltip]="nodeInfo.node.legalEntityName"
+              tooltipClass="animated fadeIn record-name-tooltip"
+              tooltipTheme="light"
+              container="body"
+              placement="bottom"
+            >
+              <!--- [i18n-tobeinternationalized] -->
+              Owned by {{ nodeInfo.node.legalEntityName }}
+            </div>
+            <div class="line ml-2 mr-2">|</div>
+            <div
+              class="d-inline-block pl-1 text-black-50 text-truncate"
+              style="max-width: 170px"
+            >
+              {{ nodeInfo.node.location.label }}
+            </div>
+          </div>
+        </div>
+      </header>
+      <ta-tabset type="segment" class="ta-flow-chart-details-tabs pl-0">
+        <ta-tab *ngIf="nodeInfo.node.locations && !nodeInfo.isSystemToSystem">
+          <ng-template taTabTitle>
+            <span>
+              <!--- [i18n-tobeinternationalized] -->
+              Locations
+            </span>
+            <span class="custom-count">
+              {{
+                nodeInfo.editable
+                  ? selectedEntities.locations.length
+                  : nodeInfo.node.locations.length
+              }}
+            </span>
+          </ng-template>
+          <ng-template taTabContent>
+            <div class="p-3">
+              <ta-table
+                [id]="locationsGrid"
+                [serverProcess]="false"
+                class="minimal mt-2 mb-2 row"
+                *ngIf="nodeInfo.node.locations"
+              >
+                <ta-table-search
+                  [taPlaceholder]="searchPlaceholderLocations"
+                  [taSearch]=""
+                  (onSearch)="onSearch($event, locationsKey)"
+                  *ngIf="nodeInfo.editable"
+                ></ta-table-search>
+                <ta-table-toolbar *ngIf="nodeInfo.editable">
+                  <ta-checkbox
+                    (click)="
+                      showAllSelected($event, locationsKey, locationsGrid)
+                    "
+                    [checked]="isShowingSelectedItems[locationsKey]"
+                  >
+                    <!--- [i18n-tobeinternationalized] -->
+                    Show all selected
+                  </ta-checkbox>
+                  <ta-popover-filter-wrapper
+                    (applyClick)="
+                      applyFilterForm(
+                        filterBodyRegions.getFilterFormValue(),
+                        locationsKey
+                      )
+                    "
+                    (clearClick)="filterBodyRegions.resetFilterForm()"
+                    [isDirty]="filterBodyRegions.isSomeSelected"
+                    [headerTitle]="headerTitleRegion"
+                    [closeOnClear]="false"
+                    contentWidth="240px"
+                  >
+                    <ta-popover-filter-body-simple-list
+                      #filterBodyRegions
+                      [filterData]="filterDataRegions"
+                      [withSearch]="false"
+                    ></ta-popover-filter-body-simple-list>
+                  </ta-popover-filter-wrapper>
+                </ta-table-toolbar>
+                <ta-table-column
+                  class="col"
+                  *ngIf="nodeInfo.editable"
+                  [taWidth]="50"
+                >
+                  <ta-checkbox
+                    (click)="checkAll($event, locationsKey)"
+                    [checked]="isAllSelected(locationsKey)"
+                    [indeterminate]="isIndeterminate(locationsKey)"
+                  >
+                  </ta-checkbox
+                ></ta-table-column>
+                <ta-table-column
+                  [taField]="'label'"
+                  [taWidth]="300"
+                  class="ta-not-first"
+                >
+                  <!--- [i18n-tobeinternationalized] -->
+                  Country Name
+                </ta-table-column>
+                <ta-table-column
+                  [taField]="'region'"
+                  [taWidth]="200"
+                  class="left-not-editable"
+                  *ngIf="!nodeInfo.editable"
+                >
+                  <!--- [i18n-tobeinternationalized] -->
+                  Region
+                </ta-table-column>
+                <ta-table-column
+                  [taField]="'region'"
+                  [taWidth]="200"
+                  class="left-editable"
+                  *ngIf="nodeInfo.editable"
+                >
+                  <!--- [i18n-tobeinternationalized] -->
+                  Region
+                </ta-table-column>
+              </ta-table>
+              <div class="ta-table-body data-transfer-details-table">
+                <div
+                  class="ta-table-row row"
+                  *ngFor="
+                    let location of nodeInfo.node.locations
+                      | filterByIncludeArrayAndPath
+                        : filterSelectedRegions
+                        : 'region'
+                      | searchInCollectionByPathsArray
+                        : searchTermRegions
+                        : ['label', 'region'];
+                    index as i
+                  "
+                >
+                  <div
+                    class="ta-table-cell col ta-col-checkbox align-items-top w-100"
+                    *ngIf="nodeInfo.editable"
+                  >
+                    <ta-checkbox
+                      (change)="updateSelected($event, location, locationsKey)"
+                      [checked]="determineSelected(location.id, locationsKey)"
+                    ></ta-checkbox>
+                  </div>
+                  <div
+                    class="ta-table-cell col align-items-top text-truncate ta-not-first"
+                  >
+                    <div class="w-100">
+                      {{ location.label }}
+                    </div>
+                  </div>
+                  <div class="ta-table-cell col align-items-top text-truncate">
+                    <div class="w-100">
+                      {{ location.region }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ta-tab>
+        <ta-tab *ngIf="nodeInfo.node.dataElements">
+          <ng-template taTabTitle>
+            <span>
+              <!--- [i18n-tobeinternationalized] -->
+              Data Elements
+            </span>
+            <span class="custom-count">
+              {{
+                nodeInfo.editable
+                  ? selectedEntities.dataElements.length
+                  : nodeInfo.node.dataElements.length
+              }}
+            </span>
+          </ng-template>
+          <ng-template taTabContent>
+            <div class="p-3">
+              <ta-table
+                [id]="dataElementsGrid"
+                [serverProcess]="false"
+                class="minimal mt-2 mb-2 row"
+              >
+                <ta-table-search
+                  [taPlaceholder]="searchPlaceholderDataElements"
+                  [taSearch]=""
+                  (onSearch)="onSearch($event, dataElementsKey)"
+                  *ngIf="nodeInfo.editable"
+                ></ta-table-search>
+                <ta-table-toolbar *ngIf="nodeInfo.editable">
+                  <ta-checkbox
+                    (click)="
+                      showAllSelected($event, dataElementsKey, dataElementsGrid)
+                    "
+                    [checked]="isShowingSelectedItems[dataElementsKey]"
+                  >
+                    <!--- [i18n-tobeinternationalized] -->
+                    Show all selected
+                  </ta-checkbox>
+                  <ta-popover-filter-wrapper
+                    (applyClick)="
+                      applyFilterForm(
+                        filterBodyDataElements.getFilterFormValue(),
+                        dataElementsKey
+                      )
+                    "
+                    (clearClick)="filterBodyDataElements.resetFilterForm()"
+                    [isDirty]="filterBodyDataElements.isSomeSelected"
+                    [headerTitle]="headerTitleCategory"
+                    [closeOnClear]="false"
+                    contentWidth="240px"
+                  >
+                    <ta-popover-filter-body-simple-list
+                      #filterBodyDataElements
+                      [filterData]="filterDataDataElements"
+                      [withSearch]="true"
+                    ></ta-popover-filter-body-simple-list>
+                  </ta-popover-filter-wrapper>
+                </ta-table-toolbar>
+                <ta-table-column
+                  class="col"
+                  *ngIf="nodeInfo.editable"
+                  [taWidth]="50"
+                >
+                  <ta-checkbox
+                    (click)="checkAll($event, dataElementsKey)"
+                    [checked]="isAllSelected(dataElementsKey)"
+                    [indeterminate]="isIndeterminate(dataElementsKey)"
+                  >
+                  </ta-checkbox
+                ></ta-table-column>
+                <ta-table-column
+                  [taField]="'label'"
+                  [taWidth]="300"
+                  class="ta-not-first"
+                >
+                  <!--- [i18n-tobeinternationalized] -->
+                  Data Element Name
+                </ta-table-column>
+                <ta-table-column
+                  [taField]="'category'"
+                  [taWidth]="200"
+                  class="left-not-editable"
+                  *ngIf="!nodeInfo.editable"
+                >
+                  <!--- [i18n-tobeinternationalized] -->
+                  Category
+                </ta-table-column>
+                <ta-table-column
+                  [taField]="'category'"
+                  [taWidth]="200"
+                  class="left-editable"
+                  *ngIf="nodeInfo.editable"
+                >
+                  <!--- [i18n-tobeinternationalized] -->
+                  Category
+                </ta-table-column>
+              </ta-table>
+              <div class="ta-table-body data-transfer-details-table">
+                <div
+                  class="ta-table-row row"
+                  *ngFor="
+                    let dataElement of nodeInfo.node.dataElements
+                      | filterByIncludeArrayAndPath
+                        : filterSelectedDataElements
+                        : 'category'
+                      | searchInCollectionByPathsArray
+                        : searchTermDataElements
+                        : ['label', 'category'];
+                    index as i
+                  "
+                >
+                  <div
+                    class="ta-table-cell col ta-col-checkbox align-items-top w-100"
+                    *ngIf="nodeInfo.editable"
+                  >
+                    <ta-checkbox
+                      (change)="
+                        updateSelected($event, dataElement, dataElementsKey)
+                      "
+                      [checked]="
+                        determineSelected(dataElement.id, dataElementsKey)
+                      "
+                    ></ta-checkbox>
+                  </div>
+                  <div
+                    class="ta-table-cell col align-items-top text-truncate ta-not-first"
+                  >
+                    <div class="w-100 " *ngIf="dataElement.label.length <= 51">
+                      {{ dataElement.label }}
+                    </div>
+                    <div
+                      *ngIf="dataElement.label.length > 51"
+                      class="w-100 text-truncate"
+                      [placement]="['bottom-right']"
+                      tooltipClass="tooltip-record-options mt-2"
+                      [taTooltip]="dataElement.label"
+                      container="body"
+                      tooltipTheme="light"
+                      tooltipTextAlign="right"
+                    >
+                      {{ dataElement.label }}
+                    </div>
+                  </div>
+                  <div class="ta-table-cell col align-items-top text-truncate">
+                    <div class="w-100">
+                      {{ dataElement.category }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ta-tab>
+        <ta-tab *ngIf="nodeInfo.node.processingPurposes">
+          <ng-template taTabTitle>
+            <span>
+              <!--- [i18n-tobeinternationalized] -->
+              Processing Purposes
+            </span>
+            <span class="custom-count">
+              {{
+                nodeInfo.editable
+                  ? selectedEntities.processingPurposes.length
+                  : nodeInfo.node.processingPurposes.length
+              }}
+            </span>
+          </ng-template>
+          <ng-template taTabContent>
+            <div class="p-3">
+              <ta-table
+                [id]="processingPurposesGrid"
+                [serverProcess]="false"
+                class="minimal mt-2 mb-2 row"
+              >
+                <ta-table-search
+                  [taPlaceholder]="searchPlaceholderProcessingPurposes"
+                  [taSearch]=""
+                  (onSearch)="onSearch($event, processingPurposesKey)"
+                  *ngIf="nodeInfo.editable"
+                ></ta-table-search>
+                <ta-table-toolbar *ngIf="nodeInfo.editable">
+                  <ta-checkbox
+                    (click)="
+                      showAllSelected(
+                        $event,
+                        processingPurposesKey,
+                        processingPurposesGrid
+                      )
+                    "
+                    [checked]="isShowingSelectedItems[processingPurposesKey]"
+                  >
+                    <!--- [i18n-tobeinternationalized] -->
+                    Show all selected
+                  </ta-checkbox>
+                  <ta-popover-filter-wrapper
+                    (applyClick)="
+                      applyFilterForm(
+                        filterBodyProcessingPurposes.getFilterFormValue(),
+                        processingPurposesKey
+                      )
+                    "
+                    (clearClick)="
+                      filterBodyProcessingPurposes.resetFilterForm()
+                    "
+                    [isDirty]="filterBodyProcessingPurposes.isSomeSelected"
+                    [headerTitle]="headerTitleCategory"
+                    [closeOnClear]="false"
+                    contentWidth="240px"
+                  >
+                    <ta-popover-filter-body-simple-list
+                      #filterBodyProcessingPurposes
+                      [filterData]="filterDataProcessingPurposes"
+                      [withSearch]="true"
+                    ></ta-popover-filter-body-simple-list>
+                  </ta-popover-filter-wrapper>
+                </ta-table-toolbar>
+                <ta-table-column
+                  class="col"
+                  *ngIf="nodeInfo.editable"
+                  [taWidth]="50"
+                >
+                  <ta-checkbox
+                    (click)="checkAll($event, processingPurposesKey)"
+                    [checked]="isAllSelected(processingPurposesKey)"
+                    [indeterminate]="isIndeterminate(processingPurposesKey)"
+                  >
+                  </ta-checkbox
+                ></ta-table-column>
+                <ta-table-column
+                  [taField]="'label'"
+                  [taWidth]="300"
+                  class="ta-not-first"
+                >
+                  <!--- [i18n-tobeinternationalized] -->
+                  Processing Purpose Name
+                </ta-table-column>
+                <ta-table-column
+                  [taField]="'category'"
+                  [taWidth]="200"
+                  class="left-not-editable"
+                  *ngIf="!nodeInfo.editable"
+                >
+                  <!--- [i18n-tobeinternationalized] -->
+                  Category
+                </ta-table-column>
+                <ta-table-column
+                  [taField]="'category'"
+                  [taWidth]="200"
+                  class="left-editable"
+                  *ngIf="nodeInfo.editable"
+                >
+                  <!--- [i18n-tobeinternationalized] -->
+                  Category
+                </ta-table-column>
+              </ta-table>
+              <div class="ta-table-body data-transfer-details-table">
+                <div
+                  class="ta-table-row row"
+                  *ngFor="
+                    let processingPurpose of nodeInfo.node.processingPurposes
+                      | filterByIncludeArrayAndPath
+                        : filterSelectedProcessingPurposes
+                        : 'category'
+                      | searchInCollectionByPathsArray
+                        : searchTermProcessingPurposes
+                        : ['label', 'category'];
+                    index as i
+                  "
+                >
+                  <div
+                    class="ta-table-cell col ta-col-checkbox align-items-top w-100"
+                    *ngIf="nodeInfo.editable"
+                  >
+                    <ta-checkbox
+                      (change)="
+                        updateSelected(
+                          $event,
+                          processingPurpose,
+                          processingPurposesKey
+                        )
+                      "
+                      [checked]="
+                        determineSelected(
+                          processingPurpose.id,
+                          processingPurposesKey
+                        )
+                      "
+                    ></ta-checkbox>
+                  </div>
+                  <div
+                    class="ta-table-cell col align-items-top text-truncate ta-not-first"
+                  >
+                    <div
+                      class="w-100"
+                      *ngIf="processingPurpose.label.length <= 51"
+                    >
+                      {{ processingPurpose.label }}
+                    </div>
+                    <div
+                      *ngIf="processingPurpose.label.length > 51"
+                      class="w-100 text-truncate"
+                      [placement]="['bottom-right']"
+                      tooltipClass="tooltip-record-options mt-2"
+                      [taTooltip]="processingPurpose.label"
+                      container="body"
+                      tooltipTheme="light"
+                      tooltipTextAlign="right"
+                    >
+                      {{ processingPurpose.label }}
+                    </div>
+                  </div>
+                  <div class="ta-table-cell col align-items-top text-truncate">
+                    <div class="w-100">
+                      {{ processingPurpose.category }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ta-tab>
+      </ta-tabset>
+    </div>
+  </div>
+  <div
+    class="modal-footer align-items-start justify-content-start"
+    *ngIf="nodeInfo.editable"
+  >
+    <button
+      taButton
+      type="button"
+      taType="secondary"
+      class="mr-auto"
+      data-dismiss="modal"
+      id="modal-cancel"
+      (click)="handleCloseModal()"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Cancel
+    </button>
+    <button
+      taButton
+      type="button"
+      taType="primary"
+      id="modal-submit"
+      (click)="saveDataTransFerDetails()"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Save
+    </button>
+  </div>
+  <div
+    class="modal-footer align-items-start justify-content-between "
+    *ngIf="!nodeInfo.editable && nodeInfo.systemId"
+  >
+    <button
+      taButton
+      taType="flat"
+      class="btn-sm mr-2"
+      data-dismiss="modal"
+      id="modal-cancel"
+      (click)="handleCloseModal()"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Cancel
+    </button>
+    <button
+      taButton
+      type="button"
+      taType="primary"
+      id="modal-submit"
+      (click)="editDataTransfer()"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Edit
+    </button>
+  </div>
+</div>

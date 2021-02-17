@@ -1,0 +1,130 @@
+@import 'src/styles/variables';
+@import '~@trustarc/ui-toolkit/scss/colors';
+
+ta-system-transfers-table {
+  .ta-table-wrapper {
+    margin-bottom: 0 !important;
+  }
+  .position-sticky {
+    position: -webkit-sticky;
+    position: -moz-sticky;
+    position: -ms-sticky;
+    position: -o-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 4;
+    background-color: $white !important;
+  }
+
+  .ta-table-head,
+  .ta-table-body {
+    .actions {
+      display: none;
+    }
+  }
+
+  .ta-table-head {
+    @extend .position-sticky;
+    z-index: 2;
+    background-color: $white;
+    top: 80px;
+    .ta-table-row {
+      display: flex;
+      .ta-table-cell {
+        padding: 0.4rem 1rem !important;
+        min-height: 32px;
+        text-align: left;
+        border-top: 0;
+        position: relative;
+        flex-basis: 0;
+        flex-grow: 1;
+        max-width: 100%;
+        &:first-child {
+          max-width: 47px;
+        }
+        &:last-child {
+          max-width: 82px;
+        }
+        &.sale-of-data {
+          max-width: 110px;
+        }
+      }
+    }
+  }
+
+  .ta-table-column-highlight {
+    background-color: rgba(22, 13, 0, 0.03) !important;
+    pointer-events: none;
+  }
+  .ta-table-body {
+    max-height: 200px;
+    overflow: auto;
+  }
+  .form-wrapper {
+    padding: 0.5rem 1rem 0.3rem 1rem;
+  }
+  .column-title {
+    .ta-checkbox-lb {
+      top: -12px;
+    }
+  }
+
+  ta-table {
+    @extend .position-sticky;
+    z-index: 2;
+    background-color: $white;
+    top: 80px;
+  }
+
+  .data-transfer-table.ta-table-body {
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-bottom: 1px solid $seashell-grey !important;
+    display: block;
+    z-index: 1;
+    position: relative;
+    margin-bottom: 1.5rem;
+    .ta-table-row {
+      display: flex;
+      .ta-table-cell {
+        padding: 0.4rem 1rem !important;
+        min-height: 32px;
+        text-align: left;
+        border-top: 0;
+        position: relative;
+        &:first-child {
+          max-width: 47px;
+        }
+        &:last-child {
+          max-width: 82px;
+        }
+        &.sale-of-data {
+          max-width: 110px;
+          &.disabled {
+            opacity: 0.3;
+            pointer-events: none;
+          }
+        }
+      }
+      &:hover {
+        .tool-button-copy {
+          display: block !important;
+          color: $gray-800;
+        }
+      }
+      .tool-button-copy {
+        display: none;
+      }
+      &:hover {
+        .tool-button-edit {
+          display: block !important;
+          color: $gray-800;
+        }
+      }
+      .tool-button-edit {
+        display: none;
+      }
+    }
+  }
+}

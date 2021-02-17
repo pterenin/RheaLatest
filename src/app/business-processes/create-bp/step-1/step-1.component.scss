@@ -1,0 +1,23 @@
+@import 'src/styles/variables';
+
+:host {
+  .form-group {
+    position: relative;
+  }
+
+  .small-dropdown {
+    width: 160px;
+  }
+
+  .not-allowed {
+    cursor: not-allowed;
+  }
+
+  .text-danger-multi-sibling {
+    margin-right: 1em;
+  }
+
+  .step-1-container {
+    padding-bottom: 50px;
+  }
+}

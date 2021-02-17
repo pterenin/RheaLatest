@@ -1,0 +1,41 @@
+<div class="d-flex align-items-end">
+  <div class="w-50">
+    <button
+      *ngIf="showCancelButton"
+      (click)="clickCancel()"
+      type="button"
+      taType="flat"
+      class="btn-lg"
+      taButton
+      [disabled]="disableCancelButton"
+    >
+      {{ textCancelButton }}
+    </button>
+  </div>
+  <div class="w-50 text-right">
+    <button
+      *ngIf="showPreviousButton"
+      (click)="clickPrevious()"
+      type="button"
+      taType="secondary"
+      class="ml-2 btn-lg"
+      taButton
+      [disabled]="disablePreviousButton"
+      data-cy="back"
+    >
+      {{ textPreviousButton }}
+    </button>
+    <button
+      *ngIf="showNextButton"
+      (click)="clickNext()"
+      type="button"
+      taType="primary"
+      class="ml-2 btn-lg"
+      taButton
+      [disabled]="disableNextButton"
+      data-cy="next"
+    >
+      {{ textNextButton }}
+    </button>
+  </div>
+</div>

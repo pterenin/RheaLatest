@@ -1,0 +1,185 @@
+<!-- For IT System data flow info -->
+<ng-container *ngIf="type === 'itSystemDataFlowInfo' && data">
+  <!-- Header -->
+  <ng-container *ngIf="section === 'header'">
+    <div class="d-flex justify-content-center align-items-center">
+      <div class="w-50 text-left text-truncate pr-1">
+        <strong>{{ data.name || 'Untitled' }}</strong>
+      </div>
+      <div class="w-50 text-right text-truncate pl-1">
+        <div class="d-inline-block mr-1">
+          <ta-record-icon
+            [type]="data?.legalEntity?.type || 'OTHER'"
+            [small]="true"
+          ></ta-record-icon>
+        </div>
+        <span class="text-black-50">
+          {{ data?.legalEntity?.name || '--' }}
+        </span>
+      </div>
+    </div>
+  </ng-container>
+  <!-- Content -->
+  <ng-container *ngIf="section === 'content'">
+    <div id="system-record-info-content-data-flow">
+      <p>
+        <span class="text-black-50">
+          <!--- [i18n-tobeinternationalized] -->
+          Data Subjects ({{ data.dataSubjects?.length || 0 }}) </span
+        ><br />
+        <ng-container *ngIf="data.dataSubjects?.length > 0">
+          {{
+            data.dataSubjects
+              | dataSubjectPipe: 'stringify':null:'dataSubjectType'
+          }}
+        </ng-container>
+        <ng-container *ngIf="data.dataSubjects?.length === 0">
+          <!--- [i18n-tobeinternationalized] -->
+          No Data Subjects
+        </ng-container>
+      </p>
+      <p>
+        <span class="text-black-50">
+          <!--- [i18n-tobeinternationalized] -->
+          Data Elements ({{ data.dataElementIds?.length || 0 }}) </span
+        ><br />
+        <ng-container *ngIf="data.dataElementIds?.length > 0">
+          {{
+            data.dataElementIds
+              | dataElementPipe: 'lookup-stringify':allDataElements
+          }}
+        </ng-container>
+        <ng-container *ngIf="data.dataElementIds?.length === 0">
+          <!--- [i18n-tobeinternationalized] -->
+          No Data Elements
+        </ng-container>
+      </p>
+      <p>
+        <span class="text-black-50">
+          <!--- [i18n-tobeinternationalized] -->
+          Hosting Locations ({{ data.locations?.length || 0 }}) </span
+        ><br />
+        <ng-container *ngIf="data.locations?.length > 0">
+          {{
+            data.locations
+              | locationPipe: 'stringify':null:'location.countryName'
+          }}
+        </ng-container>
+        <ng-container *ngIf="data.locations?.length === 0">
+          <!--- [i18n-tobeinternationalized] -->
+          No Locations
+        </ng-container>
+      </p>
+      <p>
+        <span class="text-black-50">
+          <!--- [i18n-tobeinternationalized] -->
+          Processing Purposes ({{ data.processingPurposeIds?.length || 0 }})
+        </span>
+        <br />
+        <ng-container *ngIf="data.processingPurposeIds?.length > 0">
+          {{
+            data.processingPurposeIds
+              | processingPurposePipe: 'lookup-stringify':allProcessingPurposes
+          }}
+        </ng-container>
+        <ng-container *ngIf="data.processingPurposeIds?.length === 0">
+          <!--- [i18n-tobeinternationalized] -->
+          No Processing Purposes
+        </ng-container>
+      </p>
+    </div>
+  </ng-container>
+</ng-container>
+
+<!-- For IT System inventory info -->
+<ng-container *ngIf="type === 'itSystemInventoryInfo' && data">
+  <!-- Header -->
+  <ng-container *ngIf="section === 'header'">
+    <div class="d-flex justify-content-center align-items-center">
+      <div class="w-50 text-left text-truncate pr-1">
+        <strong>{{ data.name }}</strong>
+      </div>
+      <div class="w-50 text-right text-truncate pl-1">
+        <div class="d-inline-block mr-1">
+          <ta-record-icon
+            [type]="data.entityType"
+            [small]="true"
+          ></ta-record-icon>
+        </div>
+        <span class="text-black-50">
+          {{ data.ownerName }}
+        </span>
+      </div>
+    </div>
+  </ng-container>
+  <!-- Content -->
+  <ng-container *ngIf="section === 'content'">
+    <div id="system-record-info-content-inventory">
+      <p>
+        <span class="text-black-50">
+          <!--- [i18n-tobeinternationalized] -->
+          Data Subjects ({{ data.dataSubjectsWithLocations?.length || 0 }})
+        </span>
+        <br />
+        <ng-container *ngIf="data.dataSubjectsWithLocations?.length > 0">
+          {{
+            data.dataSubjectsWithLocations
+              | dataSubjectPipe: 'stringify':null:'dataSubject'
+          }}
+        </ng-container>
+        <ng-container *ngIf="data.dataSubjectsWithLocations?.length === 0">
+          <!--- [i18n-tobeinternationalized] -->
+          No Data Subjects
+        </ng-container>
+      </p>
+      <p>
+        <span class="text-black-50">
+          <!--- [i18n-tobeinternationalized] -->
+          Data Elements ({{ data.dataElements?.length || 0 }}) </span
+        ><br />
+        <ng-container *ngIf="data.dataElements?.length > 0">
+          {{
+            data.dataElements | dataElementPipe: 'stringify':null:'dataElement'
+          }}
+        </ng-container>
+        <ng-container *ngIf="data.dataElements?.length === 0">
+          <!--- [i18n-tobeinternationalized] -->
+          No Data Elements
+        </ng-container>
+      </p>
+      <p>
+        <span class="text-black-50">
+          <!--- [i18n-tobeinternationalized] -->
+          Hosting Locations ({{ data.locations?.length || 0 }}) </span
+        ><br />
+        <ng-container *ngIf="data.locations?.length > 0">
+          {{ data.locations | locationPipe: 'stringify':null:'countryName' }}
+        </ng-container>
+        <ng-container *ngIf="data.locations?.length === 0">
+          <!--- [i18n-tobeinternationalized] -->
+          No Locations
+        </ng-container>
+      </p>
+      <p>
+        <span class="text-black-50">
+          <!--- [i18n-tobeinternationalized] -->
+          Processing Purposes ({{ data.processingPurpose?.length || 0 }}) </span
+        ><br />
+        <ng-container *ngIf="data.processingPurpose?.length > 0">
+          {{
+            data.processingPurpose
+              | processingPurposePipe: 'stringify':null:'processingPurpose'
+          }}
+        </ng-container>
+        <ng-container *ngIf="data.processingPurpose?.length === 0">
+          <!--- [i18n-tobeinternationalized] -->
+          No Processing Purposes
+        </ng-container>
+      </p>
+      <p class="text-black-50 font-italic mb-0">
+        <!--- [i18n-tobeinternationalized] -->
+        Add this system record to manage the data.
+      </p>
+    </div>
+  </ng-container>
+</ng-container>

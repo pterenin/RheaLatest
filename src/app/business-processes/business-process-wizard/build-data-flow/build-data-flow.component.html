@@ -1,0 +1,178 @@
+<ta-business-process-wizard-header
+  [currentRoute]="businessProcessNavigation[3]"
+  (isClickSteps)="onStepClick($event)"
+  (viewUpdated)="onViewUpdated($event.view)"
+></ta-business-process-wizard-header>
+<ta-data-flow-empty-state
+  *ngIf="isEmptyView"
+  (navigate)="navigate($event)"
+></ta-data-flow-empty-state>
+<div
+  *ngIf="isInitialFetchDone && !isEmptyView"
+  id="build-data-flow"
+  class="d-flex"
+  [class.is-standard-view]="isStandardView"
+  [class.is-not-standard-view]="!isStandardView"
+  data-cy="left-side-menu-data-flow"
+>
+  <ta-data-flow-side-bar
+    [isStandardView]="isStandardView"
+    [isFilterDirty]="isFilterDirty"
+    [filtersFormValue]="filtersFormValue"
+    (toggleStandardView)="toggleStandardView()"
+    (searchUpdated)="handleSearchUpdated($event)"
+    (filtersApplied)="handleFiltersApplied($event)"
+  >
+    <div class="side-bar-top">
+      <div class="side-bar-top-buttons">
+        <ta-system-record-item-list-component
+          [type]="'button'"
+          [data]="views"
+          [selectedItem]="selectedItem"
+          (selected)="handleSelection($event)"
+          data-cy="view-data-flow-options"
+        ></ta-system-record-item-list-component>
+      </div>
+      <div id="search-container" class="d-flex pr-3 pl-3 align-items-center">
+        <div [class.w-100]="isSearchVisible" [class.mr-auto]="!isSearchVisible">
+          <strong
+            class="animated fadeIn"
+            *ngIf="!isSearchVisible"
+            (click)="toggleSearchVisible()"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            Configure Data Flow
+          </strong>
+        </div>
+        <div class="text-right animated fadeIn d-flex">
+          <ta-data-flow-search
+            [isSearchVisible]="isSearchVisible"
+            (toggleSearchVisible)="toggleSearchVisible()"
+            (searchUpdated)="handleSearchUpdated($event)"
+          ></ta-data-flow-search>
+          <ta-data-flow-filters
+            *ngIf="!isSearchVisible"
+            [isFilterDirty]="isFilterDirty"
+            [filtersFormValue]="filtersFormValue"
+            (filtersApplied)="handleFiltersApplied($event)"
+          ></ta-data-flow-filters>
+        </div>
+      </div>
+      <ta-system-record-item-list-component
+        [type]="'record'"
+        [data]="itSystemNodes"
+        [selectedItem]="selectedItem"
+        (selected)="handleSelection($event)"
+      ></ta-system-record-item-list-component>
+    </div>
+  </ta-data-flow-side-bar>
+  <div
+    id="build-data-flow-container"
+    class="w-100"
+    [class.p-3]="
+      selectedItem.type !== dataFlowView.FLOWCHART &&
+      selectedItem.type !== dataFlowView.MAP
+    "
+  >
+    <div
+      id="data-flow-content"
+      [class.data-flowchart]="
+        selectedItem.type === dataFlowView.FLOWCHART ||
+        selectedItem.type === dataFlowView.MAP
+      "
+      [class.data-flow-map]="
+        selectedItem.type === dataFlowView.MAP ||
+        (!isAnySystemMapped && selectedItem.type === dataFlowView.FLOWCHART)
+      "
+    >
+      <ta-data-flow-chart
+        *ngIf="
+          selectedItem.type === dataFlowView.FLOWCHART &&
+          dataFlowChart &&
+          isAnySystemMapped
+        "
+        [data]="dataFlowChart"
+        (showDetails)="handleShowDetails($event)"
+      ></ta-data-flow-chart>
+
+      <ta-no-mapped-systems-state
+        *ngIf="
+          !isAnySystemMapped &&
+          (selectedItem.type === dataFlowView.FLOWCHART ||
+            selectedItem.type === dataFlowView.MAP)
+        "
+      ></ta-no-mapped-systems-state>
+
+      <ta-data-flow-map
+        *ngIf="
+          selectedItem.type === dataFlowView.MAP &&
+          dataFlowChart &&
+          isAnySystemMapped
+        "
+        [data]="dataFlowChart"
+      >
+      </ta-data-flow-map>
+
+      <ta-system-transfers
+        *ngIf="selectedItem.nodeId"
+        [selectedSystemSendingTransfers]="selectedSystemSendingTransfers"
+        [selectedSystemReceivingTransfers]="selectedSystemReceivingTransfers"
+        [selectedSystem]="selectedItem"
+        [isLoading]="isLoading"
+        [isSaving]="isSaving"
+        [selectedTabId]="selectedTabId"
+        (handleTabChanged)="handleTabChange($event)"
+        (saveDataTransfer)="saveDataTransfer()"
+        (cancelChanges)="cancelChanges()"
+        (markTableAsDirty)="markTableAsDirty()"
+        (showDetailsModal)="handleShowDetailsNonGraph($event)"
+      ></ta-system-transfers>
+      <ng-template #detailsModal let-modal>
+        <ta-data-flow-chart-modal-details
+          modal="modal"
+          (closeModal)="handleCloseModal()"
+          [nodeInfo]="dataTransferData"
+          (edit)="handleEditDataTransfer($event)"
+        >
+        </ta-data-flow-chart-modal-details>
+      </ng-template>
+    </div>
+  </div>
+</div>
+<ta-business-process-wizard-footer
+  [disableNextButton]="isSaving"
+  (isClickCancelButton)="onStepClick('cancel')"
+  (isClickPreviousButton)="onStepClick('systems-selection')"
+  (isClickNextButton)="onStepClick('security-and-risks')"
+>
+</ta-business-process-wizard-footer>
+
+<ng-template #modalConfirmation>
+  <ta-modal-confirmation-basic
+    [title]="confirmModalTitle"
+    [description]="confirmModalDescription"
+    [type]="confirmModalType"
+    [icon]="confirmModalIcon"
+    [btnLabelCancel]="confirmModalLabelCancel"
+    [btnLabelConfirm]="confirmModalLabelConfirm"
+    [showSpinner]="isSaving"
+    (cancel)="closeAllModals()"
+    (confirm)="saveDataTransfer()"
+  >
+  </ta-modal-confirmation-basic>
+</ng-template>
+
+<ng-template #modalConfirmationChanges>
+  <ta-modal-confirmation-basic
+    [title]="confirmModalTitle"
+    [description]="confirmModalDescription"
+    [type]="confirmModalType"
+    [icon]="confirmModalIcon"
+    [btnLabelCancel]="confirmModalLabelCancel"
+    [btnLabelConfirm]="confirmModalLabelConfirm"
+    [showSpinner]="isSaving"
+    (cancel)="closeAllModals()"
+    (confirm)="saveDataTransfer(true)"
+  >
+  </ta-modal-confirmation-basic>
+</ng-template>

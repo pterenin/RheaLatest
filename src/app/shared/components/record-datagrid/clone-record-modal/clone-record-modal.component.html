@@ -1,0 +1,65 @@
+<div class="modal-header">
+  <h4
+    class="modal-title"
+    id="modal-basic-title"
+    data-cy="modal-title"
+    taAutofocus
+  >
+    Clone Record
+  </h4>
+  <button
+    type="button"
+    data-cy="modal-close"
+    class="close"
+    aria-label="Close"
+    (click)="onCancel()"
+  >
+    <i class="ta ta-close"></i>
+  </button>
+</div>
+<div class="modal-body">
+  <form class="form-group" [formGroup]="formInputs" (ngSubmit)="onSubmit()">
+    <label for="bp-name"
+      >Business Process Name
+      <span>*</span>
+    </label>
+    <input
+      type="text"
+      class="form-control mb-3"
+      name="bp-name"
+      formControlName="businessProcessName"
+    />
+
+    <label>Include the following:</label>
+    <br />
+    <ta-checkbox (change)="onCheck($event, 'allAttachments')">
+      All attachments
+    </ta-checkbox>
+    <ta-checkbox (change)="onCheck($event, 'allTags')">
+      All tags
+    </ta-checkbox>
+  </form>
+</div>
+
+<div class="modal-footer d-flex justify-content-between">
+  <button
+    taButton
+    type="button"
+    data-cy="modal-cancel"
+    taType="secondary"
+    data-dismiss="modal"
+    (click)="onCancel()"
+  >
+    <!--- [i18n-tobeinternationalized] --->
+    Cancel
+  </button>
+  <input
+    class="btn btn-primary"
+    type="submit"
+    taButton
+    data-cy="modal-submit"
+    [disabled]="!formInputs.value.businessProcessName"
+    (click)="onSubmit()"
+    value="Clone"
+  />
+</div>

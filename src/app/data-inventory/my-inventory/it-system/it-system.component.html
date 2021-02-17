@@ -1,0 +1,105 @@
+<div class="record-details-container mt-4">
+  <div class="heading">
+    <!-- [i18n-tobeinternationalized] -->
+    System
+    <ta-collaborator
+      *ngIf="baseDomainId != 'new'"
+      [baseDomainId]="baseDomainId"
+    ></ta-collaborator>
+  </div>
+  <ta-tabset-guarded type="ta">
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-tab-guarded title="Details" [disabled]="!isCurrentFormValid">
+      <ng-template taTabContent>
+        <!-- [i18n-tobeinternationalized] -->
+        <div class="sub-heading">Details</div>
+        <ta-it-system-details
+          #canDeactivateTab
+          [showRiskFields]="showRiskFields"
+          [tabToRedirect]="tabToRedirect"
+          (startRedirect)="redirectToTab($event)"
+          (saving)="isFormSaving = $event"
+          (updateValidity)="updateValidity($event)"
+        ></ta-it-system-details>
+      </ng-template>
+    </ta-tab-guarded>
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-tab-guarded title="Data" [disabled]="!isCurrentFormValid">
+      <ng-template taTabContent>
+        <!-- [i18n-tobeinternationalized] -->
+        <div class="sub-heading">
+          <ta-risk-field-indicator
+            [showIndicator]="showRiskFields"
+          ></ta-risk-field-indicator>
+          Data elements processed by this System
+        </div>
+        <ta-it-system-data-elements
+          #canDeactivateTab
+          [baseDomainId]="baseDomainId"
+          (isSaving)="updateSaving($event)"
+        ></ta-it-system-data-elements>
+      </ng-template>
+    </ta-tab-guarded>
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-tab-guarded title="Purposes" [disabled]="!isCurrentFormValid">
+      <ng-template taTabContent>
+        <div class="sub-heading">
+          <ta-risk-field-indicator
+            [showIndicator]="showRiskFields"
+          ></ta-risk-field-indicator>
+          <!-- [i18n-tobeinternationalized] -->
+          Purposes
+        </div>
+        <ta-it-system-processing-purposes
+          #canDeactivateTab
+          [baseDomainId]="baseDomainId"
+        ></ta-it-system-processing-purposes>
+      </ng-template>
+    </ta-tab-guarded>
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-tab-guarded title="Attachments" [disabled]="!isCurrentFormValid">
+      <ng-template taTabContent>
+        <!-- [i18n-tobeinternationalized] -->
+        <div class="sub-heading">Attachments</div>
+        <ta-inventory-attachments
+          #canDeactivateTab
+          [baseDomainId]="baseDomainId"
+          (updateValidity)="updateValidity($event)"
+          (updateUploading)="updateUploading($event)"
+        ></ta-inventory-attachments>
+      </ng-template>
+    </ta-tab-guarded>
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-tab-guarded title="Tags" [disabled]="!isCurrentFormValid">
+      <ng-template taTabContent>
+        <!-- [i18n-tobeinternationalized] -->
+        <div class="sub-heading">Tags</div>
+        <div class="mb-3">Use tags to organize and classify the assets.</div>
+        <ta-inventory-tags
+          #canDeactivateTab
+          [baseDomainId]="baseDomainId"
+          [baseDomainType]="baseDomainType"
+        ></ta-inventory-tags>
+      </ng-template>
+    </ta-tab-guarded>
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-tab-guarded title="Assessments" [disabled]="!isCurrentFormValid">
+      <ng-template taTabContent>
+        <ta-assessments
+          type="data-inventory"
+          [recordId]="baseDomainId"
+        ></ta-assessments>
+        <ta-audit-accordion></ta-audit-accordion>
+      </ng-template>
+    </ta-tab-guarded>
+  </ta-tabset-guarded>
+</div>
+<!-- isForm valid is currently hardcoded-->
+<!-- As part of TIMF-4826, please make sure that the form validity is passed in to ta-data-inventory-footer component-->
+<ta-data-inventory-footer
+  [isFormValid]="isCurrentFormValid"
+  [isSaving]="isFormSaving"
+  [isUploading]="isUploading"
+  (entitySaved)="saveAndNavigateToDataInventory()"
+>
+</ta-data-inventory-footer>

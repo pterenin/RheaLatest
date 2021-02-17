@@ -1,0 +1,12 @@
+.hidden {
+  display: none;
+}
+
+.three-level {
+  width: 726px;
+}
+
+.spinner-container {
+  text-align: center;
+  padding-top: 20px;
+}

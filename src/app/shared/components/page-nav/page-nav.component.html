@@ -1,0 +1,26 @@
+<div class="clearfix">
+  <!-- default template -->
+  <div *ngIf="!isMinimal">
+    <ta-page-nav-default
+      *ngFor="let step of stepList; let i = index"
+      routerLinkActive="active"
+      [selectedStep]="selectedStep"
+      [step]="i"
+      (click)="navigateTo(step.url)"
+      [isReview]="isReview"
+    >
+      <a [innerText]="step.label"></a>
+    </ta-page-nav-default>
+  </div>
+
+  <!-- minimal template -->
+  <div *ngIf="isMinimal">
+    <ta-page-nav-minimal
+      *ngFor="let step of stepList"
+      routerLinkActive="active"
+      (click)="navigateTo(step.url)"
+    >
+      <a [innerText]="step.label"></a>
+    </ta-page-nav-minimal>
+  </div>
+</div>

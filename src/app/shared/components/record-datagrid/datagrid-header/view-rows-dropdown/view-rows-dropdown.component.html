@@ -1,0 +1,22 @@
+<div taDropdown class="d-inline-block mr-2">
+  <button
+    taButton
+    type="button"
+    taType="dropdown"
+    id="viewNumberOfRowsDropdown"
+    taDropdownToggle
+  >
+    <!-- [i18n-tobeinternationalized] -->
+    View {{ numRowsSelected }} rows
+  </button>
+  <div taDropdownMenu aria-labelledby="viewNumberOfRowsDropdown">
+    <button
+      type="button"
+      class="dropdown-item ml-0"
+      *ngFor="let opt of options"
+      (click)="updateNumberOfRows(opt.text)"
+    >
+      {{ opt.text }}
+    </button>
+  </div>
+</div>

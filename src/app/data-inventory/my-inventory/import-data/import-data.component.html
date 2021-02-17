@@ -1,0 +1,57 @@
+<div class="modal-header">
+  <!--- [i18n-tobeinternationalized] --->
+  <h4 class="modal-title" id="modal-basic-title" taAutofocus>
+    Upload New Records
+  </h4>
+  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+    <i class="ta ta-close"></i>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="modal-p mt-3 mb-3">
+    <!--- [i18n-tobeinternationalized] --->
+    Use the CSV import tool to create data inventory records. Start by
+    downloading the
+    <span class="link" (click)="downloadTemplates('/')"
+      >CSV import templates</span
+    >, or
+    <span class="link" (click)="downloadTemplates('/samples')"
+      >download a sample template</span
+    >
+    to review format requirements.
+  </div>
+  <ta-simple-file-upload
+    [formGroup]="fileFormsGroup"
+    text="Drag & drop a csv or"
+    fileRestriction="text/csv"
+    maxFileSize="16000000"
+  >
+  </ta-simple-file-upload>
+</div>
+
+<div class="modal-footer footer-buttons">
+  <button
+    taButton
+    type="button"
+    taType="secondary"
+    class="mr-3 add-it-btn"
+    data-dismiss="modal"
+    id="modal-cancel"
+    (click)="activeModal.dismiss('Cancel')"
+  >
+    <!--- [i18n-tobeinternationalized] --->
+    Cancel
+  </button>
+  <button
+    taButton
+    type="button"
+    taType="primary"
+    class="mr-3 add-it-btn"
+    id="modal-submit"
+    (click)="onSubmit()"
+    [disabled]="isProcessing"
+  >
+    <!--- [i18n-tobeinternationalized] --->
+    {{ isProcessing ? 'uploading....' : 'Upload' }}
+  </button>
+</div>

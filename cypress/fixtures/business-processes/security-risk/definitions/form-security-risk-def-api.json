@@ -1,0 +1,7 @@
+{
+  "postItSystem": {
+    "method": "POST",
+    "url": "api/business-processes/{id}/it-systems",
+    "alias": "@post-it-systems"
+  }
+}

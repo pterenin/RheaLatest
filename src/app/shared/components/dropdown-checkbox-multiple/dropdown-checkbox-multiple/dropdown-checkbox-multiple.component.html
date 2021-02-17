@@ -1,0 +1,51 @@
+<form [formGroup]="dropdownForm">
+  <label [attr.for]="dropdownId" *ngIf="label">{{ label }}</label>
+  <div
+    taDropdown
+    class="d-block"
+    [autoClose]="autoClose ? true : 'outside'"
+    [placement]="['bottom-left', 'top-left']"
+  >
+    <button
+      type="button"
+      [attr.aria-label]="dropdownId"
+      [attr.id]="dropdownId"
+      taDropdownToggle
+      class="btn btn-block btn-dropdown"
+    >
+      <span
+        class="placeholder-text"
+        *ngIf="!selectedValues || selectedValues.length === 0"
+      >
+        {{ placeholder }}
+      </span>
+      <ta-tags
+        [showClose]="true"
+        *ngFor="let option of selectedValues; index as selectionIndex"
+        id="{{ dropdownId }}"
+        (onClose)="onRemoveSelectedOption(selectionIndex)"
+      >
+        {{ optionLabel && option[optionLabel] ? option[optionLabel] : option }}
+      </ta-tags>
+    </button>
+    <div taDropdownMenu>
+      <ta-dropdown-category>
+        <div class="row search-and-select">
+          <div class="col items-scroll">
+            <ng-container>
+              <div *ngFor="let item of filteredOptions">
+                <ta-checkbox
+                  [formControlName]="item.id"
+                  [disabled]="evaluateIfDisabled(item)"
+                  class="dropdown-item text-wrap"
+                >
+                  <span [innerHTML]="getItemLabel(item)"></span>
+                </ta-checkbox>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </ta-dropdown-category>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,115 @@
+<ta-business-process-wizard-header
+  [currentRoute]="businessProcessNavigation[4]"
+  (isClickSteps)="navigate({ save: true, step: $event })"
+  (viewUpdated)="navigate({ save: true, step: $event.step })"
+></ta-business-process-wizard-header>
+
+<div class="security-risks-wrapper p-3 pb-5 mb-2">
+  <div class="row">
+    <div class="col-6">
+      <div class="security-controls-wrapper card rounded-lg mb-3">
+        <div class="card-header d-flex">
+          <div class="w-100" data-cy="title-security-controls">
+            <p class="header-text mb-0">
+              <!-- [i18n-tobeinternationalized] -->
+              Security Controls
+            </p>
+            <span class="sub-header-text">
+              <!-- [i18n-tobeinternationalized] -->
+              Identify the security controls that are in place for this business
+              process
+            </span>
+          </div>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="securityControlsForm">
+            <div
+              formArrayName="securityControls"
+              *ngFor="let item of securityControls.controls; let i = index"
+            >
+              <div [formGroupName]="i.toString()" class="mb-1">
+                <ta-checkbox formControlName="checked">
+                  {{ item.get('securityControl').value }}
+                </ta-checkbox>
+              </div>
+            </div>
+            <div class="input-other-wrapper">
+              <ta-checkbox formControlName="securityControlOtherFlag">
+                <span data-cy="other">
+                  <!-- [i18n-tobeinternationalized] -->
+                  Others
+                </span>
+              </ta-checkbox>
+              <div class="input-other w-100">
+                <textarea
+                  formControlName="securityControlOtherValue"
+                  class="form-control"
+                  placeholder="Enter other security controls"
+                  type="text"
+                  rows="3"
+                  data-cy="other-name"
+                >
+                </textarea>
+                <span
+                  class="text-danger align-left"
+                  *ngIf="!securityControlOtherValue.valid"
+                >
+                  <!-- [i18n-tobeinternationalized] -->
+                  Maximum character limit of 255 exceeded.
+                </span>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <ta-retention-period
+        (retentionPeriodChanges)="handleRetentionPeriodChange($event)"
+        [retentionPeriodData]="retentionPeriodData"
+      ></ta-retention-period>
+    </div>
+    <div class="col-6">
+      <div class="mb-3">
+        <ta-data-inventory-card
+          #dataInventoryCardPP
+          [gridID]="'data-inventory-card-PP'"
+          [type]="'PP'"
+          [title]="getTitleByType('PP')"
+          [subtitle]="getSubtitleByType('PP')"
+          [image]="'/assets/images/default-table-background.svg'"
+          [subImageString]="getSubImageStringByType('PP')"
+          [subImageStringBtnText]="'add'"
+          [subImageStringBtnType]="'link'"
+          [columnsSettings]="getColumnsDataByType('PP')"
+          [rowsSettings]="processingPurposesRowsSettings"
+          [data]="processingPurposesCategorizedList"
+          [selectedData]="processingPurposesSelections"
+        ></ta-data-inventory-card>
+      </div>
+      <div class="mb-3">
+        <ta-data-inventory-card
+          #dataInventoryCardDE
+          [gridID]="'data-inventory-card-DE'"
+          [type]="'DE'"
+          [title]="getTitleByType('DE')"
+          [subtitle]="getSubtitleByType('DE')"
+          [image]="'/assets/images/default-table-background.svg'"
+          [subImageString]="getSubImageStringByType('DE')"
+          [subImageStringBtnText]="'add'"
+          [subImageStringBtnType]="'link'"
+          [columnsSettings]="getColumnsDataByType('DE')"
+          [rowsSettings]="dataElementsRowsSettings"
+          [data]="dataElementsCategorizedList"
+          [selectedData]="dataElementsSelections"
+        ></ta-data-inventory-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ta-business-process-wizard-footer
+  [showPreviousButton]="true"
+  [disableNextButton]="isDisabledNextBtn()"
+  (isClickNextButton)="navigate({ save: true, step: 'review-bp' })"
+  (isClickPreviousButton)="navigate({ save: true, step: 'data-flow' })"
+  (isClickCancelButton)="navigate({ save: false, step: 'cancel' })"
+></ta-business-process-wizard-footer>

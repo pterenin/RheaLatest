@@ -1,0 +1,19 @@
+{
+  "data": {
+    "businessProcessNextIdentifier": 1,
+    "businessProcessPrefix": "string",
+    "companyNextIdentifier": 1,
+    "companyPrefix": "string",
+    "dimAccount": {
+      "id": "string"
+    },
+    "enableGDPRRiskHelper": true,
+    "itSystemNextIdentifier": 1,
+    "itSystemPrefix": "string",
+    "thirdPartyNextIdentifier": 1,
+    "thirdPartyPrefix": "string",
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

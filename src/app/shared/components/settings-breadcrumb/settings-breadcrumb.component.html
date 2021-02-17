@@ -1,0 +1,19 @@
+<div class="breadcrumb-wrapper">
+  <div *ngFor="let breadcrumb of breadcrumbs; index as i">
+    <div *ngIf="!isLastBreadcrumb(i)">
+      <a [routerLink]="breadcrumb.url">
+        {{ breadcrumb.label }}
+        <ta-custom-category-tag *ngIf="breadcrumb.isCustom">
+        </ta-custom-category-tag>
+      </a>
+      <i class="ta ta-chevron-right icon-wrapper"></i>
+    </div>
+    <div *ngIf="isLastBreadcrumb(i)">
+      <div>
+        {{ breadcrumb.label }}
+        <ta-custom-category-tag *ngIf="breadcrumb.isCustom">
+        </ta-custom-category-tag>
+      </div>
+    </div>
+  </div>
+</div>

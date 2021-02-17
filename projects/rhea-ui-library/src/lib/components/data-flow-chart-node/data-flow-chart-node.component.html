@@ -1,0 +1,104 @@
+<div class="ta-chart-node-container" *ngIf="node.data.type !== 'itSystem'">
+  <div class="ta-node-title">
+    <span
+      class="title d-inline-block w-100 text-truncate"
+      placement="top-left"
+      tooltipClass="animated fadeIn record-icon-tooltip"
+      [taTooltip]="node.label"
+      tooltipTheme="light"
+      tooltipTextAlign="left"
+      container="body"
+    >
+      {{ node.label }}
+    </span>
+  </div>
+  <div
+    class="ta-labels-values-container"
+    *ngIf="node.data.type === 'dataSubject'"
+  >
+    <div class="ta-labels-values-item">
+      <!-- [i18n-tobeinternationalized] -->
+      <span class="label">Locations:</span>
+      <ta-badge [values]="node.data.locations.length"></ta-badge>
+    </div>
+    <div class="ta-labels-values-item">
+      <!-- [i18n-tobeinternationalized] -->
+      <span class="label">Data Elements:</span>
+      <ta-badge [values]="node.data.dataElementCount"></ta-badge>
+    </div>
+  </div>
+
+  <div
+    class="ta-labels-values-container"
+    *ngIf="node.data.type === 'dataRecipient'"
+  >
+    <div class="ta-labels-values-item">
+      <span class="label">Locations:</span>
+      <ta-badge [values]="node.data.locations.length"></ta-badge>
+    </div>
+    <div class="ta-labels-values-item">
+      <span class="label">Processing Purpose:</span>
+      <ta-badge [values]="node.data.processingPurposeCount"></ta-badge>
+    </div>
+  </div>
+</div>
+
+<div class="ta-chart-node-container" *ngIf="node.data.type === 'itSystem'">
+  <div class="ta-node-title system">
+    <ta-data-flow-record-icon
+      [type]="node.data.legalEntityType"
+    ></ta-data-flow-record-icon>
+    <span
+      class="title d-inline-block text-truncate w-75"
+      placement="top-left"
+      tooltipClass="animated fadeIn record-icon-tooltip"
+      [taTooltip]="node.label"
+      tooltipTheme="light"
+      tooltipTextAlign="left"
+      container="body"
+    >
+      {{ node.label }}
+    </span>
+  </div>
+  <div class="ta-labels-values-container mt-1">
+    <div class="ta-labels-values-item">
+      <!-- [i18n-tobeinternationalized] -->
+      <span class="label">Owner:</span>
+      <span class="value">{{
+        node.data.legalEntityName.length > 15
+          ? (node.data.legalEntityName | slice: 0:15) + '...'
+          : node.data.legalEntityName
+      }}</span>
+    </div>
+    <div class="ta-labels-values-item">
+      <!-- [i18n-tobeinternationalized] -->
+      <span class="label">Owner Type:</span>
+      <span class="value">
+        {{
+          getNodeTypeText(node.data.legalEntityType).length > 10
+            ? (getNodeTypeText(node.data.legalEntityType) | slice: 0:10) + '...'
+            : getNodeTypeText(node.data.legalEntityType)
+        }}
+      </span>
+    </div>
+    <div class="ta-labels-values-item">
+      <!-- [i18n-tobeinternationalized] -->
+      <span class="label">Location:</span>
+      <span class="value">{{
+        node.data.location.id.length > 12
+          ? (node.data.location.id | slice: 0:12) + '...'
+          : node.data.location.id
+      }}</span>
+    </div>
+    <div class="ta-labels-values-item">
+      <!-- [i18n-tobeinternationalized] -->
+      <span class="label">Data Elements:</span>
+      <ta-badge [values]="node.data.dataElementCount"></ta-badge>
+    </div>
+    <div class="ta-labels-values-item">
+      <!-- [i18n-tobeinternationalized] -->
+      <span class="label">Processing Purpose:</span>
+      <ta-badge [values]="node.data.processingPurposeCount"></ta-badge>
+    </div>
+  </div>
+</div>

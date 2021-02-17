@@ -1,0 +1,52 @@
+@import 'src/styles/variables';
+
+#system-selection-sidebar {
+  background-color: $white;
+  border-right: $border-default;
+  width: 264px;
+  z-index: 10;
+  left: 0;
+  box-shadow: $box-shadow-default;
+  transition: 300ms;
+  height: calc(100% - 148px);
+  ta-data-flow-search,
+  ta-data-flow-filters,
+  ta-data-flow-expand-view {
+    float: left;
+  }
+  strong {
+    font-size: $font-size-14;
+  }
+  #filter-container {
+    border-bottom: $border-default;
+    height: 50px;
+    position: relative;
+    strong {
+      font-size: $font-size-14;
+      font-weight: 600 !important;
+    }
+    .expand-chevron {
+      height: 20px;
+      width: 20px;
+      top: 14px;
+      right: -10px;
+      background-color: $white;
+      cursor: pointer;
+      &:hover {
+        background-color: $gray-300;
+      }
+      ta-icon {
+        position: relative;
+        top: -2px;
+      }
+    }
+  }
+}
+
+#system-selection-sidebar.is-not-standard-view {
+  left: -250px;
+}
+
+#system-selection-sidebar.is-expanded-view {
+  width: 95%;
+}

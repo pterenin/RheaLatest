@@ -1,0 +1,13 @@
+<ta-tabset (tabChange)="onTabChange($event)">
+  <ta-tab
+    *ngFor="let tab of tabs; let i = index"
+    [title]="tab.title"
+    [disabled]="isTabDisabled(tab) && isActiveTab(tab)"
+  >
+    <ng-template taTabContent>
+      <ng-template
+        [ngTemplateOutlet]="tab.tabContent?.templateRef"
+      ></ng-template>
+    </ng-template>
+  </ta-tab>
+</ta-tabset>

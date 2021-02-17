@@ -1,0 +1,34 @@
+{
+  "data": {
+    "processName": "e2e-BP-I",
+    "title": "e2e BP It Systems",
+    "systems": [
+      {
+        "searchPrefix": "%",
+        "category": "Primary Entity"
+      },
+      {
+        "searchPrefix": "%",
+        "category": "Vendor"
+      },
+      {
+        "searchPrefix": "%",
+        "category": "Partner"
+      },
+      {
+        "searchPrefix": "%",
+        "category": "Service Provider"
+      },
+      {
+        "searchPrefix": "%",
+        "category": "Business Associate"
+      },
+      {
+        "searchPrefix": "%",
+        "category": "Company Affiliate"
+      }
+    ]
+  },
+  "status": 200,
+  "ok": true
+}

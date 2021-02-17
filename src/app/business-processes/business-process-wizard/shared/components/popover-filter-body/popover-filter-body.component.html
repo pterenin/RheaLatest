@@ -1,0 +1,204 @@
+<form [formGroup]="filterForm">
+  <div class="container p-0 w-100">
+    <div class="row no-gutters" *ngIf="isFilterEnabledCategory">
+      <div class="col-4">
+        <label
+          [attr.for]="'popover-filter-body-categories-' + gridId"
+          class="py-2"
+        >
+          {{ filterData['categories'].label }}
+        </label>
+      </div>
+      <div class="col-8">
+        <div taDropdown autoClose="outside" class="d-inline-block w-100 mr-1">
+          <button
+            taButton
+            taType="dropdown"
+            [attr.id]="'popover-filter-body-categories-' + gridId"
+            taDropdownToggle
+            class="w-100"
+            type="button"
+          >
+            {{ filterData['categories'].placeholder }}
+          </button>
+          <div
+            class="w-100"
+            taDropdownMenu
+            [attr.aria-labelledby]="'popover-filter-body-categories-' + gridId"
+          >
+            <ta-dropdown-search
+              (onSearch)="onSearch($event, 'categories')"
+            ></ta-dropdown-search>
+            <ta-dropdown-scroll [scrollHeight]="240">
+              <ng-container
+                formArrayName="categories"
+                *ngFor="let item of categories.controls; let j = index"
+              >
+                <ng-container [formGroupName]="j.toString()">
+                  <ta-checkbox
+                    class="dropdown-item text-wrap"
+                    formControlName="checked"
+                    [hidden]="item.get('hidden').value"
+                  >
+                    {{ item.get('label').value }}
+                  </ta-checkbox>
+                </ng-container>
+              </ng-container>
+            </ta-dropdown-scroll>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row no-gutters" *ngIf="isFilterEnabledLocations">
+      <div class="col-4">
+        <label
+          [attr.for]="'popover-filter-body-locations-' + gridId"
+          class="py-2"
+        >
+          {{ filterData['locations'].label }}
+        </label>
+      </div>
+      <div class="col-8">
+        <div taDropdown autoClose="outside" class="d-inline-block w-100 mr-1">
+          <button
+            taButton
+            taType="dropdown"
+            [attr.id]="'popover-filter-body-locations-' + gridId"
+            taDropdownToggle
+            class="w-100"
+            type="button"
+          >
+            {{ filterData['locations'].placeholder }}
+          </button>
+          <div
+            class="w-100"
+            taDropdownMenu
+            [attr.aria-labelledby]="'popover-filter-body-locations-' + gridId"
+          >
+            <ta-dropdown-search
+              (onSearch)="onSearch($event, 'locations')"
+            ></ta-dropdown-search>
+            <ta-dropdown-scroll [scrollHeight]="240">
+              <ng-container
+                formArrayName="locations"
+                *ngFor="let item of locations.controls; let j = index"
+              >
+                <ng-container [formGroupName]="j.toString()">
+                  <ta-checkbox
+                    class="dropdown-item text-wrap"
+                    formControlName="checked"
+                    [hidden]="item.get('hidden').value"
+                  >
+                    {{ item.get('label').value }}
+                  </ta-checkbox>
+                </ng-container>
+              </ng-container>
+            </ta-dropdown-scroll>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row no-gutters" *ngIf="isFilterEnabledDataElements">
+      <div class="col-4">
+        <label
+          [attr.for]="'popover-filter-body-data-elements-' + gridId"
+          class="py-2"
+        >
+          {{ filterData['dataElements'].label }}
+        </label>
+      </div>
+      <div class="col-8">
+        <div taDropdown autoClose="outside" class="d-inline-block w-100 mr-1">
+          <button
+            taButton
+            taType="dropdown"
+            [attr.id]="'popover-filter-body-data-elements-' + gridId"
+            taDropdownToggle
+            class="w-100"
+            type="button"
+          >
+            {{ filterData['dataElements'].placeholder }}
+          </button>
+          <div
+            class="w-100"
+            taDropdownMenu
+            [attr.aria-labelledby]="
+              'popover-filter-body-data-elements-' + gridId
+            "
+          >
+            <ta-dropdown-search
+              (onSearch)="onSearch($event, 'dataElements')"
+            ></ta-dropdown-search>
+            <ta-dropdown-scroll [scrollHeight]="240">
+              <ng-container
+                formArrayName="dataElements"
+                *ngFor="let item of dataElements.controls; let j = index"
+              >
+                <ng-container [formGroupName]="j.toString()">
+                  <ta-checkbox
+                    class="dropdown-item text-wrap"
+                    formControlName="checked"
+                    [hidden]="item.get('hidden').value"
+                  >
+                    {{ item.get('label').value }}
+                  </ta-checkbox>
+                </ng-container>
+              </ng-container>
+            </ta-dropdown-scroll>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row no-gutters" *ngIf="isFilterEnabledProcessingPurposes">
+      <div class="col-4">
+        <label
+          [attr.for]="'popover-filter-body-processing-purposes-' + gridId"
+          class="py-2"
+        >
+          {{ filterData['processingPurposes'].label }}
+        </label>
+      </div>
+      <div class="col-8">
+        <div taDropdown autoClose="outside" class="d-inline-block w-100 mr-1">
+          <button
+            taButton
+            taType="dropdown"
+            [attr.id]="'popover-filter-body-processing-purposes-' + gridId"
+            taDropdownToggle
+            class="w-100"
+            type="button"
+          >
+            {{ filterData['processingPurposes'].placeholder }}
+          </button>
+          <div
+            class="w-100"
+            taDropdownMenu
+            [attr.aria-labelledby]="
+              'popover-filter-body-processing-purposes-' + gridId
+            "
+          >
+            <ta-dropdown-search
+              (onSearch)="onSearch($event, 'processingPurposes')"
+            ></ta-dropdown-search>
+            <ta-dropdown-scroll [scrollHeight]="240">
+              <ng-container
+                formArrayName="processingPurposes"
+                *ngFor="let item of processingPurposes.controls; let j = index"
+              >
+                <ng-container [formGroupName]="j.toString()">
+                  <ta-checkbox
+                    class="dropdown-item text-wrap"
+                    formControlName="checked"
+                    [hidden]="item.get('hidden').value"
+                  >
+                    {{ item.get('label').value }}
+                  </ta-checkbox>
+                </ng-container>
+              </ng-container>
+            </ta-dropdown-scroll>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

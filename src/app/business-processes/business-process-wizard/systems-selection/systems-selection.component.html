@@ -1,0 +1,858 @@
+<ta-business-process-wizard-header
+  [currentRoute]="businessProcessNavigation[1]"
+  [record]="record"
+  (isClickSteps)="
+    preventDestroy() ? confirmDestroy('navigate', $event) : navigate($event)
+  "
+  (viewUpdated)="
+    preventDestroy()
+      ? confirmDestroy('navigate', $event.step)
+      : navigate($event.step)
+  "
+></ta-business-process-wizard-header>
+
+<div
+  id="system-selection-main"
+  class="d-flex"
+  [class.is-standard-view]="isStandardView"
+  [class.is-not-standard-view]="!isStandardView"
+  [class.is-expanded-view]="isExpandedView"
+  [class.is-collapsed-view]="!isExpandedView"
+>
+  <aside id="system-selection-sidebar" class="position-absolute">
+    <!-- SEARCH THIS SHOULD BE COMPONENT -->
+    <div
+      id="search-filter-container"
+      class="d-flex pr-3 pl-3 align-items-center"
+    >
+      <div
+        [class.w-100]="showYourSystemRecordsSearch"
+        [class.mr-auto]="!showYourSystemRecordsSearch"
+      >
+        <strong
+          class="animated fadeIn"
+          *ngIf="!showYourSystemRecordsSearch"
+          (click)="showSystemRecordsSearch()"
+        >
+          Your System Records
+        </strong>
+        <ta-search-field
+          *ngIf="showYourSystemRecordsSearch"
+          id="search-selected-records-component"
+          class="d-flex align-items-center animated fadeIn"
+          placeholder="Search System Records"
+          [alwaysShowClear]="true"
+          (searchValue)="searchItSystemRecordsFilters($event)"
+          (clearValue)="clearSearchItSystemRecords()"
+        ></ta-search-field>
+      </div>
+
+      <div class="text-right animated fadeIn">
+        <button
+          taButton
+          taType="circle"
+          *ngIf="!showYourSystemRecordsSearch"
+          (click)="showSystemRecordsSearch()"
+        >
+          <ta-icon icon="search"></ta-icon>
+        </button>
+        <button
+          *ngIf="!showYourSystemRecordsSearch"
+          class="position-relative"
+          taButton
+          taType="circle"
+          type="button"
+          [placement]="['right-top', 'bottom-right', 'auto']"
+          [taPopover]="popFilterContent"
+          [popoverTitle]="popFilterTitle"
+          #popSysRecordsFilter="taPopover"
+          popoverClass="search-filter-popover animated fadeIn"
+          autoClose="outside"
+          container="body"
+        >
+          <span
+            *ngIf="filterSystemRecordsIsDirty"
+            class="filter-indicator position-absolute d-block"
+          ></span>
+          <ta-icon icon="filter"></ta-icon>
+        </button>
+        <button
+          *ngIf="!showYourSystemRecordsSearch && !isExpandedView"
+          taButton
+          taType="circle"
+          (click)="isExpandedView = true"
+        >
+          <ta-custom-icon-maximize></ta-custom-icon-maximize>
+        </button>
+        <button
+          *ngIf="!showYourSystemRecordsSearch && isExpandedView"
+          taButton
+          taType="circle"
+          (click)="isExpandedView = false"
+        >
+          <ta-custom-icon-minimize></ta-custom-icon-minimize>
+        </button>
+
+        <div
+          class="rounded-circle d-flex align-items-center justify-content-center border expand-chevron position-absolute"
+          role="button"
+          (click)="handlerExpanded()"
+        >
+          <ta-icon
+            *ngIf="isStandardView"
+            icon="caret-left"
+            height="9"
+            width="6"
+          ></ta-icon>
+          <ta-icon
+            *ngIf="!isStandardView"
+            icon="caret-right"
+            height="9"
+            width="6"
+          ></ta-icon>
+        </div>
+      </div>
+    </div>
+
+    <!--
+      TODO: SIDEBAR THIS SHOULD BE COMPONENT
+      Before making this into component lets finalized the requirement for expanding system records container.
+      This is will be the mock URL: zpl.io/agJ96DM
+    -->
+    <div id="sidebar-accordion-container">
+      <div class="p-3" *ngIf="!itSystemRecords">
+        <span
+          class="spinner-border spinner-border-sm ml-auto text-primary"
+          role="status"
+          aria-hidden="true"
+        ></span>
+      </div>
+      <ta-accordion
+        *ngIf="itSystemRecords"
+        [activeIds]="['accordion-added', 'accordion-available']"
+      >
+        <ta-panel id="accordion-added">
+          <ng-template taPanelTitle>
+            <span>
+              <!--- [i18n-tobeinternationalized] -->
+              <b>Added </b>
+            </span>
+            <ta-badge [values]="itSystemRecords.addedRecords.length"></ta-badge>
+            <div class="position-absolute rounded-circle icon-background">
+              <!-- [i18n-tobeinternationalized] -->
+              <button
+                taButton
+                container="body"
+                taType="circle"
+                class="icon-add"
+                [placement]="['bottom-left', 'bottom-right']"
+                tooltipClass="tooltip-add-new-system-record"
+                taTooltip="Add New System Record"
+                tooltipTheme="light"
+                tooltipTextAlign="left"
+                (click)="
+                  $event.preventDefault();
+                  $event.stopPropagation();
+                  preventDestroy()
+                    ? confirmDestroy('handleAddSystem', $event)
+                    : handleAddSystem($event)
+                "
+                data-cy="btn-add-system-record"
+              >
+                <ta-icon
+                  class="align-middle"
+                  icon="plus-circle"
+                  height="16"
+                  width="16"
+                ></ta-icon>
+              </button>
+            </div>
+          </ng-template>
+          <ng-template taPanelContent>
+            <span
+              class="text-black-50 d-block pt-2 pr-2 pb-3 pl-4"
+              *ngIf="itSystemRecords.addedRecords.length === 0"
+            >
+              <!-- [i18n-tobeinternationalized] -->
+              No added systems
+            </span>
+            <ul
+              class="list-unstyled system-record-list"
+              [ngClass]="{
+                'd-flex flex-wrap is-expanded-system-record-list': isExpandedView
+              }"
+              *ngIf="itSystemRecords.addedRecords.length > 0"
+            >
+              <li
+                #addedPopover="taPopover"
+                *ngFor="
+                  let record of itSystemRecords.addedRecords;
+                  let i = index
+                "
+                class="d-flex align-items-center"
+                role="button"
+                [class.active]="
+                  isSelectedRecord(record.entityId) &&
+                  activeContent !== 'add-system'
+                "
+                popoverClass="system-record-list-popover animated fadeIn"
+                container="body"
+                [placement]="[
+                  'right-top',
+                  'right-bottom',
+                  'left-top',
+                  'left-bottom'
+                ]"
+                [taPopover]="popContentSystemRecordAdded"
+                [popoverTitle]="popTitleSystemRecordAdded"
+                (click)="
+                  preventDestroy()
+                    ? confirmDestroy('onSelectSystemFromAdded', record.entityId)
+                    : onSelectSystemFromAdded(record.entityId)
+                "
+                (mouseenter)="
+                  popoverSystemRecords(record.entityId, 'added', addedPopover)
+                "
+                (mouseleave)="popoverSystemRecordsDestroy(addedPopover)"
+                triggers="manual"
+              >
+                <ta-record-icon
+                  [type]="record?.legalEntity?.type || 'OTHER'"
+                ></ta-record-icon>
+
+                <div class="system-record-list-names text-left ml-2">
+                  <strong class="d-block text-truncate">
+                    {{ record.name || 'Untitled' }}
+                  </strong>
+                  <small class="d-block text-truncate">
+                    Owned by {{ record?.legalEntity?.name || '--' }}
+                  </small>
+                </div>
+                <span
+                  *ngIf="
+                    disableAddAndRemove &&
+                    currentSelectedItSystemId === record.entityId
+                  "
+                  class="spinner-border spinner-border-sm ml-auto text-{{
+                    isSelectedRecord(record.entityId) ? 'secondary' : 'primary'
+                  }}"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                <button
+                  class="system-record-list-button ml-auto"
+                  type="button"
+                  taTooltip="Remove record"
+                  tooltipClass="animated fadeIn delay-1s"
+                  tooltipTheme="light"
+                  container="body"
+                  (click)="
+                    preventDestroy()
+                      ? confirmDestroy('removeToRecord', record.entityId)
+                      : removeToRecord(record.entityId);
+                    $event.stopPropagation()
+                  "
+                  *ngIf="!disableAddAndRemove && !isSaving"
+                >
+                  <ta-icon
+                    height="12"
+                    icon="delete"
+                    [color]="
+                      isSelectedRecord(record.entityId) ? '#FFF' : '#000'
+                    "
+                  ></ta-icon>
+                </button>
+              </li>
+            </ul>
+          </ng-template>
+        </ta-panel>
+        <ta-panel id="accordion-available">
+          <ng-template taPanelTitle>
+            <span>
+              <!--- [i18n-tobeinternationalized] -->
+              <b>Available </b>
+            </span>
+            <ta-badge
+              [values]="itSystemRecords.availableRecords.length"
+            ></ta-badge>
+          </ng-template>
+          <ng-template taPanelContent>
+            <div
+              class="d-block pt-2 pr-2 pb-3 pl-4"
+              *ngIf="itSystemRecords.availableRecords.length === 0"
+            >
+              <ng-container *ngIf="!searchString">
+                <!-- [i18n-tobeinternationalized] -->
+                No system record found.
+                <a
+                  href="#"
+                  (click)="
+                    $event.preventDefault();
+                    $event.stopPropagation();
+                    preventDestroy()
+                      ? confirmDestroy('handleAddSystem', $event)
+                      : handleAddSystem($event, true)
+                  "
+                  class="d-inline-block"
+                >
+                  <!-- [i18n-tobeinternationalized] -->
+                  Add New
+                </a>
+              </ng-container>
+              <ng-container *ngIf="searchString.length > 2">
+                <!-- [i18n-tobeinternationalized] -->
+                <span class="text-black-50">
+                  No system record found for
+                  <strong class="text-black-100">'{{ searchString }}'</strong>.
+                </span>
+                <a
+                  href="#"
+                  (click)="
+                    $event.preventDefault();
+                    $event.stopPropagation();
+                    preventDestroy()
+                      ? confirmDestroy('handleAddSystem', $event)
+                      : handleAddSystem($event, true)
+                  "
+                  class="d-inline-block"
+                >
+                  <!-- [i18n-tobeinternationalized] -->
+                  Add New
+                </a>
+              </ng-container>
+            </div>
+            <ul
+              class="list-unstyled system-record-list"
+              [ngClass]="{
+                'd-flex flex-wrap is-expanded-system-record-list': isExpandedView
+              }"
+              *ngIf="itSystemRecords.availableRecords.length !== 0"
+            >
+              <li
+                #availablePopOver="taPopover"
+                *ngFor="
+                  let record of itSystemRecords.availableRecords;
+                  let i = index
+                "
+                class="d-flex align-items-center"
+                role="button"
+                popoverClass="system-record-list-popover animated fadeIn"
+                container="body"
+                [class.active]="
+                  isSelectedRecord(record.id) && activeContent !== 'add-system'
+                "
+                [placement]="[
+                  'right-top',
+                  'right-bottom',
+                  'left-top',
+                  'left-bottom'
+                ]"
+                [taPopover]="popContentSystemRecordAvailable"
+                [popoverTitle]="popTitleSystemRecordAvailable"
+                (click)="
+                  preventDestroy()
+                    ? confirmDestroy('onSelectRecordFromAvailable', record.id)
+                    : onSelectRecordFromAvailable(record.id)
+                "
+                (mouseenter)="
+                  popoverSystemRecords(record.id, 'available', availablePopOver)
+                "
+                (mouseleave)="popoverSystemRecordsDestroy(availablePopOver)"
+                triggers="manual"
+              >
+                <ta-record-icon
+                  [type]="record?.legalEntityType || 'OTHER'"
+                ></ta-record-icon>
+                <div class="system-record-list-names text-left ml-2">
+                  <strong class="d-block text-truncate">
+                    {{ record.name || 'Untitled' }}
+                  </strong>
+                  <small class="d-block text-truncate">
+                    Owned by {{ record?.legalEntityName || '--' }}
+                  </small>
+                </div>
+                <span
+                  *ngIf="
+                    disableAddAndRemove &&
+                    currentSelectedItSystemId === record.id
+                  "
+                  class="spinner-border spinner-border-sm ml-auto text-{{
+                    isSelectedRecord(record.id) ? 'secondary' : 'primary'
+                  }}"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                <button
+                  class="system-record-list-button ml-auto"
+                  type="button"
+                  taTooltip="Add record"
+                  tooltipClass="animated fadeIn delay-1s"
+                  tooltipTheme="light"
+                  container="body"
+                  (click)="
+                    preventDestroy()
+                      ? confirmDestroy('addToRecord', record.id)
+                      : addToRecord(record.id, undefined, undefined);
+                    $event.stopPropagation()
+                  "
+                  *ngIf="!disableAddAndRemove && !isSaving"
+                >
+                  <ta-icon
+                    height="16"
+                    icon="plus-circle"
+                    [color]="isSelectedRecord(record.id) ? '#FFF' : '#000'"
+                  ></ta-icon>
+                </button>
+              </li>
+            </ul>
+          </ng-template>
+        </ta-panel>
+      </ta-accordion>
+    </div>
+  </aside>
+
+  <div id="system-selection-container" class="w-100 p-3">
+    <div id="system-selection-content">
+      <ng-container
+        *ngIf="activeContent === 'from-added' && fromAddedSelectedSystemRecord"
+      >
+        <div class="p-3 animated fadeIn">
+          <header class="d-flex align-items-center mb-3">
+            <div
+              class="w-100 d-flex align-items-center"
+              style="padding-right: 150px;"
+            >
+              <h3
+                class="h6 m-0 d-inline-block pr-3 text-truncate"
+                style="max-width: 80%;"
+                [taTooltip]="dataFlowForAdded.name"
+                tooltipClass="animated fadeIn record-name-tooltip"
+                tooltipTheme="light"
+                container="body"
+                placement="bottom"
+              >
+                {{ dataFlowForAdded.name || 'Untitled' }}
+              </h3>
+              <div class="d-inline-block pl-3">
+                <ta-record-icon
+                  [type]="dataFlowForAdded?.legalEntity?.type || 'OTHER'"
+                  [small]="true"
+                ></ta-record-icon>
+              </div>
+              <div
+                class="d-inline-block pl-1 text-black-50 text-truncate"
+                style="min-width: 170px"
+                [taTooltip]="dataFlowForAdded?.legalEntity?.name || '--'"
+                tooltipClass="animated fadeIn record-name-tooltip"
+                tooltipTheme="light"
+                container="body"
+                placement="bottom"
+              >
+                {{ dataFlowForAdded?.legalEntity?.name || '--' }}
+              </div>
+            </div>
+          </header>
+
+          <ta-tabset
+            [activeId]="activeTabAdded"
+            (tabChange)="handleTabChange($event)"
+          >
+            <ta-tab id="tabDataSubjectsAdded" title="Data Subjects">
+              <ng-template taTabContent>
+                <ta-system-record-tab-data-subjects
+                  *ngIf="
+                    tabEnabledDataSubjects &&
+                    allDataSubjects &&
+                    fromAddedSelectedSystemRecord
+                  "
+                  class="pt-4 pl-1 pr-1"
+                  [id]="dataFlowEntityId"
+                  [entityName]="dataFlowEntityName"
+                  [type]="'withDataFlow'"
+                  [dataAttachedDataFlow]="dataFlowForAdded"
+                  [dataAttachedInventory]="dataInventoryForAdded"
+                  [dataAvailable]="allDataSubjects"
+                  [allHostingLocations]="allHostingLocations"
+                  [allDataElements]="allDataElements"
+                  (validityUpdated)="updateValidity($event)"
+                  (selectionsUpdated)="
+                    updateChangeStatusByTabId($event, 'tabDataSubjectsAdded')
+                  "
+                ></ta-system-record-tab-data-subjects>
+              </ng-template>
+            </ta-tab>
+            <ta-tab id="tabDataElementsAdded" title="Data Elements">
+              <ng-template taTabContent>
+                <ta-system-record-tab-data-elements
+                  *ngIf="
+                    tabEnabledDataElements &&
+                    allDataElements &&
+                    fromAddedSelectedSystemRecord
+                  "
+                  class="pt-4 pl-1 pr-1"
+                  [id]="dataFlowEntityId"
+                  [type]="'withDataFlow'"
+                  [dataAttachedDataFlow]="dataFlowForAdded"
+                  [dataAttachedInventory]="dataInventoryForAdded"
+                  [dataAvailable]="allDataElements"
+                  (validityUpdated)="updateValidity($event)"
+                  (selectionsUpdated)="
+                    updateChangeStatusByTabId($event, 'tabDataElementsAdded')
+                  "
+                  (updateSelected)="updateSelected($event)"
+                >
+                </ta-system-record-tab-data-elements>
+              </ng-template>
+            </ta-tab>
+            <ta-tab id="tabHostingLocationsAdded" title="Hosting Locations">
+              <ng-template taTabContent>
+                <ta-system-record-tab-hosting-locations
+                  *ngIf="
+                    tabEnabledHostingLocations &&
+                    allHostingLocations &&
+                    fromAddedSelectedSystemRecord
+                  "
+                  class="pt-4 pl-1 pr-1"
+                  [id]="dataFlowEntityId"
+                  [type]="'withDataFlow'"
+                  [dataAttachedDataFlow]="dataFlowForAdded"
+                  [dataAttachedInventory]="dataInventoryForAdded"
+                  [dataAvailable]="allHostingLocations"
+                  (validityUpdated)="updateValidity($event)"
+                  (selectionsUpdated)="
+                    updateChangeStatusByTabId(
+                      $event,
+                      'tabHostingLocationsAdded'
+                    )
+                  "
+                ></ta-system-record-tab-hosting-locations>
+              </ng-template>
+            </ta-tab>
+            <ta-tab id="tabProcessingPurposesAdded" title="Processing Purposes">
+              <ng-template taTabContent>
+                <ta-system-record-tab-processing-purposes
+                  *ngIf="
+                    tabEnabledProcessingPurposes &&
+                    allProcessingPurposes &&
+                    fromAddedSelectedSystemRecord
+                  "
+                  class="pt-4 pl-1 pr-1"
+                  [id]="dataFlowEntityId"
+                  [type]="'withDataFlow'"
+                  [dataAttachedDataFlow]="dataFlowForAdded"
+                  [dataAttachedInventory]="dataInventoryForAdded"
+                  [dataAvailable]="allProcessingPurposes"
+                  (validityUpdated)="updateValidity($event)"
+                  (selectionsUpdated)="
+                    updateChangeStatusByTabId(
+                      $event,
+                      'tabProcessingPurposesAdded'
+                    )
+                  "
+                  (updateSelected)="updateSelected($event)"
+                >
+                </ta-system-record-tab-processing-purposes>
+              </ng-template>
+            </ta-tab>
+          </ta-tabset>
+        </div>
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          activeContent === 'from-available' &&
+          fromAvailableSelectedSystemRecord
+        "
+      >
+        <div class="p-3 animated fadeIn">
+          <header class="d-flex align-items-center mb-3">
+            <div
+              class="w-100 d-flex align-items-center"
+              style="padding-right: 150px;"
+            >
+              <h3
+                class="h6 m-0 d-inline-block pr-3 text-truncate"
+                style="max-width: 80%;"
+                [taTooltip]="dataItSystemInventory.name"
+                tooltipClass="animated fadeIn record-name-tooltip"
+                tooltipTheme="light"
+                container="body"
+                placement="bottom"
+              >
+                {{ dataItSystemInventory.name }}
+              </h3>
+              <div class="d-inline-block pl-3">
+                <ta-record-icon
+                  [type]="dataItSystemInventory.entityType"
+                  [small]="true"
+                ></ta-record-icon>
+              </div>
+              <div
+                class="d-inline-block pl-1 text-black-50 text-truncate"
+                style="max-width: 170px"
+                [taTooltip]="dataItSystemInventory.ownerName"
+                tooltipClass="animated fadeIn record-name-tooltip"
+                tooltipTheme="light"
+                container="body"
+                placement="bottom"
+              >
+                {{ dataItSystemInventory.ownerName }}
+              </div>
+            </div>
+          </header>
+
+          <ta-tabset>
+            <ta-tab title="Data Subjects">
+              <ng-template taTabContent>
+                <ta-system-record-tab-data-subjects
+                  *ngIf="tabEnabledDataSubjects"
+                  class="pt-4 pl-1 pr-1"
+                  [id]="entityId"
+                  [type]="'inventoryOnly'"
+                  [itSystemReadOnly]="
+                    dataItSystemInventory.dataSubjectsWithLocations
+                  "
+                  [dataAvailable]="allDataSubjects"
+                  [allHostingLocations]="allHostingLocations"
+                ></ta-system-record-tab-data-subjects>
+              </ng-template>
+            </ta-tab>
+            <ta-tab title="Data Elements">
+              <ng-template taTabContent>
+                <ta-system-record-tab-data-elements
+                  *ngIf="tabEnabledDataElements"
+                  class="pt-4 pl-1 pr-1"
+                  [id]="entityId"
+                  [type]="'inventoryOnly'"
+                  [itSystemReadOnly]="dataItSystemInventory.dataElements"
+                  [dataAvailable]="allDataElements"
+                ></ta-system-record-tab-data-elements>
+              </ng-template>
+            </ta-tab>
+            <ta-tab title="Hosting Locations">
+              <ng-template taTabContent>
+                <ta-system-record-tab-hosting-locations
+                  *ngIf="tabEnabledHostingLocations"
+                  class="pt-4 pl-1 pr-1"
+                  [id]="entityId"
+                  [type]="'inventoryOnly'"
+                  [itSystemReadOnly]="dataItSystemInventory.locations"
+                ></ta-system-record-tab-hosting-locations>
+              </ng-template>
+            </ta-tab>
+            <ta-tab title="Processing Purposes">
+              <ng-template taTabContent>
+                <ta-system-record-tab-processing-purposes
+                  *ngIf="tabEnabledProcessingPurposes"
+                  class="pt-4 pl-1 pr-1"
+                  [id]="entityId"
+                  [type]="'inventoryOnly'"
+                  [itSystemReadOnly]="dataItSystemInventory.processingPurpose"
+                  [dataAvailable]="allProcessingPurposes"
+                ></ta-system-record-tab-processing-purposes>
+              </ng-template>
+            </ta-tab>
+          </ta-tabset>
+        </div>
+      </ng-container>
+
+      <!-- SELECTED SYSTEM RECORD NONE COMPONENT -->
+      <ta-system-record-none-component
+        *ngIf="activeContent === 'none'"
+        (addSystem)="handleAddSystem($event)"
+      ></ta-system-record-none-component>
+
+      <!-- SYSTEM RECORD ADD COMPONENT -->
+      <ta-system-record-add-component
+        *ngIf="activeContent === 'add-system'"
+        [selectedRecordId]="currentSelectedItSystemId"
+        (systemAdded)="handleSystemAdded($event, true)"
+        (contentChanged)="
+          updateChangeStatusByActiveContent($event, 'add-system')
+        "
+        (discarded)="handleDiscarded($event)"
+        (addNewEntity)="handleAddNewEntity($event)"
+      ></ta-system-record-add-component>
+
+      <!-- SYSTEM RECORD ADD THIRD PARTY COMPONENT -->
+      <ta-system-record-add-third-party-component
+        *ngIf="activeContent === 'add-third-party'"
+        [selectedRecordId]="currentSelectedItSystemId"
+        (thirdPartyAdded)="handleThirdPartyAdded($event)"
+        (contentChanged)="
+          updateChangeStatusByActiveContent($event, 'add-third-party')
+        "
+        (discarded)="handleDiscardAddingThirdParty()"
+        (backRedirect)="handleBackRedirect()"
+      ></ta-system-record-add-third-party-component>
+
+      <!-- SYSTEM RECORD ADD COMPANY AFFILIATE COMPONENT -->
+      <ta-system-record-add-company-affiliate-component
+        *ngIf="activeContent === 'add-company-affiliate'"
+        [selectedRecordId]="currentSelectedItSystemId"
+        (companyAffiliateAdded)="handleCompanyAffiliateAdded($event)"
+        (contentChanged)="
+          updateChangeStatusByActiveContent($event, 'add-company-affiliate')
+        "
+        (discarded)="handleDiscardAddingCompanyAffiliate()"
+        (backRedirect)="handleBackRedirect()"
+      ></ta-system-record-add-company-affiliate-component>
+
+      <!-- ACTION BUTTONS -->
+      <div
+        id="system-selection-action-buttons"
+        class="justify-content-end d-flex align-items-center"
+      >
+        <button
+          *ngIf="
+            activeContent === 'from-available' &&
+            fromAvailableSelectedSystemRecord
+          "
+          taButton
+          taType="flat"
+          class="btn-sm mr-2"
+          type="button"
+          (click)="
+            preventDestroy()
+              ? confirmDestroy('addToRecord', entityId)
+              : addToRecord(entityId, undefined, undefined)
+          "
+          [disabled]="disableAddAndRemove"
+        >
+          Add
+        </button>
+        <button
+          *ngIf="
+            activeContent === 'from-added' && fromAddedSelectedSystemRecord
+          "
+          taButton
+          taType="flat"
+          class="btn-sm mr-2"
+          type="button"
+          (click)="
+            preventDestroy()
+              ? confirmDestroy('removeToRecord', dataFlowEntityId)
+              : removeToRecord(dataFlowEntityId)
+          "
+          [disabled]="disableAddAndRemove"
+        >
+          Remove
+        </button>
+        <button
+          *ngIf="
+            activeContent === 'from-added' && fromAddedSelectedSystemRecord
+          "
+          taButton
+          taType="flat"
+          class="btn-sm"
+          type="button"
+          [disabled]="isDisabledSave || isSaving"
+          (click)="saveDataFromSaveButton()"
+        >
+          Save
+          <span
+            *ngIf="isSaving"
+            class="spinner-border spinner-border-sm text-primary ml-1"
+            role="status"
+            aria-hidden="true"
+          ></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ta-business-process-wizard-footer
+  [disableNextButton]="isSaving"
+  (isClickCancelButton)="
+    preventDestroy() ? confirmDestroy('navigate', 'cancel') : navigate('cancel')
+  "
+  (isClickPreviousButton)="
+    preventDestroy() ? confirmDestroy('navigate', 'owner') : navigate('owner')
+  "
+  (isClickNextButton)="
+    preventDestroy()
+      ? confirmDestroy('navigate', 'data-flow')
+      : navigate('data-flow')
+  "
+>
+</ta-business-process-wizard-footer>
+
+<ng-template #popFilterTitle>
+  <!-- [i18n-tobeinternationalized]-->
+  Filter ({{ totalFilters || 0 }})
+</ng-template>
+<ng-template #popFilterContent>
+  <ta-system-record-filter
+    (cancel)="clearSelectedFilter($event)"
+    [filtersFormValue]="filtersFormValue"
+    (filtersApplied)="applySelectedFilter($event)"
+    (filtersUpdated)="updateSelectedFilter($event)"
+  ></ta-system-record-filter>
+</ng-template>
+
+<!-- POPOVER TEMPLATES FOR SYSTEM RECORDS -->
+<ng-template #popTitleSystemRecordAdded>
+  <ta-system-record-info-component
+    [section]="'header'"
+    [type]="'itSystemDataFlowInfo'"
+    [data]="addedItSystemRecordData"
+  ></ta-system-record-info-component>
+</ng-template>
+<ng-template #popContentSystemRecordAdded>
+  <ta-system-record-info-component
+    [section]="'content'"
+    [type]="'itSystemDataFlowInfo'"
+    [data]="addedItSystemRecordData"
+    [allDataElements]="allDataElements"
+    [allProcessingPurposes]="allProcessingPurposes"
+  ></ta-system-record-info-component>
+</ng-template>
+
+<ng-template #popTitleSystemRecordAvailable>
+  <ta-system-record-info-component
+    [section]="'header'"
+    [type]="'itSystemInventoryInfo'"
+    [data]="availableItSystemRecordData"
+  ></ta-system-record-info-component>
+</ng-template>
+<ng-template #popContentSystemRecordAvailable>
+  <ta-system-record-info-component
+    [section]="'content'"
+    [type]="'itSystemInventoryInfo'"
+    [data]="availableItSystemRecordData"
+    [allDataElements]="allDataElements"
+    [allProcessingPurposes]="allProcessingPurposes"
+  ></ta-system-record-info-component>
+</ng-template>
+
+<ng-template #modalConfirmation>
+  <ta-modal-confirmation-basic
+    [title]="confirmModalTitle"
+    [description]="confirmModalDescription"
+    [type]="confirmModalType"
+    [icon]="confirmModalIcon"
+    [btnLabelCancel]="confirmModalLabelCancel"
+    [btnLabelConfirm]="confirmModalLabelConfirm"
+    [showSpinner]="isSaving"
+    (cancel)="closeAllModals()"
+    (confirm)="isDisabledSave ? closeAllModals(true) : saveDataByActiveTab()"
+  >
+  </ta-modal-confirmation-basic>
+</ng-template>
+
+<ng-template #modalConfirmationThreeButton>
+  <ta-modal-confirmation-three-button
+    [title]="confirmModalTitle"
+    [description]="confirmModalDescription"
+    [type]="confirmModalType"
+    [icon]="confirmModalIcon"
+    [btnLabelCancel]="confirmModalLabelCancel"
+    [btnLabelDiscard]="confirmModalLabelDiscard"
+    [btnLabelConfirm]="confirmModalLabelConfirm"
+    (cancel)="closeAllModals(true)"
+    (discard)="closeAllModals()"
+    (confirm)="notifySavingIsNeeded()"
+  >
+  </ta-modal-confirmation-three-button>
+</ng-template>

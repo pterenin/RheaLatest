@@ -1,0 +1,115 @@
+<div class="sub-heading">
+  {{ header }}
+</div>
+
+<div class="form-group" [formGroup]="individualTypeForm">
+  <div
+    class="row"
+    *ngIf="individualTypeForm.get('dataSubjectForms')['controls'].length > 0"
+  >
+    <div class="col-sm-6">
+      <ta-risk-field-indicator
+        [showIndicator]="showRiskFields"
+      ></ta-risk-field-indicator>
+      <label class="data-label mb-0">
+        <!-- [i18n-tobeinternationalized] -->
+        Data Subject
+        <ta-icon
+          [icon]="iconTypeTooltip"
+          tooltipTextAlign="left"
+          taTooltip="A data subject is any person whose personal data is being collected, held or processed by this System"
+          height="12"
+          container="body"
+          class="position-relative"
+          style="top: -2px; left: 5px;"
+          placement="bottom-left"
+          color="#595959"
+          tooltipTheme="light"
+        ></ta-icon>
+      </label>
+    </div>
+    <div class="col-sm-6">
+      <ta-risk-field-indicator
+        [showIndicator]="showRiskFields"
+      ></ta-risk-field-indicator>
+      <label class="data-label mb-0">
+        <!-- [i18n-tobeinternationalized] -->
+        Region
+      </label>
+    </div>
+  </div>
+  <div
+    formArrayName="dataSubjectForms"
+    *ngFor="
+      let dataSubjectType of individualTypeForm.get('dataSubjectForms')[
+        'controls'
+      ];
+      let i = index
+    "
+  >
+    <div
+      [formGroupName]="i"
+      class="row mb-1 data-subjects-location"
+      [attr.data-cy]="'data-subject-row-' + i"
+    >
+      <div class="col-sm-6" id="{{ 'dataSubjectName-' + i }}">
+        <ta-dropdown-field
+          [attr.data-cy]="'data-subject-name-' + i"
+          class="small-dropdown"
+          [itemIndex]="i"
+          [isSearchable]="true"
+          [(isDisabled)]="dataSubjectType.get('disable').value"
+          [options]="getIndividualTypesList()"
+          [selectedOption]="dataSubjectType.get('dataSubjectTypeId').value"
+          formControlName="dataSubjectTypeId"
+          optionLabel="dataSubject"
+          placeholder="Select or Search"
+          (selectedItemChanged)="onDataSubjectTouched($event, i)"
+        ></ta-dropdown-field>
+      </div>
+      <div class="col-sm-5" id="{{ 'dataSubjectRegion-' + i }}">
+        <ta-region-display-field
+          [(isDisabled)]="dataSubjectType.get('disable').value"
+          [locationData]="dataSubjectType.get('locations').value"
+          (updatedLocationDataEmitter)="updateFormLocations(i, $event)"
+          (openModalEmitter)="
+            openDataSubjectLocationModal(
+              i,
+              dataSubjectType.get('dataSubjectTypeId').value,
+              dataSubjectType.get('locations').value
+            )
+          "
+        ></ta-region-display-field>
+      </div>
+      <div class="col-sm-1">
+        <div *ngIf="!dataSubjectType.get('disable').value">
+          <button
+            taButton
+            taType="circle"
+            (click)="removeLocation(i)"
+            type="button"
+          >
+            <ta-icon icon="delete"></ta-icon>
+          </button>
+        </div>
+        <div *ngIf="dataSubjectType.get('disable').value">
+          <button
+            taButton
+            taType="circle"
+            (click)="editSubjectUsedByBP(dataSubjectType.value)"
+            type="button"
+          >
+            <ta-icon
+              icon="edit"
+              [attr.data-cy]="'location-action-edit-' + i"
+            ></ta-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- [i18n-tobeinternationalized] -->
+  <div (click)="addEmptyDataSubjectTypeRow()" class="link">
+    Add another individual type
+  </div>
+</div>

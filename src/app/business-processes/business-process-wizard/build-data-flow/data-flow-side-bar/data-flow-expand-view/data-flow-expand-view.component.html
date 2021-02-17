@@ -1,0 +1,18 @@
+<div>
+  <button
+    *ngIf="!isExpandedView"
+    taButton
+    taType="circle"
+    (click)="toggleExpandedView.emit()"
+  >
+    <ta-custom-icon-maximize></ta-custom-icon-maximize>
+  </button>
+  <button
+    *ngIf="isExpandedView"
+    taButton
+    taType="circle"
+    (click)="toggleExpandedView.emit()"
+  >
+    <ta-custom-icon-minimize></ta-custom-icon-minimize>
+  </button>
+</div>

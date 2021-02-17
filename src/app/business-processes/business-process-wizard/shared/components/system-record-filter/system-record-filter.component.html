@@ -1,0 +1,449 @@
+<form [formGroup]="filtersForm" (ngSubmit)="applyFilter()">
+  <div class="container pt-3 pr-3 pb-0 pl-3 m-0">
+    <!-- Sort type -->
+    <div class="form-group row no-gutters">
+      <label
+        [attr.for]="'sysRecordFilter-' + filterType.SORT"
+        class="col-sm-4 col-form-label"
+      >
+        <!-- [i18n-tobeinternationalized]-->
+        Sort
+      </label>
+      <div class="col-sm-8">
+        <div taDropdown class="d-inline-block w-100" [autoClose]="true">
+          <button
+            taButton
+            taType="dropdown"
+            [attr.id]="'sysRecordFilter-' + filterType.SORT"
+            taDropdownToggle
+            class="w-100"
+            type="button"
+          >
+            {{ textForSelectedFilterSORT }}
+          </button>
+          <div
+            taDropdownMenu
+            [attr.aria-labelledby]="'sysRecordFilter-' + filterType.SORT"
+          >
+            <button
+              type="button"
+              class="dropdown-item"
+              *ngFor="let opt of filter.SORT"
+              (click)="selectItemForSelectedFilter(opt, filterType.SORT)"
+            >
+              {{ opt.text }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Owner type -->
+    <div class="form-group row no-gutters">
+      <label
+        [attr.for]="'sysRecordFilter-' + filterType.OWNER"
+        class="col-sm-4 col-form-label"
+      >
+        <!-- [i18n-tobeinternationalized]-->
+        Owner Type
+      </label>
+      <div class="col-sm-8">
+        <div taDropdown autoClose="outside" class="d-inline-block w-100 mr-1">
+          <button
+            taButton
+            taType="dropdown"
+            [attr.id]="'sysRecordFilter-' + filterType.OWNER"
+            taDropdownToggle
+            class="w-100"
+            type="button"
+          >
+            {{ textForSelectedFilterOWNER }}
+          </button>
+          <div
+            class="w-100"
+            taDropdownMenu
+            [attr.aria-labelledby]="'sysRecordFilter-' + filterType.OWNER"
+          >
+            <!-- [i18n-tobeinternationalized]-->
+            <ta-dropdown-scroll [scrollHeight]="294">
+              <ng-container *ngIf="isLoading">
+                <!-- [i18n-tobeinternationalized]-->
+                Loading...
+              </ng-container>
+              <ta-checkbox
+                *ngIf="!isLoading"
+                class="dropdown-item"
+                [indeterminate]="
+                  getSummaryCheckboxStateByFilterType(
+                    filterType.OWNER,
+                    'indeterminate'
+                  )
+                "
+                [checked]="
+                  getSummaryCheckboxStateByFilterType(
+                    filterType.OWNER,
+                    'checked'
+                  )
+                "
+                (click)="handleSelectAllByFilterType(filterType.OWNER, $event)"
+              >
+                {{ getSummaryCheckboxTextByFilterType(filterType.OWNER, {}) }}
+              </ta-checkbox>
+              <ng-container
+                formArrayName="filterOwner"
+                *ngFor="
+                  let opt of filteredOwnerFilterItems$ | async;
+                  let i = index
+                "
+                [attr.data-index]="i"
+              >
+                <ng-container *ngIf="!isLoading" [formGroupName]="i.toString()">
+                  <ta-checkbox
+                    class="dropdown-item text-wrap"
+                    formControlName="checked"
+                    [hidden]="opt.hidden"
+                  >
+                    {{ opt[labelProperty] }}
+                  </ta-checkbox>
+                </ng-container>
+              </ng-container>
+            </ta-dropdown-scroll>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data subjects type -->
+    <div class="form-group row no-gutters">
+      <label
+        [attr.for]="'sysRecordFilter-' + filterType.DS"
+        class="col-sm-4 col-form-label"
+      >
+        <!-- [i18n-tobeinternationalized]-->
+        Data Subjects
+      </label>
+      <div class="col-sm-8">
+        <div taDropdown autoClose="outside" class="d-inline-block w-100 mr-1">
+          <button
+            taButton
+            taType="dropdown"
+            [attr.id]="'sysRecordFilter-' + filterType.DS"
+            taDropdownToggle
+            class="w-100"
+            type="button"
+          >
+            {{ textForSelectedFilterDS }}
+          </button>
+          <div
+            class="w-100"
+            taDropdownMenu
+            [attr.aria-labelledby]="'sysRecordFilter-' + filterType.DS"
+          >
+            <!-- [i18n-tobeinternationalized]-->
+            <ta-dropdown-search
+              (onSearch)="onSearchByFilterType(filterType.DS, $event)"
+              [placeholder]="'Search Data Subjects'"
+            ></ta-dropdown-search>
+            <ta-dropdown-scroll [scrollHeight]="294">
+              <ng-container *ngIf="isLoading">
+                <!-- [i18n-tobeinternationalized]-->
+                Loading...
+              </ng-container>
+              <ta-checkbox
+                *ngIf="!isLoading"
+                class="dropdown-item"
+                [indeterminate]="
+                  getSummaryCheckboxStateByFilterType(
+                    filterType.DS,
+                    'indeterminate'
+                  )
+                "
+                [checked]="
+                  getSummaryCheckboxStateByFilterType(filterType.DS, 'checked')
+                "
+                (click)="handleSelectAllByFilterType(filterType.DS, $event)"
+              >
+                {{ getSummaryCheckboxTextByFilterType(filterType.DS, {}) }}
+              </ta-checkbox>
+              <ng-container
+                formArrayName="filterDataSubjects"
+                *ngFor="
+                  let opt of filteredDataSubjectFilterItems$ | async;
+                  let i = index
+                "
+                [attr.data-index]="i"
+              >
+                <ng-container *ngIf="!isLoading" [formGroupName]="i.toString()">
+                  <ta-checkbox
+                    class="dropdown-item text-wrap"
+                    formControlName="checked"
+                    [hidden]="opt.hidden"
+                  >
+                    {{ opt[labelProperty] }}
+                  </ta-checkbox>
+                </ng-container>
+              </ng-container>
+            </ta-dropdown-scroll>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data elements type -->
+    <div class="form-group row no-gutters">
+      <label
+        [attr.for]="'sysRecordFilter-' + filterType.DE"
+        class="col-sm-4 col-form-label"
+      >
+        <!-- [i18n-tobeinternationalized]-->
+        Data Elements
+      </label>
+      <div class="col-sm-8">
+        <div taDropdown autoClose="outside" class="d-inline-block w-100 mr-1">
+          <button
+            taButton
+            taType="dropdown"
+            [attr.id]="'sysRecordFilter-' + filterType.DE"
+            taDropdownToggle
+            class="w-100"
+            type="button"
+          >
+            {{ textForSelectedFilterDE }}
+          </button>
+          <div
+            class="w-100"
+            taDropdownMenu
+            [attr.aria-labelledby]="'sysRecordFilter-' + filterType.DE"
+          >
+            <!-- [i18n-tobeinternationalized]-->
+            <ta-dropdown-search
+              (onSearch)="onSearchByFilterType(filterType.DE, $event)"
+              [placeholder]="'Search Data Elements'"
+            ></ta-dropdown-search>
+            <ta-dropdown-scroll [scrollHeight]="294">
+              <ng-container *ngIf="isLoading">
+                <!-- [i18n-tobeinternationalized]-->
+                Loading...
+              </ng-container>
+              <ta-checkbox
+                *ngIf="!isLoading"
+                class="dropdown-item"
+                [indeterminate]="
+                  getSummaryCheckboxStateByFilterType(
+                    filterType.DE,
+                    'indeterminate'
+                  )
+                "
+                [checked]="
+                  getSummaryCheckboxStateByFilterType(filterType.DE, 'checked')
+                "
+                (click)="handleSelectAllByFilterType(filterType.DE, $event)"
+              >
+                {{ getSummaryCheckboxTextByFilterType(filterType.DE, {}) }}
+              </ta-checkbox>
+              <ng-container
+                formArrayName="filterDataElements"
+                *ngFor="
+                  let opt of filteredDataElementFilterItems$ | async;
+                  let i = index
+                "
+                [attr.data-index]="i"
+              >
+                <ng-container *ngIf="!isLoading" [formGroupName]="i.toString()">
+                  <ta-checkbox
+                    class="dropdown-item text-wrap"
+                    formControlName="checked"
+                    [hidden]="opt.hidden"
+                  >
+                    {{ opt[labelProperty] }}
+                  </ta-checkbox>
+                </ng-container>
+              </ng-container>
+            </ta-dropdown-scroll>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hosting locations type -->
+    <div class="form-group row no-gutters">
+      <label
+        [attr.for]="'sysRecordFilter-' + filterType.HL"
+        class="col-sm-4 col-form-label"
+      >
+        <!-- [i18n-tobeinternationalized]-->
+        Hosting Locations
+      </label>
+      <div class="col-sm-8">
+        <div taDropdown autoClose="outside" class="d-inline-block w-100 mr-1">
+          <button
+            taButton
+            taType="dropdown"
+            [attr.id]="'sysRecordFilter-' + filterType.HL"
+            taDropdownToggle
+            class="w-100"
+            type="button"
+          >
+            {{ textForSelectedFilterHL }}
+          </button>
+          <div
+            class="w-100"
+            taDropdownMenu
+            [attr.aria-labelledby]="'sysRecordFilter-' + filterType.HL"
+          >
+            <!-- [i18n-tobeinternationalized]-->
+            <ta-dropdown-search
+              (onSearch)="onSearchByFilterType(filterType.HL, $event)"
+              [placeholder]="'Search Geographical Area'"
+            ></ta-dropdown-search>
+            <ta-dropdown-scroll [scrollHeight]="294">
+              <ng-container *ngIf="isLoading">
+                <!-- [i18n-tobeinternationalized]-->
+                Loading...
+              </ng-container>
+              <ta-checkbox
+                *ngIf="!isLoading"
+                class="dropdown-item"
+                [indeterminate]="
+                  getSummaryCheckboxStateByFilterType(
+                    filterType.HL,
+                    'indeterminate'
+                  )
+                "
+                [checked]="
+                  getSummaryCheckboxStateByFilterType(filterType.HL, 'checked')
+                "
+                (click)="handleSelectAllByFilterType(filterType.HL, $event)"
+              >
+                {{ getSummaryCheckboxTextByFilterType(filterType.HL, {}) }}
+              </ta-checkbox>
+              <ng-container
+                formArrayName="filterHostingLocations"
+                *ngFor="
+                  let opt of filteredHostingLocationsFilterItems$ | async;
+                  let i = index
+                "
+                [attr.data-index]="i"
+              >
+                <ng-container *ngIf="!isLoading" [formGroupName]="i.toString()">
+                  <ta-checkbox
+                    class="dropdown-item text-wrap"
+                    formControlName="checked"
+                    [hidden]="opt.hidden"
+                  >
+                    {{ opt[labelProperty] }}
+                  </ta-checkbox>
+                </ng-container>
+              </ng-container>
+            </ta-dropdown-scroll>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Processing purposes type -->
+    <div class="form-group row no-gutters">
+      <label
+        [attr.for]="'sysRecordFilter-' + filterType.PP"
+        class="col-sm-4 col-form-label"
+      >
+        <!-- [i18n-tobeinternationalized]-->
+        Processing Purposes
+      </label>
+      <div class="col-sm-8">
+        <div taDropdown autoClose="outside" class="d-inline-block w-100 mr-1">
+          <button
+            taButton
+            taType="dropdown"
+            [attr.id]="'sysRecordFilter-' + filterType.PP"
+            taDropdownToggle
+            class="w-100"
+            type="button"
+          >
+            {{ textForSelectedFilterPP }}
+          </button>
+          <div
+            class="w-100"
+            taDropdownMenu
+            [attr.aria-labelledby]="'sysRecordFilter-' + filterType.PP"
+          >
+            <!-- [i18n-tobeinternationalized]-->
+            <ta-dropdown-search
+              (onSearch)="onSearchByFilterType(filterType.PP, $event)"
+              [placeholder]="'Search Processing Purpose'"
+            ></ta-dropdown-search>
+            <ta-dropdown-scroll [scrollHeight]="294">
+              <ng-container *ngIf="isLoading">
+                <!-- [i18n-tobeinternationalized]-->
+                Loading...
+              </ng-container>
+              <ta-checkbox
+                *ngIf="!isLoading"
+                class="dropdown-item"
+                [indeterminate]="
+                  getSummaryCheckboxStateByFilterType(
+                    filterType.PP,
+                    'indeterminate'
+                  )
+                "
+                [checked]="
+                  getSummaryCheckboxStateByFilterType(filterType.PP, 'checked')
+                "
+                (click)="handleSelectAllByFilterType(filterType.PP, $event)"
+              >
+                {{ getSummaryCheckboxTextByFilterType(filterType.PP, {}) }}
+              </ta-checkbox>
+              <ng-container
+                formArrayName="filterProcessingPurposes"
+                *ngFor="
+                  let opt of filteredProcessingPurposeFilterItems$ | async;
+                  let i = index
+                "
+                [attr.data-index]="i"
+              >
+                <ng-container *ngIf="!isLoading" [formGroupName]="i.toString()">
+                  <ta-checkbox
+                    class="dropdown-item text-wrap"
+                    formControlName="checked"
+                    [hidden]="opt.hidden"
+                  >
+                    {{ opt[labelProperty] }}
+                  </ta-checkbox>
+                </ng-container>
+              </ng-container>
+            </ta-dropdown-scroll>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div class="container pt-0 pr-3 pb-3 pl-3 m-0">
+    <div class="form-group row no-gutters mb-0">
+      <div class="col-sm-12">
+        <div class="text-right">
+          <button
+            (click)="cancelChanges()"
+            type="button"
+            taType="flat"
+            class="btn-sm"
+            taButton
+          >
+            <!-- [i18n-tobeinternationalized]-->
+            Clear
+          </button>
+          <button
+            type="submit"
+            taType="primary"
+            class="ml-2 btn-sm"
+            taButton
+            [disabled]="isLoading"
+          >
+            <!-- [i18n-tobeinternationalized]-->
+            Apply
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

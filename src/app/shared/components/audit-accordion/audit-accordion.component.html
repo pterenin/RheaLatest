@@ -1,0 +1,15 @@
+<ta-accordion activeIds="logPanel">
+  <ta-panel id="logPanel">
+    <ng-template taPanelTitle>
+      <div class="sub-heading mb-2 mt-0 ">
+        <!--- [i18n-tobeinternationalized] -->
+        Activity Log ({{ totalAudit }})
+      </div>
+    </ng-template>
+    <ng-template taPanelContent>
+      <ta-audit-table
+        (finishedLoad)="finishedLoadAudit($event)"
+      ></ta-audit-table>
+    </ng-template>
+  </ta-panel>
+</ta-accordion>

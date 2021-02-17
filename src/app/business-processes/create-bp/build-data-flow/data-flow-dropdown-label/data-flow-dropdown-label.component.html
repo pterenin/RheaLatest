@@ -1,0 +1,47 @@
+<div *ngIf="item">
+  <div class="d-flex item" *ngIf="item.isItSystem" role="button">
+    <div
+      class="label-wrapper d-block text-wrap"
+      [innerHTML]="getItemLabel()"
+    ></div>
+    <div class="text-right d-block locations-wrapper">
+      <span class="label-location">
+        {{ item.locations }}
+      </span>
+    </div>
+  </div>
+
+  <div class="d-flex item" *ngIf="!item.isItSystem">
+    <div
+      class="label-wrapper d-block text-wrap w-100"
+      [innerHTML]="getItemLabel()"
+    ></div>
+    <div
+      class="text-right d-block locations-wrapper"
+      *ngIf="!isLocationsHidden()"
+    >
+      <span class="locations-text mr-1">LOCATIONS</span>
+      <span
+        class="label-location"
+        #tip="taPopover"
+        role="button"
+        [taPopover]="popContent"
+        [disablePopover]="!item.locationIds || !item.locationIds.length"
+        popoverClass="location-tooltip delay-500 fadeInApp"
+        placement="right-top"
+        container="body"
+        (mouseenter)="openTooltip(tip)"
+        triggers="manual"
+        autoClose="outside"
+      >
+        {{ item.locationIds ? item.locationIds.length : 0 }}
+      </span>
+    </div>
+  </div>
+</div>
+
+<ng-template #popContent>
+  <ta-location-tooltip
+    [locations]="getTooltipLocationList(item.locationIds)"
+  ></ta-location-tooltip>
+</ng-template>

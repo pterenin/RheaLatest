@@ -1,0 +1,73 @@
+@import 'variables';
+@import '~@trustarc/ui-toolkit/scss/colors';
+
+ta-data-inventory-card-table-body {
+  .custom-table {
+    max-height: 196px;
+    overflow: auto;
+    .position-sticky {
+      position: -webkit-sticky;
+      position: -moz-sticky;
+      position: -ms-sticky;
+      position: -o-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 4;
+      background-color: $white !important;
+    }
+    ta-table {
+      @extend .position-sticky;
+      z-index: 2;
+      background-color: $white;
+      top: 100px;
+    }
+    .ta-table-row {
+      .ta-table-cell {
+        &:first-child {
+          max-width: 47px !important;
+        }
+        &:last-child {
+          max-width: 50px !important;
+        }
+      }
+    }
+    .column-title {
+      .ta-checkbox-lb {
+        top: -12px;
+      }
+    }
+    .custom-table-body.ta-table-body {
+      max-height: 200px;
+      overflow: auto;
+      border-bottom: 1px solid $seashell-grey !important;
+      display: inline-table;
+      .ta-table-row {
+        display: flex;
+        .ta-table-cell {
+          padding: 0.4rem 1rem !important;
+          min-height: 32px;
+          text-align: left;
+          border-top: 0;
+          position: relative;
+          &:first-child {
+            max-width: 47px;
+          }
+          &.w-44 {
+            width: 44% !important;
+          }
+        }
+      }
+      .ta-table-row:hover {
+        background-color: $gray-9;
+        .delete-button {
+          display: flex !important;
+          justify-content: flex-end;
+          color: $gray-800;
+        }
+      }
+      .delete-button {
+        display: none;
+      }
+    }
+  }
+}

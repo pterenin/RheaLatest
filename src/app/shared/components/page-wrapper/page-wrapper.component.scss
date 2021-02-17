@@ -1,0 +1,14 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  padding: 1.25rem;
+
+  &.container-fluid {
+    max-width: $max-width;
+  }
+
+  &.container-fluid.container-full {
+    max-width: 100%;
+  }
+}

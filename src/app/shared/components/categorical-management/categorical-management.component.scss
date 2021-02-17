@@ -1,0 +1,118 @@
+@import 'src/styles/variables';
+
+ta-categorical-management {
+  display: block;
+  background-color: $white;
+  .categorical-title {
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    margin: 1.25rem 0 0.625rem 0;
+  }
+  .categorical-management-container {
+    margin-bottom: -10px;
+  }
+
+  .categorical-management {
+    .col {
+      section {
+        margin: 15px 15px 10px;
+        height: 385px;
+        overflow: auto;
+      }
+    }
+    .col-left {
+      border-top: 1px solid $border-default-color;
+      border-left: 1px solid $border-default-color;
+      border-bottom: 1px solid $border-default-color;
+      section {
+        padding-right: 10px;
+      }
+    }
+    .col-right {
+      border: 1px solid $border-default-color;
+      section {
+        padding-right: 10px;
+      }
+    }
+  }
+
+  .dropdown-menu-item {
+    background: $white;
+    display: block;
+    line-height: 100%;
+    padding: 5px 10px 5px 8px;
+    border-radius: 4px;
+    color: $body-color;
+    cursor: pointer;
+    position: relative;
+    text-align: left;
+    font-size: $font-size-14;
+    &:hover {
+      background-color: zeplin-lighten($blue, 0.1) 2;
+      .categorical-item-tools {
+        display: block;
+      }
+    }
+    &.selected {
+      background-color: $turquoise-blue;
+      color: $white;
+      .categorical-item-tools {
+        i.ta {
+          color: $white;
+        }
+      }
+    }
+    .categorical-item-tools {
+      float: right;
+      display: none;
+      margin-top: -3px;
+    }
+    i.ta {
+      font-size: 1.4375rem;
+      color: $nice-blue;
+      margin-left: 0.625rem;
+    }
+  }
+
+  .dropdown-menu-item-child-checkbox {
+    padding: 2px 20px;
+  }
+  .dropdown-menu-item-child span.item {
+    padding: 2px 10px 2px 10px;
+  }
+
+  .dropdown-menu-item-child-checkbox,
+  .dropdown-menu-item-child span.item {
+    margin-bottom: 3px;
+    font-size: $font-size-14;
+    display: block;
+    cursor: pointer;
+    position: relative;
+    &:hover {
+      background-color: zeplin-lighten($blue, 0.1) 2;
+      .categorical-item-tools {
+        display: block;
+      }
+    }
+    &.selected {
+      background-color: $turquoise-blue;
+      color: $white;
+    }
+    .categorical-item-tools {
+      float: right;
+      display: none;
+    }
+    i.ta {
+      font-size: 1.4375rem;
+      color: $nice-blue;
+      margin-left: 0.625rem;
+    }
+  }
+  .badge-custom {
+    background-color: $amethyst;
+    margin-left: 0.5rem;
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "deleteDataSubject": {
+    "method": "DELETE",
+    "url": "api/data-flows/data-subject-types/business-process-id/{id}/node-id",
+    "alias": "@delete-data-subject-types"
+  },
+  "deleteDataRecipient": {
+    "method": "DELETE",
+    "url": "api/data-flows/data-recipient-types/business-process-id/{id}/node-id",
+    "alias": "@delete-data-recipient-types"
+  },
+  "postDataSubject": {
+    "method": "POST",
+    "url": "api/data-flows/data-subject-types/business-process-id/{id}",
+    "alias": "@post-data-subject-types"
+  },
+  "postDataRecipient": {
+    "method": "POST",
+    "url": "api/data-flows/data-recipient-types/business-process-id/{id}",
+    "alias": "@post-data-recipient-types"
+  },
+  "putDataSubject": {
+    "method": "PUT",
+    "url": "api/data-flows/data-subject-types/business-process-id/{id}/v2",
+    "alias": "@post-data-recipient-types"
+  },
+  "putDataRecipient": {
+    "method": "PUT",
+    "url": "api/data-flows/data-recipient-types/business-process-id/{id}/v2",
+    "alias": "@post-data-recipient-types"
+  }
+}

@@ -1,0 +1,176 @@
+<div class="card-header d-flex">
+  <div class="w-100" data-cy="bp-owing-organizations-title">
+    <div class="row">
+      <div class="col-6">
+        <!-- [i18n-tobeinternationalized] -->
+        <span class="ta-bp-subtitle">Owning Organizations and Contacts</span>
+        <ta-badge
+          [values]="ownerCount$ | async"
+          class="badge-custom-nav-items align-top mt-1"
+        ></ta-badge>
+      </div>
+      <div class="col-6 text-right">
+        <!-- [i18n-tobeinternationalized] -->
+        <span class="owner-header-restriction-text"
+          >You can add a maximum of 10 owners only.</span
+        >
+        <button
+          taButton
+          taType="circle"
+          (click)="deleteOwners()"
+          type="button"
+          class="ml-2"
+          [disabled]="!thereAreSelectedOwners"
+          [placement]="['bottom-left', 'bottom-right']"
+          tooltipClass="tooltip-owing-organizations-header"
+          taTooltip="Delete"
+          tooltipTheme="light"
+          tooltipTextAlign="left"
+        >
+          <ta-icon icon="delete"></ta-icon>
+        </button>
+        <button
+          taButton
+          taType="circle"
+          (click)="openOwnerModal()"
+          type="button"
+          class="ml-2"
+          [disabled]="ownersData.length >= 10"
+          [placement]="['bottom-left', 'bottom-right']"
+          tooltipClass="tooltip-owing-organizations-header"
+          taTooltip="Add Owner"
+          tooltipTheme="light"
+          tooltipTextAlign="left"
+        >
+          <ta-icon
+            class="align-middle"
+            icon="plus-circle"
+            height="16"
+            width="16"
+          ></ta-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card-body p-0">
+  <ng-container *ngIf="ownersData.length > 0">
+    <ta-table
+      [id]="gridID"
+      data-cy="bp-owing-organizations-contacts-table"
+      [taSelected]="true"
+      [serverProcess]="false"
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      <ta-table-column [taField]="'companyName'"
+        >Company, Subsidiary or Affiliate</ta-table-column
+      >
+      <ta-table-column [taField]="'role'">Role</ta-table-column>
+      <ta-table-column [taField]="'fullName'">Owner</ta-table-column>
+      <ta-table-column [taField]="'email'">Email</ta-table-column>
+      <ta-table-column [taField]="'departmentName'">Department</ta-table-column>
+      <ta-table-column></ta-table-column>
+      <ta-table-column></ta-table-column>
+
+      <ng-container *ngIf="isFetching">
+        <ta-table-row
+          [taItem]="{ id: 'loading_row' }"
+          *ngFor="let number of [].constructor(maxRows)"
+        >
+          <ta-table-cell *ngFor="let number of [].constructor(6)">
+            <ngx-skeleton-loader count="1" appearance="line">
+            </ngx-skeleton-loader>
+          </ta-table-cell>
+        </ta-table-row>
+      </ng-container>
+
+      <ng-container *ngIf="!isFetching">
+        <ta-table-row
+          *ngFor="let owner of ownersData; index as i"
+          class="ta-table-row-editable"
+          [attr.data-cy]="owner.fullName"
+          [taItem]="owner"
+          [taSelected]="determineSelected(owner.id)"
+        >
+          <ta-table-cell>{{ owner.companyName }}</ta-table-cell>
+          <ta-table-cell>{{ owner.role }}</ta-table-cell>
+          <ta-table-cell>{{ owner.fullName }}</ta-table-cell>
+          <ta-table-cell>{{ owner.email }}</ta-table-cell>
+          <ta-table-cell>{{ owner.departmentName }}</ta-table-cell>
+          <ta-table-cell *ngIf="!owner.primaryOwner"> </ta-table-cell>
+          <ta-table-cell *ngIf="owner.primaryOwner">
+            <ta-tags theme="orange">
+              <!-- [i18n-tobeinternationalized] -->
+              Primary Owner
+            </ta-tags>
+          </ta-table-cell>
+          <ta-table-cell class="ta-column-owner-options">
+            <ta-icon
+              icon="edit"
+              (click)="loadOwnerToEdit(i)"
+              class="ml-2 options-icon"
+              [placement]="['bottom-left', 'bottom-right']"
+              tooltipClass="tooltip-record-options mt-2"
+              taTooltip="Edit"
+              tooltipTheme="light"
+              tooltipTextAlign="left"
+              container="body"
+            ></ta-icon>
+            <ta-icon
+              icon="delete"
+              (click)="delete(owner.id)"
+              class="ml-4 options-icon"
+              [placement]="['bottom-left', 'bottom-right']"
+              tooltipClass="tooltip-record-options mt-2"
+              taTooltip="Delete"
+              tooltipTheme="light"
+              tooltipTextAlign="left"
+              container="body"
+            ></ta-icon>
+          </ta-table-cell>
+        </ta-table-row>
+      </ng-container>
+    </ta-table>
+  </ng-container>
+
+  <ng-template #addEditModal let-modal>
+    <ta-add-edit-modal
+      (closeModalEvent)="closeModal($event)"
+      (addOwnerEvent)="addOwner($event)"
+      [isEditModal]="isEditingOwner"
+      [ownerData]="selectedOwner"
+      [showSpinner]="isShowingLoader$"
+      [ownersCount]="ownerCount$"
+    ></ta-add-edit-modal>
+  </ng-template>
+
+  <ng-container *ngIf="ownersData.length === 0">
+    <div
+      class="d-flex justify-content-center d-flex align-items-center flex-column"
+      data-cy="bp-owing-organizations-contacts-empty"
+    >
+      <div
+        class="d-flex justify-content-center d-flex align-items-center flex-column"
+      >
+        <div class="image-container"></div>
+        <!-- [i18n-tobeinternationalized] -->
+        <span class="text-black-100 mb-4">
+          There are no owners yet for this business process record.
+        </span>
+      </div>
+      <button
+        class="text-black-100 mt-n1"
+        taButton
+        taType="secondary"
+        id="addOwner"
+        aria-label="addOwner"
+        type="button"
+        (click)="openOwnerModal()"
+        data-cy="bp-add-owner-button"
+      >
+        <!-- [i18n-tobeinternationalized] -->
+        Add New Owner
+      </button>
+    </div>
+  </ng-container>
+</div>

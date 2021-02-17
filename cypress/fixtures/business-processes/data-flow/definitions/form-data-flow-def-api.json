@@ -1,0 +1,7 @@
+{
+  "postDataFlow": {
+    "method": "POST",
+    "url": "api/data-flows/data-transfers/business-process-id/{id}/it-system-node-id/{node-id}",
+    "alias": "@post-data-flow-node"
+  }
+}

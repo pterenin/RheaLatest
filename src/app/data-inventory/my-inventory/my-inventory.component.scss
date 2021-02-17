@@ -1,0 +1,188 @@
+@import 'src/styles/variables';
+
+ta-icon[ng-reflect-icon='success-circle'] svg * {
+  fill: $apple-green;
+}
+
+ta-icon[ng-reflect-icon='error-cirlce'] svg * {
+  fill: $dark-hot-pink;
+}
+
+ta-table-row {
+  cursor: pointer;
+}
+
+.tags-container {
+  padding: 0.8rem 1rem 0.6rem !important;
+}
+
+.dropdown-menu {
+  hr {
+    margin: 0;
+  }
+}
+
+.data-inventory-type {
+  color: $white;
+  font-size: $font-size-12;
+  padding: 0 5px;
+  border-radius: 3px;
+
+  &.company-affiliate {
+    background-color: $apple-green;
+  }
+  &.primary-entity {
+    background-color: $apple-green;
+  }
+  &.it-system {
+    background-color: $nice-blue;
+  }
+  &.partner {
+    background-color: $pumpkin-orange;
+  }
+  &.vendor {
+    background-color: $pumpkin-orange;
+  }
+  &.customer {
+    background-color: $pumpkin-orange;
+  }
+  &.service-provider {
+    background-color: $pumpkin-orange;
+  }
+  &.business-associate {
+    background-color: $pumpkin-orange;
+  }
+  &.other {
+    background-color: $amethyst;
+  }
+  &.default {
+    background-color: $gray-500;
+  }
+}
+
+.bp-popover-body {
+  margin: 0 10px;
+  font-size: $font-size-base;
+  max-height: 300px;
+  overflow: scroll;
+
+  .bp-name {
+    color: $nice-blue;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+}
+
+.title {
+  color: $black;
+  font-size: 24px;
+  padding-left: 25px;
+  padding-top: 25px;
+}
+
+.description-header {
+  display: inline-block;
+  font-weight: 600;
+  margin-left: 52px;
+  padding-left: 8px;
+  padding-right: 4px;
+}
+
+.description {
+  display: inline-block;
+}
+
+.description-row {
+  display: block;
+}
+
+#detail-row {
+  display: block;
+  border-top: 1px white solid;
+  transform: translate(0px, -1px);
+}
+
+.dropdown-divider {
+  width: 100%;
+  height: 2px;
+  border: 1px solid lightgray;
+}
+
+.delete-toast-header {
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: $black;
+}
+
+.delete-toast-text {
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: $black;
+}
+
+.risk-popover-body {
+  width: 140px;
+  font-size: $font-size-14;
+  color: $nice-blue;
+  cursor: pointer;
+}
+
+.my-inventory-ta-table-wrapper {
+  border: 1px solid $seashell-grey;
+  border-radius: 4px;
+
+  .ta-table-toolbar-btns {
+    padding-left: 13px;
+    border-left: 1px solid $seashell-grey;
+  }
+
+  .toolbar-column-btn {
+    padding-right: 10px;
+    margin-right: 10px;
+
+    &:after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      height: 47px;
+      transform: translateY(-50%);
+      border-right: 1px solid $seashell-grey;
+    }
+  }
+}
+
+.inventory-column-config-dropdown {
+  width: 200px;
+
+  .inventory-column-config-dropdown-header {
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0 10px;
+  }
+}
+
+.ta-spinner-system-bp {
+  position: relative;
+  left: 36px;
+  top: 22px;
+}
+
+.inventory-owner-popover-styles {
+  margin-left: -16px;
+  width: 313px;
+  .popover-body {
+    min-height: 0;
+    max-height: 239px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+}

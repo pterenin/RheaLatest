@@ -1,0 +1,99 @@
+@import '../../../../../styles/variables';
+
+.custom-filter {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+
+  .filter-options {
+    width: 270px !important;
+    overflow: auto;
+  }
+
+  ta-dropdown-scroll {
+    margin: 0;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .selector {
+    margin-right: 20px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+
+  .parent-tier {
+    span {
+      text-transform: uppercase;
+      font-size: 12px;
+      color: $gray-700;
+      cursor: pointer;
+    }
+  }
+
+  i.ta-close {
+    background: $gray-500;
+    color: $white;
+    border-radius: 100px;
+    line-height: 6px;
+    padding: 3px;
+    font-size: 11px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  span {
+    padding-right: 20px;
+  }
+
+  ta-selected-filter-type {
+    position: absolute;
+    right: 0;
+  }
+}
+
+:host {
+  .dropdown-menu {
+    overflow: visible !important;
+  }
+
+  .dropdown-item {
+    height: 24px;
+    span {
+      display: block;
+      overflow: hidden;
+      height: 20px;
+      text-overflow: ellipsis;
+    }
+    .dropdown-menu {
+      top: -16px !important;
+      left: 0px !important;
+    }
+  }
+
+  .parent-tier {
+    span {
+      display: inline;
+    }
+    ta-icon {
+      position: static;
+      margin-right: 10px;
+    }
+  }
+
+  .selector > ta-icon {
+    padding-left: 3px;
+    padding-right: 3px;
+    cursor: pointer !important;
+
+    &.remove {
+      background-color: $gray-700;
+    }
+  }
+
+  .selection-items {
+    max-height: 50vh;
+  }
+}

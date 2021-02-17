@@ -1,0 +1,172 @@
+<div [class]="styleClass">
+  <div class="categorical-search-wrapper">
+    <ta-icon icon="search" height="13"></ta-icon>
+    <input
+      data-cy="categorical-view-search-input"
+      type="text"
+      class="form-control"
+      [attr.id]="idPrefix + 'search'"
+      [placeholder]="placeHolder"
+      [(ngModel)]="searchString"
+      (input)="onSearch()"
+      (focus)="componentFocused()"
+    />
+  </div>
+  <div class="categorical-view-container">
+    <div class="d-flex categorical-view" *ngIf="openByDefault || openDropdown">
+      <div class="categorical-menu" data-cy="categories">
+        <section>
+          <div *ngFor="let category of categories">
+            <button
+              (click)="changeSelectedCategory($event, category)"
+              id="category_{{ category.id }}"
+              class="dropdown-menu-item"
+              *ngIf="category && !category.hidden"
+              [ngClass]="{ selected: selectedCategory.id === category.id }"
+              [attr.title]="getCategoryLabel(category)"
+              role="button"
+            >
+              <!-- The non-breaking space and unusual formatting are necessary to get decent UI -->
+              <span
+                id="category_{{ category.id }}_name"
+                class="text-wrap"
+                [innerHTML]="getCategoryLabel(category)"
+              >
+              </span>
+
+              <span id="category_{{ category.id }}_count" *ngIf="showCounts">
+                ({{ getSelected(category) }}/{{ category?.items?.length }})
+              </span>
+              <span *ngIf="category.isCustom && enableCustomCategoryTag">
+                <ta-custom-category-tag innerText="C"> </ta-custom-category-tag>
+              </span>
+              <ta-icon class="caret-right" icon="caret-right"></ta-icon>
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <div
+        data-cy="categories-items"
+        class="categorical-items"
+        [ngClass]="{ 'full-width': !showCheckboxes }"
+      >
+        <section>
+          <div *ngIf="selectedCategory">
+            <ng-container *ngIf="showCheckboxes">
+              <div class="dropdown-item">
+                <ta-checkbox
+                  (click)="checkAll($event, selectedCategory)"
+                  [checked]="selectedCategory.isAllSelected()"
+                  [indeterminate]="selectedCategory.isIndeterminate()"
+                >
+                  <span>Select All</span>
+                </ta-checkbox>
+              </div>
+            </ng-container>
+            <ng-container *ngFor="let item of selectedCategory.items">
+              <div
+                id="item_{{ item.id }}"
+                *ngIf="item && !item.hidden"
+                (click)="itemClicked($event, item)"
+                class="dropdown-item text-wrap"
+                [ngClass]="{
+                  'dropdown-menu-item-child': !showCheckboxes,
+                  'dropdown-menu-item-child-checkbox': showCheckboxes,
+                  consolidate: consolidateLocations
+                }"
+              >
+                <ta-checkbox
+                  *ngIf="showCheckboxes"
+                  [(ngModel)]="item.selected"
+                  (change)="onItemChange(item)"
+                >
+                  <span [innerHTML]="getItemLabel(item)"></span>
+                  <span
+                    *ngIf="showThreeLetterCountryCode"
+                    class="small-tag country"
+                  >
+                    {{ item.location }}
+                  </span>
+                </ta-checkbox>
+
+                <div
+                  class="d-flex item"
+                  *ngIf="!showCheckboxes && item.isItSystem"
+                  (click)="onItemClick(item, selectedCategory)"
+                  role="button"
+                >
+                  <div
+                    class="label-wrapper d-block text-wrap"
+                    [innerHTML]="getItemLabel(item)"
+                  ></div>
+                  <div
+                    class="text-right d-block locations-wrapper"
+                    *ngIf="showThreeLetterCountryCode"
+                  >
+                    <span class="label-location">
+                      {{ item.locations }}
+                    </span>
+                  </div>
+                </div>
+
+                <div
+                  class="d-flex item"
+                  *ngIf="!showCheckboxes && item.isDsOrDr"
+                  (click)="onItemClick(item, selectedCategory)"
+                >
+                  <div
+                    class="label-wrapper d-block text-wrap"
+                    [ngClass]="{
+                      'w-100': !consolidateLocations
+                    }"
+                    [innerHTML]="getItemLabel(item)"
+                  ></div>
+                  <div
+                    class="text-right d-block locations-wrapper"
+                    *ngIf="consolidateLocations"
+                  >
+                    <span class="locations-text mr-1">LOCATIONS</span>
+                    <span
+                      class="label-location"
+                      (mouseenter)="triggerLocationTooltip(tip)"
+                      #tip="taPopover"
+                      role="button"
+                      [taPopover]="popContent"
+                      popoverClass="location-tooltip delay-500 fadeInApp"
+                      placement="right-top"
+                      container="body"
+                      triggers="manual"
+                      autoClose="outside"
+                    >
+                      {{ item.locationIds ? item.locationIds.length : 0 }}
+                    </span>
+                  </div>
+                </div>
+
+                <div
+                  class="d-flex item"
+                  *ngIf="!showCheckboxes && !item.isItSystem && !item.isDsOrDr"
+                  (click)="onItemClick(item, selectedCategory)"
+                  role="button"
+                >
+                  <div
+                    class="label-wrapper d-block text-wrap"
+                    [innerHTML]="getItemLabel(item)"
+                  ></div>
+                </div>
+
+                <ng-template #popContent>
+                  <ta-location-tooltip
+                    *ngIf="consolidateLocations"
+                    [locations]="getTooltipLocationList(item.locationIds)"
+                  ></ta-location-tooltip>
+                </ng-template>
+              </div>
+            </ng-container>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

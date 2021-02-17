@@ -1,0 +1,31 @@
+<ta-data-flow-chart-controls
+  (zoom)="handleChartZoom($event)"
+  (pan)="togglePanChart()"
+  (fit)="resetZoomChart()"
+  (full)="fullscreenChart()"
+  [showMultipleEntities]="true"
+  [hideControls]="hideControls"
+></ta-data-flow-chart-controls>
+
+<highcharts-chart
+  [id]="uniqueId"
+  class="mapContainer"
+  [class.grab]="panningEnabled"
+></highcharts-chart>
+
+<div
+  *ngIf="!hideControls"
+  [class.preloader-hide]="hidePreloader"
+  class="preloader d-flex justify-content-center align-items-center text-center flex-column"
+>
+  Building Map View {{ preloader || 0 }}%
+  <div class="w-25">
+    <ta-progressbar
+      height=".5rem"
+      [showValue]="false"
+      [striped]="true"
+      [value]="preloader || 0"
+      [animated]="true"
+    ></ta-progressbar>
+  </div>
+</div>

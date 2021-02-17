@@ -1,0 +1,21 @@
+<div
+  class="d-flex align-items-center item"
+  (click)="onClick(item)"
+  [ngClass]="{
+    selected: isSelected(item),
+    disabled: isDisabled(item)
+  }"
+  *ngIf="item?.show"
+>
+  <div class="justify-content-start mr-2">
+    <ta-record-icon
+      [iconType]="iconType"
+      [type]="item?.type || 'OTHER'"
+    ></ta-record-icon>
+  </div>
+  <div class="justify-content-start item-name">
+    <p class="mb-0">
+      {{ item?.label }}
+    </p>
+  </div>
+</div>

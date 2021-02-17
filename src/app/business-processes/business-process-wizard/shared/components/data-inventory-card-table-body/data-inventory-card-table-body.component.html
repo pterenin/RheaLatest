@@ -1,0 +1,52 @@
+<div class="custom-table">
+  <div class="ta-table-body custom-table-body w-100">
+    <div class="ta-table-row row no-gutters" *ngFor="let d of data">
+      <div class="ta-table-cell col ta-col-checkbox align-items-top">
+        <ta-checkbox
+          [(ngModel)]="d.isSelected"
+          (change)="handleChange($event, d)"
+        ></ta-checkbox>
+      </div>
+      <div class="ta-table-cell col align-items-top w-44">
+        <div
+          *ngIf="d[col1Field].length >= 55"
+          class="w-100 text-truncate"
+          [taTooltip]="d[col1Field]"
+          tooltipTheme="light"
+          tooltipTextAlign="left"
+          placement="bottom-left"
+        >
+          {{ d[col1Field] }}
+        </div>
+        <div class="w-100 text-truncate" *ngIf="d[col1Field].length < 55">
+          {{ d[col1Field] }}
+        </div>
+      </div>
+      <div class="ta-table-cell col align-items-top w-50">
+        <div
+          *ngIf="d[col2Field].length >= 55"
+          class="w-100 text-truncate"
+          [taTooltip]="d[col2Field]"
+          tooltipTheme="light"
+          tooltipTextAlign="left"
+          placement="bottom-left"
+        >
+          {{ d[col2Field] }}
+        </div>
+        <div class="w-100 text-truncate" *ngIf="d[col2Field].length < 55">
+          {{ d[col2Field] }}
+        </div>
+      </div>
+      <div class="ta-table-cell col align-items-top">
+        <a
+          href="#"
+          role="button"
+          class="delete-button"
+          (click)="handleDeleteRow($event, d)"
+        >
+          <ta-icon icon="delete"></ta-icon>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

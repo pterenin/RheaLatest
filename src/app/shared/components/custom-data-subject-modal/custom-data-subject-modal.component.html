@@ -1,0 +1,138 @@
+<div class="modal-header">
+  <!--- [i18n-tobeinternationalized] --->
+  <h4 class="modal-title">Custom Data Subject</h4>
+  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+    <i class="ta ta-close"></i>
+  </button>
+</div>
+<form [formGroup]="customDataSubjectForm" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-6 mb-3">
+        <div class="form-group">
+          <!-- [i18n-tobeinternationalized] -->
+          <label for="dsName" class="data-label">Data Subject Name*</label>
+          <!-- [i18n-tobeinternationalized] -->
+          <input
+            taAutoFocus
+            id="dsName"
+            type="text"
+            formControlName="dsName"
+            class="form-control"
+            name="dsName"
+          />
+          <div
+            *ngIf="name.errors?.required && customDataSubjectForm.dirty"
+            class="text-danger"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            This field is required.
+          </div>
+          <div *ngIf="name.errors?.maxlength" class="text-danger">
+            <!-- [i18n-tobeinternationalized] -->
+            The name must be less than 255 characters.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 mb-3">
+        <!--- [i18n-tobeinternationalized] --->
+        <label for="dsCategory" class="data-label"
+          >Data Subject Category*</label
+        >
+        <ta-dropdown-field
+          id="dsCategory"
+          [options]="categoryOptionList"
+          optionLabel="label"
+          [selectedOption]="category.value"
+          formControlName="dsCategory"
+          [isSearchable]="true"
+          [useInfiniteScroll]="true"
+          (infiniteListChanged)="requestForInfiniteList($event)"
+          [viewPortHeight]="250"
+          class="w-100"
+        ></ta-dropdown-field>
+        <div
+          *ngIf="category.errors?.required && customDataSubjectForm.touched"
+          class="text-danger"
+        >
+          <!-- [i18n-tobeinternationalized] -->
+          This field is required.
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 mb-3">
+        <div class="form-group">
+          <!-- [i18n-tobeinternationalized] -->
+          <div class="data-label">
+            Is this a vulnerable data subject?
+            <ta-icon
+              [icon]="'information-circle'"
+              [taTooltip]="'Check if custom data subject is vulnerable'"
+              tooltipTextAlign="left"
+              height="12"
+              container="body"
+              class="position-relative"
+              style="top: -2px; left: 5px;"
+              placement="bottom-left"
+              color="#595959"
+              tooltipTheme="light"
+            ></ta-icon>
+          </div>
+          <div class="form-check form-check-inline">
+            <ta-radio
+              class="mr-3"
+              group="radioGroup"
+              value="true"
+              formControlName="dsHighRisk"
+              id="id-yes"
+            >
+              <!-- [i18n-tobeinternationalized] -->
+              Yes
+            </ta-radio>
+            <ta-radio
+              group="radioGroup"
+              value="false"
+              formControlName="dsHighRisk"
+              id="id-no"
+            >
+              <!-- [i18n-tobeinternationalized] -->
+              No
+            </ta-radio>
+          </div>
+          <p
+            *ngIf="highRisk.errors?.required && customDataSubjectForm.touched"
+            class="text-danger"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            This field is required.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer justify-content-between">
+    <button
+      taButton
+      type="button"
+      taType="secondary"
+      data-dismiss="modal"
+      id="modal-cancel"
+      (click)="activeModal.dismiss('Cancel')"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Cancel
+    </button>
+    <button
+      taButton
+      taType="primary"
+      id="modal-submit"
+      [disabled]="!customDataSubjectForm.valid"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Save
+    </button>
+  </div>
+</form>

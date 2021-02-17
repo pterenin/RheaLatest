@@ -1,0 +1,235 @@
+<div class="fadeInApp">
+  <ta-business-process-wizard-header
+    style="margin-bottom:1rem"
+    *ngIf="licenses.RHEA_NEW_UI_STEPS_12_LICENSE"
+    [currentRoute]="businessProcessNavigation[2]"
+    [record]="record"
+    (isClickSteps)="navigate($event)"
+  ></ta-business-process-wizard-header>
+
+  <div class="container-fluid">
+    <div class="row step-wrapper">
+      <div class="col">
+        <div class="form-group">
+          <h3
+            class="bp-title mb-4 mt-3"
+            *ngIf="itSystems.length"
+            data-cy="title-data-flow"
+          >
+            <!--- [i18n-tobeinternationalized] -->
+            Select who is sending and who is receiving information from each
+            System involved in this business process.
+          </h3>
+        </div>
+        <h3
+          class="bp-title text-center"
+          *ngIf="locations.length === 0 || !isFinishLoadITs"
+        >
+          <!--- [i18n-tobeinternationalized] -->
+          Loading...
+        </h3>
+      </div>
+    </div>
+    <!-- NO IT SYSTEMS -->
+    <div *ngIf="locations.length > 0 && isFinishLoadITs">
+      <div *ngIf="itSystems.length === 0" class="no-it-systems">
+        <div data-cy="no-data">
+          <img src="assets/images/no-data.svg" class="no-data" />
+          <p>
+            <!--- [i18n-tobeinternationalized] -->
+            Hmm, it looks like you haven’t added any Systems to this business
+            process.
+            <br *ngIf="hasRHEA_NEW_UI_STEPS_34_LICENSE" />
+            <em class="link" (click)="goPreviousPage()">
+              Go back to
+              {{
+                hasRHEA_NEW_UI_STEPS_34_LICENSE
+                  ? 'Systems Selection Page'
+                  : 'Step 4'
+              }}
+            </em>
+            to add Systems{{
+              hasRHEA_NEW_UI_STEPS_34_LICENSE
+                ? '.'
+                : ' or click next below to continue to Step 6 if none are needed or you plan to do this later.'
+            }}
+          </p>
+          <span>
+            Although Systems are not required, you cannot generate a data flow
+            chart or map of your data flow without at least one System.
+          </span>
+        </div>
+      </div>
+      <!-- WITH IT SYSTEMS -->
+      <div
+        class="row step-wrapper fadeInApp ta-label-badge-clickable"
+        *ngIf="itSystems.length > 0"
+      >
+        <div class="col-6 pr-3">
+          <p class="mt-4">
+            <!--- [i18n-tobeinternationalized] -->
+            <strong class="process-title"
+              >{{ this.currentItSystemIndex + 1 }} of
+              {{ this.itSystems.length }} Systems
+            </strong>
+          </p>
+          <ta-progressbar
+            type="info"
+            [value]="getProgressBarValue()"
+            height="16px"
+          ></ta-progressbar>
+          <div *ngIf="selectedItSystem" class="mt-3">
+            <div class="d-flex pt-2 pb-1">
+              <h3 class="flex-grow-1 bp-title text-left it-system-name mb-0">
+                {{ selectedItSystem.label }}
+              </h3>
+              <ta-tags>
+                {{ selectedItSystem.location }}
+              </ta-tags>
+              <ta-tags
+                [theme]="
+                  'inverted-' + getLabelDetailsByTag(selectedItSystem.tag)
+                "
+              >
+                {{ selectedItSystem.tag | replace: '_':' ' | titlecase }}
+              </ta-tags>
+            </div>
+            <ta-data-flow-popover
+              #popover
+              [popoverData]="popoverData"
+              [locations]="locations"
+              [allGlobalRegions]="locationDatas"
+              [allDataElements]="dataElementCategories"
+              [allProcessingPurposes]="processingPurposes"
+              (savePopoverData)="savePopoverData($event)"
+            ></ta-data-flow-popover>
+
+            <!-- RECIEVS FROM -->
+            <!--- [i18n-tobeinternationalized] -->
+            <div class="row mt-3">
+              <ta-data-flow-dropdown
+                data-cy="bp-step-5-data-subjects"
+                class="d-inline-block col-6"
+                text="Receives information from..."
+                [open]="dropdownsOpen['receiving']"
+                [isFetching]="isFetching"
+                [dataFlow]="dataFlow"
+                direction="receiving"
+                [currentItSystem]="selectedItSystem"
+                [locationDatas]="locationDatas"
+                [hasRHEA_NEW_UI_STEPS_34_LICENSE]="
+                  hasRHEA_NEW_UI_STEPS_34_LICENSE
+                "
+                (itemSelected)="itemSelected($event, 'receiving')"
+              ></ta-data-flow-dropdown>
+              <div class="col-6 right-alligned">
+                <button
+                  taButton
+                  class="remove-all-icon mt-2 ml-2"
+                  type="button"
+                  taType="circle"
+                  (click)="clearAllDataItems('receiving')"
+                  taTooltip="Clear All Items"
+                  container="body"
+                  [disabled]="receivingSelectedOptions.length == 0"
+                >
+                  <ta-icon icon="delete"></ta-icon>
+                </button>
+              </div>
+            </div>
+
+            <ta-data-flow-selected-items
+              [dataItems]="receivingSelectedOptions"
+              [locationDatas]="locationDatas"
+              [fullCountryList]="fullCountryList"
+              [locations]="locations"
+              emptyStateText="a Data Subject or System"
+              (emptyLinkClicked)="openDropdown('receiving')"
+              (itemRemoved)="itemRemoved($event, 'receiving')"
+              (itemClicked)="openPopover($event, 'receiving')"
+            ></ta-data-flow-selected-items>
+
+            <!-- SENDS TO -->
+            <!--- [i18n-tobeinternationalized] -->
+            <div class="row mt-3">
+              <ta-data-flow-dropdown
+                data-cy="bp-step-5-data-recipients"
+                class="d-inline-block col-6"
+                text="Sends information to..."
+                [dataFlow]="dataFlow"
+                direction="sending"
+                [currentItSystem]="selectedItSystem"
+                [locationDatas]="locationDatas"
+                [open]="dropdownsOpen['sending']"
+                [isFetching]="isFetching"
+                [hasRHEA_NEW_UI_STEPS_34_LICENSE]="
+                  hasRHEA_NEW_UI_STEPS_34_LICENSE
+                "
+                (itemSelected)="itemSelected($event, 'sending')"
+              ></ta-data-flow-dropdown>
+              <div class="col-6 right-alligned">
+                <button
+                  taButton
+                  class="remove-all-icon mt-2 ml-2"
+                  type="button"
+                  taType="circle"
+                  (click)="clearAllDataItems('sending')"
+                  taTooltip="Clear All Items"
+                  container="body"
+                  [disabled]="sendingSelectedOptions.length == 0"
+                >
+                  <ta-icon icon="delete"></ta-icon>
+                </button>
+              </div>
+            </div>
+
+            <ta-data-flow-selected-items
+              [dataItems]="sendingSelectedOptions"
+              [locationDatas]="locationDatas"
+              [locations]="locations"
+              [fullCountryList]="fullCountryList"
+              emptyStateText="a Data Recipient or System"
+              (emptyLinkClicked)="openDropdown('sending')"
+              (itemRemoved)="itemRemoved($event, 'sending')"
+              (itemClicked)="openPopover($event, 'sending')"
+            ></ta-data-flow-selected-items>
+            <!-- END OF FORM -->
+          </div>
+        </div>
+        <div class="col-6 pl-3">
+          <div class="mt-4">
+            <ta-highcharts-container></ta-highcharts-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER BUTTONs -->
+    <div *taSlotView>
+      <button
+        data-cy="back"
+        taButton
+        type="button"
+        taType="secondary"
+        class="page-prev btn-lg mr-2"
+        (click)="onBackClick()"
+      >
+        <!--- [i18n-tobeinternationalized] -->
+        Back
+      </button>
+      <button
+        data-cy="next"
+        taDebounceClick
+        (debounceClick)="onNextClick()"
+        taButton
+        type="button"
+        taType="primary"
+        class="page-next btn-lg"
+        [disabled]="!isFinishLoadITs"
+      >
+        <!--- [i18n-tobeinternationalized] -->
+        Next
+      </button>
+    </div>
+  </div>
+</div>

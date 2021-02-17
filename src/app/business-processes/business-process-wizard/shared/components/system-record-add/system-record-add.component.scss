@@ -1,0 +1,21 @@
+@import 'src/styles/variables';
+
+ta-system-record-add-component {
+}
+
+:host {
+  .sub-heading {
+    font-size: $font-size-14;
+    font-weight: 500;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  #system-record-add-content {
+    header {
+      button {
+        min-width: unset;
+      }
+    }
+  }
+}

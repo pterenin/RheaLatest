@@ -1,0 +1,12 @@
+<div
+  class="page-icon"
+  [class.page-completed]="isCompleted()"
+  [class.page-selected]="isSelected()"
+>
+  <p *ngIf="showStep()">{{ step + 1 }}</p>
+  <i *ngIf="isReview && !isCompleted()" class="ta-star">&#9733;</i>
+  <i *ngIf="isCompleted()" class="ta ta-check"></i>
+</div>
+<span class="page-nav-label" [class.active-link]="isSelected()">
+  <ng-content></ng-content>
+</span>

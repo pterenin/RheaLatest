@@ -1,0 +1,73 @@
+<div class="modal-header">
+  <h4
+    class="modal-title"
+    id="modal-basic-title"
+    data-cy="modal-title"
+    taAutofocus
+  >
+    {{ title }}
+  </h4>
+  <button
+    type="button"
+    data-cy="modal-close"
+    class="close"
+    aria-label="Close"
+    (click)="onCancel()"
+  >
+    <i class="ta ta-close"></i>
+  </button>
+</div>
+<div class="modal-scroll">
+  <!--- [i18n-tobeinternationalized] -->
+  <div class="modal-body">
+    {{ content }}
+    <div *ngIf="isCategoryModal" class="category-list">
+      {{ getCategories() }}
+    </div>
+    <div *ngIf="getFileName()" class="file-name">
+      {{ getFileName() }}
+    </div>
+    <div *ngIf="!getFileName() && !isCategoryModal && getItemIdentifiers()">
+      <div *ngFor="let identifier of getItemIdentifiers()">
+        {{ identifier }}
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal-footer align-items-start"
+  [ngClass]="{
+    'justify-content-start': buttonPlacement !== 'right',
+    'justify-content-end': buttonPlacement === 'right'
+  }"
+>
+  <button
+    taButton
+    type="button"
+    id="confirm-delete-cancel"
+    data-cy="modal-cancel"
+    taType="secondary"
+    [ngClass]="{
+      'mr-auto': buttonPlacement === 'fill',
+      'mr-3': buttonPlacement !== 'fill'
+    }"
+    data-dismiss="modal"
+    [disabled]="disabled"
+    (click)="onCancel()"
+  >
+    <!--- [i18n-tobeinternationalized] --->
+    Cancel
+  </button>
+  <button
+    taButton
+    id="confirm-delete-button"
+    data-cy="modal-submit"
+    type="button"
+    [taType]="redButton ? 'danger' : 'primary'"
+    [disabled]="disabled"
+    (click)="onDelete()"
+  >
+    <!--- [i18n-tobeinternationalized] --->
+    Delete
+  </button>
+</div>

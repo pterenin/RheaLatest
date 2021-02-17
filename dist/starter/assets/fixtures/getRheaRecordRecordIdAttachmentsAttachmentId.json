@@ -1,0 +1,20 @@
+{
+  "data": {
+    "dateCreated": "string",
+    "fileUrl": {
+      "authority": "string",
+      "content": {},
+      "defaultPort": 1,
+      "file": "string",
+      "host": "string",
+      "path": "string",
+      "port": 1,
+      "protocol": "string",
+      "query": "string",
+      "ref": "string",
+      "userInfo": "string"
+    }
+  },
+  "status": 200,
+  "ok": true
+}

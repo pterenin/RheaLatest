@@ -1,0 +1,32 @@
+{
+  "data": {
+    "processName": "e2e-BP-Step5",
+    "title": "Select the data subjects, data recipients, add a system, design the data-flow involved in this business process",
+    "subjects": [
+      {
+        "searchPrefix": "Doctor",
+        "category": "Health Care",
+        "locations": [
+          {
+            "region": "North America",
+            "countries": ["Canada"]
+          }
+        ]
+      }
+    ],
+    "recipients": [
+      {
+        "searchPrefix": "IT",
+        "category": "Corporate",
+        "locations": [
+          {
+            "region": "North America",
+            "countries": ["Canada"]
+          }
+        ]
+      }
+    ]
+  },
+  "status": 200,
+  "ok": true
+}

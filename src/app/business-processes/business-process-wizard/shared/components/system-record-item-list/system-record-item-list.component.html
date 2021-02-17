@@ -1,0 +1,28 @@
+<ul class="list-unstyled">
+  <li *ngFor="let item of data" class="d-flex align-items-center">
+    <ng-container *ngIf="type === 'record'">
+      <ta-system-record-item-component
+        [fieldId]="'nodeId'"
+        [fieldName]="'name'"
+        [fieldEntityType]="'owningEntityType'"
+        [fieldEntityName]="'owningEntityName'"
+        [fieldLocationName]="'locationName'"
+        [fieldMapped]="'mapped'"
+        [withLocation]="true"
+        [withIcon]="true"
+        [colorIconOne]="'#5FC323'"
+        [colorIconTwo]="'#FFF'"
+        [item]="item"
+        [selectedItem]="selectedItem"
+        (selected)="onSelect($event)"
+      ></ta-system-record-item-component>
+    </ng-container>
+    <ng-container *ngIf="type === 'button'">
+      <ta-item-button-component
+        [item]="item"
+        [selectedItem]="selectedItem"
+        (selected)="onSelect($event)"
+      ></ta-item-button-component>
+    </ng-container>
+  </li>
+</ul>

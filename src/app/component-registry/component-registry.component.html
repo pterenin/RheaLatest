@@ -1,0 +1,48 @@
+<div>
+  <div *ngIf="!isReadOnly">
+    <div class="title">
+      Parallel Categorical Dropdown
+    </div>
+    <ta-async-categorical-dropdown
+      [dropdownAlignment]="['bottom-left']"
+      [mapContentItem]="mapContentItem"
+      [categoryLoaders]="categoryLoaders"
+    ></ta-async-categorical-dropdown>
+    <div class="title">
+      Location selection
+    </div>
+    <ta-location [locations]="locationData"></ta-location>
+    <ta-country-selector
+      type="Data Subject Location"
+      name="Buyer"
+      (save)="onCountrySelected($event)"
+      (cancel)="cancel()"
+    ></ta-country-selector>
+  </div>
+  <div *ngIf="isReadOnly">
+    <!-- <div>// TODO* Implement updated description when editable-locations are implemented[needs ticket number]</div> -->
+    <div>
+      <!-- [i18n-tobeinternationalized] -->
+      Select the countries where this
+      {{
+        registryInputEntityTypeDisplayValue
+          ? registryInputEntityTypeDisplayValue
+          : 'entity'
+      }}
+      is located (multiple allowed)*
+    </div>
+    <input
+      type="text"
+      placeholder="Search"
+      class="locationSearch"
+      (input)="onSearchChange($event.target.value)"
+    />
+    <div *ngIf="!isFinishLoaded" class="location-not-loaded"></div>
+    <ta-location
+      *ngIf="isFinishLoaded"
+      [locations]="locationsForDisplay"
+      isReadOnly="true"
+      class="readOnlyRegistry"
+    ></ta-location>
+  </div>
+</div>

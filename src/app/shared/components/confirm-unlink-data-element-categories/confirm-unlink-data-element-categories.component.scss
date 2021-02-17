@@ -1,0 +1,22 @@
+@import 'src/styles/variables';
+.unlink-modal {
+  .modal-dialog {
+    max-width: 706px !important;
+    .modal-content {
+      background-color: $white;
+      .modal-header {
+        .modal-title {
+          font-weight: 600;
+        }
+      }
+    }
+    .modal-scroll {
+      max-height: 6.25rem;
+      margin-top: 1.25rem;
+    }
+  }
+}
+.category-list {
+  font-size: $font-size-16;
+  color: zeplin-lighten($twilight-blue, 0.9);
+}

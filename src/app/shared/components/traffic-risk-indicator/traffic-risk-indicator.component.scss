@@ -1,0 +1,53 @@
+@import '../../../../styles/variables';
+
+ta-popover-window.incomplete-fields-popover {
+  margin-top: -20px !important;
+}
+.traffic-light-risk-indicator {
+  .min-height-14 {
+    min-height: 14px;
+  }
+  .no-underline {
+    text-decoration: none;
+  }
+  span {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-left: 3px;
+    display: inherit;
+    line-height: 12px;
+    text-decoration: underline;
+  }
+  .traffic-light-container {
+    margin-right: 3px;
+    width: 20px;
+    float: left;
+  }
+  .traffic-light {
+    background-color: $super-light-grey;
+    float: left;
+    width: 4px;
+    height: 12px;
+    margin-right: 1px;
+    border-radius: 4px;
+    &.RISK_UNLIKELY,
+    &.LOW_INHERENT_RISK,
+    &.LOW_RESIDUAL_RISK {
+      background-color: $apple-green;
+    }
+    &.POSSIBLY_HIGH_RISK,
+    &.MEDIUM_INHERENT_RISK,
+    &.MEDIUM_RESIDUAL_RISK {
+      background-color: $yellow-orange;
+    }
+    &.LIKELY_HIGH_RISK,
+    &.HIGH_INHERENT_RISK,
+    &.HIGH_RESIDUAL_RISK {
+      background-color: $dark-hot-pink;
+    }
+    &.INCOMPLETE_FIELDS {
+      background-color: $turquoise-blue;
+    }
+  }
+}

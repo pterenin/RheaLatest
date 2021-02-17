@@ -1,0 +1,225 @@
+<div class="modal-header">
+  <h4
+    data-cy="modal-title"
+    *ngIf="mode === 'added'"
+    class="modal-title"
+    id="modal-basic-title-added"
+    taAutofocus
+  >
+    <!--- [i18n-tobeinternationalized] --->
+    Configure System
+  </h4>
+  <h4
+    *ngIf="mode === 'edited'"
+    class="modal-title"
+    id="modal-basic-title-edited"
+    taAutofocus
+  >
+    <!--- [i18n-tobeinternationalized] --->
+    Configure System for {{ country }}
+  </h4>
+  <button
+    data-cy="modal-close"
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="closeModal()"
+    id="modal-close"
+  >
+    <ta-icon [icon]="'close'"></ta-icon>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="d-flex flex-row flex-fill flex-overflow mb-3">
+    <span id="it-system-header" class="modal-subheader align-middle">
+      {{ itSystemProperties?.name }}
+    </span>
+    <ta-tags
+      class="align-middle"
+      [theme]="'inverted-' + getLabelDetailsByTag(itSystemData?.tag)"
+    >
+      {{ itSystemData?.tag | entityType }}
+    </ta-tags>
+    <button
+      taButton
+      class="it-system-edit-button"
+      id="modal-edit"
+      aria-label="Edit"
+      type="button"
+      taType="circle"
+      taTooltip="Edit"
+      [disabled]="isEditDisabled()"
+      (click)="editItSystem()"
+    >
+      <ta-icon [icon]="'edit'"></ta-icon>
+    </button>
+  </div>
+  <ta-tabset (tabChange)="onTabChange($event)">
+    <ta-tab id="it-system-tab-location" *ngIf="canSelectLocation()">
+      <ng-template taTabTitle>
+        <ta-risk-field-indicator
+          [showIndicator]="showRiskFields"
+        ></ta-risk-field-indicator>
+        <!-- [i18n-tobeinternationalized] -->
+        <span data-cy="tab-locations-title">Locations</span>
+        <ta-badge [values]="countSelectedCountries"></ta-badge>
+      </ng-template>
+      <ng-template taTabContent>
+        <div class="modal-p mt-3">
+          <!-- [i18n-tobeinternationalized] -->
+          Uncheck hosting locations that are not applicable to this business
+          process
+        </div>
+        <div class="modal-note mb-2">
+          <!-- [i18n-tobeinternationalized] -->
+          Record defaults are preselected
+        </div>
+        <span data-cy="tab-locations-body">
+          <ta-location
+            id="locationSelector"
+            [locations]="locationData"
+            (itemsSelected)="editSelectedCountries($event)"
+            class="dat-dst-locations"
+            [selectedLocations]="selectedCountries"
+            #locationSelector
+          ></ta-location>
+        </span>
+      </ng-template>
+    </ta-tab>
+    <ta-tab id="it-system-tab-de">
+      <ng-template taTabTitle>
+        <ta-risk-field-indicator
+          [showIndicator]="showRiskFields"
+        ></ta-risk-field-indicator>
+        <!-- [i18n-tobeinternationalized] -->
+        <span data-cy="tab-data-elements">Data Elements</span>
+        <ta-badge [values]="countSelectedDataElements"></ta-badge>
+      </ng-template>
+      <ng-template taTabContent>
+        <div class="modal-p mt-3">
+          <!-- [i18n-tobeinternationalized] -->
+          Uncheck data elements that are not applicable to this business process
+        </div>
+        <div class="modal-note mb-2">
+          <!-- [i18n-tobeinternationalized] -->
+          Record defaults are preselected
+        </div>
+        <div>
+          <ta-categorical-view
+            id="dataElementsList"
+            *ngIf="dataElementsData?.length; else emptyStateDataElements"
+            [data]="dataElementsData"
+            (selections)="onDataElementSelect($event)"
+            [showCheckboxes]="true"
+            [selectFirstCategory]="false"
+            [showCounts]="true"
+            class="not-in-dropdown it-system-de-pp"
+          >
+          </ta-categorical-view>
+        </div>
+      </ng-template>
+    </ta-tab>
+    <ta-tab id="it-system-tab-pp">
+      <ng-template taTabTitle>
+        <ta-risk-field-indicator
+          [showIndicator]="showRiskFields"
+        ></ta-risk-field-indicator>
+        <!-- [i18n-tobeinternationalized] -->
+        <span data-cy="tab-processing-purposes">Processing Purposes</span>
+        <ta-badge [values]="countSelectedProcessingPurposes"></ta-badge>
+      </ng-template>
+      <ng-template taTabContent>
+        <div class="modal-p mt-3">
+          <!-- [i18n-tobeinternationalized] -->
+          Uncheck processing purposes that are not applicable to this business
+          process
+        </div>
+        <div class="modal-note mb-2">
+          <!-- [i18n-tobeinternationalized] -->
+          Record defaults are preselected
+        </div>
+        <div>
+          <ta-categorical-view
+            id="processingPurposeList"
+            *ngIf="
+              processingPurposeData?.length;
+              else emptyStateprocessingPurposes
+            "
+            [data]="processingPurposeData"
+            (selections)="onProcessingPurposesSelect($event)"
+            [showCheckboxes]="true"
+            [showCounts]="true"
+            [selectFirstCategory]="false"
+            class="not-in-dropdown it-system-de-pp"
+          >
+          </ta-categorical-view>
+        </div>
+      </ng-template>
+    </ta-tab>
+  </ta-tabset>
+</div>
+<div class="modal-footer align-items-center justify-content-between">
+  <button
+    data-cy="modal-cancel"
+    taButton
+    type="button"
+    taType="flat"
+    class="mr-3 btn-lg"
+    data-dismiss="modal"
+    id="modal-cancel"
+    (click)="activeModal.dismiss('Cancel')"
+  >
+    <!--- [i18n-tobeinternationalized] --->
+    Cancel
+  </button>
+  <button
+    data-cy="modal-submit"
+    taButton
+    type="button"
+    taType="primary"
+    class="btn-lg"
+    id="modal-submit"
+    (click)="onSubmit()"
+    [disabled]="
+      (canSelectLocation() && countSelectedCountries == 0) || isSaving
+    "
+  >
+    <!--- [i18n-tobeinternationalized] --->
+    Save
+  </button>
+</div>
+
+<ng-template #emptyStateDataElements>
+  <ng-container
+    *ngTemplateOutlet="emptyState; context: { type: 'data elements' }"
+  ></ng-container>
+</ng-template>
+
+<ng-template #emptyStateprocessingPurposes>
+  <ng-container
+    *ngTemplateOutlet="emptyState; context: { type: 'processing purposes' }"
+  ></ng-container>
+</ng-template>
+
+<ng-template #emptyState let-type="type">
+  <div *ngIf="!isFetching">
+    <div
+      class="add-it-empty-state d-flex flex-column align-items-center justify-content-center"
+    >
+      <img alt="empty" src="assets/images/empty-fish-tank.svg" />
+      <p class="mt-2">No {{ type }} selected in the system record.</p>
+    </div>
+  </div>
+  <div *ngIf="isFetching">
+    <div
+      class="add-it-empty-state d-flex flex-column align-items-center justify-content-center"
+    >
+      <div class="spinner-border opacity-10" role="status">
+        <span class="sr-only">
+          <!--- [i18n-tobeinternationalized] --->
+          Loading...
+        </span>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,30 @@
+{
+  "save": {
+    "selector": "[data-cy='save']",
+    "alias": "@save"
+  },
+  "cancel": {
+    "selector": "[data-cy='cancel']",
+    "alias": "@cancel"
+  },
+  "back": {
+    "selector": "[data-cy='back']",
+    "alias": "@back"
+  },
+  "next": {
+    "selector": "[data-cy='next']",
+    "alias": "@next"
+  },
+  "exit": {
+    "selector": "[data-cy='exit']",
+    "alias": "@exit"
+  },
+  "title": {
+    "selector": "[data-cy='title']",
+    "alias": "@title"
+  },
+  "finish": {
+    "selector": "[data-cy='finish']",
+    "alias": "@finish"
+  }
+}

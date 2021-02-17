@@ -1,0 +1,105 @@
+<div class="fadeInApp">
+  <form [formGroup]="tagGroupFormGroup">
+    <div formArrayName="tagGroupFormArray" class="row">
+      <div
+        class="col-12 form-group mb-1"
+        *ngFor="
+          let tagGroupForm of tagGroupFormArray.controls;
+          index as tagGroupIndex
+        "
+        [formGroupName]="tagGroupIndex"
+      >
+        <label for="{{ tagGroupForm.get('id').value }}">{{
+          tagGroupForm.get('tagGroupName').value
+        }}</label>
+        <div [ngSwitch]="tagGroupForm.get('tagGroupType').value" class="mb-2">
+          <div *ngSwitchCase="'USER'">
+            <div [ngSwitch]="tagGroupForm.get('multipleValuesAllowed').value">
+              <div *ngSwitchCase="true">
+                <ta-dropdown-field
+                  class="small-dropdown"
+                  [options]="userTags"
+                  [selectedOption]="tagGroupForm.get('selected').value"
+                  formControlName="selected"
+                  optionLabel="tag"
+                  [useInfiniteScroll]="true"
+                  (infiniteListChanged)="requestForInfiniteList($event)"
+                  [isSearchable]="true"
+                  (keyup)="debounceSearch($event.target.value)"
+                  [placement]="
+                    lastElementPlacementTop &&
+                    tagGroupIndex == tagGroupFormArray.controls.length - 1
+                      ? ['top-left']
+                      : null
+                  "
+                  [isMultiple]="true"
+                  [autoClose]="false"
+                ></ta-dropdown-field>
+              </div>
+              <div *ngSwitchCase="false">
+                <ta-dropdown-field
+                  class="small-dropdown"
+                  [options]="userTags"
+                  [selectedOption]="tagGroupForm.get('selected').value"
+                  formControlName="selected"
+                  optionLabel="tag"
+                  [useInfiniteScroll]="true"
+                  (infiniteListChanged)="requestForInfiniteList($event)"
+                  [isSearchable]="true"
+                  (keyup)="debounceSearch($event.target.value)"
+                  [emptyOption]="true"
+                  [allowUnselectItem]="true"
+                  [placement]="
+                    lastElementPlacementTop &&
+                    tagGroupIndex == tagGroupFormArray.controls.length - 1
+                      ? ['top-left']
+                      : null
+                  "
+                ></ta-dropdown-field>
+              </div>
+            </div>
+          </div>
+          <div *ngSwitchCase="'SELECTABLE'">
+            <div [ngSwitch]="tagGroupForm.get('multipleValuesAllowed').value">
+              <div *ngSwitchCase="true">
+                <div *ngSwitchCase="true">
+                  <ta-dropdown-hierarchy
+                    [tagGroupForm]="tagGroupForm"
+                    [isMultiSelect]="true"
+                  >
+                  </ta-dropdown-hierarchy>
+                </div>
+              </div>
+              <div *ngSwitchCase="false">
+                <ta-dropdown-hierarchy
+                  [tagGroupForm]="tagGroupForm"
+                  [isMultiSelect]="false"
+                >
+                </ta-dropdown-hierarchy>
+              </div>
+            </div>
+          </div>
+          <div *ngSwitchCase="'TEXT'">
+            <input
+              id="{{ tagGroupForm.get('id').value }}"
+              type="text"
+              formControlName="selected"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': tagGroupForm.invalid && tagGroupForm.touched
+              }"
+              placeholder="Enter tag value"
+            />
+            <div
+              *ngIf="tagGroupForm.get('selected').errors?.maxlength"
+              class="text-danger text-danger-multi-sibling"
+            >
+              <!-- [i18n-tobeinternationalized] -->
+              The tag name must be less than 255 characters.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

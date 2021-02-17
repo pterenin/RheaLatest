@@ -1,0 +1,38 @@
+{
+  "data": {
+    "contact": {
+      "address": "string",
+      "city": "string",
+      "email": "string",
+      "fullName": "string",
+      "id": "string",
+      "location": {
+        "countryId": "string",
+        "globalRegionId": "string",
+        "id": "string",
+        "stateOrProvinceId": "string",
+        "version": 1
+      },
+      "phone": "string",
+      "version": 1,
+      "zip": "string"
+    },
+    "contractEndDate": "string",
+    "contractStartDate": "string",
+    "created": "string",
+    "description": "string",
+    "entityRole": "string",
+    "id": "string",
+    "identifier": "string",
+    "industrySectors": "",
+    "locations": "",
+    "name": "string",
+    "notes": "string",
+    "ownerId": "string",
+    "ownerName": "string",
+    "type": "string",
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

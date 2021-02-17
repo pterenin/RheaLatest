@@ -1,0 +1,52 @@
+<div
+  taDropdown
+  #filterDropdown
+  class="d-inline-block"
+  placement="bottom-right"
+  autoClose="outside"
+>
+  <button
+    taButton
+    taType="circle"
+    id="selected-system-record-filter"
+    taDropdownToggle
+    class="position-relative"
+  >
+    <span
+      *ngIf="isDirty"
+      class="filter-indicator position-absolute d-block"
+    ></span>
+    <ta-icon icon="filter"></ta-icon>
+  </button>
+  <div
+    taDropdownMenu
+    aria-labelledby="selected-system-record-filter"
+    class="selected-system-record-filter-dropdown-menu animated fadeIn"
+    [style.width]="contentWidth"
+  >
+    <!-- Header -->
+    <header class="selected-system-record-filter-header px-3 py-2">
+      {{ headerTitle }}
+    </header>
+
+    <!-- Form Content -->
+    <div class="selected-system-record-filter-content">
+      <ng-content></ng-content>
+    </div>
+
+    <!-- Action Button: Emitters -->
+    <footer class="selected-system-record-filter-footer px-3 py-2 text-right">
+      <button class="mr-1 btn-sm" taButton taType="flat" (click)="onClear()">
+        {{ clearLabel }}
+      </button>
+      <button
+        class="btn-sm w-auto"
+        taButton
+        taType="primary"
+        (click)="onApply()"
+      >
+        {{ applyLabel }}
+      </button>
+    </footer>
+  </div>
+</div>

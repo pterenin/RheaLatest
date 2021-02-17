@@ -1,0 +1,40 @@
+@import 'src/styles/variables';
+@import '../../../../styles/record-details';
+
+.remove {
+  background: zeplin-lighten($blue, 0.1);
+  position: absolute;
+  font-size: 24px;
+  width: 26px;
+  height: 26px;
+  border-radius: 100px;
+  text-align: center;
+  line-height: 24px;
+  top: 0;
+  cursor: pointer;
+  color: $nice-blue;
+  &.disabled {
+    color: black;
+    background: $gray-500;
+    pointer-events: none;
+    opacity: 0.2;
+  }
+  i {
+    line-height: 12px;
+  }
+}
+.link {
+  cursor: pointer;
+}
+
+.row {
+  margin-bottom: -3px;
+}
+
+.row.location {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.font-color-default {
+}

@@ -1,0 +1,80 @@
+@import 'src/styles/variables';
+
+ta-modal-revalidation-date-edit {
+  .ta-tags .ta-tags-close {
+    top: 7px !important;
+  }
+  .ta-tags-close {
+    line-height: 0 !important;
+  }
+  .modal-header {
+    font-weight: 500;
+    font-size: $font-size-20;
+    line-height: 26px;
+  }
+  #revalidation-date-edit-dropdown-date-menu {
+    padding: 0;
+  }
+  #revalidation-date-edit-datepicker {
+    width: 100%;
+    .ta-dp-week {
+      justify-content: space-between;
+      .ta-dp-weekdays {
+        justify-content: space-between;
+      }
+    }
+    .ta-dp-months {
+      .ta-dp-month {
+        width: 100%;
+      }
+    }
+    ta-datepicker-navigation {
+      .ta-dp-arrow {
+        width: 0;
+        .right {
+          width: 0;
+        }
+      }
+    }
+  }
+  .comment-area {
+    border: 1px solid $silver-grey;
+    box-sizing: border-box;
+    border-radius: $border-radius;
+  }
+  .required {
+    color: $red;
+  }
+  .ta-table-wrapper-modal-revalidation-date-contacts {
+    min-height: 175px;
+    .text-helper {
+      color: $gray-700;
+    }
+    .ta-table-toolbars {
+      width: 100%;
+    }
+    .ta-table-toolbar-btns {
+      justify-content: space-between;
+      padding-right: 0;
+      padding-left: 0;
+      border-left: none;
+      width: 100%;
+    }
+    .ta-table-cell {
+      padding: 0.5rem 1rem !important;
+      min-height: unset !important;
+    }
+  }
+  .image-container {
+    width: 139px;
+    height: 120px;
+    background: $white url('/assets/images/default-table-background.svg')
+      no-repeat center center;
+  }
+  .text-contact {
+    color: $gray-700;
+  }
+  .dropdown-menu-contacts-add.show {
+    min-width: 358px !important;
+  }
+}

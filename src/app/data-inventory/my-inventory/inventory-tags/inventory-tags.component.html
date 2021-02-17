@@ -1,0 +1,25 @@
+<div class="fadeInApp">
+  <form class="navbar-form-custom" [formGroup]="tagFormsGroup">
+    <ta-tags-selector
+      [formGroup]="tagFormsGroup"
+      (selectedTagsChange)="handleSelectedTagsChange($event)"
+      [baseDomainId]="baseDomainId"
+      [baseDomainType]="baseDomainType"
+      [preselectedTags]="preselectedTags || []"
+    >
+    </ta-tags-selector>
+    <div *taSlotView>
+      <button
+        taButton
+        type="submit"
+        taType="primary"
+        class="page-next btn-lg"
+        [ngClass]="{ 'page-next': true }"
+        routerLink="/data-inventory"
+      >
+        <!-- [i18n-tobeinternationalized] -->
+        Save
+      </button>
+    </div>
+  </form>
+</div>

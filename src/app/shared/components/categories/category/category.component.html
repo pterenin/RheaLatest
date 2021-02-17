@@ -1,0 +1,307 @@
+<ta-page-wrapper [full]="true">
+  <ta-table
+    [id]="gridId"
+    [taSelected]="isAdmin()"
+    indexField="id"
+    class="ta-table-wrapper-border"
+  >
+    <ta-table-toolbar>
+      <div class="d-flex">
+        <div taDropdown class="d-inline-block ml-auto">
+          <button
+            taButton
+            type="button"
+            taType="dropdown"
+            id="viewDropdowns"
+            taDropdownToggle
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            {{ getVisibilityText() }}
+          </button>
+          <div taDropdownMenu aria-labelledby="viewDropdowns">
+            <!-- RHEA-992 dummy links -->
+            <button
+              type="button"
+              class="dropdown-item ml-0"
+              (click)="updateSelectedVisibility('all')"
+            >
+              <!-- [i18n-tobeinternationalized] -->
+              View All
+            </button>
+            <button
+              type="button"
+              class="dropdown-item ml-0"
+              (click)="updateSelectedVisibility('hidden')"
+            >
+              <!-- [i18n-tobeinternationalized] -->
+              View Hidden
+            </button>
+            <button
+              type="button"
+              class="dropdown-item ml-0"
+              (click)="updateSelectedVisibility('visible')"
+            >
+              <!-- [i18n-tobeinternationalized] -->
+              View Visible
+            </button>
+          </div>
+        </div>
+
+        <div
+          taDropdown
+          class="d-inline-block ml-1"
+          [ngClass]="{ 'mr-2': isAdmin() }"
+        >
+          <button
+            taButton
+            type="button"
+            taType="dropdown"
+            id="viewTypeDropdown"
+            taDropdownToggle
+            [ngClass]="{ 'no-margin': !isAdmin() }"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            {{ getCreationText() }}
+          </button>
+          <div taDropdownMenu aria-labelledby="viewTypeDropdown">
+            <button
+              type="button"
+              class="dropdown-item ml-0"
+              (click)="updateSelectedCreation('all')"
+            >
+              <!-- [i18n-tobeinternationalized] -->
+              All {{ itemTypeName }}s
+            </button>
+            <button
+              type="button"
+              class="dropdown-item ml-0"
+              (click)="updateSelectedCreation('custom')"
+            >
+              <!-- [i18n-tobeinternationalized] -->
+              Custom {{ itemTypeName }}s
+            </button>
+            <button
+              type="button"
+              class="dropdown-item ml-0"
+              (click)="updateSelectedCreation('system')"
+            >
+              <!-- [i18n-tobeinternationalized] -->
+              Default {{ itemTypeName }}s
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="isAdmin()">
+          <div class="d-inline-block ml-1 header-icon">
+            <button
+              taButton
+              type="button"
+              taType="primary"
+              taTooltip="Add {{ itemTypeName }}"
+              (click)="addNewElementByType(dataType)"
+            >
+              Add New
+            </button>
+          </div>
+
+          <div class="d-inline-block ml-1 header-icon">
+            <button
+              taButton
+              type="button"
+              taType="circle"
+              taTooltip="Edit"
+              [disabled]="isEditDisabled()"
+              (click)="onEdit(currentPageSelectedItems[0])"
+            >
+              <ta-icon icon="edit"></ta-icon>
+            </button>
+          </div>
+
+          <div class="d-inline-block ml-1 header-icon">
+            <button
+              taButton
+              type="button"
+              taType="circle"
+              class="btn-view"
+              (click)="toggleVisibilityForSelectedCustomItems()"
+              [disabled]="isToggleVisibilityDisabled()"
+              [taTooltip]="getToggleVisibilityTooltip()"
+              tooltipClass="visibility-tooltip"
+            >
+              <img
+                alt="off"
+                src="assets/images/visibility-off.svg"
+                *ngIf="!isToggleVisibilityDisabled()"
+              />
+              <img
+                alt="disabled"
+                src="assets/images/visibility-disabled.svg"
+                *ngIf="isToggleVisibilityDisabled()"
+              />
+            </button>
+          </div>
+
+          <div
+            taDropdown
+            class="d-inline-block ml-1"
+            placement="bottom-right"
+            id="moreDropdownButtonContainer"
+          >
+            <button
+              taButton
+              type="button"
+              taType="circle"
+              id="moreDropdown"
+              taDropdownToggle
+            >
+              <ta-icon icon="more" height="10"></ta-icon>
+            </button>
+            <!--- [i18n-tobeinternationalized] -->
+            <div taDropdownMenu aria-labelledby="moreDropdown">
+              <!-- RHEA-992 dummy links -->
+              <button
+                [disabled]="disabledUnlinkBtn"
+                type="button"
+                class="dropdown-item ml-0"
+                (click)="unlinkSelectedItems()"
+              >
+                <!-- [i18n-tobeinternationalized] -->
+                Unlink
+              </button>
+              <button
+                [disabled]="isDeleteDisabled()"
+                type="button"
+                class="dropdown-item ml-0"
+                (click)="deleteSelectedItems()"
+              >
+                <!-- [i18n-tobeinternationalized] -->
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ta-table-toolbar>
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-table-column taField="name">{{ itemTypeName }} Name</ta-table-column>
+    <ta-table-column
+      *ngIf="dataType === 'DE' || dataType === 'PP'"
+      taField="identifier"
+      taWidth="115"
+      >ID#</ta-table-column
+    >
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-table-column *ngIf="dataType === 'DE'" taField="dataElementType">
+      Data Classification Level
+    </ta-table-column>
+    <ta-table-column
+      *ngIf="dataType === 'PP'"
+      taField="highRiskFactorCategories"
+    >
+      <span class="column-header"
+        >Risk Classification
+        <ta-icon
+          icon="information-circle"
+          taTooltip="The level of risk associated with each record"
+          tooltipTheme="light"
+          height="12"
+          container="body"
+          class="position-relative"
+          style="top: -2px; left: 5px;"
+          placement="bottom-left"
+          color="#595959"
+          tooltipTheme="light"
+        >
+        </ta-icon>
+      </span>
+    </ta-table-column>
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-table-column taField="linkedRecords">Linked Records</ta-table-column>
+    <ta-table-column></ta-table-column>
+    <ta-table-row *ngFor="let item of tableData; index as i" [taItem]="item">
+      <ta-table-cell>
+        <div class="d-flex flex-row align-items-center">
+          <a
+            class="data-element-name"
+            [routerLink]="item.id"
+            [ngClass]="{ 'hidden-element': item.isHidden }"
+            [disableTooltip]="!item.isHidden"
+            taTooltip="Hidden from everyone"
+            container="body"
+            >{{ item.name }}</a
+          >
+          <ta-custom-category-tag class="ml-1" *ngIf="item.isCustom">
+          </ta-custom-category-tag>
+        </div>
+      </ta-table-cell>
+      <ta-table-cell *ngIf="dataType === 'DE' || dataType === 'PP'">{{
+        item.identifier || 'N/A'
+      }}</ta-table-cell>
+      <ta-table-cell *ngIf="dataType === 'DE' || dataType == 'PP'">
+        <span
+          *ngIf="dataType === 'DE'"
+          [ngClass]="{ 'hidden-element': item.isHidden }"
+        >
+          {{ item.dataElementType }}
+        </span>
+        <span
+          *ngIf="dataType === 'PP'"
+          [ngClass]="{ 'hidden-element': item.isHidden }"
+        >
+          {{ getRiskLabel(item) }}
+        </span>
+      </ta-table-cell>
+      <ta-table-cell>
+        <span [ngClass]="{ 'hidden-element': item.isHidden }">
+          {{ item.numberOfLinkedRecords }}
+        </span>
+      </ta-table-cell>
+      <ta-table-cell class="icon-cell">
+        <div *ngIf="isAdmin()" class="icon-container">
+          <div
+            *ngIf="item.isCustom"
+            class="icon-wrapper"
+            [id]="getIconId(item, 'edit')"
+            (click)="onEdit(item)"
+          >
+            <ta-icon icon="edit" height="12.5" [color]="iconColor"></ta-icon>
+          </div>
+          <!-- [i18n-tobeinternationalized] -->
+          <div
+            *ngIf="item.numberOfLinkedRecords === 0"
+            class="icon-wrapper"
+            [id]="getIconId(item, 'hide')"
+            placement="top-right"
+            [taTooltip]="
+              item.isHidden ? 'Show for everyone' : 'Hide from everyone'
+            "
+            (click)="toggleVisibilityForCustomItem(item)"
+          >
+            <img alt="off" src="assets/images/visibility-off.svg" />
+          </div>
+          <div
+            *ngIf="item.isCustom && item.numberOfLinkedRecords === 0"
+            class="icon-wrapper"
+            [id]="getIconId(item, 'delete')"
+            (click)="deleteItem(item)"
+          >
+            <ta-icon icon="delete" height="13.5" [color]="iconColor"></ta-icon>
+          </div>
+        </div>
+      </ta-table-cell>
+    </ta-table-row>
+    <ta-table-footer>
+      <ta-pagination
+        *ngIf="tableData.length > 0"
+        [collectionSize]="getTotalRows()"
+        [pageSize]="getMaxRows()"
+        [page]="getPage()"
+        [maxSize]="1"
+        [ellipses]="true"
+        showingType="full"
+        (pageChange)="onChangePage($event)"
+        (onChangePageSize)="onChangeMax($event)"
+      ></ta-pagination>
+    </ta-table-footer>
+  </ta-table>
+</ta-page-wrapper>

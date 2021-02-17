@@ -1,0 +1,181 @@
+<div class="modal-header">
+  <!--- [i18n-tobeinternationalized] --->
+  <h4
+    data-cy="modal-title"
+    class="modal-title text-truncate"
+    id="modal-basic-title"
+    placement="bottom-left"
+    container="body"
+    tooltipTheme="light"
+    tooltipTextAlign="left"
+    [taTooltip]="getModalTitle()"
+    tooltipClass="record-name-tooltip animated fadeIn delay-1s"
+    taAutofocus
+  >
+    {{ getModalTitle() }}
+  </h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="closeModal()"
+    id="modal-close"
+  >
+    <ta-icon [icon]="'close'" data-cy="modal-close"></ta-icon>
+  </button>
+</div>
+<div
+  class="modal-body"
+  [ngClass]="{
+    'pb-0 pr-0': redesign && !selectingStates
+  }"
+>
+  <div *ngIf="type === 'Data Subject Location' || redesign">
+    <div class="mb-4" *ngIf="type === 'Data Subject Location'">
+      Select the countries where this Data Subject is located (multiple allowed)
+    </div>
+    <ta-location
+      taAutofocus
+      *ngIf="!selectingStates"
+      [selectedLocations]="selectedLocationData"
+      (itemsSelected)="onLocationSelected($event)"
+      (selectedCountry)="stateSelectHandler($event)"
+      [stateProvinceIsSelectable]="stateProvinceIsSelectable"
+      class="dat-dst-locations d-block"
+      [placeholder]="'Search ' + getModalTitle()"
+      [useTabset]="redesign"
+      [setActiveTabId]="setActiveTabId"
+      (emitActiveTabId)="emitActiveTabId($event)"
+      [selectedIdsFromLocation]="selectedCountry || []"
+      (selectedStatesFromLocation)="stateSelectHandlerFromLocation($event)"
+    ></ta-location>
+    <ta-state
+      *ngIf="selectingStates"
+      [stateList]="stateList"
+      [selectedCountry]="selectedCountry"
+      [selected]="selectedCountry.selectedStates || []"
+      (isSelectingStates)="stateSelectHandler($event)"
+      (selectedStates)="setSelectedStates($event)"
+      [ngClass]="{
+        'mb-4 animated fadeIn': redesign
+      }"
+      class="d-block"
+    ></ta-state>
+  </div>
+  <ta-tabset *ngIf="type !== 'Data Subject Location' && !redesign">
+    <ta-tab>
+      <ng-template taTabTitle>
+        <ta-risk-field-indicator
+          [showIndicator]="showRiskFields"
+        ></ta-risk-field-indicator>
+        <!-- [i18n-tobeinternationalized] -->
+        Locations
+        <ta-badge [values]="getSelectedLocationCount()"></ta-badge>
+      </ng-template>
+      <ng-template taTabContent>
+        <div class="modal-p mt-3 mb-3">
+          <!-- [i18n-tobeinternationalized] -->
+          Select the countries where this {{ getDataTypeGDPRString(type) }} is
+          located.
+        </div>
+        <div class="modal-note mb-2" *ngIf="type === 'Data Recipient'">
+          <!-- [i18n-tobeinternationalized] -->
+          For this data recipient country grouping, note that you will need to
+          use the same data elements
+        </div>
+        <div>
+          <ta-location
+            taAutofocus
+            *ngIf="!selectingStates"
+            [selectedLocations]="selectedLocations"
+            [locations]="locationData"
+            (itemsSelected)="onLocationSelected($event)"
+            (selectedCountry)="stateSelectHandler($event)"
+            class="dat-dst-locations"
+          ></ta-location>
+          <ta-state
+            *ngIf="selectingStates"
+            [stateList]="stateList"
+            [selectedCountry]="selectedCountry"
+            [selected]="selectedCountry.selectedStates || []"
+            (isSelectingStates)="stateSelectHandler($event)"
+            (selectedStates)="setSelectedStates($event)"
+          ></ta-state>
+        </div>
+      </ng-template>
+    </ta-tab>
+    <ta-tab *ngIf="type === 'Data Subject'">
+      <ng-template taTabTitle>
+        <ta-risk-field-indicator
+          [showIndicator]="showRiskFields"
+        ></ta-risk-field-indicator>
+        <!-- [i18n-tobeinternationalized] -->
+        Data Elements
+        <ta-badge [values]="getSelectedDataElementsCount()"></ta-badge>
+      </ng-template>
+      <ng-template taTabContent>
+        <div class="modal-p mt-3 mb-3">
+          <!-- [i18n-tobeinternationalized] -->
+          Select the data elements this Data Subject is
+          <strong>sending*</strong>
+        </div>
+        <div>
+          <ta-categorical-view
+            id="dataElementsList"
+            [data]="dataElements"
+            (selections)="onDataElementSelected($event)"
+            [showCounts]="true"
+            [showCheckboxes]="true"
+            [selectFirstCategory]="false"
+            class="not-in-dropdown-short"
+          >
+          </ta-categorical-view>
+        </div>
+      </ng-template>
+    </ta-tab>
+  </ta-tabset>
+</div>
+<div class="modal-footer align-items-center justify-content-between">
+  <button
+    data-cy="modal-cancel"
+    taButton
+    type="button"
+    taType="flat"
+    class="btn-lg"
+    data-dismiss="modal"
+    id="modal-cancel"
+    (click)="closeModal()"
+  >
+    <!--- [i18n-tobeinternationalized] --->
+    Cancel
+  </button>
+  <button
+    data-cy="modal-submit"
+    taButton
+    type="button"
+    taType="primary"
+    class="btn-lg"
+    id="modal-submit"
+    (click)="onSubmit()"
+    [disabled]="pristine"
+  >
+    {{ saveButtonLabel }}
+  </button>
+</div>
+
+<ng-template #emptyStateDataElements>
+  <!-- <ng-container *ngTemplateOutlet="emptyState; context: { type: 'data elements' }"></ng-container> -->
+</ng-template>
+
+<ng-template #emptyStateprocessingPurposes>
+  <!-- <ng-container *ngTemplateOutlet="emptyState; context: { type: 'processing purposes' }"></ng-container> -->
+</ng-template>
+
+<ng-template #emptyState let-type="type">
+  <div
+    class="add-it-empty-state d-flex flex-column align-items-center justify-content-center"
+  >
+    <img src="assets/images/empty-fish-tank.svg" />
+    <p class="mt-2">Empty State Text.</p>
+  </div>
+</ng-template>

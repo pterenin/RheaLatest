@@ -1,0 +1,13 @@
+@import '../../../../styles/variables';
+
+.risk-field-indicator {
+  width: 8px;
+  min-height: 18px;
+  max-height: 24px;
+  border-radius: 4px;
+  vertical-align: text-bottom;
+  border: solid 1px $white;
+  background-color: $turquoise-blue;
+  display: inline-block;
+  cursor: help;
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59 (86127) - https://sketch.com -->
+    <title>risk-inc</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="risk-/-incomplete">
+            <g id="risk-inc" transform="translate(-1.000000, -1.000000)">
+                <rect id="Rectangle" fill="#0052cc" transform="translate(8.988835, 8.988835) rotate(-225.000000) translate(-8.988835, -8.988835) " x="2.73883476" y="2.73883476" width="12.5" height="12.5" rx="2"></rect>
+                <path d="M10,11.3571429 L10,13.0413534 L8,13.0413534 L8,11.3571429 L10,11.3571429 Z M10,4.5 L10,9.55263158 L8,9.55263158 L8,4.5 L10,4.5 Z" id="Combined-Shape" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>

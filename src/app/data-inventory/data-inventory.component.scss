@@ -1,0 +1,18 @@
+ta-data-inventory {
+  padding-bottom: 60px;
+
+  .tab-pane {
+    padding-top: 2rem !important;
+  }
+  display: block;
+  ta-tabset {
+    display: block;
+
+    .nav-ta {
+      margin-bottom: 20px !important;
+    }
+    .nav-tabs .nav-link {
+      padding: 0.75rem 1.85rem;
+    }
+  }
+}

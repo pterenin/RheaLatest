@@ -1,0 +1,124 @@
+<div class="label-container row justify-content-between" *ngIf="data">
+  <a
+    *ngIf="hasInfoIcon"
+    class="col-auto"
+    (click)="showInfo(data)"
+    [taTooltip]="infoTooltip"
+    container="body"
+  >
+    <i class="ta ta-info-circle"> </i>
+  </a>
+  <div
+    class="d-flex flex-row flex-fill flex-overflow"
+    (click)="onItemClicked($event)"
+  >
+    <div class="d-flex flex-column flex-overflow">
+      <div class="d-flex flex-row" [class.mt-2]="!subItem">
+        <div class="dataLabel">
+          {{ data.label }}
+        </div>
+        <ta-custom-category-tag
+          *ngIf="data.isCustom && showCustomTag"
+          innerText="C"
+          class="ml-1 badge-custom"
+        >
+        </ta-custom-category-tag>
+      </div>
+      <div class="subname" *ngIf="subItem">
+        {{ subItem }}
+        <ta-custom-category-tag
+          *ngIf="data.isCustom && showCustomTag"
+          innerText="(Custom)"
+          class="sub-badge"
+        >
+        </ta-custom-category-tag>
+      </div>
+    </div>
+    <div
+      class="d-flex flex-fill justify-content-end align-items-center flex-badge"
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      <ta-tags
+        *ngIf="options && options.showMappedTag"
+        [theme]="data.mapped ? 'green' : 'red'"
+      >
+        {{ data.mapped ? 'Mapped' : 'Requires Mapping' }}
+      </ta-tags>
+      <div
+        *ngIf="tagText && (!grouped || data.isItSystem)"
+        class="col-auto pr-0"
+      >
+        <ta-tags [theme]="'inverted-' + getLabelDetailsByTag(data?.tag)">
+          {{ tagText | replace: '_':' ' | titlecase }}
+        </ta-tags>
+      </div>
+
+      <div
+        *ngIf="!grouped && !data.isItSystem && data.location"
+        class="col-auto label-loc"
+      >
+        {{ data.location | uppercase }}
+      </div>
+      <div
+        *ngIf="data.isItSystem && data.locations[0].country"
+        class="col-auto label-loc"
+      >
+        {{ data.locations[0].country.threeLetterCode | uppercase }}
+      </div>
+      <div
+        *ngIf="data.isItSystem && !data.locations[0].country"
+        class="col-auto label-loc"
+      >
+        {{ data.locations }}
+      </div>
+      <!-- [i18n-tobeinternationalized] -->
+      <ng-container *ngIf="!showLoader">
+        <div
+          *ngIf="grouped && !data.isItSystem"
+          class="group-locations-label mr-2 ml-2"
+        >
+          LOCATIONS
+        </div>
+        <div
+          *ngIf="grouped && !data.isItSystem && data.locationIds"
+          class="col-auto label-loc"
+          [disablePopover]="!this.locationsForBage || !getCountriesCount()"
+          [taPopover]="popContent"
+          popoverClass="location-tooltip fadeInApp delay-500"
+          placement="right-top"
+          container="body"
+          triggers="manual"
+          autoClose="outside"
+          (mouseenter)="triggerTooltip()"
+        >
+          {{ getCountriesCount() }}
+        </div>
+        <span *ngIf="hasCloseIcon">
+          <a
+            *ngIf="!grouped"
+            class="col-auto remove mr-2 ml-2"
+            (click)="removeItem($event, data)"
+          >
+            <ta-icon [icon]="'close'"></ta-icon>
+          </a>
+          <a
+            *ngIf="grouped"
+            class="col-auto remove"
+            (click)="removeGroup($event, data)"
+          >
+            <ta-icon [icon]="'close'"></ta-icon> </a
+        ></span>
+      </ng-container>
+      <span
+        class="spinner-border spinner-border-sm mr-2 text-primary"
+        role="status"
+        aria-hidden="true"
+        *ngIf="showLoader"
+      ></span>
+    </div>
+  </div>
+</div>
+<ng-template #popContent>
+  <!-- RHEA-1129 Location Tooltip with mock data  -->
+  <ta-location-tooltip [locations]="locationsForBage"></ta-location-tooltip>
+</ng-template>

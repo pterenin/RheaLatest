@@ -1,0 +1,11 @@
+@import 'src/styles/variables';
+
+.link {
+  cursor: pointer;
+  color: $nice-blue;
+}
+
+:host ::ng-deep #file-upload.drop-zone {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}

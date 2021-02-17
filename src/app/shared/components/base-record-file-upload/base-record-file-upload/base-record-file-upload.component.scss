@@ -1,0 +1,30 @@
+@import 'src/styles/variables';
+
+:host {
+  .form-group {
+    position: relative;
+    .remove-file {
+      position: absolute;
+      right: 0;
+    }
+    .blank-area {
+      padding-top: 24px;
+      padding-bottom: 24px;
+      border: none;
+      border-radius: 4px;
+      background-color: $white;
+      span {
+        font-size: $font-size-12;
+        color: $gray-800;
+      }
+    }
+    .spinner-border {
+      position: relative;
+      left: 50%;
+      color: $cornflower-blue !important;
+    }
+  }
+  .file-name {
+    margin-right: 10px;
+  }
+}

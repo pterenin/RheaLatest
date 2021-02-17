@@ -1,0 +1,331 @@
+<div class="modal-header" data-cy="bp-add-edit-owner-modal">
+  <!--- [i18n-tobeinternationalized] --->
+  <h4 class="modal-title" id="addEditOwingOrganizationsContacts">
+    {{ isEditModal ? 'Edit Owner' : 'New Owner' }}
+  </h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="closeModal('Cross click')"
+  >
+    <i class="ta ta-close"></i>
+  </button>
+</div>
+<form [formGroup]="bpAddEditOwner" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+    <div class="row mb-1">
+      <div class="col">
+        <div class="form-group">
+          <!--- [i18n-tobeinternationalized] -->
+          <ta-dropdown-field
+            [isSearchable]="true"
+            data-cy="bp-owner-company"
+            label="Company, subsidiary or affiliate *"
+            [options]="organizations"
+            optionLabel="name"
+            [selectedOption]="
+              bpAddEditOwner.get('companySubsidiaryAffiliate').value
+            "
+            formControlName="companySubsidiaryAffiliate"
+            [useInfiniteScroll]="true"
+            (infiniteListChanged)="requestForInfiniteList($event)"
+            [viewPortHeight]="250"
+            class="w-100"
+          ></ta-dropdown-field>
+          <div
+            *ngIf="
+              companySubsidiaryAffiliate.invalid &&
+              companySubsidiaryAffiliate.touched
+            "
+            class="text-danger"
+          >
+            <span
+              *ngIf="companySubsidiaryAffiliate.errors?.required"
+              class="text-danger"
+            >
+              <!-- [i18n-tobeinternationalized] -->
+              Company, subsidiary or affiliate is required.
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <ta-dropdown-field
+            data-cy="bp-owner-role"
+            label="Role"
+            [options]="owningEntityRoles"
+            optionLabel="name"
+            [selectedOption]="bpAddEditOwner.get('role').value"
+            formControlName="role"
+          ></ta-dropdown-field>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-1">
+      <div class="col">
+        <div class="form-group mb-3">
+          <!--- [i18n-tobeinternationalized] -->
+          <label for="ownerName">Owner Name</label>
+          <span
+            [ngClass]="{
+              'text-danger': iconRequiredColor === 'red',
+              'font-color-default': iconRequiredColor === 'default'
+            }"
+          >
+            *</span
+          >
+          <input
+            data-cy="bp-owner-full-name"
+            type="text"
+            class="form-control"
+            formControlName="ownerName"
+            name="ownerName"
+            placeholder="Owner Name"
+            [ngClass]="{
+              'is-invalid': ownerName.invalid && ownerName.touched
+            }"
+          />
+          <div
+            *ngIf="ownerName.invalid && ownerName.touched"
+            class="text-danger"
+          >
+            <span *ngIf="ownerName.errors?.maxlength" class="text-danger">
+              <!-- [i18n-tobeinternationalized] -->
+              The name of owner must be less than 255 characters.
+            </span>
+            <span *ngIf="ownerName.errors?.required" class="text-danger">
+              <!-- [i18n-tobeinternationalized] -->
+              The name of owner is required.
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-1">
+      <div class="col">
+        <div class="form-group mb-3">
+          <!--- [i18n-tobeinternationalized] -->
+          <label for="ownerEmail">Owner Email</label>
+          <input
+            data-cy="bp-owner-email"
+            type="text"
+            class="form-control"
+            formControlName="ownerEmail"
+            name="ownerEmail"
+            placeholder="Email"
+            [ngClass]="{
+              'is-invalid': ownerEmail.invalid && ownerEmail.touched
+            }"
+          />
+          <!--- [i18n-tobeinternationalized] -->
+          <div
+            *ngIf="ownerEmail.errors?.pattern"
+            class="text-danger bp-owner-email-error"
+          >
+            Email must be a valid email address
+          </div>
+          <div *ngIf="ownerEmail.errors?.maxlength" class="text-danger">
+            <!-- [i18n-tobeinternationalized] -->
+            The email of owner must be less than 255 characters.
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group mb-3">
+          <!--- [i18n-tobeinternationalized] -->
+          <label for="ownerPhone">Owner Phone</label>
+          <input
+            data-cy="bp-owner-phone"
+            type="text"
+            class="form-control"
+            formControlName="ownerPhone"
+            name="ownerPhone"
+            placeholder="Phone"
+            [ngClass]="{
+              'is-invalid': ownerPhone.invalid && ownerPhone.touched
+            }"
+          />
+          <div *ngIf="ownerPhone.errors?.maxlength" class="text-danger">
+            <!-- [i18n-tobeinternationalized] -->
+            Invalid phone number
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-1">
+      <div class="col">
+        <div class="form-group mb-3">
+          <!--- [i18n-tobeinternationalized] -->
+          <label for="ownerAddress">Owner Address</label>
+          <input
+            data-cy="bp-owner-address"
+            type="text"
+            class="form-control"
+            formControlName="ownerAddress"
+            name="ownerAddress"
+            placeholder="Address Line"
+            [ngClass]="{
+              'is-invalid': ownerAddress.invalid && ownerAddress.touched
+            }"
+          />
+          <div *ngIf="ownerAddress.errors?.maxlength" class="text-danger">
+            <!-- [i18n-tobeinternationalized] -->
+            Invalid address
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-1">
+      <div class="col">
+        <div class="form-group mb-3">
+          <!--- [i18n-tobeinternationalized] -->
+          <label for="ownerCity">Owner City</label>
+          <input
+            data-cy="bp-owner-city"
+            type="text"
+            class="form-control"
+            formControlName="ownerCity"
+            name="ownerCity"
+            placeholder="City"
+            [ngClass]="{
+              'is-invalid': ownerCity.invalid && ownerCity.touched
+            }"
+          />
+          <div *ngIf="ownerCity.errors?.maxlength" class="text-danger">
+            <!-- [i18n-tobeinternationalized] -->
+            Invalid city
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group" id="ownerContactCountryDropdown">
+          <ta-dropdown-field
+            [isSearchable]="true"
+            label="Owner Country"
+            placeholder="Select Country"
+            [options]="countries"
+            optionLabel="name"
+            [selectedOption]="bpAddEditOwner.get('ownerCountry').value"
+            formControlName="ownerCountry"
+          ></ta-dropdown-field>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-1">
+      <div class="col">
+        <div class="form-group" id="ownerContactStateProvinceDropdown">
+          <ta-dropdown-field
+            [isSearchable]="true"
+            label="Owner State/Province"
+            placeholder="Select State/Province"
+            [options]="stateOrProvinces"
+            optionLabel="name"
+            [selectedOption]="bpAddEditOwner.get('ownerStateOrProvince').value"
+            formControlName="ownerStateOrProvince"
+            [isDisabled]="!bpAddEditOwner.get('ownerCountry').value"
+          ></ta-dropdown-field>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group mb-3">
+          <!--- [i18n-tobeinternationalized] -->
+          <label for="ownerZip">Owner Zip Code</label>
+          <input
+            data-cy="bp-owner-country"
+            type="text"
+            class="form-control"
+            formControlName="ownerZip"
+            name="ownerZip"
+            placeholder="Zip Code"
+            [ngClass]="{
+              'is-invalid': ownerZip.invalid && ownerZip.touched
+            }"
+          />
+          <div *ngIf="ownerZip.errors?.maxlength" class="text-danger">
+            <!-- [i18n-tobeinternationalized] -->
+            Invalid Zip Code
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-1">
+      <div class="col">
+        <div class="form-group">
+          <ta-dropdown-field
+            data-cy="bp-owner-department"
+            label="Department"
+            [options]="departments"
+            optionLabel="name"
+            [selectedOption]="bpAddEditOwner.get('department').value"
+            formControlName="department"
+            class="department-dropdown"
+          ></ta-dropdown-field>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-1">
+      <div class="col">
+        <div class="form-group">
+          <ta-checkbox
+            formControlName="primary"
+            class="dropdown-item text-wrap px-3"
+            [checked]="bpAddEditOwner.get('primary').value"
+            [disabled]="totalOwners === 1 && isEditModal"
+          >
+            <span>
+              <!-- [i18n-tobeinternationalized] -->
+              Make as primary owner
+            </span>
+            <span>
+              <ta-icon
+                icon="information-circle"
+                taTooltip="The primary owner will be used in calculating risk."
+                tooltipClass="ta-primary-tooltip"
+                tooltipTheme="light"
+                placement="bottom-left"
+                tooltipTheme="light"
+              >
+              </ta-icon>
+            </span>
+          </ta-checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer align-items-start justify-content-start">
+    <button
+      taButton
+      type="button"
+      taType="flat"
+      class="mr-auto"
+      data-dismiss="modal"
+      id="modal-cancel"
+      (click)="closeModal('Cancel')"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Cancel
+    </button>
+    <button
+      taButton
+      type="button"
+      taType="primary"
+      id="modal-submit"
+      (click)="onSubmit()"
+      bpAssignForm
+      [disabled]="!bpAddEditOwner.valid"
+      data-cy="bp-add-owner-modal-button"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      {{ isEditModal ? 'Save' : 'Add' }}
+      <span
+        *ngIf="isShowingSpinner"
+        class="spinner-border spinner-border-sm ml-auto text-secondary"
+        role="status"
+        aria-hidden="true"
+      ></span>
+    </button>
+  </div>
+</form>

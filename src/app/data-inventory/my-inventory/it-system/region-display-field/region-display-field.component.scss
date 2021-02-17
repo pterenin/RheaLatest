@@ -1,0 +1,6 @@
+@import 'src/styles/variables';
+
+.disable-input {
+  background-color: $gray-400;
+  pointer-events: none;
+}

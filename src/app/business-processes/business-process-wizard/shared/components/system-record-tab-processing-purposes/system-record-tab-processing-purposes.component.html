@@ -1,0 +1,184 @@
+<div class="animated fadeIn" *ngIf="!isReady">
+  <span class="spinner-border spinner-border-sm ml-auto text-primary"></span>
+</div>
+<div class="animated fadeIn" *ngIf="isReady">
+  <div class="d-flex align-items-center">
+    <ta-search-field
+      class="mr-auto w-100 d-block"
+      placeholder="Search Processing Purposes by Name"
+      (searchValue)="onSearch($event)"
+    ></ta-search-field>
+
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-selected-system-record-filter
+      (applyClick)="applyFilterForm()"
+      (clearClick)="resetFilterForm()"
+      headerTitle="Filter by Category ({{ filterChecked?.length || 0 }})"
+      [isDirty]="isFiltersDirty()"
+    >
+      <form [formGroup]="filterForm" class="py-2">
+        <div
+          formArrayName="filters"
+          *ngFor="let item of filters.controls; let i = index"
+        >
+          <div [formGroupName]="i.toString()">
+            <ta-checkbox
+              formControlName="checked"
+              class="dropdown-item text-wrap px-3"
+            >
+              {{ item.get('name').value }}
+            </ta-checkbox>
+          </div>
+        </div>
+      </form>
+    </ta-selected-system-record-filter>
+  </div>
+
+  <ng-container *ngIf="type === 'withDataFlow'">
+    <ng-container>
+      <!-- Summary Info -->
+      <div
+        class="d-flex align-items-center pt-4 pb-2 position-sticky"
+        style="top: 35px; z-index: 3"
+      >
+        <div
+          class="tab-main-content cursor-pointer"
+          (click)="isCollapsedAttached = !isCollapsedAttached"
+        >
+          <h3 class="h6 m-0">
+            <!-- [i18n-tobeinternationalized] -->
+            Processing Purposes on System record ({{
+              getSelectedCount(processingPurposesProcessed)
+            }}/{{ processingPurposesProcessed?.length }})
+          </h3>
+          <p class="text-black-50 m-0">
+            <!-- [i18n-tobeinternationalized] -->
+            Deselect any processing purposes that are not applicable to this
+            system in this business process.
+          </p>
+        </div>
+        <button
+          class="ml-auto"
+          taButton
+          taType="circle"
+          *ngIf="processingPurposesProcessed"
+          (click)="isCollapsedAttached = !isCollapsedAttached"
+        >
+          <ta-icon
+            [icon]="isCollapsedAttached ? 'chevron-down' : 'chevron-up'"
+          ></ta-icon>
+        </button>
+      </div>
+
+      <!-- List of attached processing purposes -->
+      <div [class.d-none]="isCollapsedAttached">
+        <ta-system-record-tab-table
+          [data]="
+            processingPurposesProcessed
+              | searchBy: { processingPurpose: searchValue }:false
+              | filterByIncludeArrayAndPath: filterCheckedCategories:'category'
+          "
+          [gridId]="gridIdAttached"
+          col1Name="Processing Purposes"
+          col2Name="Category"
+          col1Field="processingPurpose"
+          col2Field="category"
+        ></ta-system-record-tab-table>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="type === 'withDataFlow' && dataAvailable">
+    <ng-container
+      *ngIf="
+        processingPurposesAvailable
+          | filterOutByArrayAndPropertyPipe
+            : processingPurposesProcessedIds
+            : 'id' as resultProcessingPurposesAvailable
+      "
+    >
+      <!-- Summary Info -->
+      <div
+        class="d-flex align-items-center pt-4 pb-2 position-sticky"
+        style="top: 35px; z-index: 3"
+        *ngIf="dataAvailable"
+      >
+        <div
+          class="tab-main-content cursor-pointer"
+          (click)="isCollapsedAdditional = !isCollapsedAdditional"
+        >
+          <h3 class="h6 m-0">
+            <!-- [i18n-tobeinternationalized] -->
+            Additional Processing Purposes ({{
+              getSelectedCount(resultProcessingPurposesAvailable)
+            }}/{{ resultProcessingPurposesAvailable?.length }})
+          </h3>
+          <p class="text-black-50 m-0">
+            <!-- [i18n-tobeinternationalized] -->
+            Select additional processing purposes that are applicable to this
+            system in this business process.
+          </p>
+        </div>
+        <button
+          class="ml-auto"
+          taButton
+          taType="circle"
+          (click)="isCollapsedAdditional = !isCollapsedAdditional"
+        >
+          <ta-icon
+            [icon]="isCollapsedAdditional ? 'chevron-down' : 'chevron-up'"
+          ></ta-icon>
+        </button>
+      </div>
+
+      <!-- List of available processing purposes -->
+      <div [class.d-none]="isCollapsedAdditional">
+        <ta-system-record-tab-table
+          [data]="
+            resultProcessingPurposesAvailable
+              | searchBy: { processingPurpose: searchValue }:false
+              | filterByIncludeArrayAndPath: filterCheckedCategories:'category'
+          "
+          [gridId]="gridIdAvailable"
+          col1Name="Processing Purposes"
+          col2Name="Category"
+          col1Field="processingPurpose"
+          col2Field="category"
+        ></ta-system-record-tab-table>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="itSystemReadOnly">
+    <!-- Summary Info -->
+    <div
+      class="d-flex align-items-center pt-4 pb-2 position-sticky"
+      style="top: 35px; z-index: 3"
+    >
+      <div
+        class="tab-main-content cursor-pointer"
+        (click)="isCollapsedAttached = !isCollapsedAttached"
+      >
+        <h3 class="h6 m-0">
+          <!-- [i18n-tobeinternationalized] -->
+          Processing Purposes on System record ({{ itSystemReadOnly?.length }})
+        </h3>
+      </div>
+    </div>
+
+    <div [class.d-none]="isCollapsedAttached">
+      <ta-system-record-tab-table
+        [data]="
+          itSystemReadOnly
+            | searchBy: { processingPurpose: searchValue }:false
+            | filterByIncludeArrayAndPath: filterCheckedCategories:'category'
+        "
+        [gridId]="gridIdSystemReadOnly"
+        col1Name="Processing Purposes"
+        col2Name="Category"
+        col1Field="processingPurpose"
+        col2Field="category"
+      ></ta-system-record-tab-table>
+    </div>
+  </ng-container>
+</div>

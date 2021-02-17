@@ -1,0 +1,115 @@
+<ta-risk-field-indicator
+  [showIndicator]="showRiskFields"
+></ta-risk-field-indicator>
+<div class="row">
+  <div class="col-6">
+    <div
+      taDropdown
+      [autoClose]="autoClose"
+      class="d-inline-block mt-2 mb-2 select-item-dropdown w-100"
+      [placement]="['bottom-left', 'top-left']"
+      #selectorDropdown
+    >
+      <button
+        type="button"
+        taButton
+        class="btn btn-dropdown w-100"
+        [attr.id]="dropdownId"
+        *ngIf="!isLoading"
+        taDropdownToggle
+        taType="dropdown"
+        data-cy="selected-items-container-dropdown"
+      >
+        <!--- [i18n-tobeinternationalized] -->
+        <span class="placeholder-text">{{ dropdownText }}</span>
+      </button>
+      <button
+        type="button"
+        taButton
+        class="btn btn-dropdown"
+        [attr.id]="dropdownId"
+        *ngIf="isLoading"
+        taType="dropdown"
+      >
+        <!--- [i18n-tobeinternationalized] -->
+        Loading...
+      </button>
+      <div
+        taDropdownMenu
+        aria-labelledby="bpDataItemsSelect"
+        class="bpDataItemsSelect"
+      >
+        <ta-categorical-view
+          *ngIf="data"
+          [locationDatas]="locationDatas"
+          [data]="data"
+          [reselectable]="reselectable"
+          [selectFirstCategory]="false"
+          [showCheckboxes]="useCheckboxes"
+          [showCounts]="showCounts"
+          [showThreeLetterCountryCode]="showThreeLetterCountryCode"
+          (itemSelected)="onSelectionChange($event)"
+          (itemDeleted)="onSelectionChange($event)"
+          [consolidateLocations]="consolidateLocations"
+        >
+          ></ta-categorical-view
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+<button
+  taButton
+  class="remove-all-icon"
+  type="button"
+  taType="circle"
+  (click)="clearAllDataItems()"
+  [taTooltip]="clearAllTooltip"
+  container="body"
+  [disabled]="selectedDataItems.length == 0"
+>
+  <ta-icon icon="delete"></ta-icon>
+</button>
+<div class="selected-items-box" [style.height]="height" *ngIf="!isLoading">
+  <div *ngIf="selectedDataItems.length; else emptystate">
+    <div
+      *ngFor="let dataItem of selectedDataItems; let i = index"
+      class="fadeInApp"
+      [style.animation-delay]="150 * i + 'ms'"
+      (mouseenter)="closeBadgeTooltips()"
+    >
+      <ta-label-badge
+        #labelBadgeComponent
+        [showCustomTag]="showCustomTag"
+        [data]="dataItem"
+        [options]="options"
+        [locationDatas]="locationDatas"
+        [fullCountryListRaw]="fullCountryList"
+        [info]="info"
+        [tagText]="dataItem.tag"
+        [subItem]="dataItem.subItem"
+        [close]="close"
+        [grouped]="grouped"
+        (removeFromList)="removeFromList(dataItem)"
+        (removeGroupFromList)="removeGroupFromList($event)"
+        (showInfoTooltip)="showInfoTooltip(dataItem)"
+        (click)="onItemClick(dataItem)"
+      ></ta-label-badge>
+    </div>
+  </div>
+</div>
+
+<ng-template #emptystate>
+  <div class="empty-image">
+    <!-- [i18n-tobeinternationalized] -->
+    <div class="empty-subtext">
+      <span
+        class="add-link"
+        (click)="$event.stopPropagation(); selectorDropdown.open()"
+        >{{ emptyStateLink }}</span
+      >
+      {{ emptyStateText }}
+    </div>
+  </div>
+</ng-template>

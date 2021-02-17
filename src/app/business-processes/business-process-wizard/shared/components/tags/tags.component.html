@@ -1,0 +1,76 @@
+<div class="modal-header" data-cy="bp-tags-modal">
+  <h4 class="modal-title" data-cy="modal-title">
+    <!-- [i18n-tobeinternationalized] -->
+    Tags
+    <ta-badge
+      [values]="tagsCount$ | async"
+      class="badge-custom-nav-items align-top mt-1"
+    ></ta-badge>
+  </h4>
+  <button
+    data-cy="modal-close"
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="dismissModal()"
+  >
+    <i class="ta ta-close"></i>
+  </button>
+</div>
+<div class="modal-body modal-scroll">
+  <div class="form-group bp-tags-container">
+    <ng-container *ngIf="isFetching">
+      <ngx-skeleton-loader count="1" appearance="line"> </ngx-skeleton-loader>
+    </ng-container>
+    <div
+      class="bp-tags-empty d-flex justify-content-center"
+      *ngIf="!thereAreTagsBP && !isFetching"
+    >
+      <span>No tags available for this record.</span>
+    </div>
+    <ta-tags-selector
+      *ngIf="thereAreTagsBP"
+      [thereAreTagsBP]="thereAreTagsBP"
+      [formGroup]="tagFormsGroup"
+      [baseDomainId]="businessProcessId"
+      [baseDomainType]="baseDomainTypeEnum.BusinessProcess"
+      (selectedTagsChange)="selectedTagsChange($event)"
+      [lastElementPlacementTop]="true"
+      [preselectedTags]="selectedTags"
+      [allTags]="allTags"
+    >
+    </ta-tags-selector>
+  </div>
+</div>
+
+<div class="modal-footer align-items-start justify-content-start">
+  <button
+    taButton
+    type="button"
+    taType="flat"
+    class="mr-auto"
+    data-dismiss="modal"
+    id="modal-cancel"
+    (click)="dismissModal()"
+  >
+    <!--- [i18n-tobeinternationalized] --->
+    Cancel
+  </button>
+  <button
+    taButton
+    type="button"
+    taType="primary"
+    id="modal-submit"
+    (click)="saveTags()"
+    [disabled]="selectedTags.length === 0"
+  >
+    <!--- [i18n-tobeinternationalized] --->
+    Save
+    <span
+      *ngIf="isShowingSpinner"
+      class="spinner-border spinner-border-sm ml-auto text-secondary"
+      role="status"
+      aria-hidden="true"
+    ></span>
+  </button>
+</div>

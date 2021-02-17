@@ -1,0 +1,64 @@
+@import '../../../../styles/_variables.scss';
+
+:host {
+  .state-content {
+    border: 1px solid $gray-500;
+    width: 100%;
+    height: 316px;
+    border-radius: 3px;
+    overflow: auto;
+  }
+
+  .search-items {
+    max-height: 100%;
+    overflow-y: auto;
+  }
+
+  .back-chevron-container {
+    cursor: pointer;
+    height: 100%;
+    width: 10%;
+  }
+
+  .back-chevron {
+    align-items: center;
+    color: $turquoise-blue;
+    padding-left: 20px;
+  }
+
+  .clear-all {
+    cursor: pointer;
+  }
+
+  .state-header {
+    border-bottom: 1px solid $gray-500;
+  }
+
+  .state-list-wrapper {
+    width: 100%;
+    padding: 0 15px;
+  }
+
+  .state-list .state-wrapper {
+    display: block;
+    width: 33.3333333333%;
+  }
+
+  .search {
+    border: none;
+    max-width: 115px;
+    outline: none;
+  }
+
+  .state {
+    width: 100%;
+    display: block;
+  }
+}
+
+::ng-deep .ta-checkbox-layout {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}

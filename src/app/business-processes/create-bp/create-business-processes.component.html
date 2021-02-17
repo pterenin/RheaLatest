@@ -1,0 +1,24 @@
+<ta-steps
+  *ngIf="!isFetching && !licenses.RHEA_NEW_UI_STEPS_12_LICENSE"
+  #taSteps
+  [activeStep]="selectedStep + 1"
+  [attr.data-cy]="'business-process-steps'"
+>
+  <ta-step
+    *ngFor="let step of pageSteps; index as i"
+    [stepNumber]="i + 1"
+    [status]="setStatusByStepNumber(i)"
+    (click)="handleStepClick(taSteps, step, i)"
+  >
+    {{ step.label }}
+  </ta-step>
+</ta-steps>
+
+<ta-step-container
+  [hasRHEA_NEW_UI_STEPS_34_LICENSE]="hasRHEA_NEW_UI_STEPS_34_LICENSE"
+  [pageSteps]="pageSteps"
+  [selectedStep]="selectedStep"
+  (pageRouteChanged)="onPageRouteChange($event)"
+>
+  <router-outlet></router-outlet>
+</ta-step-container>

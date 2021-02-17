@@ -1,0 +1,18 @@
+{
+  "processName": {
+    "selector": "[data-cy='process-name']",
+    "alias": "@process-name"
+  },
+  "title": {
+    "selector": "[data-cy='title-subjects']",
+    "alias": "@title-subjects"
+  },
+  "selectDataSubject": {
+    "selector": "[data-cy='bp-step-3-data-subjects']",
+    "alias": "@bp-step-3-data-subjects"
+  },
+  "selectDataRecipient": {
+    "selector": "[data-cy='bp-step-3-data-recipients']",
+    "alias": "@bp-step-3-data-recipients"
+  }
+}

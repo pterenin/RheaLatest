@@ -1,0 +1,20 @@
+@import 'src/styles/variables';
+
+:host {
+  padding-right: 25px;
+  display: flex;
+  align-items: flex-end;
+
+  div.label {
+    text-align: right;
+    padding-bottom: 5px;
+    span {
+      color: $gray-800;
+    }
+  }
+
+  ta-progressbar {
+    width: 400px;
+    padding-bottom: 10px;
+  }
+}

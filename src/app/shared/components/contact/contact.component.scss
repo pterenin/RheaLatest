@@ -1,0 +1,19 @@
+@import 'src/styles/variables';
+
+$border-grey: zeplin-lighten($gray-700, 0.2);
+
+.ta-modal-custom-width {
+  .modal-dialog {
+    max-width: 700px !important;
+  }
+}
+.modal-body {
+  min-height: calc(600px - 137px);
+  padding: 20px;
+}
+
+.modal-subheading {
+  font-size: $font-size-18;
+  color: $twilight-blue;
+  display: inline;
+}

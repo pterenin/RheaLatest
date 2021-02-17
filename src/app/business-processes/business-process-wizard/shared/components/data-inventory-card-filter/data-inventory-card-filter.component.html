@@ -1,0 +1,53 @@
+<div
+  taDropdown
+  #filterDropdown
+  class="d-inline-block"
+  placement="bottom-left"
+  autoClose="outside"
+>
+  <button
+    taButton
+    taType="circle"
+    id="data-inventory-card-filter"
+    taDropdownToggle
+    class="position-relative"
+  >
+    <span
+      *ngIf="isDirty"
+      class="filter-indicator position-absolute d-block"
+    ></span>
+    <ta-icon icon="filter"></ta-icon>
+  </button>
+  <div
+    taDropdownMenu
+    aria-labelledby="data-inventory-card-filter"
+    class="data-inventory-card-filter-dropdown-menu animated fadeIn"
+    [style.width]="contentWidth"
+  >
+    <!-- Header -->
+    <header class="data-inventory-card-filter-header px-3 py-2">
+      {{ headerTitle }}
+      <ta-badge [values]="counter"></ta-badge>
+    </header>
+
+    <!-- Form Content -->
+    <div class="data-inventory-card-filter-content">
+      <ng-content></ng-content>
+    </div>
+
+    <!-- Action Button: Emitters -->
+    <footer class="data-inventory-card-filter-footer px-3 py-2 text-right">
+      <button class="mr-1 btn-sm" taButton taType="flat" (click)="onClear()">
+        {{ clearLabel }}
+      </button>
+      <button
+        class="btn-sm w-auto"
+        taButton
+        taType="primary"
+        (click)="onApply()"
+      >
+        {{ applyLabel }}
+      </button>
+    </footer>
+  </div>
+</div>

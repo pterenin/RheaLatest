@@ -1,0 +1,87 @@
+<form [formGroup]="dropdownForm">
+  <label [attr.for]="dropdownId" *ngIf="label">{{ label }}</label>
+  <div
+    taDropdown
+    [autoClose]="autoClose ? true : 'outside'"
+    [placement]="['bottom-left']"
+  >
+    <div
+      type="button"
+      [attr.aria-label]="dropdownId"
+      [attr.id]="dropdownId"
+      class="d-inline-block w-100"
+      taButton
+      taType="tags"
+      role="button"
+      taDropdownToggle
+    >
+      <span
+        class="placeholder-text"
+        *ngIf="!selectedValues || selectedValues.length === 0"
+      >
+        {{ placeholder }}
+      </span>
+      <ng-container
+        *ngFor="let option of selectedValues; index as selectionIndex"
+      >
+        <ta-tags
+          showClose="true"
+          theme="dropdown"
+          (click)="$event.stopPropagation()"
+          (onClose)="onRemoveSelectedOption(selectionIndex)"
+        >
+          {{
+            optionLabel && option[optionLabel] ? option[optionLabel] : option
+          }}
+        </ta-tags>
+      </ng-container>
+    </div>
+
+    <div taDropdownMenu>
+      <ta-dropdown-search
+        *ngIf="showSearch"
+        (onSearch)="onSearch($event)"
+      ></ta-dropdown-search>
+
+      <ta-dropdown-category>
+        <ta-dropdown-menus>
+          <ta-dropdown-scroll scrollHeight="200">
+            <div
+              *ngIf="!filteredOptions || filteredOptions.length === 0"
+              class="col no-options-match"
+            >
+              {{ noOptionsText }}
+            </div>
+            <ng-container *ngFor="let category of filteredOptions">
+              <button
+                *ngIf="category && !category.hidden"
+                [class.selected]="selectedCategory.label == category.label"
+                (click)="onSelectCategory(category)"
+                class="dropdown-menu-item white-space-unset"
+              >
+                <span [innerHTML]="getCategoryLabel(category)"></span>
+                <ta-icon class="caret-right" icon="caret-right"></ta-icon>
+              </button>
+            </ng-container>
+          </ta-dropdown-scroll>
+        </ta-dropdown-menus>
+
+        <ta-dropdown-items>
+          <ta-dropdown-scroll scrollHeight="200">
+            <ng-container *ngIf="selectedCategory">
+              <div *ngFor="let item of selectedCategory.items">
+                <ta-checkbox
+                  *ngIf="item && !item.hidden"
+                  [formControlName]="item.id"
+                  class="dropdown-item white-space-unset"
+                >
+                  <span [innerHTML]="getItemLabel(item)"></span>
+                </ta-checkbox>
+              </div>
+            </ng-container>
+          </ta-dropdown-scroll>
+        </ta-dropdown-items>
+      </ta-dropdown-category>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,13 @@
+.indicator-container {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+
+  span {
+    text-decoration: underline;
+  }
+
+  & > img {
+    padding-right: 5px;
+  }
+}

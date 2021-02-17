@@ -1,0 +1,25 @@
+<div
+  #displayPopOver="taPopover"
+  triggers="'manual'"
+  [placement]="['bottom-left', 'top-left']"
+  [taPopover]="namesHoverContent"
+  [autoClose]="false"
+  [disablePopover]="owners && owners.length < 1"
+  container="body"
+  (mouseenter)="triggerPopover(displayPopOver)"
+  (mouseleave)="closePopovers()"
+  popoverClass="inventory-owner-popover-styles"
+>
+  <span class="d-inline" *ngIf="owners && owners.length === 1">
+    {{ owners[0].fullName }}
+  </span>
+  <span class="d-inline" *ngIf="owners && owners.length > 1">
+    {{ getOwnerNames() | multipleStringPipe: 'stringify' }}
+  </span>
+</div>
+
+<ng-template #namesHoverContent>
+  <div *ngIf="owners && owners.length > 0" (mouseleave)="closePopovers()">
+    <div class="mb-1" *ngFor="let owner of owners">{{ owner.fullName }}</div>
+  </div>
+</ng-template>

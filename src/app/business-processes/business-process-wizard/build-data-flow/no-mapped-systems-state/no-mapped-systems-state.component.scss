@@ -1,0 +1,29 @@
+@import 'src/styles/variables';
+
+ta-no-mapped-systems-state {
+  .data-flow-empty-wrapper {
+    display: flex;
+    padding-top: 80px !important;
+    .card-body {
+      padding-bottom: 80px;
+    }
+    .image-container {
+      width: 214px;
+      height: 280px;
+      background-color: $white;
+      background-position-x: center;
+      background-position-y: center;
+      background-repeat: no-repeat;
+      background-image: url('/assets/images/no-mapped-systems-background.svg');
+      background-size: contain;
+      z-index: 9;
+    }
+    .sub-image-text {
+      font-size: $font-size-12;
+      line-height: 16px;
+      text-align: center;
+      color: $gray-800;
+      z-index: 10;
+    }
+  }
+}

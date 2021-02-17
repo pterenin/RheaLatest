@@ -1,0 +1,7 @@
+{
+  "putOwner": {
+    "method": "PUT",
+    "url": "api/business-processes/{id}/owner*",
+    "alias": "@putOwner"
+  }
+}

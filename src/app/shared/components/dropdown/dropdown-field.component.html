@@ -1,0 +1,130 @@
+<ta-risk-field-indicator
+  [showIndicator]="showRiskFields"
+></ta-risk-field-indicator>
+<label [attr.for]="dropdownId" *ngIf="label" [innerHTML]="label"></label>
+<ng-content></ng-content>
+<div
+  taDropdown
+  (openChange)="onOpenChange($event)"
+  [placement]="placement ? placement : ['bottom-left', 'top-left']"
+  class="w-100"
+>
+  <div
+    data-cy="dropdown-field-click"
+    taButton
+    taDropdownToggle
+    [attr.id]="getDropdownButtonId()"
+    role="button"
+    [taType]="isMultiple ? 'tags' : 'dropdown'"
+    class="btn btn-block w-100"
+    [ngClass]="{
+      'disable-input': isDisabled === true,
+      'disabled-active-style': selectedOption && selectedOption.length > 0
+    }"
+  >
+    <span
+      *ngIf="!isMultiple"
+      [ngClass]="{
+        'selected-option': selectedOption,
+        'placeholder-text': !selectedOption
+      }"
+      class="text-truncate d-inline-block text-wrapper"
+      [attr.title]="selectedOptionLabel"
+    >
+      {{ selectedOptionLabel || placeholder }}
+    </span>
+    <span class="d-flex align-items-center flex-wrap multiple-tags-wrapper">
+      <ng-container *ngIf="isMultiple">
+        <span
+          class="placeholder-text"
+          *ngIf="!selectedOption || selectedOption.length === 0"
+        >
+          {{ placeholder }}
+        </span>
+        <ta-tags
+          [showClose]="true"
+          theme="dropdown"
+          *ngFor="let option of selectedOption; index as selectionIndex"
+          (onClose)="onRemoveSelectedOption(selectionIndex)"
+        >
+          {{ getLabel(option) }}
+        </ta-tags>
+      </ng-container>
+    </span>
+  </div>
+  <div taDropdownMenu *ngIf="useInfiniteScroll">
+    <ta-dropdown-search
+      data-cy="dropdown-field-search"
+      *ngIf="showSearch"
+      (onSearch)="onSearch($event)"
+    ></ta-dropdown-search>
+    <ta-dropdown-scroll [scrollHeight]="260">
+      <div
+        *ngIf="!filteredOptions || filteredOptions.length === 0"
+        class="col no-options-match"
+      >
+        {{ noOptionsText }}
+      </div>
+      <!-- https://github.com/rintoj/ngx-virtual-scroller -->
+      <virtual-scroller
+        #scroll
+        [items]="filteredOptions"
+        (vsEnd)="onListChange($event)"
+        [bufferAmount]="5"
+        [ngStyle]="getViewPortStyle()"
+      >
+        <button
+          data-cy="dropdown-field-search-option"
+          *ngFor="let item of scroll.viewPortItems"
+          type="button"
+          (click)="!autoClose ? $event.stopPropagation() : null; onSelect(item)"
+          class="dropdown-item text-wrap"
+        >
+          {{ getLabel(item) }}
+        </button>
+      </virtual-scroller>
+    </ta-dropdown-scroll>
+  </div>
+  <div taDropdownMenu *ngIf="!useInfiniteScroll">
+    <ta-dropdown-search
+      data-cy="dropdown-field-search"
+      [id]="getSearchId()"
+      *ngIf="showSearch"
+      (onSearch)="onSearch($event)"
+    ></ta-dropdown-search>
+    <ta-dropdown-scroll [scrollHeight]="260">
+      <button
+        *ngIf="selectAllOption && filteredOptions.length > 0"
+        type="button"
+        (click)="!autoClose ? $event.stopPropagation() : null; onSelectAll()"
+        class="dropdown-item text-wrap"
+      >
+        <!-- [i18n-tobeinternationalized] -->
+        Select all
+      </button>
+      <div
+        *ngIf="!filteredOptions || filteredOptions.length === 0"
+        class="col no-options-match"
+      >
+        {{ noOptionsText }}
+      </div>
+      <button
+        *ngIf="emptyOption"
+        type="button"
+        (click)="onSelect(null)"
+        class="dropdown-item dropdown-empty-item text-wrap"
+      >
+        {{ emptyLabel ? emptyLabel : placeholder }}
+      </button>
+      <button
+        data-cy="dropdown-field-search-option"
+        type="button"
+        *ngFor="let option of filteredOptions"
+        (click)="!autoClose ? $event.stopPropagation() : null; onSelect(option)"
+        class="dropdown-item text-wrap"
+      >
+        {{ getLabel(option) }}
+      </button>
+    </ta-dropdown-scroll>
+  </div>
+</div>

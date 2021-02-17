@@ -1,0 +1,26 @@
+{
+  "data": {
+    "processName": "e2e-BP-Step5",
+    "title": "Select the data subjects, data recipients, add a system, design the data-flow involved in this business process",
+    "subjects": [
+      {
+        "searchPrefix": "Doctor",
+        "category": "Data Subjects"
+      }
+    ],
+    "recipients": [
+      {
+        "searchPrefix": "IT",
+        "category": "Data Recipients"
+      }
+    ],
+    "systems": [
+      {
+        "searchPrefix": "%",
+        "category": "Systems"
+      }
+    ]
+  },
+  "status": 200,
+  "ok": true
+}

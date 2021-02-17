@@ -1,0 +1,33 @@
+<ta-business-process-wizard-header
+  [currentRoute]="businessProcessNavigation[0]"
+  (isClickSteps)="navigate($event)"
+  (viewUpdated)="navigate($event.step)"
+></ta-business-process-wizard-header>
+
+<div class="details-wrapper p-3">
+  <div class="card mb-3 rounded-lg">
+    <div class="card-header d-flex">
+      <div class="w-100" data-cy="title-details">
+        <!-- [i18n-tobeinternationalized] -->
+        <span class="ta-bp-subtitle">Basic Details</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <ta-business-process-detail
+        [sourceData]="bpDetail$"
+        (formGroupValueChanges)="detailsFormValueChanges($event)"
+        [dataSubjectVolumes]="dataSubjectVolumes"
+        (dataChanged)="updateBusinessProcessDetails($event)"
+      ></ta-business-process-detail>
+    </div>
+  </div>
+  <div class="owning-organization-wrapper card rounded-lg">
+    <ta-owing-organizations-contacts></ta-owing-organizations-contacts>
+  </div>
+</div>
+<ta-business-process-wizard-footer
+  [showPreviousButton]="false"
+  [disableNextButton]="!isDetailsFormValid"
+  (isClickNextButton)="saveDetails(true)"
+  (isClickCancelButton)="cancelForm()"
+></ta-business-process-wizard-footer>

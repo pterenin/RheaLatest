@@ -1,0 +1,34 @@
+<div class="selected-items-box">
+  <div *ngIf="dataItems && dataItems.length; else emptystate">
+    <div *ngFor="let dataItem of dataItems">
+      <ta-label-badge
+        [ngClass]="{ disabled: !dataItem.edgeId }"
+        *ngIf="!dataItem.removing"
+        #labelBadgeComponent
+        [data]="dataItem"
+        [options]="options"
+        [locations]="locations"
+        [locationDatas]="locationDatas"
+        [fullCountryListRaw]="fullCountryList"
+        [tagText]="dataItem.tag"
+        [subItem]="dataItem.subItem"
+        [close]="true"
+        [grouped]="true"
+        (mouseenter)="closeBadgeTooltips()"
+        (removeGroupFromList)="removeGroupFromList($event)"
+        (click)="onItemClick(dataItem)"
+        [showLoader]="!dataItem.edgeId"
+      ></ta-label-badge>
+    </div>
+  </div>
+</div>
+
+<ng-template #emptystate>
+  <div class="empty-image">
+    <!-- [i18n-tobeinternationalized] -->
+    <div class="empty-subtext">
+      <span class="add-link" (click)="emptyLinkClickEvent()">Select</span>
+      {{ emptyStateText }}
+    </div>
+  </div>
+</ng-template>

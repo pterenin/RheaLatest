@@ -1,0 +1,370 @@
+<div class="fadeInApp">
+  <form [formGroup]="detailsForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="company-affiliate-details-container">
+      <div class="row form-group">
+        <div class="col col-6">
+          <label for="companyName" class="data-label">
+            <!-- [i18n-tobeinternationalized] -->
+            Company Name
+            <span
+              [ngClass]="{
+                'text-danger': iconRequiredColor === 'red',
+                'font-color-default': iconRequiredColor === 'default'
+              }"
+              >*</span
+            >
+            <ta-icon
+              [icon]="iconTypeTooltip"
+              taTooltip="A commercial entity with a relationship with a peer or a larger entity."
+              tooltipTextAlign="left"
+              height="12"
+              container="body"
+              class="position-relative"
+              style="top: -2px; left: 5px;"
+              placement="bottom-left"
+              color="#595959"
+              tooltipTheme="light"
+            ></ta-icon>
+          </label>
+          <input
+            id="companyName"
+            type="text"
+            formControlName="companyName"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': companyName.invalid && companyName.touched
+            }"
+            name="companyName"
+          />
+          <div
+            *ngIf="
+              companyName.invalid &&
+              companyName.touched &&
+              !companyName.errors?.maxlength
+            "
+            class="text-danger text-danger-multi-sibling"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            This field is required.
+          </div>
+          <div
+            *ngIf="companyName.errors?.maxlength"
+            class="text-danger text-danger-multi-sibling"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            The name must be less than 255 characters.
+          </div>
+        </div>
+        <div class="col col-6">
+          <!-- [i18n-tobeinternationalized] -->
+          <label class="data-label">
+            <!-- [i18n-tobeinternationalized] -->
+            Entity Type
+            <span
+              [ngClass]="{
+                'text-danger': iconRequiredColor === 'red',
+                'font-color-default': iconRequiredColor === 'default'
+              }"
+              >*</span
+            >
+          </label>
+          <ta-dropdown-field
+            [options]="entityTypes"
+            optionLabel="name"
+            [selectedOption]="detailsForm.get('entityType').value"
+            formControlName="entityType"
+            placeholder="Select"
+            [ngClass]="{
+              'is-invalid': entityType.invalid
+            }"
+            (dropdownOpenChanged)="onDropdownTouched($event, 'entityType')"
+          ></ta-dropdown-field>
+          <div
+            *ngIf="
+              detailsForm.get('entityType').invalid &&
+              detailsForm.get('entityType').touched
+            "
+            class="text-danger text-danger-multi-sibling"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            This field is required.
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-6">
+          <label class="data-label">
+            <!-- [i18n-tobeinternationalized] -->
+            Industry Sector
+          </label>
+          <div
+            aria-labelledby="companyAffiliateIndustrySectorDetailsItemsSelect"
+          >
+            <ta-dropdown-category-multiple
+              [isSearchable]="true"
+              [options]="industrySectorOptions"
+              formControlName="industrySectors"
+            ></ta-dropdown-category-multiple>
+          </div>
+        </div>
+        <div class="col col-6">
+          <label class="data-label">
+            <!-- [i18n-tobeinternationalized] -->
+            Data Controller or Processor
+            <ng-template #controllerProcessorTipContent>
+              <!-- [i18n-tobeinternationalized] -->
+              The data controller is the person (or business) who determines the
+              purposes for which, and the way in which, personal data is
+              processed. By contrast, a data processor is anyone who processes
+              personal data on behalf of the data controller (excluding the data
+              controller's own employees)
+            </ng-template>
+            <ta-icon
+              [icon]="iconTypeTooltip"
+              [taTooltip]="controllerProcessorTipContent"
+              tooltipTextAlign="left"
+              height="12"
+              container="body"
+              class="position-relative"
+              style="top: -2px; left: 5px;"
+              placement="bottom-left"
+              color="#595959"
+              tooltipTheme="light"
+            ></ta-icon>
+          </label>
+          <ta-dropdown-field
+            [options]="dataControllerOrProcessors"
+            optionLabel="name"
+            [selectedOption]="
+              detailsForm.get('dataControllerOrProcessor').value
+            "
+            formControlName="dataControllerOrProcessor"
+            placeholder="Select Controller or Processor"
+          ></ta-dropdown-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <ta-risk-field-indicator
+            [showIndicator]="showRiskFields"
+          ></ta-risk-field-indicator>
+          <label for="ownedBy" class="data-label">
+            <!--- [i18n-tobeinternationalized] --->
+            Owned By
+            <ng-template #ownedByTipContent>
+              <div class="tooltip-content">
+                <strong>
+                  <!-- [i18n-tobeinternationalized] -->
+                  Company Entities:
+                </strong>
+                <span>
+                  <!-- [i18n-tobeinternationalized] -->
+                  Primary Entity or Company Affiliate
+                </span>
+              </div>
+            </ng-template>
+            <ta-icon
+              [icon]="iconTypeTooltip"
+              [taTooltip]="ownedByTipContent"
+              tooltipTextAlign="left"
+              height="12"
+              container="body"
+              class="position-relative"
+              style="top: -2px; left: 5px;"
+              placement="bottom-left"
+              color="#595959"
+              tooltipTheme="light"
+            ></ta-icon>
+          </label>
+          <div data-cy="owned-by" id="ownedBy">
+            <ta-async-categorical-dropdown
+              #asyncDropdown
+              [categoryLoaders]="getCategoryLoaders()"
+              [dropdownAlignment]="['bottom-left', 'bottom-right', 'top-right']"
+              [isMultiSelect]="false"
+              [mapContentItem]="mapContentItem"
+              [selectedItems]="selectedLegalEntity ? [selectedLegalEntity] : []"
+              (itemSelected)="
+                selectLegalEntity($event);
+                asyncDropdown.selectorDropdown.close()
+              "
+            ></ta-async-categorical-dropdown>
+          </div>
+          <div
+            *ngIf="legalEntity.errors?.required && legalEntity.touched"
+            class="text-danger text-danger-multi-sibling"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            This field is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- [i18n-tobeinternationalized] -->
+      <ta-headquarters-form
+        [header]="'Company Headquarters'"
+        [allCountries]="allCountries"
+        [details]="companyAddress"
+        (detailsUpdated)="handleDetailsUpdated($event)"
+      ></ta-headquarters-form>
+
+      <!-- [i18n-tobeinternationalized] -->
+      <ta-input-location
+        header="Location"
+        [iconRequiredColor]="iconRequiredColor"
+        [showRiskFields]="showRiskFields"
+        [allCountries]="allCountries"
+        [locations]="companyAffiliateDetailsGetResponse?.locations"
+        (locationChanges)="locationChanges($event)"
+      ></ta-input-location>
+
+      <div>
+        <div class="sub-heading mb-3 mt-4">
+          <!-- [i18n-tobeinternationalized] -->
+          Legal and Privacy Team Contact
+        </div>
+      </div>
+
+      <ng-container *ngIf="contacts?.length > 0">
+        <div class="row" *ngFor="let contact of contacts">
+          <div class="col">
+            <div class="contact-area position-relative">
+              <div class="btn-actions w-100">
+                <button
+                  class="float-right"
+                  taButton
+                  taType="circle"
+                  (click)="deleteContact(contact, true)"
+                >
+                  <ta-icon icon="delete"></ta-icon>
+                </button>
+                <button
+                  class="mr-1 float-right"
+                  taButton
+                  taType="circle"
+                  (click)="editContact(contact)"
+                >
+                  <ta-icon icon="edit"></ta-icon>
+                </button>
+              </div>
+              <div class="pt-3 pb-2 px-3">
+                <div class="row contact-row">
+                  <div class="col text-wrap text-break">
+                    <strong>{{ contact?.fullName || '' }}</strong>
+                  </div>
+                  <div class="col text-wrap text-break">
+                    {{ getCityState(contact) }}
+                  </div>
+                </div>
+                <div class="row contact-row">
+                  <div class="col">
+                    {{ contact?.email || '' }}
+                  </div>
+                  <div class="col">
+                    {{ getCountryName(contact) }}
+                  </div>
+                </div>
+                <div class="row contact-row">
+                  <div class="col">
+                    {{ contact?.phone || '' }}
+                  </div>
+                  <div class="col">
+                    {{ contact?.address || '' }}
+                  </div>
+                </div>
+                <div class="row contact-row">
+                  <div class="col">
+                    {{ getContactRole(contact) }}
+                  </div>
+                  <div class="col">
+                    {{ contact?.zip || '' }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="w-100">
+              <a
+                class="add-new-location-link ml-0"
+                *ngIf="contacts?.length !== 3"
+                (click)="createNewContact()"
+              >
+                <!-- [i18n-tobeinternationalized] -->
+                Add New Contact
+              </a>
+              <span class="text-gray-600" *ngIf="contacts?.length === 3">
+                <!-- [i18n-tobeinternationalized] -->
+                Add New Contact
+              </span>
+              <span class="ml-2" *ngIf="contacts?.length === 3">
+                <!-- [i18n-tobeinternationalized] -->
+                Only 3 contacts can be added.
+              </span>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="contacts?.length === 0">
+        <div class="row mb-3">
+          <div class="col">
+            <div class="w-100 mb-2">
+              <!-- [i18n-tobeinternationalized] -->
+              You haven’t added an internal contact.
+            </div>
+            <div class="w-100">
+              <a
+                class="add-new-location-link ml-0"
+                (click)="createNewContact()"
+              >
+                <!-- [i18n-tobeinternationalized] -->
+                Add New Contact
+              </a>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="row form-group">
+        <div class="col-12">
+          <label for="notes" class="sub-heading">
+            <!-- [i18n-tobeinternationalized] -->
+            Notes
+          </label>
+          <textarea
+            formControlName="notes"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': notes.invalid && notes.touched
+            }"
+            id="notes"
+            name="notes"
+            placeholder="Add comments, notes."
+            rows="5"
+          ></textarea>
+          <div *ngIf="notes.errors?.maxlength" class="text-danger">
+            <!-- [i18n-tobeinternationalized] -->
+            The notes must be less than 1024 characters.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *taSlotView>
+      <button
+        taButton
+        type="submit"
+        taType="primary"
+        class="page-next btn-lg"
+        [ngClass]="{ 'page-next': true, 'not-allowed': !formIsValid }"
+        [routerLink]="['data-inventory']"
+        [disabled]="!formIsValid"
+      >
+        <!-- [i18n-tobeinternationalized] -->
+        Save
+      </button>
+    </div>
+  </form>
+</div>

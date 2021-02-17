@@ -1,0 +1,74 @@
+{
+  "systemName": {
+    "selector": "[data-cy='system-name']",
+    "alias": "@system-name"
+  },
+  "ownedBy": {
+    "selector": "[data-cy='owned-by']",
+    "alias": "@owned-by"
+  },
+  "description": {
+    "selector": "[data-cy='description']",
+    "alias": "@description"
+  },
+  "hostingLocations": {
+    "selector": "[data-cy='hosting-locations']",
+    "alias": "@hosting-locations"
+  },
+  "dataSubjects": {
+    "selector": "[data-cy='data-subjects']",
+    "alias": "@data-subjects"
+  },
+  "volumeOfDataSubjectRecords": {
+    "selector": "[data-cy='volume-of-data-subject-records']",
+    "alias": "@volume-of-data-subject-records"
+  },
+  "contact": {
+    "fullName": {
+      "selector": "[data-cy='contact-full-name']",
+      "alias": "@contact-full-name"
+    },
+    "email": {
+      "selector": "[data-cy='contact-email']",
+      "alias": "@contact-email"
+    },
+    "phone": {
+      "selector": "[data-cy='contact-phone']",
+      "alias": "@contact-phone"
+    },
+    "country": {
+      "selector": "[data-cy='contact-country']",
+      "alias": "@contact-country"
+    },
+    "state": {
+      "selector": "[data-cy='contact-state']",
+      "alias": "@contact-state"
+    },
+    "city": {
+      "selector": "[data-cy='contact-city']",
+      "alias": "@contact-city"
+    },
+    "zipCode": {
+      "selector": "[data-cy='contact-zip-code']",
+      "alias": "@contact-zip-code"
+    },
+    "address": {
+      "selector": "[data-cy='contact-address']",
+      "alias": "@contact-address"
+    }
+  },
+  "notes": {
+    "selector": "[data-cy='notes']",
+    "alias": "@notes"
+  },
+  "companyAffiliate": {
+    "emailAddress": {
+      "selector": "[data-cy='email-address']",
+      "alias": "@email-address"
+    },
+    "emailAddressErrorMessage": {
+      "selector": "[data-cy='email-address-error-message']",
+      "alias": "@email-address-error-message"
+    }
+  }
+}

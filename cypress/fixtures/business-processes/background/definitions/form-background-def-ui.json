@@ -1,0 +1,30 @@
+{
+  "title": {
+    "selector": "[data-cy='title-background']",
+    "alias": "@title-background"
+  },
+  "processName": {
+    "selector": "[data-cy='process-name']",
+    "alias": "@process-name"
+  },
+  "peopleRange": {
+    "selector": "[data-cy='people-range']",
+    "alias": "@people-range"
+  },
+  "description": {
+    "selector": "[data-cy='description']",
+    "alias": "@description"
+  },
+  "attachments": {
+    "selector": "[data-cy='bp-attachments-button']",
+    "alias": "@attachment"
+  },
+  "modalClose": {
+    "selector": "[data-cy='modal-close']",
+    "alias": "@modalClose"
+  },
+  "notes": {
+    "selector": "[data-cy='notes']",
+    "alias": "@notes"
+  }
+}

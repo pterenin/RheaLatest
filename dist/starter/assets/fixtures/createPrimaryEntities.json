@@ -1,0 +1,21 @@
+{
+  "data": {
+    "businessStructure": {
+      "businessStructure": "string",
+      "id": "string",
+      "version": 1
+    },
+    "created": "string",
+    "description": "string",
+    "entityRole": "string",
+    "id": "string",
+    "identifier": "string",
+    "name": "string",
+    "notes": "string",
+    "ownerId": "string",
+    "ownerName": "string",
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

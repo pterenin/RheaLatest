@@ -1,0 +1,17 @@
+<ul>
+  <li *ngFor="let nav of leftNav" routerLinkActive="active-parent">
+    <a [routerLink]="['/' + nav.slug]" routerLinkActive="active" #sideNavLinks>
+      {{ nav.label }} <i class="ta ta-chevron-right" *ngIf="nav.parent"></i>
+      <i class="ta ta-chevron-down" *ngIf="nav.parent"></i>
+    </a>
+    <ul *ngIf="nav.parent">
+      <li *ngFor="let navChild of nav.children">
+        <a
+          [routerLink]="['/' + nav.slug + '/' + navChild.slug]"
+          routerLinkActive="active-child"
+          [innerText]="navChild.label"
+        ></a>
+      </li>
+    </ul>
+  </li>
+</ul>

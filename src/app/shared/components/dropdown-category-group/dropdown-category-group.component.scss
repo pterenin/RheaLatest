@@ -1,0 +1,18 @@
+.dropdown-toggle {
+  padding: 3px;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 30px;
+
+  .dropdown-placeholder {
+    margin: 1px 7px;
+  }
+
+  .tags-container {
+    display: contents;
+
+    ta-tags {
+      margin: 2px 1px;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "data": {
+    "id": "string",
+    "securityControlIds": ["string"],
+    "securityControlOther": "string",
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

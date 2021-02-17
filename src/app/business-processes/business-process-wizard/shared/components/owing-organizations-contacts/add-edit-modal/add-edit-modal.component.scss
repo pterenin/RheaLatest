@@ -1,0 +1,16 @@
+ta-add-edit-modal {
+  ta-checkbox.dropdown-item {
+    padding: 0 !important;
+    label.ta-checkbox-layout {
+      span {
+        ta-icon {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+
+  .ta-primary-tooltip {
+    top: 30px !important;
+  }
+}

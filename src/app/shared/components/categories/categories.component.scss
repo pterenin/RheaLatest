@@ -1,0 +1,115 @@
+@import 'src/styles/variables';
+
+:host ::ng-deep {
+  .data-element-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .badge-custom {
+    background-color: $amethyst;
+    text-transform: uppercase;
+    margin-left: 5px;
+    margin-right: 4px;
+    height: 16px;
+    min-width: 58px;
+  }
+
+  .btn-view {
+    display: inline-block;
+    ta-icon {
+      position: relative;
+      top: -1px;
+      svg {
+        width: 0.9375rem;
+      }
+    }
+    img {
+      margin-bottom: 1px;
+    }
+  }
+
+  .ta-table-toolbars {
+    .ta-table-toolbar-btns {
+      width: 100%;
+    }
+  }
+
+  ta-table-cell.icon-cell {
+    text-align: right;
+  }
+
+  ta-table-row {
+    .icon-container {
+      visibility: hidden;
+    }
+  }
+
+  ta-table-row:hover {
+    .icon-container {
+      visibility: visible;
+    }
+  }
+
+  #viewDropdowns {
+    margin-right: 8px !important;
+  }
+
+  #viewTypeDropdown {
+    margin-right: 8px !important;
+  }
+
+  #viewTypeDropdown.no-margin {
+    margin-right: 0px !important;
+  }
+
+  .header-icon {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+  }
+
+  #moreDropdownButtonContainer {
+    margin-right: 0px !important;
+  }
+  .unsortable .ta-col-filter-up {
+    visibility: hidden;
+  }
+
+  .unsortable .ta-col-filter-down {
+    visibility: hidden;
+  }
+
+  .ta-table .ta-table-cell.unsortable {
+    cursor: default !important;
+  }
+}
+
+.hidden-element {
+  color: zeplin-lighten($gray-700, 0.6);
+}
+
+.icon-wrapper {
+  display: inline;
+  margin: 0px 9px;
+  cursor: pointer;
+}
+
+.page-header {
+  font-family: $font-family-sans-serif;
+  font-size: $font-size-18;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.11;
+  letter-spacing: normal;
+  color: $twilight-blue;
+  padding-top: 0.3125rem;
+}
+
+.text-gray {
+  color: zeplin-lighten($black, 0.4);
+}
+
+::ng-deep .ta-table-head > .ta-table-row > .ta-table-cell {
+  border-bottom: 0px !important;
+}

@@ -1,0 +1,44 @@
+<ng-content select="router-outlet"></ng-content>
+
+<ta-page-footer-nav [currentFormValidity]="true">
+  <span class="stepper">
+    <!--- [i18n-tobeinternationalized] -->
+    Review Step
+  </span>
+
+  <button
+    taButton
+    type="button"
+    taType="link"
+    class="page-cancel btn-lg"
+    routerLink="/business-process"
+  >
+    <!--- [i18n-tobeinternationalized] -->
+    Exit
+  </button>
+
+  <button
+    taButton
+    type="button"
+    taType="secondary"
+    class="page-prev btn-lg mr-2"
+    routerLink="security-and-risks"
+    (click)="saveReviewForm()"
+    data-cy="back"
+  >
+    <!--- [i18n-tobeinternationalized] -->
+    Back
+  </button>
+
+  <button
+    taButton
+    type="button"
+    taType="primary"
+    class="page-next btn-lg"
+    routerLink="/business-process"
+    data-cy="finish"
+  >
+    <!--- [i18n-tobeinternationalized] -->
+    Finish
+  </button>
+</ta-page-footer-nav>

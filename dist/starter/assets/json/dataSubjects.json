@@ -1,0 +1,47 @@
+[
+  {
+    "category": "Category 1",
+    "id": "001",
+    "label": "Recruits"
+  },
+  {
+    "category": "Category 1",
+    "id": "002",
+    "label": "Employees"
+  },
+  {
+    "category": "Category 1",
+    "id": "003",
+    "label": "Retirees"
+  },
+  {
+    "category": "Category 2",
+    "id": "004",
+    "label": "Sponsors"
+  },
+  {
+    "category": "Category 2",
+    "id": "005",
+    "label": "Executives"
+  },
+  {
+    "category": "Category 2",
+    "id": "006",
+    "label": "Legal"
+  },
+  {
+    "category": "Category 3",
+    "id": "007",
+    "label": "Contractors"
+  },
+  {
+    "category": "Category 3",
+    "id": "008",
+    "label": "Students"
+  },
+  {
+    "category": "Category 3",
+    "id": "009",
+    "label": "Management"
+  }
+]

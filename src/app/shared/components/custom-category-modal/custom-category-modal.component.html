@@ -1,0 +1,64 @@
+<div class="modal-header">
+  <!--- [i18n-tobeinternationalized] --->
+  <h4 class="modal-title" data-cy="modal-title">
+    Custom {{ modalType }} Category
+  </h4>
+  <button
+    data-cy="modal-close"
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="dismissModal()"
+  >
+    <i class="ta ta-close"></i>
+  </button>
+</div>
+<form [formGroup]="customCategoryForm" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <!--- [i18n-tobeinternationalized] --->
+        <label for="category">{{ modalType }} Category*</label>
+        <input
+          taAutoFocus
+          type="text"
+          class="form-control"
+          id="category"
+          data-cy="category"
+          name="category"
+          formControlName="category"
+          placeholder="Enter Custom Category Name"
+        />
+        <div
+          *ngIf="category.errors?.required && category.touched"
+          class="text-danger"
+        >
+          <!-- [i18n-tobeinternationalized] -->
+          This field is required.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer justify-content-between">
+    <button
+      taButton
+      type="button"
+      taType="secondary"
+      data-dismiss="modal"
+      data-cy="modal-cancel"
+      (click)="activeModal.dismiss('Cancel')"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Cancel
+    </button>
+    <button
+      taButton
+      taType="primary"
+      data-cy="modal-submit"
+      [disabled]="!category.valid"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Save
+    </button>
+  </div>
+</form>

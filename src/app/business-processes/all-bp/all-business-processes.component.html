@@ -1,0 +1,23 @@
+<ta-page-wrapper [full]="true">
+  <h2 class="page-header d-none">
+    <!--- [i18n-tobeinternationalized] -->
+    All Business Processes
+  </h2>
+  <!--- [i18n-tobeinternationalized] -->
+  <ta-business-processes-list
+    [emptyCTAText]="'Add New Business Process Record'"
+    (emptyCTAClick)="emptyRecordsCTAClick()"
+    [gridId]="'business-process-list-main'"
+    [recordType]="'BusinessProcess'"
+  ></ta-business-processes-list>
+
+  <!--    TODO: Delete after QA acceptance-->
+  <!--  <ta-record-datagrid-->
+  <!--    emptyCTAText="Add New Business Process Record"-->
+  <!--    (emptyCTAClick)="emptyRecordsCTAClick()"-->
+  <!--    [cloneRecordService]="cloneRecordService.bind(this)"-->
+  <!--    [recordType]="'BusinessProcess'"-->
+  <!--    [gridId]="dataGridId"-->
+  <!--  >-->
+  <!--  </ta-record-datagrid>-->
+</ta-page-wrapper>

@@ -1,0 +1,32 @@
+<!-- Page wrapper -->
+<div
+  id="wrapper"
+  *ngIf="appReady"
+  class="fadeInApp"
+  [class.breadcrumbs-hidden]="!showBreadCrumb"
+>
+  <div class="nav-header" [ngClass]="{ 'nav-header-bg-white': headerWhite }">
+    <div class="nav-title">
+      <ta-breadcrumb *ngIf="showBreadCrumb"></ta-breadcrumb>
+      <h3 *ngIf="headerTitle">{{ pageTitle }}</h3>
+    </div>
+    <ta-download-report-fake-progress-bar
+      *ngIf="showDownloadingReport"
+    ></ta-download-report-fake-progress-bar>
+  </div>
+
+  <div class="row no-gutters">
+    <!-- Content and router outlet -->
+    <div class="col">
+      <section id="content-container" role="main">
+        <router-outlet></router-outlet>
+      </section>
+
+      <!-- TrustArc Footer -->
+      <ta-footer *ngIf="showFooter"></ta-footer>
+    </div>
+  </div>
+</div>
+
+<!-- Global toast container -->
+<ta-toast></ta-toast>

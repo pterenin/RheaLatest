@@ -1,0 +1,37 @@
+{
+  "create": {
+    "method": "POST",
+    "url": "api/business-processes",
+    "alias": "@create"
+  },
+  "read": {
+    "method": "GET",
+    "url": "",
+    "alias": ""
+  },
+  "update": {
+    "method": "PUT",
+    "url": "business-process/${body.id}/background",
+    "alias": ""
+  },
+  "delete": {
+    "method": "DELETE",
+    "url": "api/base-records/records",
+    "alias": "@delete"
+  },
+  "putDetails": {
+    "method": "PUT",
+    "url": "api/business-processes/{id}/details",
+    "alias": "@putDetails"
+  },
+  "getUsers": {
+    "method": "GET",
+    "url": "api/users",
+    "alias": "@getUsers"
+  },
+  "putOwner": {
+    "method": "PUT",
+    "url": "/api/business-processes/${id}/owners",
+    "alias": "@putOwner"
+  }
+}

@@ -1,0 +1,118 @@
+<div class="retention-period-wrapper card rounded-lg mb-3">
+  <div class="card-header d-flex">
+    <div class="w-100" data-cy="title-retention-period">
+      <p class="header-text mb-0">
+        <!-- [i18n-tobeinternationalized] -->
+        Retention Period
+      </p>
+      <span class="sub-header-text">
+        <!-- [i18n-tobeinternationalized] -->
+        Enter the retention period that is appropriate for this business
+        process.
+      </span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="normal-text mb-1">
+      <!-- [i18n-tobeinternationalized] -->
+      Period
+    </div>
+    <div class="d-flex align-items-center w-100 mb-1">
+      <form [formGroup]="retentionPeriodForm" class="d-flex w-100">
+        <div class="retention-period-value-default">
+          <!-- [i18n-tobeinternationalized] -->
+          <input
+            type="text"
+            formControlName="retentionPeriodValue"
+            class="form-control"
+            placeholder="Enter period..."
+            data-cy="retention-period"
+          />
+        </div>
+        <div class="retention-period-units-default ml-2">
+          <ta-dropdown-field
+            [options]="retentionPeriodUnitsOptions"
+            [selectedOption]="retentionPeriodUnits.value"
+            formControlName="retentionPeriodUnits"
+            data-cy="retention-period-unit"
+          ></ta-dropdown-field>
+        </div>
+        <div
+          *ngIf="retentionPeriodUnits.value === 'Other'"
+          class="retention-period-units-other-default ml-2"
+        >
+          <input
+            type="text"
+            formControlName="retentionPeriodUnitsOther"
+            class="form-control"
+            placeholder="Enter other..."
+          />
+        </div>
+        <button
+          taButton
+          taType="flat"
+          class="retention-period-btn-clear-default ml-2"
+          (click)="resetRetentionPeriodForm()"
+        >
+          <!-- [i18n-tobeinternationalized] -->
+          Clear
+        </button>
+      </form>
+    </div>
+    <span
+      class="text-danger d-block"
+      *ngIf="
+        retentionPeriodValue.errors && retentionPeriodValue.errors.maxlength
+      "
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      Period length must be less than 20 characters long.
+    </span>
+    <span
+      class="text-danger d-block"
+      *ngIf="
+        retentionPeriodForm.dirty &&
+        !retentionPeriodValue.value &&
+        retentionPeriodUnits.value !== 'Other'
+      "
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      Period length must be set if a non-other period unit is entered.
+    </span>
+    <span
+      class="text-danger d-block"
+      *ngIf="retentionPeriodValue.errors && retentionPeriodValue.errors.pattern"
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      Period length may only contain numbers.
+    </span>
+    <span
+      class="text-danger d-block"
+      *ngIf="retentionPeriodValue.value && !retentionPeriodUnits.value"
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      Period length must be accompanied by units of measure.
+    </span>
+    <span
+      class="text-danger d-block"
+      *ngIf="
+        !retentionPeriodUnitsOther.value &&
+        retentionPeriodUnits.value === 'Other'
+      "
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      A description must be set if the 'Other' period unit is selected.
+    </span>
+    <span
+      class="text-danger d-block"
+      *ngIf="
+        retentionPeriodUnits.value === 'Other' &&
+        retentionPeriodUnitsOther.errors &&
+        retentionPeriodUnitsOther.errors.maxlength
+      "
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      A period description must be less than 1024 characters.
+    </span>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="modal-header" data-cy="bp-attachments-modal">
+  <h4 class="modal-title" data-cy="modal-title">
+    <!-- [i18n-tobeinternationalized] -->
+    Notes & Attachments
+  </h4>
+  <button
+    data-cy="modal-close"
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="closeModal()"
+  >
+    <i class="ta ta-close"></i>
+  </button>
+</div>
+<div
+  class="modal-body modal-scroll"
+  [formGroup]="notesAndAttachmentsFormsGroup"
+>
+  <div class="form-group">
+    <!-- [i18n-tobeinternationalized] -->
+    <label for="notes" class="data-label">Notes</label>
+    <textarea
+      data-cy="notes"
+      class="form-control"
+      id="notes"
+      name="notes"
+      placeholder="Write your own notes here."
+      rows="5"
+      formControlName="notes"
+    ></textarea>
+    <div
+      class="text-danger text-danger-multi-sibling"
+      *ngIf="notes.errors?.maxlength"
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      The notes must be less than 1024 characters.
+    </div>
+  </div>
+  <div class="form-group">
+    <!-- [i18n-tobeinternationalized] -->
+    <label for="filesUpload" class="data-label">File Attachments</label>
+    <ta-base-record-file-upload
+      id="filesUpload"
+      [formGroup]="attachmentsFormsGroup"
+      [isDeletingFile]="isDeletingFile"
+    ></ta-base-record-file-upload>
+  </div>
+</div>
+
+<div class="modal-footer justify-content-right">
+  <button
+    taButton
+    taType="primary"
+    data-cy="modal-submit"
+    (click)="onSubmit()"
+    [disabled]="!isValid"
+  >
+    <!--- [i18n-tobeinternationalized] --->
+    Done
+  </button>
+</div>

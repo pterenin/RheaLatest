@@ -1,0 +1,37 @@
+<form [formGroup]="filterForm">
+  <div class="container p-0 w-100">
+    <div class="row" *ngIf="filterData.length > 0">
+      <div class="w-100 px-2" *ngIf="withSearch">
+        <ta-search-field
+          class="w-100 mr-auto d-block"
+          [placeholder]="'Search'"
+          (searchValue)="onSearch($event)"
+        ></ta-search-field>
+      </div>
+      <ta-checkbox
+        class="dropdown-item"
+        [checked]="isAllSelected"
+        [indeterminate]="isIndeterminate"
+        (change)="handleSelectAll($event)"
+      >
+        {{ selectAllPlaceholder }}
+      </ta-checkbox>
+      <div class="list-wrapper">
+        <ng-container
+          [formArrayName]="'list'"
+          *ngFor="let item of list.controls; let i = index"
+        >
+          <ng-container [formGroupName]="i.toString()">
+            <ta-checkbox
+              class="dropdown-item text-wrap"
+              [formControlName]="'checked'"
+              [hidden]="item.get('hidden').value"
+            >
+              {{ item.get('label').value }}
+            </ta-checkbox>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,228 @@
+{
+  "id": "5ac8b362-ec79-40d1-bd3c-b1e1ca37c098",
+  "version": 1,
+  "dstNodes": [
+    {
+      "businessProcessId": "5ac8b362-ec79-40d1-bd3c-b1e1ca37c098",
+      "entityId": "76453158-de4b-47c5-816f-c3a8289383ea",
+      "locationId": "ba1edb9a-1993-4ff9-a2dc-cff8a04d1378",
+      "version": 0,
+      "category": "Customer",
+      "dataSubjectType": "Shopper"
+    }
+  ],
+  "drtNodes": [
+    {
+      "businessProcessId": "5ac8b362-ec79-40d1-bd3c-b1e1ca37c098",
+      "entityId": "ce5708a2-b09d-48c6-b6e3-060791171afc",
+      "locationId": "8ed8e077-9188-4057-9059-a4c3d4194bc5",
+      "version": 0,
+      "category": "Category1",
+      "dataRecipientType": "Analyst"
+    }
+  ],
+  "isNodes": [
+    {
+      "businessProcessId": "5ac8b362-ec79-40d1-bd3c-b1e1ca37c098",
+      "entityId": "2f04fb60-6619-40f7-aac8-8c246a4e9cf4",
+      "locationId": "90de66d7-57b7-48b3-a53b-92686a2c1330",
+      "version": 0,
+      "category": "category",
+      "dataElementIds": [
+        "2daa4622-dbfd-48dc-b0ce-434fe43ec3b8",
+        "0da7b0ce-12b7-4107-a775-b3b1a5ace619",
+        "2b925554-ac16-479b-8263-78bc0eb671dd",
+        "c322b9ed-ae0b-4627-94a4-4c86feb8533d",
+        "77c63d3c-beec-452e-8beb-1e18f5f4ab60",
+        "c1dd16a8-f221-4b32-af45-eb5d4ee4cd44",
+        "5a336391-5818-4471-94af-48d52ef7b642",
+        "b434d688-026b-4b05-b126-3743348d5315",
+        "b42bc518-e5c3-45ab-a846-8f3958fd7b02",
+        "5d4afb9e-d54a-4fff-b3c5-3e34c763474c",
+        "d173d571-19ba-4747-9faa-9589a7d2727e"
+      ],
+      "description": "some description",
+      "name": "System A",
+      "notes": "some notes for it system-2",
+      "processingPurposeIds": [
+        "28863e7a-1afc-4771-b104-03a815652f68",
+        "e5b7171b-819c-4240-940c-1e8c06f05aed",
+        "64d4cdc4-173c-402c-84a0-ee4dad8087c9",
+        "92fbfdce-aec6-46e2-8146-c00727141638",
+        "3ca20ac4-da0b-4326-9cfb-4ba833313e07"
+      ],
+      "role": "controller",
+      "dataSubjectTypeToItSystemDataTransfers": [
+        {
+          "dataElementIds": ["2daa4622-dbfd-48dc-b0ce-434fe43ec3b8"],
+          "saleOfData": false,
+          "processingPurposeIds": ["ae05e42d-e774-4c45-95e8-bc7f1adf1e94"],
+          "sourceEntityId": "76453158-de4b-47c5-816f-c3a8289383ea",
+          "sourceLocationId": "ba1edb9a-1993-4ff9-a2dc-cff8a04d1378",
+          "targetEntityId": "2f04fb60-6619-40f7-aac8-8c246a4e9cf4",
+          "targetLocationId": "90de66d7-57b7-48b3-a53b-92686a2c1330"
+        }
+      ],
+      "itSystemToDataRecipientTypeDataTransfers": [
+        {
+          "dataElementIds": [],
+          "saleOfData": false,
+          "processingPurposeIds": [],
+          "sourceEntityId": "2f04fb60-6619-40f7-aac8-8c246a4e9cf4",
+          "sourceLocationId": "90de66d7-57b7-48b3-a53b-92686a2c1330",
+          "targetEntityId": "ce5708a2-b09d-48c6-b6e3-060791171afc",
+          "targetLocationId": "8ed8e077-9188-4057-9059-a4c3d4194bc5"
+        }
+      ],
+      "itSystemToItSystemDataTransfers": [
+        {
+          "dataElementIds": ["2daa4622-dbfd-48dc-b0ce-434fe43ec3b8"],
+          "saleOfData": false,
+          "processingPurposeIds": [
+            "64d4cdc4-173c-402c-84a0-ee4dad8087c9",
+            "92fbfdce-aec6-46e2-8146-c00727141638"
+          ],
+          "sourceEntityId": "2f04fb60-6619-40f7-aac8-8c246a4e9cf4",
+          "sourceLocationId": "90de66d7-57b7-48b3-a53b-92686a2c1330",
+          "targetEntityId": "14eb917f-73d5-4fbe-8e13-2ba75dc7c7b8",
+          "targetLocationId": "8feff700-580a-48d8-a23c-19ccf83d62b0"
+        }
+      ],
+      "incomingItSystemToItSystemDataTransfers": []
+    },
+    {
+      "businessProcessId": "5ac8b362-ec79-40d1-bd3c-b1e1ca37c098",
+      "entityId": "14eb917f-73d5-4fbe-8e13-2ba75dc7c7b8",
+      "locationId": "8feff700-580a-48d8-a23c-19ccf83d62b0",
+      "version": 0,
+      "category": "category",
+      "dataElementIds": [
+        "2daa4622-dbfd-48dc-b0ce-434fe43ec3b8",
+        "0da7b0ce-12b7-4107-a775-b3b1a5ace619",
+        "2b925554-ac16-479b-8263-78bc0eb671dd",
+        "c322b9ed-ae0b-4627-94a4-4c86feb8533d",
+        "77c63d3c-beec-452e-8beb-1e18f5f4ab60",
+        "c1dd16a8-f221-4b32-af45-eb5d4ee4cd44",
+        "5a336391-5818-4471-94af-48d52ef7b642",
+        "b434d688-026b-4b05-b126-3743348d5315",
+        "b42bc518-e5c3-45ab-a846-8f3958fd7b02",
+        "5d4afb9e-d54a-4fff-b3c5-3e34c763474c",
+        "d173d571-19ba-4747-9faa-9589a7d2727e"
+      ],
+      "description": "some description",
+      "name": "System B",
+      "notes": "some notes for it system-1",
+      "processingPurposeIds": [
+        "28863e7a-1afc-4771-b104-03a815652f68",
+        "e5b7171b-819c-4240-940c-1e8c06f05aed",
+        "64d4cdc4-173c-402c-84a0-ee4dad8087c9",
+        "92fbfdce-aec6-46e2-8146-c00727141638",
+        "3ca20ac4-da0b-4326-9cfb-4ba833313e07",
+        "b6a0658d-889a-418c-8ed9-0b95a8ecef80",
+        "1a3a5a42-f28a-44d7-bd78-3de67b94e865"
+      ],
+      "role": "controller",
+      "dataSubjectTypeToItSystemDataTransfers": [
+        {
+          "dataElementIds": [],
+          "saleOfData": false,
+          "processingPurposeIds": [],
+          "sourceEntityId": "76453158-de4b-47c5-816f-c3a8289383ea",
+          "sourceLocationId": "ba1edb9a-1993-4ff9-a2dc-cff8a04d1378",
+          "targetEntityId": "14eb917f-73d5-4fbe-8e13-2ba75dc7c7b8",
+          "targetLocationId": "8feff700-580a-48d8-a23c-19ccf83d62b0"
+        }
+      ],
+      "itSystemToDataRecipientTypeDataTransfers": [
+        {
+          "dataElementIds": [],
+          "saleOfData": false,
+          "processingPurposeIds": [],
+          "sourceEntityId": "14eb917f-73d5-4fbe-8e13-2ba75dc7c7b8",
+          "sourceLocationId": "8feff700-580a-48d8-a23c-19ccf83d62b0",
+          "targetEntityId": "ce5708a2-b09d-48c6-b6e3-060791171afc",
+          "targetLocationId": "8ed8e077-9188-4057-9059-a4c3d4194bc5"
+        }
+      ],
+      "itSystemToItSystemDataTransfers": [],
+      "incomingItSystemToItSystemDataTransfers": [
+        {
+          "dataElementIds": [],
+          "saleOfData": false,
+          "processingPurposeIds": [
+            "64d4cdc4-173c-402c-84a0-ee4dad8087c9",
+            "92fbfdce-aec6-46e2-8146-c00727141638"
+          ],
+          "sourceEntityId": "2f04fb60-6619-40f7-aac8-8c246a4e9cf4",
+          "sourceLocationId": "54b93f41-385e-47e7-a01a-2268c02e10c4",
+          "targetEntityId": "14eb917f-73d5-4fbe-8e13-2ba75dc7c7b8",
+          "targetLocationId": "8feff700-580a-48d8-a23c-19ccf83d62b0"
+        }
+      ]
+    },
+    {
+      "businessProcessId": "5ac8b362-ec79-40d1-bd3c-b1e1ca37c098",
+      "entityId": "2f04fb60-6619-40f7-aac8-8c246a4e9cf4",
+      "locationId": "54b93f41-385e-47e7-a01a-2268c02e10c4",
+      "version": 0,
+      "category": "unassigned",
+      "dataElementIds": [
+        "2daa4622-dbfd-48dc-b0ce-434fe43ec3b8",
+        "0da7b0ce-12b7-4107-a775-b3b1a5ace619",
+        "2b925554-ac16-479b-8263-78bc0eb671dd",
+        "c322b9ed-ae0b-4627-94a4-4c86feb8533d",
+        "77c63d3c-beec-452e-8beb-1e18f5f4ab60",
+        "c1dd16a8-f221-4b32-af45-eb5d4ee4cd44",
+        "5a336391-5818-4471-94af-48d52ef7b642",
+        "b434d688-026b-4b05-b126-3743348d5315",
+        "b42bc518-e5c3-45ab-a846-8f3958fd7b02",
+        "5d4afb9e-d54a-4fff-b3c5-3e34c763474c",
+        "d173d571-19ba-4747-9faa-9589a7d2727e"
+      ],
+      "description": "some description",
+      "name": "System C",
+      "notes": "some notes for it system-3",
+      "processingPurposeIds": [
+        "e5b7171b-819c-4240-940c-1e8c06f05aed",
+        "64d4cdc4-173c-402c-84a0-ee4dad8087c9",
+        "92fbfdce-aec6-46e2-8146-c00727141638",
+        "3ca20ac4-da0b-4326-9cfb-4ba833313e07",
+        "b6a0658d-889a-418c-8ed9-0b95a8ecef80",
+        "1a3a5a42-f28a-44d7-bd78-3de67b94e865"
+      ],
+      "role": "controller",
+      "dataSubjectTypeToItSystemDataTransfers": [],
+      "itSystemToDataRecipientTypeDataTransfers": [],
+      "itSystemToItSystemDataTransfers": [],
+      "incomingItSystemToItSystemDataTransfers": []
+    }
+  ],
+  "isDetails": [
+    {
+      "id": "2f04fb60-6619-40f7-aac8-8c246a4e9cf4",
+      "version": 0,
+      "name": "It System 2",
+      "description": "some description",
+      "comments": "some comments about IT system-2",
+      "contact": {
+        "fullName": "Sky Link",
+        "email": "slink@trustarc.com"
+      },
+      "dataSubjectIds": [],
+      "processingPurposeIds": []
+    },
+    {
+      "id": "14eb917f-73d5-4fbe-8e13-2ba75dc7c7b8",
+      "version": 0,
+      "name": "It System 1",
+      "description": "some description",
+      "comments": "some comments about IT system-1",
+      "contact": {
+        "fullName": "Brian Thi",
+        "email": "bthi@trustarc.com"
+      },
+      "dataSubjectIds": [],
+      "processingPurposeIds": []
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+<div class="datagridHeader d-flex">
+  <div class="mr-auto w-100">
+    <!-- searchbox  -->
+    <ta-datagrid-search-box [id]="gridId"></ta-datagrid-search-box>
+  </div>
+  <!-- Assign Records -->
+  <!-- Reports Dropdown-->
+  <!-- View # of rows Dropdown -->
+  <ta-view-rows-dropdown class="pl-1"></ta-view-rows-dropdown>
+  <!-- Configure Columns Dropdown -->
+  <!-- Download Dropdown -->
+  <!-- add (+) button -->
+  <ta-datagrid-add-bp-button
+    class="pl-1"
+    [gridId]="gridId"
+  ></ta-datagrid-add-bp-button>
+  <!-- edit button -->
+  <ta-datagrid-edit-button
+    class="pl-1"
+    [gridId]="gridId"
+  ></ta-datagrid-edit-button>
+  <!-- delete button -->
+  <ta-datagrid-delete-button
+    class="pl-1"
+    [gridId]="gridId"
+  ></ta-datagrid-delete-button>
+</div>

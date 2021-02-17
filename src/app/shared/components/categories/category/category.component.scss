@@ -1,0 +1,128 @@
+@import 'src/styles/variables';
+
+:host ::ng-deep {
+  .data-element-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ta-table .icon-cell .wraptext {
+    overflow: visible;
+  }
+
+  .badge-custom {
+    background-color: $amethyst;
+    text-transform: uppercase;
+    margin-left: 5px;
+    height: 16px;
+    min-width: 58px;
+  }
+
+  .btn-view {
+    ta-icon {
+      position: relative;
+      top: -1px;
+
+      svg {
+        width: 0.9375rem;
+      }
+    }
+  }
+
+  .ta-table-toolbars {
+    .ta-table-toolbar-btns {
+      width: 100%;
+
+      .visibility-tooltip {
+        left: 20px;
+      }
+    }
+  }
+
+  ta-table-cell.icon-cell {
+    text-align: right;
+  }
+
+  ta-table-row {
+    .icon-container {
+      visibility: hidden;
+    }
+  }
+
+  ta-table-row:hover {
+    .icon-container {
+      visibility: visible;
+    }
+  }
+
+  .btn-view {
+    ta-icon {
+      position: relative;
+      top: -1px;
+
+      svg {
+        width: 0.9375rem;
+      }
+    }
+  }
+
+  .ta-table-toolbars {
+    .ta-table-toolbar-btns {
+      width: 100%;
+    }
+  }
+
+  .unsortable .ta-col-filter-up {
+    visibility: hidden;
+  }
+
+  .unsortable .ta-col-filter-down {
+    visibility: hidden;
+  }
+
+  .ta-table .ta-table-cell.unsortable {
+    cursor: default !important;
+  }
+
+  #viewDropdowns {
+    margin-right: 8px !important;
+  }
+
+  #viewTypeDropdown {
+    margin-right: 8px !important;
+  }
+
+  #viewTypeDropdown.no-margin {
+    margin-right: 0px !important;
+  }
+
+  .header-icon {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+  }
+
+  #moreDropdownButtonContainer {
+    margin-right: 0px !important;
+  }
+  .column-header {
+    position: relative;
+    ta-icon {
+      position: absolute;
+      right: -37px;
+    }
+  }
+}
+
+.icon-wrapper {
+  display: inline;
+  margin: 0px 9px;
+  cursor: pointer;
+}
+
+.hidden-element {
+  color: zeplin-lighten($gray-700, 0.6);
+}
+
+::ng-deep .ta-table-head > .ta-table-row > .ta-table-cell {
+  border-bottom: 0px !important;
+}

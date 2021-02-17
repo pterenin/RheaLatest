@@ -1,0 +1,15 @@
+{
+  "data": {
+    "dimAccount": {
+      "id": "string"
+    },
+    "email": "string",
+    "firstName": "string",
+    "id": "string",
+    "lastName": "string",
+    "status": "string",
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

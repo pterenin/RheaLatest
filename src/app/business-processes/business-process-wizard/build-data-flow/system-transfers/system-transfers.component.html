@@ -1,0 +1,415 @@
+<div class="p-3 animated fadeIn" id="system-transfers">
+  <div
+    id="data-transfer-buttons"
+    class="justify-content-end d-flex align-items-center"
+  >
+    <button
+      taButton
+      type="button"
+      taType="secondary"
+      class="ml-2 btn-lg"
+      type="button"
+      [disabled]="isSaving"
+      (click)="cancel()"
+      data-cy="data-transfer-table-cancel"
+    >
+      Cancel
+    </button>
+    <button
+      taButton
+      type="button"
+      taType="primary"
+      class="ml-2 btn-lg"
+      type="primary"
+      [disabled]="isSaving"
+      (click)="saveData()"
+      data-cy="data-transfer-table-save"
+    >
+      Save
+      <span
+        *ngIf="isSaving"
+        class="spinner-border spinner-border-sm text-primary ml-1"
+        role="status"
+        aria-hidden="true"
+      ></span>
+    </button>
+  </div>
+
+  <header class="d-flex align-items-center mb-3" *ngIf="selectedSystem">
+    <div class="w-100 d-flex align-items-center" style="padding-right: 150px;">
+      <h3
+        class="h6 m-0 d-inline-block text-truncate"
+        style="max-width: 80%;"
+        [taTooltip]="selectedSystem.name"
+        tooltipClass="animated fadeIn record-name-tooltip"
+        tooltipTheme="light"
+        container="body"
+        placement="bottom"
+        data-cy="table-system-name"
+      >
+        {{ selectedSystem.name }}
+      </h3>
+      <div class="line">|</div>
+      <div class="d-inline-block">
+        <ta-record-icon
+          [type]="selectedSystem.owningEntityType"
+          [small]="true"
+        ></ta-record-icon>
+      </div>
+      <div
+        class="d-inline-block pl-1 text-black-50 text-truncate"
+        style="max-width: 170px"
+        [taTooltip]="selectedSystem.owningEntityName"
+        tooltipClass="animated fadeIn record-name-tooltip"
+        tooltipTheme="light"
+        container="body"
+        placement="bottom"
+      >
+        <!--- [i18n-tobeinternationalized] -->
+        Owned by {{ selectedSystem.owningEntityName }}
+      </div>
+      <div class="line">|</div>
+      <div
+        class="d-inline-block pl-1 text-black-50 text-truncate"
+        style="max-width: 170px"
+      >
+        {{ selectedSystem.locationName }}
+      </div>
+    </div>
+  </header>
+  <ta-tabset
+    (tabChange)="handleTabChange($event)"
+    [activeId]="selectedTabId"
+    *ngIf="selectedSystem"
+  >
+    <ta-tab [title]="'Sends Data to ' + selectedSystem.name" id="sends">
+      <ng-template taTabContent>
+        <p class="pt-3 text-black-50 m-0">
+          {{ getSendsDetailsText() }}
+        </p>
+        <div
+          class="d-flex align-items-center pt-4 pb-2 position-sticky"
+          style="top: 35px; z-index: 3"
+        >
+          <div class="col pl-0 d-flex">
+            <div class="ds-icon dt-icon"></div>
+            <div
+              class="tab-main-content cursor-pointer"
+              (click)="
+                isCollapsed.isCollapsedSendSubject = !isCollapsed.isCollapsedSendSubject
+              "
+            >
+              <h3 class="h6 m-0">
+                <!-- [i18n-tobeinternationalized] -->
+                Data Subjects
+                <ta-badge
+                  *ngIf="selectedSystemSendingTransfers && !isLoading"
+                  [values]="counterSelectedSubjects || 0"
+                ></ta-badge>
+              </h3>
+            </div>
+          </div>
+          <div class="col pr-0 d-flex">
+            <div class="d-flex w-100 justify-content-end">
+              <button
+                taButton
+                taType="circle"
+                (click)="
+                  isCollapsed.isCollapsedSendSubject = !isCollapsed.isCollapsedSendSubject
+                "
+              >
+                <ta-icon
+                  *ngIf="isCollapsed.isCollapsedSendSubject"
+                  [icon]="'chevron-up'"
+                ></ta-icon>
+                <ta-icon
+                  *ngIf="!isCollapsed.isCollapsedSendSubject"
+                  [icon]="'chevron-down'"
+                ></ta-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="p-3" *ngIf="isLoading">
+          <span
+            class="spinner-border spinner-border-sm ml-auto text-primary"
+            role="status"
+            aria-hidden="true"
+          ></span>
+        </div>
+        <div [taCollapse]="isCollapsed.isCollapsedSendSubject">
+          <ta-system-transfers-table
+            *ngIf="selectedSystemSendingTransfers && !isLoading"
+            [gridId]="
+              selectedSystem.nodeId +
+              '-data-flow-sending-' +
+              dataFlowTableType.DATA_SUBJECT
+            "
+            [recordType]="dataFlowTableType.DATA_SUBJECT"
+            [transfersData]="
+              selectedSystemSendingTransfers.dataSubjectTransfers
+            "
+            (selectionsUpdated)="
+              handleSelectionUpdate($event, dataFlowTableType.DATA_SUBJECT)
+            "
+            (showModalDetails)="
+              handleShowModalDetails(
+                $event,
+                dataFlowTableType.DATA_SUBJECT,
+                'sending'
+              )
+            "
+            (tableUpdated)="
+              selectedSystemSendingTransfers.dataSubjectTransfers = $event
+            "
+            data-cy="data-subject-sending-table"
+          ></ta-system-transfers-table>
+        </div>
+
+        <div
+          class="d-flex align-items-center pt-4 pb-2 position-sticky"
+          style="top: 35px; z-index: 3"
+        >
+          <div class="col pl-0 d-flex">
+            <div class="s-icon dt-icon"></div>
+            <div
+              class="tab-main-content cursor-pointer"
+              (click)="
+                isCollapsed.isCollapsedSendSystem = !isCollapsed.isCollapsedSendSystem
+              "
+            >
+              <h3 class="h6 m-0">
+                <!-- [i18n-tobeinternationalized] -->
+                Systems
+                <ta-badge
+                  *ngIf="selectedSystemSendingTransfers && !isLoading"
+                  [values]="counterSelectedSystemsSending || 0"
+                ></ta-badge>
+              </h3>
+            </div>
+          </div>
+          <div class="col pr-0 d-flex">
+            <div class="d-flex w-100 justify-content-end">
+              <button
+                taButton
+                taType="circle"
+                (click)="
+                  isCollapsed.isCollapsedSendSystem = !isCollapsed.isCollapsedSendSystem
+                "
+              >
+                <ta-icon
+                  *ngIf="isCollapsed.isCollapsedSendSystem"
+                  [icon]="'chevron-up'"
+                ></ta-icon>
+                <ta-icon
+                  *ngIf="!isCollapsed.isCollapsedSendSystem"
+                  [icon]="'chevron-down'"
+                ></ta-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="p-3" *ngIf="isLoading">
+          <span
+            class="spinner-border spinner-border-sm ml-auto text-primary"
+            role="status"
+            aria-hidden="true"
+          ></span>
+        </div>
+        <div [taCollapse]="isCollapsed.isCollapsedSendSystem">
+          <ta-system-transfers-table
+            *ngIf="selectedSystemSendingTransfers && !isLoading"
+            [gridId]="
+              selectedSystem.nodeId +
+              '-data-flow-sending-' +
+              dataFlowTableType.SYSTEM
+            "
+            [recordType]="dataFlowTableType.SYSTEM"
+            [transfersData]="selectedSystemSendingTransfers.itSystemTransfers"
+            (selectionsUpdated)="
+              handleSelectionUpdate($event, dataFlowTableType.SYSTEM, 'sending')
+            "
+            (showModalDetails)="
+              handleShowModalDetails(
+                $event,
+                dataFlowTableType.SYSTEM,
+                'sending'
+              )
+            "
+            (tableUpdated)="
+              selectedSystemSendingTransfers.itSystemTransfers = $event
+            "
+            data-cy="system-sending-table"
+          ></ta-system-transfers-table>
+        </div>
+      </ng-template>
+    </ta-tab>
+
+    <ta-tab [title]="'Receives Data From ' + selectedSystem.name" id="receives">
+      <ng-template taTabContent>
+        <p class="pt-3 text-black-50 m-0">
+          {{ getReceivesDetailsText() }}
+        </p>
+        <div
+          class="d-flex align-items-center pt-4 pb-2 position-sticky"
+          style="top: 35px; z-index: 3"
+        >
+          <div class="col pl-0 d-flex">
+            <div class="dr-icon dt-icon"></div>
+            <div
+              class="tab-main-content cursor-pointer"
+              (click)="
+                isCollapsed.isCollapsedReceiveRecipient = !isCollapsed.isCollapsedReceiveRecipient
+              "
+            >
+              <h3 class="h6 m-0">
+                <!-- [i18n-tobeinternationalized] -->
+                Data Recipients
+                <ta-badge
+                  *ngIf="selectedSystemReceivingTransfers && !isLoading"
+                  [values]="counterSelectedRecipients || 0"
+                ></ta-badge>
+              </h3>
+            </div>
+          </div>
+          <div class="col pr-0 d-flex">
+            <div class="d-flex w-100 justify-content-end">
+              <button
+                taButton
+                taType="circle"
+                (click)="
+                  isCollapsed.isCollapsedReceiveRecipient = !isCollapsed.isCollapsedReceiveRecipient
+                "
+              >
+                <ta-icon
+                  *ngIf="isCollapsed.isCollapsedReceiveRecipient"
+                  [icon]="'chevron-up'"
+                ></ta-icon>
+                <ta-icon
+                  *ngIf="!isCollapsed.isCollapsedReceiveRecipient"
+                  [icon]="'chevron-down'"
+                ></ta-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="p-3" *ngIf="isLoading">
+          <span
+            class="spinner-border spinner-border-sm ml-auto text-primary"
+            role="status"
+            aria-hidden="true"
+          ></span>
+        </div>
+        <div [taCollapse]="isCollapsed.isCollapsedReceiveRecipient">
+          <ta-system-transfers-table
+            *ngIf="selectedSystemReceivingTransfers && !isLoading"
+            [gridId]="
+              selectedSystem.nodeId +
+              '-data-flow-receiving-' +
+              dataFlowTableType.DATA_RECIPIENT
+            "
+            [recordType]="dataFlowTableType.DATA_RECIPIENT"
+            [transfersData]="
+              selectedSystemReceivingTransfers.dataRecipientTransfers
+            "
+            (selectionsUpdated)="
+              handleSelectionUpdate($event, dataFlowTableType.DATA_RECIPIENT)
+            "
+            (showModalDetails)="
+              handleShowModalDetails(
+                $event,
+                dataFlowTableType.DATA_RECIPIENT,
+                'receiving'
+              )
+            "
+            (tableUpdated)="
+              selectedSystemReceivingTransfers.dataRecipientTransfers = $event
+            "
+            data-cy="data-recipient-table"
+          ></ta-system-transfers-table>
+        </div>
+
+        <div
+          class="d-flex align-items-center pt-4 pb-2 position-sticky"
+          style="top: 35px; z-index: 3"
+        >
+          <div class="col pl-0 d-flex">
+            <div class="s-icon dt-icon"></div>
+            <div
+              class="tab-main-content cursor-pointer"
+              (click)="
+                isCollapsed.isCollapsedReceiveSystem = !isCollapsed.isCollapsedReceiveSystem
+              "
+            >
+              <h3 class="h6 m-0">
+                <!-- [i18n-tobeinternationalized] -->
+                Systems
+                <ta-badge
+                  *ngIf="selectedSystemReceivingTransfers && !isLoading"
+                  [values]="counterSelectedSystemsReceiving || 0"
+                ></ta-badge>
+              </h3>
+            </div>
+          </div>
+          <div class="col pr-0 d-flex">
+            <div class="d-flex w-100 justify-content-end">
+              <button
+                taButton
+                taType="circle"
+                (click)="
+                  isCollapsed.isCollapsedReceiveSystem = !isCollapsed.isCollapsedReceiveSystem
+                "
+              >
+                <ta-icon
+                  *ngIf="isCollapsed.isCollapsedReceiveSystem"
+                  [icon]="'chevron-up'"
+                ></ta-icon>
+                <ta-icon
+                  *ngIf="!isCollapsed.isCollapsedReceiveSystem"
+                  [icon]="'chevron-down'"
+                ></ta-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="p-3" *ngIf="isLoading">
+          <span
+            class="spinner-border spinner-border-sm ml-auto text-primary"
+            role="status"
+            aria-hidden="true"
+          ></span>
+        </div>
+        <div [taCollapse]="isCollapsed.isCollapsedReceiveSystem">
+          <ta-system-transfers-table
+            *ngIf="selectedSystemReceivingTransfers && !isLoading"
+            [gridId]="
+              selectedSystem.nodeId +
+              '-data-flow-receiving-' +
+              dataFlowTableType.SYSTEM
+            "
+            [recordType]="dataFlowTableType.SYSTEM"
+            [transfersData]="selectedSystemReceivingTransfers.itSystemTransfers"
+            (selectionsUpdated)="
+              handleSelectionUpdate(
+                $event,
+                dataFlowTableType.SYSTEM,
+                'receiving'
+              )
+            "
+            (showModalDetails)="
+              handleShowModalDetails(
+                $event,
+                dataFlowTableType.SYSTEM,
+                'receiving'
+              )
+            "
+            (tableUpdated)="
+              selectedSystemReceivingTransfers.itSystemTransfers = $event
+            "
+            data-cy="system-receiving-table"
+          ></ta-system-transfers-table>
+        </div>
+      </ng-template>
+    </ta-tab>
+  </ta-tabset>
+</div>

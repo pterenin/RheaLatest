@@ -1,0 +1,68 @@
+<div class="modal-header">
+  <!--- [i18n-tobeinternationalized] --->
+  <h4 class="modal-title">Invite Collaborator</h4>
+  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+    <i class="ta ta-close"></i>
+  </button>
+</div>
+<form [formGroup]="collaboratorForm" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+    <div class="modal-description">
+      <!--- [i18n-tobeinternationalized] --->
+      Select or enter a collaborator's email address.
+    </div>
+    <div class="form-group">
+      <!--- [i18n-tobeinternationalized] --->
+      <label for="email">Email*</label>
+      <ta-dropdown-field
+        taAutofocus
+        [useInfiniteScroll]="true"
+        [options]="userOptionsList"
+        optionLabel="nameAndEmail"
+        [selectedOption]="email.value"
+        formControlName="email"
+        placeholder="Search or Enter email address"
+        [isSearchable]="true"
+        (keyup)="debounceSearch($event.target.value)"
+        (infiniteListChanged)="requestForInfiniteList($event)"
+      ></ta-dropdown-field>
+    </div>
+    <div class="form-group mb-3">
+      <!--- [i18n-tobeinternationalized] --->
+      <label for="message">Email Message (Optional)</label>
+      <textarea
+        class="form-control message"
+        rows="5"
+        id="message"
+        name="message"
+        formControlName="message"
+        placeholder="Add a message."
+      ></textarea>
+    </div>
+  </div>
+  <div class="modal-footer align-items-start justify-content-end">
+    <button
+      taButton
+      type="button"
+      taType="secondary"
+      class="mr-3"
+      data-dismiss="modal"
+      id="modal-cancel"
+      (click)="activeModal.dismiss('Cancel')"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Cancel
+    </button>
+    <button
+      taButton
+      type="button"
+      taType="primary"
+      id="modal-submit"
+      (click)="onSubmit()"
+      [disabled]="!email.valid"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Send Invite
+    </button>
+  </div>
+</form>

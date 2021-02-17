@@ -1,0 +1,122 @@
+<div class="sub-heading">
+  {{ header }}
+</div>
+<form [formGroup]="inputLocationForms" novalidate>
+  <div class="row">
+    <div class="col-sm-6" id="riskIndicator">
+      <ta-risk-field-indicator
+        [showIndicator]="showRiskFields"
+      ></ta-risk-field-indicator>
+      <!-- [i18n-tobeinternationalized] -->
+      Country
+      <span
+        [ngClass]="{
+          'text-danger': iconRequiredColor === 'red',
+          'font-color-default': iconRequiredColor === 'default'
+        }"
+        >*</span
+      >
+    </div>
+    <!-- [i18n-tobeinternationalized] -->
+    <div class="col-sm-6">State/Province</div>
+  </div>
+  <div
+    formArrayName="locationForms"
+    *ngFor="
+      let location of inputLocationForms.get('locationForms')['controls'];
+      let i = index
+    "
+  >
+    <div
+      [formGroupName]="i"
+      class="row mb-1 location"
+      [attr.data-cy]="'location-row-' + i"
+      id="{{ 'locationCountryDropdown-' + i }}"
+    >
+      <div class="col-sm-6">
+        <ta-dropdown-field
+          [attr.data-cy]="'location-country-' + i"
+          [options]="selectableCountries"
+          optionLabel="name"
+          [selectedOption]="location.get('country').value"
+          formControlName="country"
+          [isSearchable]="true"
+          [itemIndex]="i"
+          [(isDisabled)]="location.get('disable').value"
+          (dropdownOpenChanged)="onLocationTouched($event, i)"
+        ></ta-dropdown-field>
+        <div
+          *ngIf="
+            location.controls.country.errors?.required &&
+            location.controls.country.touched
+          "
+          class="text-danger text-danger-multi-sibling"
+        >
+          <!-- [i18n-tobeinternationalized] -->
+          This field is required.
+        </div>
+      </div>
+      <div
+        class="col-sm-5"
+        [attr.data-cy]="'location-state-' + i"
+        id="{{ 'locationCityDropdown-' + i }}"
+      >
+        <ta-dropdown-field
+          [attr.data-cy]="'location-state-' + i"
+          [options]="getStates(location.get('country').value)"
+          optionLabel="name"
+          [selectedOption]="location.get('state').value"
+          formControlName="state"
+          [isSearchable]="true"
+          [(isDisabled)]="location.get('disable').value"
+          (dropdownOpenChanged)="onStateTouched($event)"
+          [isMultiple]="true"
+          [selectAllOption]="true"
+        >
+        </ta-dropdown-field>
+      </div>
+      <div class="col-sm-1">
+        <div *ngIf="!location.get('disable').value">
+          <button
+            taButton
+            taType="circle"
+            (click)="removeLocation(i)"
+            type="button"
+          >
+            <ta-icon
+              icon="delete"
+              [attr.data-cy]="'location-action-delete-' + i"
+              data-cy="location-action-delete"
+            ></ta-icon>
+          </button>
+        </div>
+        <div
+          placement="top"
+          taTooltip="Edit location currently used in business process"
+          container="body"
+          *ngIf="location.get('country').value && location.get('disable').value"
+        >
+          <button
+            taButton
+            taType="circle"
+            (click)="editLocationUsedByBP(location.value)"
+            type="button"
+          >
+            <ta-icon
+              icon="edit"
+              [attr.data-cy]="'location-action-edit-' + i"
+            ></ta-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- [i18n-tobeinternationalized] -->
+  <div
+    (click)="addEmptyLocationRow(true)"
+    class="link"
+    data-cy="location-action-add"
+  >
+    Add Another Hosting Location
+  </div>
+</form>

@@ -1,0 +1,23 @@
+@import 'src/styles/variables';
+
+:host {
+  display: inline-block;
+  .popover-filter-wrapper-dropdown-menu {
+    padding: 0;
+    .popover-filter-wrapper-header {
+      font-weight: 500;
+      border-bottom: $border-default;
+    }
+    .popover-filter-wrapper-content {
+    }
+    .popover-filter-wrapper-footer {
+      border-top: $border-default;
+      .btn {
+        min-width: 55px !important;
+      }
+    }
+  }
+  .dropdown-menu.show {
+    overflow: visible !important;
+  }
+}

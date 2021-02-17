@@ -1,0 +1,183 @@
+@import 'variables';
+
+ta-business-processes-list {
+  display: block;
+  .description-header {
+    display: inline-block;
+    font-weight: 600;
+    margin-left: 70px;
+    padding-left: 8px;
+    min-width: 108px;
+    max-width: 108px;
+    width: 108px;
+  }
+  .description {
+    padding-left: 8px;
+  }
+  .data-record-name,
+  .data-record-status,
+  .data-record-owner,
+  .data-record-revalidation-date {
+    ta-icon {
+      opacity: 0;
+      transition: 300ms;
+      &:hover {
+        color: $blue;
+      }
+      &.ta-icon-badge {
+        opacity: 1;
+      }
+    }
+    &:hover {
+      background-color: $gray-300;
+      ta-icon {
+        opacity: 1;
+      }
+    }
+  }
+  .ta-table-cell-tools {
+    &:hover {
+      background-color: $gray-300;
+    }
+  }
+  .ta-table-toolbar-btns {
+    border-left: none !important;
+  }
+  .ta-table-toolbar-filter {
+    border-right: none !important;
+  }
+  .selected-count {
+    color: $scorpion-grey;
+    position: relative;
+    width: auto;
+    white-space: nowrap;
+    padding-right: 16px;
+    margin-right: 10px;
+    &:after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      height: 47px;
+      transform: translateY(-50%);
+      border-right: 1px solid $seashell-grey;
+    }
+  }
+  .toolbar-btn-bordered-right {
+    padding-right: 10px;
+    margin-right: 10px;
+    &:after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      height: 47px;
+      transform: translateY(-50%);
+      border-right: 1px solid $seashell-grey;
+    }
+  }
+  .tags-container {
+    padding: 0.8rem 1rem 0.6rem !important;
+    ta-tags {
+      min-width: 81px;
+    }
+  }
+  .tags-table-cell.tags-cell:hover {
+    ta-inline-tag-editor {
+      .tag-hover {
+        .edit-icon {
+          opacity: 1 !important;
+        }
+      }
+    }
+  }
+  .tags-table-cell {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+
+    &:hover {
+      background-color: $gray-300;
+    }
+  }
+  .column-config-dropdown {
+    width: 200px;
+    .column-config-dropdown-header {
+      font-size: 12px;
+      font-weight: 600;
+      margin: 0 10px;
+    }
+  }
+  .ta-table-dropdown-more .dropdown-menu.show {
+    margin-left: 16px;
+    top: 35px !important;
+  }
+  .status-dropdown.show {
+    width: 170px;
+    left: -156px !important;
+    top: 25px !important;
+    .status-dropdown-button {
+      min-width: 56px;
+    }
+  }
+  .draft-record-badge {
+    color: $gray-600;
+  }
+  .in_review-record-badge {
+    color: $orange;
+  }
+  .revise-record-badge {
+    color: $violet;
+  }
+  .publish-record-badge {
+    color: $apple-green;
+  }
+  ta-popover-window.tag-pop-content {
+    top: 35px !important;
+    left: 0 !important;
+    margin: 0;
+    width: 255px;
+    height: 225px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  .empty-records {
+    padding: 16px;
+    text-align: center;
+    background-color: $white;
+    min-height: 460px;
+    position: relative;
+    top: -18px;
+    .content-container {
+      margin-top: 88px;
+      margin-bottom: 144px;
+      p {
+        margin-top: 32px;
+        margin-bottom: 14px;
+        font-size: 0.875rem;
+      }
+    }
+  }
+}
+
+// Risk popover styles
+.business-list-risk-popover-styles {
+  .popover-body {
+    .risk-popover-body {
+      width: 140px;
+      font-size: $font-size-12;
+      cursor: pointer;
+    }
+  }
+}
+
+// Inline owner popover styles
+.inline-owner-popover-styles {
+  margin-left: -16px;
+  width: 313px;
+  .popover-body {
+    min-height: 0;
+    max-height: 239px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+}

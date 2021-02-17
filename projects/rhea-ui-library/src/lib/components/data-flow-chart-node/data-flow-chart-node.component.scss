@@ -1,0 +1,65 @@
+$black: #000000;
+$white: #ffffff;
+$label-text: #595959;
+$red-system-icon: #ffeeea;
+$red-border-system-icon: #ffddd5;
+$red-text-system-icon: #99331c;
+
+ta-data-flow-chart-node {
+  display: block;
+  overflow: hidden;
+  width: 100%;
+
+  .ta-chart-node-container {
+    .ta-node-title {
+      &.system {
+        display: flex;
+
+        .title {
+          margin-top: 6px;
+          margin-left: 10px;
+        }
+      }
+
+      .title {
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 16px;
+        color: $black;
+      }
+    }
+  }
+
+  .ta-labels-values-container {
+    .ta-labels-values-item {
+      .label {
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 16px;
+        color: $label-text;
+      }
+
+      ta-badge,
+      .value {
+        margin-left: 6px;
+      }
+
+      ta-badge {
+        font-weight: normal;
+        font-size: 10px;
+        line-height: 13px;
+      }
+
+      .value {
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 16px;
+        color: $black;
+      }
+    }
+  }
+}
+
+.tooltip.record-icon-tooltip {
+  margin-top: -5px !important;
+}

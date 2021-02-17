@@ -1,0 +1,36 @@
+@import 'src/styles/variables';
+@import '../../../../../styles/record-details';
+
+.contact-area {
+  min-height: 120px;
+  background-color: $white;
+  border: $border-default-600;
+  border-radius: $border-radius;
+
+  &:hover {
+    background-color: $gray-200;
+  }
+}
+
+.contact-row {
+  line-height: 12px;
+  margin-bottom: 10px !important;
+}
+
+.row {
+  margin-bottom: 30px;
+
+  .col {
+    line-height: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    .font-weight-bold {
+      margin-bottom: 4px;
+    }
+  }
+}
+
+.industry-title {
+  margin-top: 11px;
+}

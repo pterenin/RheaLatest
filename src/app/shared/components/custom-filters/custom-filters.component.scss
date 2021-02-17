@@ -1,0 +1,254 @@
+@import '../../../../styles/variables';
+
+:host ::ng-deep {
+  .dropdown-menu ta-checkbox.dropdown-item {
+    padding: 0 10px;
+  }
+  .dropdown-menu {
+    margin-top: 6px !important;
+  }
+
+  .dropdown {
+    &.show {
+      color: $cornflower-blue;
+      & > button {
+        color: $cornflower-blue !important;
+      }
+    }
+  }
+
+  #addFilters {
+    .btn-circle svg path {
+      color: white;
+    }
+  }
+}
+
+.inventory-filter-container.dropdown-menu.show {
+  display: flex;
+  flex-direction: column;
+  width: 480px;
+  min-width: unset !important;
+  padding-top: 0;
+  padding-bottom: 0;
+
+  .wrapper {
+    column-count: 2;
+    column-gap: 0;
+
+    .category-block {
+      max-width: 230px;
+      display: inline-flex;
+      justify-content: left;
+      flex-direction: column;
+      text-align: left;
+    }
+  }
+}
+
+.disabled-message {
+  top: 294px;
+  left: 554px;
+  max-width: none;
+  background: $seashell-grey;
+  height: auto;
+  margin-left: 30px;
+  .popover-body {
+    padding: 4px 8px;
+    min-height: 0;
+  }
+}
+
+span.disabled {
+  color: $silver-grey;
+}
+
+.custom-filters {
+  position: relative;
+  min-height: 30px;
+  .overflow-text-elipses {
+    label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  .loading {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .black {
+    color: black;
+  }
+  .not-active {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  .hidden {
+    display: none;
+  }
+  strong {
+    color: $prussian-blue;
+    font-weight: 600;
+  }
+  .main-container {
+    width: calc(100% - 370px);
+  }
+  div.add-filter {
+    float: left;
+    margin-right: 20px;
+    margin-top: 5px;
+  }
+  a {
+    color: $nice-blue;
+  }
+
+  a.add-filter {
+    i {
+      color: $white;
+    }
+    .btn-circle {
+      min-width: 16px !important;
+    }
+    .btn {
+      border: 1px solid #0052cc;
+      width: 16px !important;
+      max-width: 16px !important;
+      height: 16px;
+      margin-top: -4px;
+      margin-right: 4px;
+      min-width: unset;
+      padding: 0;
+
+      ta-icon {
+        color: white;
+        margin-top: -2px;
+        margin-left: 2px;
+        float: left;
+      }
+    }
+  }
+  .toolbar {
+    position: absolute;
+    padding-top: 3px;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: auto;
+    left: auto;
+    margin-left: 75px;
+    .clear-btn {
+      position: relative;
+      &:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 24px;
+        border-left: 1px solid $gallery-grey;
+        left: 12px;
+        top: 0px;
+      }
+    }
+    .save-drop {
+      .dropdown-item {
+        cursor: pointer;
+      }
+    }
+    .my-filters-options {
+      max-height: 400px;
+      overflow-y: auto;
+      width: 300px;
+      margin-left: -12px;
+      .text-danger {
+        ta-icon {
+          float: left;
+          margin-right: 4px;
+        }
+        span {
+          white-space: normal;
+        }
+      }
+      form {
+        width: 220px;
+        display: inline-block;
+        input {
+          width: 100%;
+        }
+      }
+      .dropdown-item {
+        cursor: pointer;
+      }
+      span {
+        max-width: 220px;
+        text-overflow: ellipsis;
+        display: inline-block;
+        overflow: hidden;
+      }
+      i {
+        float: right;
+        cursor: pointer;
+        color: $turquoise-blue;
+        font-size: 23px;
+        margin-left: 8px;
+        line-height: 17px;
+        &:hover {
+          color: $black;
+        }
+      }
+    }
+
+    .filter-name-form {
+      .form-group {
+        width: 285px;
+        padding: 10px;
+      }
+      .btn {
+        margin-right: 10px !important;
+        margin-left: 0px !important;
+        float: right;
+      }
+      .text-danger {
+        font-size: 10px;
+        margin-top: 4px;
+        ta-icon {
+          float: left;
+        }
+        span {
+          margin-left: 4px;
+          display: block;
+          padding-top: 5px;
+        }
+      }
+      svg {
+        width: 16px;
+        margin-right: 4px;
+        line-height: 3px;
+        height: 34px;
+        margin-top: -4px;
+      }
+    }
+    .ta-chevron-down {
+      margin-left: 6px;
+    }
+    .btn.btn-primary {
+      margin-left: 10px;
+    }
+    .my-filters {
+      display: inline;
+      ta-icon {
+        margin-left: 4px;
+      }
+      button {
+        color: black;
+      }
+    }
+    .btn-flat {
+      &:disabled {
+        background-color: transparent;
+      }
+      box-shadow: none;
+      line-height: 12px;
+      border: none;
+      outline: none;
+    }
+  }
+}

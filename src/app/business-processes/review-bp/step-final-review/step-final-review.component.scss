@@ -1,0 +1,46 @@
+@import 'src/styles/variables';
+
+ta-step-final-review {
+  .review-step-section-container {
+    .final-review-header {
+      font-size: $font-size-16;
+      font-weight: 500;
+    }
+    a {
+      font-size: 14px;
+    }
+  }
+
+  .ta-accordion-body {
+    padding: 0;
+    .accordion-content-table {
+      box-shadow: $box-shadow;
+      background-color: $white;
+      border: 1px solid #f1f1f1;
+      border-radius: 4px;
+      .ta-table-wrapper-border {
+        border: unset;
+        border-radius: unset;
+      }
+      .accordion-ol {
+        margin: 0;
+        padding: 12px 30px;
+      }
+    }
+  }
+  .ta-accordion .ta-accordion-header {
+    ta-icon {
+      position: absolute;
+      right: 2rem;
+    }
+  }
+  .ta-accordion-button {
+    padding: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+  .ta-table-cell {
+    .btn {
+      min-width: 100% !important;
+    }
+  }
+}

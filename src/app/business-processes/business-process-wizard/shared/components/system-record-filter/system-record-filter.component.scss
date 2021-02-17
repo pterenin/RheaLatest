@@ -1,0 +1,22 @@
+@import 'src/styles/variables';
+
+.search-filter-popover {
+  &.bs-popover-bottom-right {
+    margin-left: 5px;
+  }
+  &.bs-popover-right {
+    margin-left: 24px !important;
+  }
+  margin-top: -4px;
+  width: 490px;
+  max-width: 490px;
+  overflow: unset;
+  .popover-body {
+    min-height: 307px;
+    padding: 0;
+    font-size: $font-size-12;
+  }
+  .dropdown-item-caret {
+    max-width: 10px;
+  }
+}

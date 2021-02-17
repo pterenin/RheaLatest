@@ -1,0 +1,39 @@
+{
+  "data": {
+    "processName": "e2e-BP-Step6 security and risk",
+    "title": "Provide Security, Risk information",
+    "securityControls": {
+      "items": [
+        "Authentication and access mechanisms",
+        "Boundary protection, such as firewalls and intrusion detection"
+      ],
+      "other": "custom-security-control"
+    },
+    "retentionPeriod": {
+      "period": "12",
+      "periodUnit": "Months"
+    },
+    "processingPurposes": [
+      {
+        "searchPrefix": "Advertising compliance",
+        "category": "Advertising"
+      },
+      {
+        "searchPrefix": "Clinical research",
+        "category": "Health Care"
+      }
+    ],
+    "dataElements": [
+      {
+        "searchPrefix": "Fingerprints",
+        "category": "Biometrics and Genetics"
+      },
+      {
+        "searchPrefix": "License plate number",
+        "category": "Identification Numbers"
+      }
+    ]
+  },
+  "status": 200,
+  "ok": true
+}

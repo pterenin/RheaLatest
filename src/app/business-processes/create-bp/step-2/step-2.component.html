@@ -1,0 +1,113 @@
+<div class="fadeInApp">
+  <form
+    [formGroup]="step2Form"
+    (ngSubmit)="onSubmit()"
+    autocomplete="off"
+    novalidate
+  >
+    <div class="record-details-container">
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <h3 class="bp-title mb-4" data-cy="title-owner">
+              <!-- [i18n-tobeinternationalized] -->
+              Provide the contact information of the business-process owner
+            </h3>
+          </div>
+          <div class="row mb-1">
+            <div class="col">
+              <div class="form-group">
+                <!--- [i18n-tobeinternationalized] -->
+                <ta-dropdown-field
+                  data-cy="entity"
+                  label="Company, subsidiary or affiliate"
+                  [options]="organizations"
+                  optionLabel="name"
+                  [selectedOption]="step2Form.get('company').value"
+                  formControlName="company"
+                  [useInfiniteScroll]="true"
+                  (infiniteListChanged)="requestForInfiniteList($event)"
+                ></ta-dropdown-field>
+              </div>
+            </div>
+
+            <div class="col pl-0">
+              <div class="form-group">
+                <ta-dropdown-field
+                  data-cy="entity-role"
+                  label="Role"
+                  [options]="owningEntityRoles"
+                  optionLabel="name"
+                  [selectedOption]="step2Form.get('owningEntityRole').value"
+                  formControlName="owningEntityRole"
+                ></ta-dropdown-field>
+              </div>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <!--- [i18n-tobeinternationalized] -->
+            <label for="fullName">Name of owner</label>
+            <input
+              data-cy="full-name"
+              type="text"
+              class="form-control"
+              formControlName="fullName"
+              name="fullName"
+              placeholder="Full Name"
+              [ngClass]="{
+                'is-invalid': fullName.invalid && fullName.touched
+              }"
+            />
+            <div *ngIf="fullName.errors?.maxlength" class="text-danger">
+              <!-- [i18n-tobeinternationalized] -->
+              The name of owner must be less than 255 characters.
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <!--- [i18n-tobeinternationalized] -->
+            <label for="ownersEmail">Email of owner</label>
+            <input
+              data-cy="email"
+              type="email"
+              formControlName="email"
+              class="form-control"
+              name="ownersEmail"
+              placeholder="Enter email address..."
+            />
+            <!--- [i18n-tobeinternationalized] -->
+            <div *ngIf="form.email.errors?.pattern" class="text-danger">
+              Email must be a valid email address
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <ta-dropdown-field
+                  data-cy="department"
+                  label="Department"
+                  [options]="departments"
+                  optionLabel="name"
+                  [selectedOption]="step2Form.get('department').value"
+                  formControlName="department"
+                  class="department-dropdown"
+                ></ta-dropdown-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      data-cy="next"
+      *taSlotView
+      taButton
+      type="submit"
+      taType="primary"
+      class="page-next btn-lg"
+      (click)="onSubmit()"
+      [disabled]="!step2Form.valid || isNextButtonDisabled"
+    >
+      Next
+    </button>
+  </form>
+</div>

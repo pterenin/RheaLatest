@@ -1,0 +1,120 @@
+<div
+  class="custom-filter"
+  taDropdown
+  (openChange)="onOpenChange($event)"
+  #filterDrop="taDropdown"
+  autoClose="outside"
+  *ngIf="filterType"
+>
+  <div taDropdownToggle class="selector">
+    {{ filterType.name }} {{ getSelectedOptionsNumber() }}
+    <ta-icon [icon]="'chevron-down'"></ta-icon>
+    <ta-icon
+      [icon]="'clear'"
+      color="#aaaaaa"
+      (click)="removeFilter()"
+    ></ta-icon>
+  </div>
+  <div
+    taDropdownMenu
+    class="filter-options"
+    aria-labelledby="filteroptions"
+    *ngIf="selectedFilterType"
+  >
+    <ta-dropdown-search (onSearch)="onSearch($event)"></ta-dropdown-search>
+    <div
+      class="parent-tier dropdown-item d-inline-block text-truncate"
+      *ngIf="selectedFilterType.parentType"
+      (click)="selectParent($event, filterDrop)"
+    >
+      <ta-icon [icon]="'caret-left'" [color]="arrowColor"></ta-icon>
+      <span>{{ selectedFilterType.name }}</span>
+    </div>
+    <ta-dropdown-scroll [scrollHeight]="320">
+      <ng-content
+        *ngIf="selectedFilterType.filterOptions.length === 0"
+      ></ng-content>
+      <div class="dropdown-item">
+        <ta-checkbox
+          *ngIf="
+            selectedFilterType.filterOptions &&
+            selectedFilterType.filterOptions.length
+          "
+          (click)="allFiltersClick($event); onFilterOptionChanged()"
+          [checked]="isAll()"
+          [indeterminate]="isInt() && !isAll()"
+        >
+          <!-- [i18n-tobeinternationalized] -->
+          <span>Select all</span>
+        </ta-checkbox>
+      </div>
+      <ng-container
+        *ngFor="let filterOption of selectedFilterType.filterOptions"
+      >
+        <div class="dropdown-item" [class.hidden]="filterOption.hidden">
+          <ta-checkbox
+            *ngIf="!filterOption.isCategory"
+            [class.hidden]="filterOption.hidden"
+            [disabled]="
+              filterOption.isCategorizedFilter && !filterOption.selectable
+            "
+            (change)="onFilterOptionChanged()"
+            (click)="$event.stopPropagation()"
+            [indeterminate]="
+              !filterOption.selected && isSomeChildrentSelected(filterOption)
+            "
+            [(ngModel)]="filterOption.selected"
+          >
+            <span
+              *ngIf="!filterOption.name || filterOption.name.length < 30"
+              [innerHTML]="getLabel(filterOption.name || noNameText)"
+            ></span>
+            <span
+              *ngIf="filterOption.name && filterOption.name.length > 30"
+              triggers="mouseenter:mouseleave"
+              container="body"
+              [innerHTML]="getLabel(filterOption.name || '-no name-')"
+              placement="top"
+              [taTooltip]="filterOption.name"
+              tooltipTextAlign="left"
+            ></span>
+          </ta-checkbox>
+
+          <ta-checkbox
+            *ngIf="filterOption.isCategory"
+            [class.hidden]="filterOption.hidden"
+            (click)="selectCategory(filterOption, $event)"
+            [checked]="isAllChildrentSelected(filterOption)"
+            [indeterminate]="
+              isSomeChildrentSelected(filterOption) &&
+              !isAllChildrentSelected(filterOption)
+            "
+          >
+            <span
+              *ngIf="!filterOption.name || filterOption.name.length < 30"
+              [innerHTML]="getLabel(filterOption.name || '-no name-')"
+            ></span>
+            <span
+              *ngIf="filterOption.name && filterOption.name.length > 30"
+              triggers="mouseenter:mouseleave"
+              container="body"
+              [innerHTML]="getLabel(filterOption.name || '-no name-')"
+              placement="top"
+              [taTooltip]="filterOption.name"
+              tooltipTextAlign="left"
+            ></span>
+          </ta-checkbox>
+          <ta-icon
+            [icon]="'caret-right'"
+            (click)="selectChild(filterOption, $event)"
+            *ngIf="
+              filterOption.subType ||
+              (filterOption.filterOptions && filterOption.filterOptions.length)
+            "
+            [color]="arrowColor"
+          ></ta-icon>
+        </div>
+      </ng-container>
+    </ta-dropdown-scroll>
+  </div>
+</div>

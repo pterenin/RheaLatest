@@ -1,0 +1,11 @@
+{
+  "data": {
+    "associations": "",
+    "id": "string",
+    "processingPurposes": "",
+    "status": "string",
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

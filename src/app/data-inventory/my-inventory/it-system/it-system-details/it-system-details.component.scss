@@ -1,0 +1,77 @@
+@import 'src/styles/variables';
+@import '../../../../../styles/record-details';
+
+ta-it-system-details {
+  .link {
+    cursor: pointer;
+    color: $nice-blue;
+  }
+
+  .foat-left {
+    float: left;
+  }
+
+  .tooltip-content {
+    strong {
+      width: 100;
+    }
+
+    span {
+      display: block;
+      margin-bottom: 10px;
+    }
+  }
+
+  .add-new-location-link {
+    display: inline-block;
+    margin-left: 5px;
+  }
+  .data-subject-record {
+    .retention-period-wrapper,
+    .card-header {
+      border: none;
+      box-shadow: none;
+      background-color: transparent;
+      .sub-header-text {
+        display: none;
+      }
+    }
+    .card-header {
+      padding-bottom: 0;
+    }
+    .card-header,
+    .card-body {
+      padding-left: 0;
+    }
+  }
+
+  .contact-area {
+    min-height: 120px;
+    background-color: $white;
+    border: $border-default-600;
+    border-radius: $border-radius;
+    .btn-actions {
+      z-index: 1;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+    &:hover {
+      background-color: $gray-200;
+    }
+  }
+
+  .sub-heading {
+    .contact-info {
+      margin-top: 10px;
+      font-weight: normal;
+      font-size: 12px;
+    }
+  }
+}
+
+.ta-it-system-details {
+  .dropdown-menu.show {
+    top: unset !important;
+  }
+}

@@ -1,0 +1,50 @@
+<form [formGroup]="fileUploadFormGroup">
+  <div class="form-group">
+    <ta-file-upload
+      class="d-block"
+      [text]="text"
+      [fileRestriction]="fileRestriction"
+      linkText="browse files"
+      (fileSelected)="addFileForm($event)"
+      [maxFileSize]="maxFileSize"
+    >
+    </ta-file-upload>
+  </div>
+  <div class="form-group">
+    <span class="file-attachment-summary">
+      Files imported ({{ getFileControl().length }})</span
+    >
+  </div>
+  <ng-container
+    formArrayName="fileForms"
+    *ngFor="let fileControl of getFileControl(); let i = index"
+  >
+    <div class="form-group d-block">
+      <div [formGroupName]="i" class="d-block">
+        <button
+          title="Delete this file"
+          taButton
+          taType="circle"
+          (click)="removeFile(i)"
+          type="button"
+          class="remove-file"
+        >
+          <ta-icon icon="delete"></ta-icon>
+        </button>
+
+        <span>
+          <label
+            for="{{ fileControl.get('id').value }}"
+            class="file-name"
+            (click)="downloadFileFrom(fileControl)"
+            >{{ fileControl.get('fileName').value }}</label
+          >
+        </span>
+      </div>
+      <div *ngIf="isFileStatusError(fileControl)" class="text-danger">
+        This file could not be uploaded. Make sure this is a valid file, and
+        less than {{ maxFileSizeAllowed }}.
+      </div>
+    </div>
+  </ng-container>
+</form>

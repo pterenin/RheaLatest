@@ -1,0 +1,235 @@
+@import 'src/styles/variables';
+
+$remain-steps-grey: zeplin-lighten($gray-700, 0.2);
+
+%nav-after-bar {
+  content: '';
+  height: 3px;
+  width: 100%;
+  position: absolute;
+  top: 13px;
+  left: 50%;
+  z-index: -1;
+}
+
+%nav-page-container {
+  color: $turquoise-blue;
+  width: 150px;
+  text-align: center;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    a {
+      color: $turquoise-blue;
+    }
+  }
+}
+
+%default-indicator-size {
+  border: 2px solid $turquoise-blue;
+  height: 28px;
+  width: 28px;
+  display: block;
+  border-radius: 50px;
+  margin: auto;
+}
+
+%minimal-indicator-size {
+  content: '';
+  height: 13px;
+  width: 13px;
+  display: block;
+  border-radius: 50px;
+  margin: 8px auto 0;
+}
+
+%minimal-remain-steps {
+  &:before {
+    @extend %minimal-indicator-size;
+  }
+
+  &:after {
+    background-color: $remain-steps-grey;
+  }
+}
+
+ta-page-nav {
+  display: block;
+  overflow: hidden;
+  min-height: 58px;
+  padding: 15px 0;
+  position: relative;
+  z-index: 0;
+  justify-content: center;
+  text-align: center;
+  margin: 0 auto;
+
+  .page-nav-label {
+    color: $gray-700;
+    font-size: 11px;
+    margin-top: 5px;
+    display: inline-block;
+    text-decoration: none;
+
+    &:hover {
+      color: $turquoise-blue;
+    }
+  }
+
+  ta-page-nav-minimal {
+    @extend %nav-page-container;
+
+    .page-nav-label {
+      margin-top: 10px;
+    }
+
+    &:before {
+      background-color: $turquoise-blue;
+      @extend %minimal-indicator-size;
+    }
+
+    &:after {
+      background-color: $turquoise-blue;
+      @extend %nav-after-bar;
+    }
+
+    &:last-child {
+      &:after {
+        display: none;
+      }
+    }
+
+    &.active {
+      font-weight: 600;
+      cursor: pointer; // should be auto
+      pointer-events: none;
+
+      a,
+      a:hover {
+        color: $gray-700; // should be brownish-grey
+        cursor: auto; // should be auto
+      }
+
+      @extend %minimal-remain-steps;
+
+      &:before {
+        background-color: $turquoise-blue;
+      }
+
+      ~ ta-page-nav-minimal {
+        color: $gray-700; // should be brownish-grey
+        cursor: auto; // should be auto
+        pointer-events: none;
+
+        a,
+        a:hover {
+          color: $gray-700; // should be brownish-grey
+          cursor: auto; // should be auto
+        }
+
+        @extend %minimal-remain-steps;
+
+        &:before {
+          background-color: $remain-steps-grey;
+        }
+      }
+    }
+  }
+
+  ta-page-nav-default .page-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: white;
+    border: 2px solid $remain-steps-grey;
+    margin: auto;
+    cursor: pointer;
+
+    p {
+      color: $gray-700;
+      display: table-cell;
+      vertical-align: middle;
+      width: 28px;
+      height: 28px;
+      text-align: center;
+    }
+
+    &::after {
+      background-color: $remain-steps-grey;
+      content: '';
+      height: 3px;
+      width: 100%;
+      position: absolute;
+      bottom: 35px;
+      z-index: -1;
+      cursor: pointer;
+    }
+
+    .ta-check {
+      color: white;
+      font-size: 20px;
+    }
+  }
+
+  ta-page-nav-default:last-of-type {
+    .page-icon {
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  ta-page-nav-default .active-link {
+    color: $black;
+  }
+
+  ta-page-nav-default .page-selected {
+    border: 2px solid $turquoise-blue;
+
+    p {
+      color: $turquoise-blue;
+    }
+  }
+
+  ta-page-nav-default .page-completed {
+    background-color: $turquoise-blue;
+
+    &.page-icon {
+      border: 2px solid $turquoise-blue;
+    }
+
+    &::after {
+      background-color: $turquoise-blue;
+      content: '';
+      height: 3px;
+      width: 100%;
+      position: absolute;
+      bottom: 35px;
+      z-index: -1;
+    }
+  }
+
+  ta-page-nav-default {
+    @extend %nav-page-container;
+
+    &.active {
+      font-weight: 600;
+      cursor: auto; // should be auto
+
+      ~ ta-page-nav-default {
+        color: $gray-700; // should be brownish-grey
+        cursor: auto; // should be auto
+      }
+    }
+  }
+}
+
+.ta-star {
+  color: $turquoise-blue;
+  font-size: $font-size-20;
+  position: absolute;
+  margin-left: -10px;
+  margin-top: -3px;
+}

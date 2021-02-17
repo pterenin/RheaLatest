@@ -1,0 +1,83 @@
+<div class="p-3 animated fadeIn" id="system-record-add-content">
+  <header class="d-flex align-items-center mb-3">
+    <p class="mb-0 text-black-50">New System Record</p>
+    <ta-icon width="4" height="7" icon="caret-right" class="mx-2"></ta-icon>
+    <p class="mb-0">New Third Party Record</p>
+  </header>
+  <header class="d-flex align-items-center mb-3">
+    <div class="w-100 d-flex align-items-center">
+      <h3
+        class="h6 m-0 d-inline-block pr-3 text-truncate"
+        style="max-width: 80%;"
+      >
+        <ta-icon
+          (click)="handleBack()"
+          class="cursor-pointer mr-2"
+          height="8"
+          icon="arrow-left"
+        ></ta-icon>
+        <!-- [i18n-tobeinternationalized] -->
+        New Third Party Record
+      </h3>
+    </div>
+  </header>
+
+  <ta-tabset [destroyOnHide]="false">
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-tab title="Details" [disabled]="false">
+      <ng-template taTabContent>
+        <!-- [i18n-tobeinternationalized] -->
+        <div class="sub-heading">Details</div>
+        <ta-third-party-details-form
+          [iconRequiredColor]="'red'"
+          [iconTypeTooltip]="'help'"
+          [showRiskFields]="showRiskFields"
+          (updatedFormValue)="getFormData($event)"
+          (updatedContactValue)="setContactValue($event)"
+        ></ta-third-party-details-form>
+      </ng-template>
+    </ta-tab>
+
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-tab title="Tags" [disabled]="false">
+      <ng-template taTabContent>
+        <!-- [i18n-tobeinternationalized] -->
+        <div class="sub-heading">Tags</div>
+        <!-- [i18n-tobeinternationalized] -->
+        <div class="mb-3">Use tags to organize and classify the assets.</div>
+        <ta-inventory-tags
+          [baseDomainId]="baseDomainId"
+          [baseDomainType]="baseDomainType"
+          (selectedTagsChange)="handleTagsUpdated($event)"
+        ></ta-inventory-tags>
+      </ng-template>
+    </ta-tab>
+  </ta-tabset>
+</div>
+
+<div
+  id="system-selection-action-buttons"
+  class="justify-content-end d-flex align-items-center"
+>
+  <div class="d-flex text-right">
+    <button
+      class="mr-2"
+      taButton
+      taType="flat btn-sm"
+      (click)="handleCancelAdding()"
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      Cancel
+    </button>
+    <button
+      class="w-auto"
+      taButton
+      taType="flat btn-sm"
+      (click)="handleSaveAddingThirdParty()"
+      [disabled]="isDisabledSave"
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      Add
+    </button>
+  </div>
+</div>

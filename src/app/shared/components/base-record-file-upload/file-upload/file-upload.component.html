@@ -1,0 +1,18 @@
+<div
+  id="file-upload"
+  class="drop-zone"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+  [ngClass]="{ 'dragging-over': draggingOver }"
+>
+  {{ text }}
+  <label class="link" for="{{ id }}">{{ linkText }}</label>
+  <input
+    #fileUploadInput
+    type="file"
+    id="{{ id }}"
+    (change)="onFileSelected($event)"
+    [accept]="fileRestriction"
+  />
+</div>

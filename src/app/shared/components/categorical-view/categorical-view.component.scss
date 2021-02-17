@@ -1,0 +1,89 @@
+@import 'src/styles/variables';
+
+$spacer: 0.25rem;
+
+ta-categorical-view {
+  display: block;
+  background-color: $white;
+  .categorical-search-wrapper {
+    display: block;
+    position: relative;
+    top: -$spacer;
+    border-bottom: 1px solid $border-default-color;
+    ta-icon {
+      position: absolute;
+      top: 0.35rem;
+      left: 0.55rem;
+      svg {
+        color: $gray-700;
+      }
+    }
+    input.form-control {
+      border-radius: 0;
+      border: 0;
+      padding-left: 1.85rem;
+    }
+  }
+  .categorical-view-container {
+    margin: -$spacer 0;
+    background-color: $white;
+  }
+
+  .categorical-view-component {
+    .categorical-menu,
+    .categorical-items {
+      min-height: 150px;
+      max-height: 250px !important;
+      overflow: auto;
+    }
+  }
+
+  .categorical-view-component-full-height {
+    .categorical-menu,
+    .categorical-items {
+      min-height: 150px;
+      max-height: 596px !important;
+      overflow: auto;
+    }
+  }
+
+  .categorical-menu {
+    padding: $spacer 0;
+    width: 50%;
+    border-right: $border-default;
+  }
+  .categorical-items {
+    padding: $spacer 0;
+    width: 50%;
+  }
+  .dropdown-item,
+  .dropdown-menu-item {
+    cursor: pointer;
+    white-space: unset;
+    margin-bottom: 0.25rem;
+  }
+  .locations-text {
+    height: 13px;
+    line-height: 13px;
+    font-size: $font-size-10;
+    text-transform: uppercase;
+  }
+  .small-tag.country {
+    font-size: $font-size-11 !important;
+    background-color: zeplin-lighten($gray-700, 0.22) !important;
+    color: zeplin-lighten($black, 0.535);
+    border-radius: 2px;
+    height: 17px;
+    min-width: 40px;
+    padding: 0 10px;
+    line-height: 17px;
+    display: inline-block;
+    text-align: center;
+  }
+  .label-wrapper {
+    width: 60%;
+  }
+  .locations-wrapper {
+    width: 40%;
+  }
+}

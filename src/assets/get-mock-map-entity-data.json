@@ -1,0 +1,97 @@
+{
+  "data": [
+    {
+      "from": {
+        "name": "AR Entity",
+        "location": "AR",
+        "type": "DATA_SUBJECT"
+      },
+      "to": {
+        "name": "AT Entity",
+        "location": "AT",
+        "type": "IT_SYSTEM_1ST_PARTY"
+      }
+    },
+    {
+      "from": {
+        "name": "AR Entity",
+        "location": "AR",
+        "type": "DATA_SUBJECT"
+      },
+      "to": {
+        "name": "AU Entity",
+        "location": "AU",
+        "type": "IT_SYSTEM_3RD_PARTY"
+      }
+    },
+    {
+      "from": {
+        "name": "AU Entity",
+        "location": "AU",
+        "type": "IT_SYSTEM_3RD_PARTY"
+      },
+      "to": {
+        "name": "BD Entity",
+        "location": "BD",
+        "type": "DATA_RECIPIENT"
+      }
+    },
+    {
+      "from": {
+        "name": "BR Entity",
+        "location": "BR",
+        "type": "IT_SYSTEM_1ST_PARTY"
+      },
+      "to": {
+        "name": "BO",
+        "location": "BO",
+        "type": "IT_SYSTEM_3RD_PARTY"
+      }
+    },
+    {
+      "from": {
+        "name": "AT Entity",
+        "location": "AT",
+        "type": "IT_SYSTEM_1ST_PARTY"
+      },
+      "to": {
+        "name": "BE Entity",
+        "location": "BE",
+        "type": "DATA_RECIPIENT"
+      }
+    },
+    {
+      "from": {
+        "name": "AT Entity",
+        "location": "AT",
+        "type": "IT_SYSTEM_1ST_PARTY"
+      },
+      "to": {
+        "name": "BD Entity",
+        "location": "BD",
+        "type": "DATA_RECIPIENT"
+      }
+    },
+    {
+      "from": {
+        "name": "BE Entity",
+        "location": "BE",
+        "type": "DATA_RECIPIENT"
+      }
+    },
+    {
+      "from": {
+        "name": "BD Entity",
+        "location": "BD",
+        "type": "DATA_RECIPIENT"
+      }
+    },
+    {
+      "from": {
+        "name": "BO",
+        "location": "BO",
+        "type": "IT_SYSTEM_3RD_PARTY"
+      }
+    }
+  ]
+}

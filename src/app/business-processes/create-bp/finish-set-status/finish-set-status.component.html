@@ -1,0 +1,82 @@
+<div class="modal-header">
+  <!--- [i18n-tobeinternationalized] --->
+  <h4 class="modal-title" id="modal-basic-title">Finish &amp; Set Status</h4>
+  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+    <i class="ta ta-close"></i>
+  </button>
+</div>
+<form [formGroup]="bpStatusForm" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+    <!--- [i18n-tobeinternationalized] --->
+    <div class="mb-1">Select the status for this business process</div>
+    <div class="form-check form-check-inline mb-2 mr-3">
+      <ta-radio
+        taAutofocus
+        group="radioGr"
+        [value]="'draft'"
+        formControlName="status"
+        id="draft"
+      >
+        <!--- [i18n-tobeinternationalized] --->
+        Draft
+      </ta-radio>
+    </div>
+    <div class="form-check form-check-inline mb-2">
+      <ta-radio
+        group="radioGr"
+        [value]="'review-selected'"
+        formControlName="status"
+        id="review-selected"
+      >
+        <!--- [i18n-tobeinternationalized] --->
+        Send for review
+      </ta-radio>
+    </div>
+    <div *ngIf="bpStatusForm.get('status').value === 'review-selected'">
+      <!--- [i18n-tobeinternationalized] --->
+      <ta-dropdown-field
+        class="reviewer-dropdown mb-3"
+        [label]="'Reviewer'"
+        [placeholder]="'Select user...'"
+        [options]="reviewers"
+        [selectedOption]="bpStatusForm.get('reviewer').value"
+        formControlName="reviewer"
+      ></ta-dropdown-field>
+      <div class="form-group">
+        <!--- [i18n-tobeinternationalized] --->
+        <label for="message">Message to reviewer</label>
+        <textarea
+          class="form-control message mb-4"
+          rows="5"
+          id="message"
+          name="message"
+          formControlName="message"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer align-items-start justify-content-start">
+    <button
+      taButton
+      type="button"
+      taType="secondary"
+      class="mr-auto"
+      data-dismiss="modal"
+      id="modal-cancel"
+      (click)="activeModal.dismiss('Cancel')"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Cancel
+    </button>
+    <button
+      taButton
+      type="button"
+      taType="primary"
+      id="modal-submit"
+      (click)="onSubmit()"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Finish &amp; Set Status
+    </button>
+  </div>
+</form>

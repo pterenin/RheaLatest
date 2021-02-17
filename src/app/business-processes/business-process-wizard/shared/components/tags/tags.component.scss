@@ -1,0 +1,16 @@
+@import 'src/styles/variables';
+
+.bp-tags-empty {
+  span {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+    color: $gray-700;
+  }
+}
+
+.bp-tags-container,
+.bp-tags-empty {
+  min-height: 300px;
+}

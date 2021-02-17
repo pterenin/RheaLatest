@@ -1,0 +1,12 @@
+{
+  "data": {
+    "description": "string",
+    "id": "string",
+    "summary": "string",
+    "type": "string",
+    "value": "string",
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

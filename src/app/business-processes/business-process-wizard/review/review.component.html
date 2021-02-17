@@ -1,0 +1,157 @@
+<ta-business-process-wizard-header
+  [currentRoute]="businessProcessNavigation[5]"
+  (isClickSteps)="navigate({ save: true, step: $event })"
+  (viewUpdated)="navigate({ save: true, step: $event.step })"
+></ta-business-process-wizard-header>
+
+<div class="review-wrapper p-3">
+  <div class="row">
+    <div class="col-12">
+      <div class="review-link-wrapper card rounded-lg mb-3">
+        <div class="card-header d-flex">
+          <div class="w-100" data-cy="title-review-link">
+            <div class="row">
+              <div class="col-9">
+                <p class="header-text mb-0">
+                  <!-- [i18n-tobeinternationalized] -->
+                  You are almost there...
+                </p>
+                <span class="sub-header-text">
+                  <!-- [i18n-tobeinternationalized] -->
+                  Copy the link to send this business process to a reviewer, and
+                  update the status above to <strong>“In Review.”</strong>
+                </span>
+              </div>
+              <div class="col-3 copy-button-wrapper">
+                <button
+                  taButton
+                  taType="secondary"
+                  class="copy-button"
+                  (click)="copyLinkToClipboard()"
+                >
+                  <!-- [i18n-tobeinternationalized] -->
+                  <ta-icon [icon]="'task'" class="mx-1"></ta-icon>
+                  Copy Business Process Link
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="review-table-wrapper card rounded-lg mb-3">
+        <div class="card-header no-subheader d-flex">
+          <div class="w-100" data-cy="title-review-table">
+            <p class="header-text mb-0">
+              <!-- [i18n-tobeinternationalized] -->
+              If you're reviewing this record, select the legal basis for
+              processing below.
+            </p>
+          </div>
+        </div>
+        <div class="card-body card-body-table">
+          <ta-table
+            *ngIf="!isLoading"
+            [id]="gridID"
+            [taSelected]="false"
+            [indexField]="'id'"
+            class="review-table"
+          >
+            <!-- Columns -->
+            <ta-table-column [taWidth]="500" [taField]="'category'">
+              <!--- [i18n-tobeinternationalized] -->
+              Category
+            </ta-table-column>
+            <ta-table-column [taWidth]="500" [taField]="'name'">
+              <!--- [i18n-tobeinternationalized] -->
+              Processing Purpose
+            </ta-table-column>
+            <ta-table-column [taField]="'legalBasisName'">
+              <!--- [i18n-tobeinternationalized] -->
+              Legal Basis
+            </ta-table-column>
+
+            <!-- Rows -->
+            <ta-table-row
+              *ngFor="let d of data; index as i"
+              [taItem]="d"
+              [attr.data-cy]="d.category + ' ' + d.processingPurpose"
+            >
+              <ta-table-cell [taTruncate]="true">{{
+                d.category
+              }}</ta-table-cell>
+              <ta-table-cell [taTruncate]="true">{{ d.name }}</ta-table-cell>
+              <ta-table-cell class="ta-table-row-dropdown">
+                <div taDropdown>
+                  <a
+                    href="#"
+                    id="{{ 'ta-review-row-dropdown-id-' + d.id }}"
+                    taDropdownToggle
+                  >
+                    <span *ngIf="!d.legalBasis" class="empty-legal-basis">
+                      <!--- [i18n-tobeinternationalized] -->
+                      Select
+                    </span>
+                    <span *ngIf="d.legalBasis">
+                      {{ d.legalBasis?.shortName }}
+                    </span>
+                    <ta-icon icon="chevron-down"></ta-icon>
+                  </a>
+                  <div
+                    taDropdownMenu
+                    [attr.aria-labelledby]="'ta-review-row-dropdown-id-' + d.id"
+                  >
+                    <ta-dropdown-search
+                      (onSearch)="onSearch($event)"
+                    ></ta-dropdown-search>
+                    <ta-dropdown-scroll scrollHeight="175">
+                      <button
+                        *ngFor="
+                          let opt of legalBases
+                            | searchInCollectionByPathsArray
+                              : searchString
+                              : ['shortName']
+                        "
+                        class="dropdown-item text-truncate"
+                        (click)="setLegalBasisForProcessingPurpose(d.id, opt)"
+                      >
+                        {{ opt.shortName }}
+                      </button>
+                    </ta-dropdown-scroll>
+                  </div>
+                </div>
+              </ta-table-cell>
+            </ta-table-row>
+
+            <ta-table-footer>
+              <ta-pagination
+                *ngIf="processingPurposes.length > 0"
+                [collectionSize]="processingPurposes.length"
+                [pageSize]="pageSize"
+                [page]="page"
+                [showingType]="'full'"
+                [maxSize]="4"
+                [boundaryLinks]="true"
+                (pageChange)="onChangePage($event)"
+                (onChangePageSize)="onChangeMax($event)"
+              ></ta-pagination>
+            </ta-table-footer>
+          </ta-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--- [i18n-tobeinternationalized] -->
+<ta-business-process-wizard-footer
+  [showPreviousButton]="true"
+  [disableNextButton]="isDisabledNextBtn()"
+  [textNextButton]="'Finish'"
+  (isClickNextButton)="navigate({ save: true, step: 'home' })"
+  (isClickPreviousButton)="navigate({ save: true, step: 'security-and-risks' })"
+  (isClickCancelButton)="navigate({ save: false, step: 'cancel' })"
+></ta-business-process-wizard-footer>

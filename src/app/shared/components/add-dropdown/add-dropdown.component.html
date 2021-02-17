@@ -1,0 +1,16 @@
+<div taDropdown class="d-inline-block" placement="bottom-right">
+  <button
+    taButton
+    type="button"
+    taType="circle"
+    [id]="dropdownID"
+    taDropdownToggle
+    placement="top-left"
+    taTooltip="Add"
+  >
+    <i class="ta ta-plus"></i>
+  </button>
+  <div taDropdownMenu [attr.aria-labelledby]="dropdownID">
+    <ng-content></ng-content>
+  </div>
+</div>

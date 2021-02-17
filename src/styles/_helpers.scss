@@ -1,0 +1,159 @@
+@import 'src/styles/variables';
+
+.text-black-100 {
+  color: black !important;
+}
+
+.text-gray-600 {
+  color: $gray-600 !important;
+}
+
+.w-20 {
+  width: 20%;
+}
+
+.w-30 {
+  width: 30%;
+}
+
+.w-70 {
+  width: 70%;
+}
+
+.w-80 {
+  width: 80%;
+}
+
+strong {
+  font-weight: 500 !important;
+}
+
+.animated.fadeIn {
+  animation-duration: 300ms;
+}
+
+.animated.fadeIn.bs-tooltip-top {
+  margin-top: -5px;
+}
+
+.filter-indicator {
+  height: 4px;
+  width: 4px;
+  background-color: $red;
+  right: 0;
+  border-radius: 100px;
+}
+
+.dirty-indicator {
+  height: 4px;
+  width: 4px;
+  background-color: $red;
+  right: 0;
+  border-radius: 100px;
+}
+
+.cursor-alias {
+  cursor: alias;
+}
+.cursor-all-scroll {
+  cursor: all-scroll;
+}
+.cursor-auto {
+  cursor: auto;
+}
+.cursor-cell {
+  cursor: cell;
+}
+.cursor-context-menu {
+  cursor: context-menu;
+}
+.cursor-col-resize {
+  cursor: col-resize;
+}
+.cursor-copy {
+  cursor: copy;
+}
+.cursor-crosshair {
+  cursor: crosshair;
+}
+.cursor-default {
+  cursor: default;
+}
+.cursor-e-resize {
+  cursor: e-resize;
+}
+.cursor-ew-resize {
+  cursor: ew-resize;
+}
+.cursor-grab {
+  cursor: grab;
+}
+.cursor-grabbing {
+  cursor: grabbing;
+}
+.cursor-help {
+  cursor: help;
+}
+.cursor-move {
+  cursor: move;
+}
+.cursor-n-resize {
+  cursor: n-resize;
+}
+.cursor-ne-resize {
+  cursor: ne-resize;
+}
+.cursor-nesw-resize {
+  cursor: nesw-resize;
+}
+.cursor-ns-resize {
+  cursor: ns-resize;
+}
+.cursor-nw-resize {
+  cursor: nw-resize;
+}
+.cursor-nwse-resize {
+  cursor: nwse-resize;
+}
+.cursor-no-drop {
+  cursor: no-drop;
+}
+.cursor-none {
+  cursor: none;
+}
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.cursor-progress {
+  cursor: progress;
+}
+.cursor-row-resize {
+  cursor: row-resize;
+}
+.cursor-s-resize {
+  cursor: s-resize;
+}
+.cursor-se-resize {
+  cursor: se-resize;
+}
+.cursor-sw-resize {
+  cursor: sw-resize;
+}
+.cursor-text {
+  cursor: text;
+}
+.cursor-w-resize {
+  cursor: w-resize;
+}
+.cursor-wait {
+  cursor: wait;
+}
+.cursor-zoom-in {
+  cursor: zoom-in;
+}
+.cursor-zoom-out {
+  cursor: zoom-out;
+}

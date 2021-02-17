@@ -1,0 +1,136 @@
+{
+  "data": {
+    "processName": "e2e-BP-Step3",
+    "title": "Select the data subjects and data recipients involved in this business process",
+    "subjects": [
+      {
+        "searchPrefix": "Doctor",
+        "category": "Health Care",
+        "locations": [
+          {
+            "region": "North America",
+            "countries": ["Canada", "United States"]
+          },
+          {
+            "region": "Europe",
+            "countries": ["Cyprus", "Austria"]
+          }
+        ]
+      },
+      {
+        "searchPrefix": "Nurse",
+        "category": "Health Care",
+        "locations": [
+          {
+            "region": "North America",
+            "countries": ["Canada", "United States"]
+          },
+          {
+            "region": "Europe",
+            "countries": ["Cyprus", "Austria"]
+          }
+        ]
+      },
+      {
+        "searchPrefix": "Employee",
+        "category": "Employment",
+        "locations": [
+          {
+            "region": "North America",
+            "countries": ["Canada", "United States"]
+          },
+          {
+            "region": "Europe",
+            "countries": ["Cyprus", "Austria"]
+          }
+        ]
+      },
+      {
+        "searchPrefix": "Client",
+        "category": "Customers",
+        "locations": [
+          {
+            "region": "North America",
+            "countries": ["Canada", "United States"]
+          },
+          {
+            "region": "Europe",
+            "countries": ["Cyprus", "Austria"]
+          }
+        ]
+      },
+      {
+        "searchPrefix": "Broker",
+        "category": "Financial Services",
+        "locations": [
+          {
+            "region": "North America",
+            "countries": ["Canada", "United States"]
+          }
+        ]
+      },
+      {
+        "searchPrefix": "Coach",
+        "category": "Other Individual Types",
+        "locations": [
+          {
+            "region": "North America",
+            "countries": ["Canada", "United States"]
+          }
+        ]
+      }
+    ],
+    "recipients": [
+      {
+        "searchPrefix": "Accounting",
+        "category": "Corporate",
+        "locations": [
+          {
+            "region": "North America",
+            "countries": ["Canada", "United States"]
+          },
+          {
+            "region": "Europe",
+            "countries": ["Cyprus", "Austria"]
+          }
+        ]
+      },
+      {
+        "searchPrefix": "IT",
+        "category": "Corporate",
+        "locations": [
+          {
+            "region": "North America",
+            "countries": ["Canada", "United States"]
+          }
+        ]
+      },
+      {
+        "searchPrefix": "Alumni",
+        "category": "Education",
+        "locations": [
+          {
+            "region": "North America",
+            "countries": ["Canada", "United States"]
+          },
+          {
+            "region": "Europe",
+            "countries": ["Cyprus", "Austria"]
+          }
+        ]
+      },
+      {
+        "searchPrefix": "Artist",
+        "category": "Other Individual Types",
+        "locations": [
+          {
+            "region": "North America",
+            "countries": ["Canada", "United States"]
+          }
+        ]
+      }
+    ]
+  },
+  "status": 200,
+  "ok": true
+}

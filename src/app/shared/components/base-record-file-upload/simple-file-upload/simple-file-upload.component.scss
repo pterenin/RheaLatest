@@ -1,0 +1,11 @@
+@import 'src/styles/variables';
+
+:host {
+  .form-group {
+    position: relative;
+    .remove-file {
+      position: absolute;
+      right: 0;
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "legalEntities": {
+    "method": "GET",
+    "url": "api/legal-entities?size=100&sort=name,ASC",
+    "alias": "@legalEntities"
+  },
+  "legalEntitiesTypeBusinessAssociate": {
+    "method": "GET",
+    "url": "api/legal-entities/entity-type?legalEntitiesType=BUSINESS_ASSOCIATE&page=0&size=100&sort=name,ASC",
+    "alias": "@legalEntitiesTypeBusinessAssociate"
+  },
+  "legalEntitiesTypeServiceProvider": {
+    "method": "GET",
+    "url": "/api/legal-entities/entity-type?legalEntitiesType=SERVICE_PROVIDER&page=0&size=100&sort=name,ASC",
+    "alias": "@legalEntitiesTypeServiceProvider"
+  },
+  "legalEntitiesTypeCustomer": {
+    "method": "GET",
+    "url": "/api/legal-entities/entity-type?legalEntitiesType=CUSTOMER&page=0&size=100&sort=name,ASC",
+    "alias": "@legalEntitiesTypeCustomer"
+  },
+  "legalEntitiesTypeVendor": {
+    "method": "GET",
+    "url": "/api/legal-entities/entity-type?legalEntitiesType=VENDOR&page=0&size=100&sort=name,ASC",
+    "alias": "@legalEntitiesTypeVendor"
+  },
+  "legalEntitiesTypePartner": {
+    "method": "GET",
+    "url": "/api/legal-entities/entity-type?legalEntitiesType=PARTNER&page=0&size=100&sort=name,ASC",
+    "alias": "@legalEntitiesTypePartner"
+  },
+  "legalEntitiesTypeCompanyAffiliate": {
+    "method": "GET",
+    "url": "/api/legal-entities/entity-type?legalEntitiesType=COMPANY_AFFILIATE&page=0&size=100&sort=name,ASC",
+    "alias": "@legalEntitiesTypeBusinessAssociate"
+  },
+  "legalEntitiesTypePrimaryEntity": {
+    "method": "GET",
+    "url": "/api/legal-entities/entity-type?legalEntitiesType=PRIMARY_ENTITY&page=0&size=100&sort=name,ASC",
+    "alias": "@legalEntitiesTypePrimaryEntity"
+  },
+  "dataSubjectVolumes": {
+    "method": "GET",
+    "url": "/api/data-subject-volumes",
+    "alias": "@dataSubjectVolumes"
+  },
+  "locationsCountries": {
+    "method": "GET",
+    "url": "/api/locations/countries",
+    "alias": "@locationsCountries"
+  },
+  "baseRecordsFiltersPOST": {
+    "method": "POST",
+    "url": "/api/search/base-records/filters",
+    "alias": "@baseRecordsFiltersPOST"
+  }
+}

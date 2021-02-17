@@ -1,0 +1,460 @@
+<ng-container *ngIf="!useTabset">
+  <div class="regions" id="regions">
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-accordion #accordion="taAccordion">
+      <ta-panel
+        *ngFor="let region of locationData; let regionIndex = index"
+        id="region-{{ regionIndex }}-panel"
+      >
+        <ng-template taPanelTitle>
+          <!-- [i18n-tobeinternationalized] -->
+          <span
+            data-cy="modal-location-region"
+            class="accordion-title"
+            id="region-{{ regionIndex }}-title"
+          >
+            {{ region.name }}
+            ({{ getSelectionCountIndicator(regionIndex) }} Countries)
+          </span>
+        </ng-template>
+        <!-- Select-All Boxes for EU, Non-EU, and Everything else -->
+        <ng-template taPanelContent>
+          <div class="countries">
+            <!-- [i18n-tobeinternationalized] -->
+            <ta-checkbox
+              *ngIf="isEurope(region) && hasEuCountry() && !isReadOnly"
+              (click)="checkAllCountriesInEu($event, regionIndex)"
+              [checked]="isAllSelected(regionIndex)"
+              [indeterminate]="isIndeterminate(regionIndex, true)"
+              id="region-{{ regionIndex }}-selectall"
+            >
+              <span
+                data-cy="modal-location-region-countries-in-europe-eu"
+                class="country-name"
+              >
+                Select all countries in the EU ({{
+                  getSelectionCountIndicator(regionIndex, true)
+                }})
+              </span>
+            </ta-checkbox>
+            <div class="row countries" *ngIf="isEurope(region) && !isReadOnly">
+              <div class="row">
+                <ta-checkbox
+                  (click)="checkAllCountriesForRegion($event, regionIndex)"
+                  [checked]="isAllSelected(regionIndex)"
+                  [indeterminate]="isIndeterminate(regionIndex)"
+                  id="region-{{ regionIndex }}-selectall"
+                >
+                  <span
+                    data-cy="modal-location-region-countries-all-in-europe"
+                    class="country-name"
+                  >
+                    Select all countries in Europe, includes EU + Non-EU ({{
+                      getSelectionCountIndicator(regionIndex)
+                    }})
+                  </span>
+                </ta-checkbox>
+              </div>
+            </div>
+            <ta-checkbox
+              *ngIf="!isEurope(region) && !isReadOnly"
+              (click)="checkAllCountriesForRegion($event, regionIndex)"
+              [checked]="isAllSelected(regionIndex)"
+              [indeterminate]="isIndeterminate(regionIndex)"
+              id="region-{{ regionIndex }}-selectall"
+            >
+              <!-- [i18n-tobeinternationalized] -->
+              <span
+                data-cy="modal-location-region-countries-all"
+                class="country-name"
+              >
+                Select all countries in this region ({{
+                  getSelectionCountIndicator(regionIndex)
+                }})</span
+              >
+            </ta-checkbox>
+            <ng-container *ngIf="!isReadOnly">
+              <ng-container *ngFor="let country of region.countries">
+                <div class="row countries">
+                  <div class="row position-relative">
+                    <ta-checkbox
+                      [(ngModel)]="country.selected"
+                      (change)="selectCountry($event, country)"
+                      id="region-{{ regionIndex }}-{{ country }}-{{
+                        twoLetterCode
+                      }}"
+                    >
+                      <ng-container
+                        *ngTemplateOutlet="countryTemplate"
+                      ></ng-container>
+                    </ta-checkbox>
+                    <div
+                      class="state-link"
+                      *ngIf="
+                        stateProvinceIsSelectable &&
+                        country.stateOrProvinces.length > 0
+                      "
+                      (click)="selectStates(country)"
+                    >
+                      <!-- [i18n-tobeinternationalized] -->
+                      Select by State/Province
+                    </div>
+                  </div>
+                </div>
+
+                <ng-template #countryTemplate>
+                  <div class="three-letter-code">
+                    {{ country.threeLetterCode }}
+                  </div>
+                  <div
+                    data-cy="modal-location-country"
+                    class="country-name"
+                    id="region-{{ regionIndex }}-{{ country }}-{{
+                      twoLetterCode
+                    }}-name"
+                  >
+                    {{ country.name }}
+                    <span
+                      data-cy="modal-location-country-state"
+                      *ngIf="stateProvinceIsSelectable"
+                      >{{ getCountSelectedStateProvinces(country) }}</span
+                    >
+                  </div>
+                </ng-template>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="isReadOnly">
+              <ng-container *ngFor="let country of region.countries">
+                <div class="row countries" *ngIf="country.selected === true">
+                  <div class="row">
+                    <div class="three-letter-code">
+                      {{ country.threeLetterCode }}
+                    </div>
+                    <div
+                      data-cy="modal-location-country"
+                      class="country-name"
+                      id="region-{{ regionIndex }}-{{ country }}-{{
+                        twoLetterCode
+                      }}-name"
+                    >
+                      {{ country.name }}
+                      <span
+                        data-cy="modal-location-country-state"
+                        *ngIf="stateProvinceIsSelectable"
+                        >{{ getCountSelectedStateProvinces(country) }}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </ng-template>
+      </ta-panel>
+    </ta-accordion>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="useTabset && locationData">
+  <!-- SEARCH FIELD -->
+  <ta-search-field
+    [placeholder]="placeholder"
+    (searchValue)="searchLocation($event)"
+    class="d-flex align-items-center mb-2"
+  ></ta-search-field>
+
+  <!-- SEARCH RESULT -->
+  <ng-container
+    *ngIf="
+      searchCountryAndStatesByName && searchValue && searchValue.length > 1
+    "
+  >
+    <h3 class="h6 d-block mr-auto pt-1 pb-2">Search Results</h3>
+    <div class="animated fadeIn" style="height: 419px; overflow-y: scroll;">
+      <ng-container *ngFor="let result of searchCountryAndStatesByName">
+        <div
+          class="d-flex align-items-center py-2 pr-4"
+          *ngIf="!result.fromCountry"
+        >
+          <ta-checkbox
+            [(ngModel)]="result.selected"
+            (change)="selectCountry($event, result)"
+            class="mr-auto"
+          >
+            {{ result.name }}
+            <span class="text-black-50"> ({{ result.fromRegion.name }}) </span>
+          </ta-checkbox>
+          <span
+            class="link"
+            role="link"
+            *ngIf="
+              stateProvinceIsSelectable && result.stateOrProvinces.length > 0
+            "
+            (click)="selectStates(result)"
+          >
+            Select by State/Province
+          </span>
+        </div>
+        <div
+          class="d-flex align-items-center py-2 pr-4"
+          *ngIf="result.fromCountry"
+        >
+          <ta-checkbox
+            [(ngModel)]="result.selected"
+            (change)="
+              onSelectedSearchResultByStates(result.fromCountry, result)
+            "
+            class="mr-auto"
+          >
+            {{ result.name }}
+            <span class="text-black-50">
+              ({{ result.fromRegion.name }} - {{ result.fromCountry.name }})
+            </span>
+          </ta-checkbox>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <!-- TABSET -->
+  <ng-container
+    *ngIf="
+      !searchCountryAndStatesByName ||
+      (searchCountryAndStatesByName &&
+        searchCountryAndStatesByName.length === 0 &&
+        (!searchValue || (searchValue && searchValue.length < 2)))
+    "
+  >
+    <ta-tabset
+      class="animated fadeIn"
+      orientation="vertical"
+      [activeId]="setActiveTabId || 'region-0-panel'"
+    >
+      <ta-tab
+        *ngIf="getSelectedLocationsCount() > 0"
+        id="region-selected-panel"
+      >
+        <ng-template taTabTitle>
+          <!-- [i18n-tobeinternationalized] -->
+          <div
+            data-cy="modal-location-selected"
+            class="accordion-title d-flex align-items-center"
+            id="region-selected-title"
+          >
+            <span class="d-block mr-auto">Selected</span>
+            <strong class="d-block modal-location-selected-indicator px-1">
+              {{ getSelectedLocationsCount() }}
+            </strong>
+          </div>
+        </ng-template>
+        <ng-template taTabContent>
+          <div class="py-2 px-4 mb-0 d-flex">
+            <span class="h6 d-block mr-auto mb-0">Selected Locations</span>
+            <span class="text-black-50">
+              Total of {{ getSelectedLocationsCount() }} Locations
+            </span>
+          </div>
+          <div class="countries">
+            <ng-container
+              *ngFor="let location of getSelectedLocationByNameAsc()"
+            >
+              <div
+                class="d-flex py-2 px-4 selected-locations align-items-center overflow-hidden"
+              >
+                <div class="d-block three-letter-code mr-2">
+                  {{ location.threeLetterCode }}
+                </div>
+                <div class="d-block mr-auto">{{ location.name }}</div>
+                <div
+                  class="link mr-2"
+                  *ngIf="
+                    location.selectedStates &&
+                    location.selectedStates.length > 0
+                  "
+                  (click)="selectStates(location); onActiveTabId('selected')"
+                >
+                  <!-- [i18n-tobeinternationalized] -->
+                  Remove by State/Province
+                </div>
+                <button
+                  taButton
+                  taType="circle"
+                  (click)="removeSelectedCountries(location)"
+                >
+                  <ta-icon icon="delete"></ta-icon>
+                </button>
+              </div>
+            </ng-container>
+          </div>
+        </ng-template>
+      </ta-tab>
+      <ta-tab
+        *ngFor="let region of locationData; let regionIndex = index"
+        id="region-{{ regionIndex }}-panel"
+      >
+        <ng-template taTabTitle>
+          <!-- [i18n-tobeinternationalized] -->
+          <div
+            data-cy="modal-location-region"
+            class="accordion-title d-flex align-items-center"
+            id="region-{{ regionIndex }}-title"
+          >
+            <span class="d-block mr-auto">{{ region.name }}</span>
+            <strong class="d-block modal-location-selected-indicator px-1">
+              {{ getSelectionCountIndicator(regionIndex) }}
+            </strong>
+          </div>
+        </ng-template>
+
+        <!-- Select-All Boxes for EU, Non-EU, and Everything else -->
+        <ng-template taTabContent>
+          <div class="d-flex align-items-center py-2 px-4">
+            <span class="h6 d-block mr-auto mb-0">{{ region.name }}</span>
+            <span class="text-black-50">
+              Selected
+              {{ getSelectionCountIndicator(regionIndex, false, ' of ') }}
+              Country(s)
+            </span>
+          </div>
+          <div class="countries pt-2">
+            <!-- [i18n-tobeinternationalized] -->
+            <ng-container
+              *ngIf="isEurope(region) && hasEuCountry() && !isReadOnly"
+            >
+              <div class="d-flex align-items-center py-2 px-4">
+                <ta-checkbox
+                  (click)="checkAllCountriesInEu($event, regionIndex)"
+                  [checked]="isAllSelected(regionIndex)"
+                  [indeterminate]="isIndeterminate(regionIndex, true)"
+                  id="region-{{ regionIndex }}-selectall"
+                >
+                  <span
+                    data-cy="modal-location-region-countries-in-europe-eu"
+                    class="country-name"
+                  >
+                    Select all countries in the EU ({{
+                      getSelectionCountIndicator(regionIndex, true)
+                    }})
+                  </span>
+                </ta-checkbox>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="isEurope(region) && !isReadOnly">
+              <div class="d-flex align-items-center py-2 px-4">
+                <ta-checkbox
+                  (click)="checkAllCountriesForRegion($event, regionIndex)"
+                  [checked]="isAllSelected(regionIndex)"
+                  [indeterminate]="isIndeterminate(regionIndex)"
+                  id="region-{{ regionIndex }}-selectall"
+                >
+                  <span
+                    data-cy="modal-location-region-countries-all-in-europe"
+                    class="country-name"
+                  >
+                    Select all countries in Europe, includes EU + Non-EU ({{
+                      getSelectionCountIndicator(regionIndex)
+                    }})
+                  </span>
+                </ta-checkbox>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!isEurope(region) && !isReadOnly">
+              <div class="d-flex align-items-center py-2 px-4">
+                <ta-checkbox
+                  (click)="checkAllCountriesForRegion($event, regionIndex)"
+                  [checked]="isAllSelected(regionIndex)"
+                  [indeterminate]="isIndeterminate(regionIndex)"
+                  id="region-{{ regionIndex }}-selectall"
+                >
+                  <!-- [i18n-tobeinternationalized] -->
+                  <span
+                    data-cy="modal-location-region-countries-all"
+                    class="country-name"
+                  >
+                    Select all countries in this region ({{
+                      getSelectionCountIndicator(regionIndex)
+                    }})</span
+                  >
+                </ta-checkbox>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!isReadOnly">
+              <ng-container *ngFor="let country of region.countries">
+                <div class="d-flex py-2 px-4">
+                  <ta-checkbox
+                    [(ngModel)]="country.selected"
+                    (change)="selectCountry($event, country)"
+                    id="region-{{ regionIndex }}-{{ country }}-{{
+                      twoLetterCode
+                    }}"
+                    class="mr-auto"
+                  >
+                    <ng-container
+                      *ngTemplateOutlet="countryTemplate"
+                    ></ng-container>
+                  </ta-checkbox>
+                  <div
+                    class="link"
+                    *ngIf="
+                      stateProvinceIsSelectable &&
+                      country.stateOrProvinces.length > 0
+                    "
+                    (click)="selectStates(country); onActiveTabId(regionIndex)"
+                  >
+                    <!-- [i18n-tobeinternationalized] -->
+                    Select by State/Province
+                  </div>
+                </div>
+
+                <ng-template #countryTemplate>
+                  <div class="three-letter-code">
+                    {{ country.threeLetterCode }}
+                  </div>
+                  <div
+                    data-cy="modal-location-country"
+                    class="country-name"
+                    id="region-{{ regionIndex }}-{{ country }}-{{
+                      twoLetterCode
+                    }}-name"
+                  >
+                    {{ country.name }}
+                    <span
+                      data-cy="modal-location-country-state"
+                      *ngIf="stateProvinceIsSelectable"
+                    >
+                      {{ getCountSelectedStateProvinces(country) }}
+                    </span>
+                  </div>
+                </ng-template>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="isReadOnly">
+              <ng-container *ngFor="let country of region.countries">
+                <div *ngIf="country.selected === true">
+                  <div class="three-letter-code">
+                    {{ country.threeLetterCode }}
+                  </div>
+                  <div
+                    data-cy="modal-location-country"
+                    class="country-name"
+                    id="region-{{ regionIndex }}-{{ country }}-{{
+                      twoLetterCode
+                    }}-name"
+                  >
+                    {{ country.name }}
+                    <span
+                      data-cy="modal-location-country-state"
+                      *ngIf="stateProvinceIsSelectable"
+                    >
+                      {{ getCountSelectedStateProvinces(country) }}
+                    </span>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </ng-template>
+      </ta-tab>
+    </ta-tabset>
+  </ng-container>
+</ng-container>

@@ -1,0 +1,53 @@
+<!--- [i18n-tobeinternationalized] --->
+<div
+  class="traffic-light-risk-indicator"
+  triggers="mouseenter: mouseleave"
+  [taPopover]="tipContent"
+  popoverClass="incomplete-fields-popover"
+  popoverTitle="Incomplete Record"
+  placement="top"
+  *ngIf="riskItem"
+  [disablePopover]="!isIncompletFields()"
+  container="body"
+>
+  <div class="traffic-light-container">
+    <div
+      class="traffic-light"
+      [ngClass]="riskItem.algorithmRiskIndicator"
+    ></div>
+    <div class="traffic-light" [ngClass]="riskItem.inherentRiskIndicator"></div>
+    <div class="traffic-light" [ngClass]="riskItem.residualRiskIndicator"></div>
+  </div>
+  <span
+    *ngIf="getLabel()"
+    class="link min-height-14"
+    [ngClass]="{ 'no-underline': !isLink(riskItem) }"
+  >
+    <!--- [i18n-tobeinternationalized] --->
+    {{ getLabel() }}
+  </span>
+</div>
+<ng-template #tipContent>
+  <div style="width: 220px;">
+    <!--- [i18n-tobeinternationalized] --->
+    The following
+    {{
+      riskItem.incompleteRiskEvaluationFields
+        ? riskItem.incompleteRiskEvaluationFields.length
+        : 0
+    }}
+    fields are needed to evaluate this records risk profile:
+    <br />
+    <br />
+    <div
+      *ngIf="
+        riskItem.incompleteRiskEvaluationFields &&
+        riskItem.incompleteRiskEvaluationFields.length
+      "
+    >
+      <div *ngFor="let field of riskItem.incompleteRiskEvaluationFields">
+        - {{ field }}<br />
+      </div>
+    </div>
+  </div>
+</ng-template>

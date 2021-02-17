@@ -1,0 +1,22 @@
+@import 'src/styles/variables';
+
+:host {
+  display: inline-block;
+  .selected-system-record-filter-dropdown-menu {
+    padding: 0;
+    .selected-system-record-filter-header {
+      font-weight: 500;
+      border-bottom: $border-default;
+    }
+    .selected-system-record-filter-content {
+      max-height: 250px;
+      overflow-y: auto;
+    }
+    .selected-system-record-filter-footer {
+      border-top: $border-default;
+      .btn {
+        min-width: 55px !important;
+      }
+    }
+  }
+}

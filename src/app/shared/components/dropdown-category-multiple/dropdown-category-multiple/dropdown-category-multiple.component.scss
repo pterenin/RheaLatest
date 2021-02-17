@@ -1,0 +1,13 @@
+@import '../../../../../styles/_variables';
+ta-dropdown-category-multiple {
+  .placeholder-text {
+    padding: 0.375rem 0.75rem;
+    position: relative;
+    top: 7px;
+    left: -4px;
+  }
+
+  div[role='button'] {
+    -webkit-appearance: none;
+  }
+}

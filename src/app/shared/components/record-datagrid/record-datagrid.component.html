@@ -1,0 +1,701 @@
+<!--- [i18n-tobeinternationalized] -->
+<ta-table
+  *ngIf="gridData?.length || hasInitFetched"
+  indexField="id"
+  [id]="gridId"
+  [taSelected]="true"
+  [taExpandable]="true"
+  [filter]="true"
+  [filterIsDirty]="isFilterDirty"
+  [filterValue]="filterValue ? filterValue : 'Filters'"
+  class="ta-table-wrapper-border"
+>
+  <!--- [i18n-tobeinternationalized] -->
+  <ta-table-search
+    [taPlaceholder]="'Search record name, ID or contact'"
+    (onSearch)="onSearch($event)"
+  >
+  </ta-table-search>
+  <ta-table-toolbar>
+    <!-- Selected counter -->
+    <span class="selected-count">{{ getSelectedCounterString() }}</span>
+
+    <!-- Column configuration -->
+    <div
+      #columnConfigDropdown
+      taDropdown
+      class="d-inline-block ml-1 toolbar-btn-bordered-right"
+      placement="bottom-right"
+      autoClose="outside"
+    >
+      <button
+        taButton
+        taType="circle"
+        taDropdownToggle
+        type="button"
+        class="mr-1"
+        id="record-datagrid-icon-column-config"
+      >
+        <ta-icon icon="configure-column"></ta-icon>
+      </button>
+      <div
+        taDropdownMenu
+        aria-labelledby="record-datagrid-icon-column-config"
+        class="column-config-dropdown"
+      >
+        <p class="column-config-dropdown-header">
+          <!--- [i18n-tobeinternationalized] -->
+          Configure Columns
+        </p>
+        <form [formGroup]="columnsConfigForm" class="py-2">
+          <div
+            formArrayName="columns"
+            *ngFor="let item of columns.controls; let i = index"
+          >
+            <div [formGroupName]="i.toString()">
+              <ta-checkbox
+                formControlName="selected"
+                class="dropdown-item text-wrap px-3"
+              >
+                {{ item.get('columnName').value }}
+              </ta-checkbox>
+            </div>
+          </div>
+        </form>
+        <button
+          taButton
+          taType="flat"
+          class="m-0"
+          (click)="saveConfigAsDefault(); columnConfigDropdown.close()"
+        >
+          <!--- [i18n-tobeinternationalized] -->
+          Save as default view
+        </button>
+      </div>
+    </div>
+
+    <!-- Refresh button -->
+    <button
+      taButton
+      type="button"
+      taType="circle"
+      taTooltip="Refresh"
+      (click)="refreshData()"
+      class="mr-1"
+      id="record-datagrid-icon-refresh"
+    >
+      <ta-icon icon="refresh"></ta-icon>
+    </button>
+
+    <!-- Edit button -->
+    <button
+      taButton
+      type="button"
+      taType="circle"
+      taTooltip="Edit"
+      (click)="editRecord()"
+      [disabled]="currentPageSelectedItems.length !== 1"
+      class="mr-1"
+      id="record-datagrid-icon-edit"
+    >
+      <ta-icon icon="edit"></ta-icon>
+    </button>
+
+    <!-- Download button -->
+    <div taDropdown class="d-inline-block ml-1" placement="bottom-right">
+      <button
+        taButton
+        taType="circle"
+        id="downloadDropdown"
+        taDropdownToggle
+        type="button"
+        [disabled]="currentPageSelectedItems.length === 0"
+        class="mr-1"
+        id="record-datagrid-icon-download"
+      >
+        <ta-icon icon="download"></ta-icon>
+      </button>
+      <div taDropdownMenu aria-labelledby="downloadDropdown">
+        <button class="dropdown-item ml-0" [disabled]="true">
+          <!--- [i18n-tobeinternationalized] -->
+          DOWNLOAD PDF
+        </button>
+        <button
+          class="dropdown-item ml-0"
+          type="button"
+          (click)="downloadMultiReport(ReportDownloadType.BpSummary, null)"
+        >
+          <!--- [i18n-tobeinternationalized] -->
+          Business Process Summary Report
+        </button>
+        <button
+          class="dropdown-item ml-0"
+          type="button"
+          (click)="downloadMultiReport(ReportDownloadType.Article30, null)"
+        >
+          <!--- [i18n-tobeinternationalized] -->
+          Article 30 Report
+        </button>
+        <!-- TODO: Commented out till BE export enabled -->
+        <!-- <button
+          class="dropdown-item ml-0"
+          type="button"
+          (click)="downloadSelected()"
+        >
+
+          Export .CSV
+        </button> -->
+      </div>
+    </div>
+
+    <!-- Delete button -->
+    <button
+      taButton
+      type="button"
+      taType="circle"
+      taTooltip="Delete"
+      (click)="delete()"
+      [disabled]="deleteBtnDisabled"
+      class="mr-1"
+      id="record-datagrid-icon-delete"
+    >
+      <ta-icon icon="delete"></ta-icon>
+    </button>
+
+    <!-- Add business process button -->
+    <ta-datagrid-add-bp-button
+      class="pl-1"
+      [gridId]="gridId"
+    ></ta-datagrid-add-bp-button>
+  </ta-table-toolbar>
+  <ta-table-filter>
+    <ta-custom-filters
+      (applyFiltersEvent)="applyFilters($event)"
+      [defaultFilters]="defaultFilters"
+      (applyFilterName)="updateFilterValue($event)"
+      [customFilters]="customFilters"
+      [licenses]="licenses"
+      recordType="BP_ALL"
+    >
+    </ta-custom-filters>
+  </ta-table-filter>
+
+  <!-- Columns -->
+  <ta-table-column taField="name" taResize="true">
+    <!--- [i18n-tobeinternationalized] -->
+    Record Name
+  </ta-table-column>
+  <ta-table-column
+    *ngIf="
+      visibilityByLicense.showDataTransfer &&
+      determineColumnVisibilityByAlias('BP_DATA_TRANSFER')
+    "
+    taField="dataTransferRisk"
+    taResize="true"
+  >
+    <!--- [i18n-tobeinternationalized] -->
+    Data Transfer
+  </ta-table-column>
+  <ta-table-column
+    *ngIf="
+      visibilityByLicense.showRiskProfile &&
+      determineColumnVisibilityByAlias('BP_RISK')
+    "
+    taField="currentRiskIndicator"
+  >
+    <!--- [i18n-tobeinternationalized] -->
+    Risk
+  </ta-table-column>
+  <ta-table-column
+    *ngIf="
+      oldRiskIndicatorEnabled && determineColumnVisibilityByAlias('BP_RISK')
+    "
+    taField="riskLevel"
+  >
+    <!--- [i18n-tobeinternationalized] -->
+    Risk
+  </ta-table-column>
+  <ta-table-column
+    *ngIf="determineColumnVisibilityByAlias('BP_OWNER_NAME')"
+    [taWidth]="220"
+  >
+    <!--- [i18n-tobeinternationalized] -->
+    Owner
+  </ta-table-column>
+  <ta-table-column
+    *ngIf="determineColumnVisibilityByAlias('BP_TAG')"
+    [taWidth]="250"
+  >
+    <!--- [i18n-tobeinternationalized] -->
+    Tags
+  </ta-table-column>
+  <ta-table-column
+    *ngIf="determineColumnVisibilityByAlias('BP_LAST_UPDATED')"
+    taField="lastModified"
+  >
+    <!--- [i18n-tobeinternationalized] -->
+    Last Updated
+  </ta-table-column>
+  <ta-table-column
+    *ngIf="determineColumnVisibilityByAlias('BP_REVALIDATION_DATE')"
+    taField="revalidationDate"
+    [taWidth]="155"
+  >
+    <!--- [i18n-tobeinternationalized] -->
+    Revalidation Date
+  </ta-table-column>
+  <ta-table-column
+    *ngIf="determineColumnVisibilityByAlias('BP_STATUS')"
+    taField="status"
+    [taWidth]="150"
+  >
+    <!--- [i18n-tobeinternationalized] -->
+    Status
+  </ta-table-column>
+  <ta-table-column
+    *ngIf="
+      isInternalAdmin && this.licenses?.RHEA_NEW_UI_STEPS_34_LICENSE === false
+    "
+  >
+    <!--- [i18n-tobeinternationalized] -->
+    Data Subject Mapped
+  </ta-table-column>
+  <ta-table-column class="ta-table-cell-tools"></ta-table-column>
+
+  <!-- Skeleton loader-->
+  <ng-container *ngIf="isFetching">
+    <ta-table-row
+      [taItem]="{ id: 'loading_row' }"
+      *ngFor="let number of [].constructor(maxRows)"
+    >
+      <ta-table-cell *ngFor="let number of [].constructor(currentColumnLength)">
+        <ngx-skeleton-loader count="1" appearance="line"> </ngx-skeleton-loader>
+      </ta-table-cell>
+    </ta-table-row>
+  </ng-container>
+
+  <!-- Rows/Cells -->
+  <ng-container *ngIf="!isFetching">
+    <ta-table-row
+      *ngFor="let item of gridData; index as i"
+      [taItem]="item"
+      [attr.id]="'business-process-' + i"
+    >
+      <ta-table-cell
+        [attr.id]="'ta-table-record-name-' + i"
+        class="data-record-name"
+      >
+        <div class="d-flex justify-content-between">
+          <span
+            class="text-truncate link d-block mr-2"
+            placement="top-left"
+            container="body"
+            tooltipTextAlign="left"
+            [taTooltip]="item.name"
+            tooltipClass="record-datagrid-tooltip animated fadeIn delay-1s"
+            role="button"
+            (click)="onEditItem(item); $event.stopPropagation()"
+          >
+            {{ item.name }}
+          </span>
+          <div
+            class="ta-table-dropdown"
+            taDropdown
+            autoClose="outside"
+            #nameDropdown="taDropdown"
+            [placement]="['bottom-left', 'top-left']"
+          >
+            <ta-icon
+              icon="edit"
+              taDropdownToggle
+              (click)="
+                openInlineEditingDropdown(
+                  $event,
+                  item.id,
+                  nameDropdown,
+                  'name',
+                  item.name
+                )
+              "
+            ></ta-icon>
+            <div taDropdownMenu (click)="$event.stopPropagation()">
+              <form [formGroup]="inlineNameForm">
+                <div class="px-2 pb-2 border-bottom">
+                  <input
+                    class="form-control ta-table-input"
+                    formControlName="name"
+                  />
+                </div>
+                <div class="text-right px-2 pt-2">
+                  <button
+                    class="mr-1 btn-sm ta-table-button"
+                    taButton
+                    taType="flat"
+                    (click)="nameDropdown.close()"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    class="btn-sm ta-table-button"
+                    taButton
+                    taType="primary"
+                    [disabled]="disableInlineSaveButton || isSaving"
+                    (click)="updateRecordName(item)"
+                  >
+                    Save
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </ta-table-cell>
+      <ta-table-cell
+        *ngIf="
+          visibilityByLicense.showDataTransfer &&
+          determineColumnVisibilityByAlias('BP_DATA_TRANSFER')
+        "
+        [attr.id]="'ta-table-data-transfer-review-' + i"
+        class=""
+      >
+        <div
+          *ngIf="item.dataTransferRisk"
+          class="link"
+          (click)="onRiskItem(item)"
+        >
+          <!--- [i18n-tobeinternationalized] -->
+          Review & Take Action
+        </div>
+        <div *ngIf="!item.dataTransferRisk">-</div>
+      </ta-table-cell>
+      <ta-table-cell
+        *ngIf="isRiskEnabled && determineColumnVisibilityByAlias('BP_RISK')"
+        [attr.id]="'ta-table-record-risk-' + i"
+      >
+        <div
+          #p="taPopover"
+          [taPopover]="popContent"
+          popoverClass="custom-popover-styles"
+          [disablePopover]="isRiskIncomplete(item)"
+          triggers="manual"
+          placement="bottom-left"
+          container="body"
+          (mouseenter)="triggerRiskPopover(p)"
+          class="d-block"
+          style="margin-top: 4px;"
+        >
+          <ta-risk-indicator
+            *ngIf="!riskStatus || !riskStatus.riskService"
+            (click)="onRiskItem(item)"
+            [risk]="getRisk(item)"
+            class="d-block"
+          ></ta-risk-indicator>
+          <ta-traffic-risk-indicator
+            *ngIf="riskStatus && riskStatus.riskService"
+            (click)="onRiskItem(item)"
+            [riskItem]="item"
+            class="d-block"
+          ></ta-traffic-risk-indicator>
+        </div>
+      </ta-table-cell>
+      <ta-table-cell
+        *ngIf="determineColumnVisibilityByAlias('BP_OWNER_NAME')"
+        [attr.id]="'ta-table-record-owner-' + i"
+        class="data-record-owner"
+      >
+        <!-- OWNER INLINE-->
+        <ta-inline-owner-editor
+          (click)="$event.stopPropagation()"
+          [businessProcessId]="item.id"
+          [flatNames]="getOwnersFullName(item)"
+          [data]="getOwnersIdName(item)"
+          (selectionChanges)="ownersNamedUpdated($event)"
+          (editModeChanges)="ownerInlineEditModeChanged($event)"
+        >
+        </ta-inline-owner-editor>
+      </ta-table-cell>
+      <ta-table-cell
+        *ngIf="determineColumnVisibilityByAlias('BP_TAG')"
+        class="tags-table-cell tags-cell"
+        [attr.id]="'ta-table-tags-' + i"
+      >
+        <ta-inline-tag-editor
+          *ngIf="userTags && userTags.length"
+          (click)="$event.stopPropagation()"
+          [userTags]="userTags"
+          [bpItem]="item"
+          [bpId]="item.id"
+          [flatTags]="item.flattendTags"
+          [treeTags]="getClonedAllTags()"
+          (selectionChanges)="inlineTagSelectionChanges($event)"
+        >
+        </ta-inline-tag-editor>
+      </ta-table-cell>
+      <ta-table-cell
+        *ngIf="determineColumnVisibilityByAlias('BP_LAST_UPDATED')"
+        [attr.id]="'ta-table-record-date-' + i"
+        taTruncate="true"
+      >
+        {{ item.lastModified | date: 'MM-dd-yyyy hh:mm a' }}
+      </ta-table-cell>
+      <ta-table-cell
+        *ngIf="determineColumnVisibilityByAlias('BP_REVALIDATION_DATE')"
+        class="data-record-revalidation-date"
+      >
+        <div class="d-flex justify-content-between">
+          <span [attr.id]="'business-process-row-revalidation-date-cell-' + i">
+            {{
+              item.revalidationDate
+                ? (item.revalidationDate | date: 'MM-dd-yyyy':'GMT')
+                : '--'
+            }}
+            <span class="ml-1" (click)="handleRevalidationEdit($event, item)">
+              <ta-icon icon="edit"></ta-icon>
+            </span>
+          </span>
+        </div>
+      </ta-table-cell>
+      <ng-template #popContent>
+        <div class="risk-popover-body">
+          <!--- [i18n-tobeinternationalized] -->
+          <div>Review Risk</div>
+        </div>
+      </ng-template>
+      <ta-table-cell
+        *ngIf="determineColumnVisibilityByAlias('BP_STATUS')"
+        [attr.id]="'ta-table-record-status-' + i"
+        class="tags-container data-record-status"
+      >
+        <div class="d-flex align-items-center">
+          <div class="mr-2">
+            <ta-tags [theme]="getTypeTheme(item.status)">
+              {{ getRecordStatus(item) }}
+            </ta-tags>
+          </div>
+          <div
+            class="ta-table-dropdown"
+            taDropdown
+            autoClose="outside"
+            #statusDropdown="taDropdown"
+            [placement]="['bottom-right', 'top-right']"
+          >
+            <ta-icon
+              icon="edit"
+              taDropdownToggle
+              (click)="
+                openInlineEditingDropdown(
+                  $event,
+                  item.id,
+                  statusDropdown,
+                  'status'
+                );
+                selectedRecordStatus = item.status
+              "
+            ></ta-icon>
+            <div taDropdownMenu (click)="$event.stopPropagation()">
+              <ng-container *ngFor="let status of BP_STATUS_LIST">
+                <button
+                  class="dropdown-item"
+                  [ngClass]="{
+                    selected: item.status === status,
+                    active:
+                      selectedRecordStatus === status && item.status !== status
+                  }"
+                  (click)="selectedRecordStatus = status"
+                >
+                  <ta-icon
+                    height="4"
+                    icon="icon-circle"
+                    class="ta-icon-badge {{
+                      status.toLowerCase()
+                    }}-record-badge"
+                  ></ta-icon>
+                  {{ status | replace: '_':' ' | titlecase }}
+                </button>
+              </ng-container>
+              <div class="text-right px-2 pt-2 mt-2 border-top">
+                <button
+                  class="mr-1 btn-sm ta-table-button"
+                  taButton
+                  taType="flat"
+                  (click)="statusDropdown.close()"
+                >
+                  Cancel
+                </button>
+                <button
+                  class="btn-sm ta-table-button"
+                  taButton
+                  taType="primary"
+                  [disabled]="selectedRecordStatus === item.status || isSaving"
+                  (click)="updateRecordStatus(item)"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ta-table-cell>
+      <ta-table-cell
+        id="ta-table-record-status"
+        class="map-indicator"
+        *ngIf="
+          isInternalAdmin &&
+          this.licenses?.RHEA_NEW_UI_STEPS_34_LICENSE === false
+        "
+        ><ta-tags [theme]="item.mapped ? 'green' : 'red'">
+          {{ item.mapped ? 'Mapped' : 'Requires Mapping' }}
+        </ta-tags>
+      </ta-table-cell>
+      <ta-table-cell
+        [attr.id]="'ta-table-record-tools-' + i"
+        class="ta-table-cell-tools"
+        (click)="openInlineEditingDropdown($event, item.id, moreDropdown)"
+      >
+        <div
+          #moreDropdown="taDropdown"
+          taDropdown
+          class="ta-table-dropdown-more"
+          [placement]="['bottom-right', 'top-right']"
+        >
+          <span
+            role="button"
+            id="dropdownBasic{{ i }}"
+            taDropdownToggle
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            class="link"
+            role="button"
+          >
+            <ta-icon icon="more" height="10"></ta-icon>
+          </span>
+          <div taDropdownMenu>
+            <div>
+              <div class="ml-2">
+                <strong>Download</strong>
+              </div>
+
+              <button
+                class="dropdown-item ml-0"
+                type="button"
+                (click)="
+                  downloadMultiReport(ReportDownloadType.BpSummary, item)
+                "
+              >
+                Business Process Summary Report
+              </button>
+              <button
+                class="dropdown-item ml-0"
+                type="button"
+                (click)="
+                  downloadMultiReport(ReportDownloadType.Article30, item)
+                "
+              >
+                Article 30 Report
+              </button>
+            </div>
+            <hr class="menu-border-line" size="10" />
+            <div *ngIf="assessmentEnabled">
+              <button
+                type="button"
+                class="dropdown-item"
+                (click)="onViewItem(item)"
+              >
+                View
+              </button>
+              <button
+                type="button"
+                class="dropdown-item"
+                (click)="onAssessItem(item)"
+              >
+                Assess
+              </button>
+            </div>
+            <button
+              type="button"
+              class="dropdown-item"
+              (click)="onCloneItem(item)"
+            >
+              Clone
+            </button>
+            <button
+              type="button"
+              class="dropdown-item"
+              (click)="onEditItem(item)"
+            >
+              Edit
+            </button>
+            <!--- [i18n-tobeinternationalized] -->
+            <hr class="menu-border-line" size="10" />
+            <button
+              type="button"
+              class="dropdown-item text-danger"
+              (click)="deleteRecord(item)"
+            >
+              Delete
+            </button>
+            <!--- [i18n-tobeinternationalized] -->
+          </div>
+        </div>
+      </ta-table-cell>
+      <ta-table-row-detail>
+        <div class="d-flex">
+          <!--- [i18n-tobeinternationalized] -->
+          <div class="description-header">Description</div>
+          <div class="description text-break">
+            {{ item.description ? item.description : '--' }}
+          </div>
+        </div>
+      </ta-table-row-detail>
+    </ta-table-row>
+  </ng-container>
+  <ta-table-footer>
+    <ta-pagination
+      *ngIf="gridData?.length > 0"
+      [collectionSize]="totalElements"
+      [pageSize]="maxRows"
+      [(page)]="page"
+      [maxSize]="1"
+      [rotate]="true"
+      [ellipses]="true"
+      showingType="full"
+      [boundaryLinks]="true"
+      (pageChange)="onChangePage($event)"
+      (onChangePageSize)="onChangeMax($event)"
+    >
+    </ta-pagination>
+  </ta-table-footer>
+</ta-table>
+
+<ng-template #description let-data="row">
+  <div class="d-flex">
+    <!--- [i18n-tobeinternationalized] -->
+    <div class="description-header">Description</div>
+    <div class="description text-break">{{ data.description }}</div>
+  </div>
+</ng-template>
+
+<div
+  class="empty-records border"
+  *ngIf="
+    recordType === 'BusinessProcess' &&
+    hasInitFetched &&
+    !gridData?.length &&
+    !isFilterDirty
+  "
+>
+  <div class="content-container">
+    <img alt="empty" src="assets/images/ic-empty-state.svg" />
+    <p>You have no {{ formatRecordType(recordType) }} records yet.</p>
+    <button
+      *ngIf="emptyCTAText"
+      taButton
+      taType="primary"
+      (click)="emptyCTAClick.emit()"
+      routerLink="data-inventory"
+    >
+      {{ emptyCTAText }}
+    </button>
+  </div>
+</div>

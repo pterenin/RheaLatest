@@ -1,0 +1,35 @@
+<div
+  taDropdown
+  #categoryDropdown
+  class="d-inline-block"
+  placement="bottom-right"
+  autoClose="outside"
+>
+  <button
+    taButton
+    taType="circle"
+    id="data-inventory-card-add"
+    taDropdownToggle
+    class="position-relative"
+  >
+    <ta-icon icon="plus-circle"></ta-icon>
+  </button>
+  <div
+    taDropdownMenu
+    aria-labelledby="data-inventory-card-add"
+    class="data-inventory-card-add-dropdown-menu animated fadeIn"
+    [style.width]="contentWidth"
+  >
+    <!-- Search bar -->
+    <ta-dropdown-search
+      class="data-inventory-card-add-search"
+      [placeholder]="searchPlaceholder"
+      (onSearch)="onSearch($event)"
+    ></ta-dropdown-search>
+
+    <!-- Form Content -->
+    <div class="data-inventory-card-add-content">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

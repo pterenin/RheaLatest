@@ -1,0 +1,420 @@
+/**
+ * TrustArc Font
+ */
+$path: '~@trustarc/fonts/fonts/';
+@import '~@trustarc/fonts/scss/fonts';
+
+/**
+ * Bootstrap TrustArc Flavor
+ */
+@import 'src/styles/variables';
+@import 'helpers';
+@import 'progress-bar';
+
+@import '~@trustarc/ui-toolkit/scss/animation';
+@import '~@trustarc/ui-toolkit/scss/scrollbar';
+
+/**
+ * Bootstrap
+ */
+@import '~bootstrap-scss/bootstrap';
+
+/**
+ * App Shell Style
+ */
+html,
+body {
+  min-width: $max-width;
+}
+
+body {
+  background-color: $gray-100;
+  overflow-y: scroll;
+}
+
+.te-header-panel .te-nav {
+  font-family: $font-family-sans-serif;
+}
+
+.ta-breadcrumb-wrapper {
+  padding: 1.25rem;
+  overflow: hidden;
+  display: block;
+  ol {
+    margin-bottom: 0;
+  }
+}
+
+ta-table {
+  background-color: $white;
+  display: block;
+}
+
+a {
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+}
+
+.container-max-width {
+  width: $max-width;
+  display: block;
+  margin: auto;
+}
+
+.container-fluid {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  margin: 0;
+}
+
+.page-header {
+  margin-bottom: 20px;
+}
+
+.ta-checkbox-layout {
+  position: relative;
+  padding-left: 20px !important;
+  padding-right: 5px !important;
+  .ta-checkbox-lb {
+    margin: 0 !important;
+    position: absolute !important;
+    top: 3px;
+    left: 0;
+  }
+  span {
+    margin-left: 0 !important;
+    word-break: break-word !important;
+  }
+}
+.ta-col-checkbox .ta-checkbox-layout .ta-checkbox-lb {
+  top: -12px;
+}
+
+ta-categorical-view.not-in-dropdown,
+ta-categorical-view.not-in-dropdown-short {
+  border: 1px solid $border-default-color;
+  border-radius: 2px;
+  padding: 0.5rem 0;
+}
+
+.ta-tabset .nav-ta .nav-item {
+  margin-right: 10px !important;
+}
+.ta-tabset .nav-ta .nav-item .nav-link {
+  padding: 1px 0 !important;
+  min-width: 80px;
+}
+
+.progress {
+  height: 12px;
+}
+
+.ta-label-badge-clickable {
+  ta-label-badge {
+    cursor: pointer;
+    .label-container {
+      transition: 100ms;
+    }
+    &:hover .label-container {
+      background-color: zeplin-lighten($gray-700, 0.1);
+    }
+  }
+}
+
+.bp-title {
+  font-size: $font-size-16;
+  font-weight: 500;
+
+  small.small-tag:first-child {
+    margin-left: 5px;
+  }
+  small.small-tag {
+    display: inline-block;
+    margin-left: 5px;
+    padding: 2px 4px;
+    font-size: $font-size-11;
+    border-radius: 2px;
+    position: relative;
+    top: -2px;
+  }
+  small.country {
+    background-color: zeplin-lighten($gray-700, 0.1);
+  }
+  small.type {
+    background-color: $pumpkin-orange;
+    color: $white;
+  }
+}
+
+.btn-dropdown > .text-truncate.text-wrapper {
+  height: 16px;
+  margin-bottom: -4px;
+}
+
+.dropdown-menu {
+  min-width: 100% !important;
+  .ta-dropdown-scroll {
+    display: block;
+    overflow: auto;
+  }
+}
+
+.btn-circle:disabled {
+  color: $gray-600 !important;
+}
+
+.risk-field-indicator {
+  width: 8px;
+  height: 16px;
+  border-radius: 4px;
+  vertical-align: text-bottom;
+  border: solid 1px $white;
+  background-color: $turquoise-blue;
+  display: inline-block;
+  margin-right: 2px;
+}
+
+.form-control {
+  color: $black !important;
+}
+
+.white-space-unset {
+  white-space: unset !important;
+}
+
+.ta-tags .ta-tags-close {
+  top: 7px !important;
+}
+
+.text-wrap {
+  overflow-wrap: break-word;
+}
+
+.dropdown-menu-item {
+  margin-bottom: 0;
+}
+
+.update-contact-link {
+  float: right;
+  margin-top: 3px;
+  font-size: $font-size-12;
+  font-weight: normal;
+}
+
+.add-link,
+.file-name,
+.update-contact-link,
+.state-link,
+.link,
+.add-new-location-link {
+  color: $blue !important;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline !important;
+  }
+}
+
+.link-hover {
+  &:hover {
+    color: $blue !important;
+    text-decoration: underline !important;
+  }
+}
+
+.ta-tags.tag-close {
+  min-width: unset !important;
+}
+
+.file-attachment-summary {
+  font-weight: 500;
+}
+
+ta-badge.badge-custom {
+  color: $white;
+  text-transform: uppercase;
+  height: 16px;
+  line-height: 1.1;
+  width: 53px;
+  font-size: $font-size-10 !important;
+  background-color: $violet;
+}
+
+.label-location {
+  min-width: 31px;
+  height: 18px;
+  border-radius: 9px;
+  color: #595959;
+  background-color: $gallery-grey;
+  text-align: center;
+  line-height: 18px;
+  display: inline-block;
+}
+
+.location-tooltip.fadeInApp {
+  animation-duration: 300ms;
+  animation-delay: unset;
+}
+
+.delay-500.fadeInApp {
+  animation-duration: 300ms;
+  animation-delay: 500ms !important;
+}
+
+.duration-300.fadeInApp {
+  animation-duration: 300ms;
+}
+
+/**
+ * THIS NEED TO INVESTIGATE WHY THE FONT SIZE IS 14
+ */
+.dropdown-hierarchy-multi-tags {
+  font-size: $font-size-12 !important;
+}
+
+/**
+ * TEMP FIX: NEED TO ADDED IN TOOLKIT
+ */
+strong {
+  font-weight: 500;
+}
+
+.disable-input {
+  * {
+    overflow: hidden !important;
+  }
+  .ta-tags {
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+  }
+  .ta-tags-close {
+    display: none !important;
+  }
+}
+
+.btn-circle:disabled {
+  &:hover {
+    background-color: transparent;
+  }
+  cursor: default;
+  ta-icon {
+    svg path {
+      color: $gray-600;
+    }
+  }
+}
+
+// Dropdown
+.ta-dropdown-menus,
+.ta-dropdown-scroll {
+  padding: 0.25rem 0;
+}
+
+.dropdown-item.selected,
+.dropdown-menu-item.selected {
+  color: $twilight-blue !important;
+}
+
+.dropdown-item,
+.dropdown-menu-item {
+  position: relative;
+  padding-right: 1rem !important;
+  ta-icon.caret-right {
+    position: absolute;
+    right: 0.5rem;
+    top: 1px;
+  }
+}
+
+.dropdown-item.selected,
+.dropdown-menu-item.selected {
+  ta-icon.caret-right {
+    svg path {
+      color: $twilight-blue;
+    }
+  }
+}
+
+.ta-tooltip.light {
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: $box-shadow;
+  .tooltip-content {
+    color: $gray-800;
+  }
+}
+
+.ta-modal .modal-footer {
+  padding: 10px 24px !important;
+}
+
+::placeholder {
+  color: $gray-700 !important;
+  opacity: 1;
+}
+:-ms-input-placeholder {
+  color: $gray-700 !important;
+}
+::-ms-input-placeholder {
+  color: $gray-700 !important;
+}
+.placeholder-text {
+  color: $gray-700;
+}
+
+.ta-accordion-header {
+  .ta-svg-icon-chevron-up,
+  .ta-svg-icon-chevron-down {
+    svg {
+      height: 12px;
+      width: 12px;
+    }
+  }
+}
+
+.ta-dp-weekday {
+  color: $blue !important;
+}
+
+.ta-accordion-header ta-icon {
+  pointer-events: none;
+}
+
+/**
+* TEMP FIX: NEED TO ADDED IN TOOLKIT
+*/
+.ta-table-toolbars .filter-is-dirty button:before {
+  height: 4px !important;
+  width: 4px !important;
+}
+
+span.ta-alert-ico svg {
+  height: 20px;
+  width: 20px;
+}
+
+.ta-table-cell span.loader {
+  margin-bottom: -10px !important;
+  position: relative;
+  top: -4px;
+}
+
+.ta-modal-confirmation-basic {
+  .modal-body {
+    min-height: unset !important;
+  }
+}
+
+ta-toast {
+  z-index: 1000000 !important;
+}
+
+ta-modal-backdrop,
+ta-modal-window,
+ta-alert,
+ta-tooltip-window,
+ta-popover-window {
+  z-index: 999999 !important;
+}

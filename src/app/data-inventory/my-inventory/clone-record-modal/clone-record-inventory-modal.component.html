@@ -1,0 +1,70 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title" data-cy="modal-title">
+    <!--- [i18n-tobeinternationalized] --->
+    Clone Record
+  </h4>
+  <button
+    type="button"
+    data-cy="modal-close"
+    class="close"
+    aria-label="Close"
+    (click)="onCancel()"
+  >
+    <i class="ta ta-close"></i>
+  </button>
+</div>
+<div class="modal-body">
+  <form class="form-group" [formGroup]="formInputs">
+    <label for="cloned-record-name">
+      <!--- [i18n-tobeinternationalized] --->
+      Data Inventory Name
+      <span>*</span>
+    </label>
+    <input
+      id="cloned-record-name"
+      type="text"
+      class="form-control mb-3"
+      name="cloned-record-name"
+      formControlName="businessProcessName"
+    />
+
+    <label>
+      <!--- [i18n-tobeinternationalized] --->
+      Include the following:
+    </label>
+    <br />
+    <ta-checkbox formControlName="allAttachments">
+      <!--- [i18n-tobeinternationalized] --->
+      All attachments
+    </ta-checkbox>
+    <ta-checkbox formControlName="allTags">
+      <!--- [i18n-tobeinternationalized] --->
+      All tags
+    </ta-checkbox>
+  </form>
+</div>
+
+<div class="modal-footer d-flex justify-content-between">
+  <button
+    taButton
+    type="button"
+    data-cy="modal-cancel"
+    taType="secondary"
+    data-dismiss="modal"
+    (click)="onCancel()"
+  >
+    <!--- [i18n-tobeinternationalized] --->
+    Cancel
+  </button>
+  <button
+    class="btn btn-primary"
+    type="submit"
+    taButton
+    data-cy="modal-submit"
+    [disabled]="!formInputs.valid"
+    (click)="onSubmit()"
+  >
+    <!--- [i18n-tobeinternationalized] --->
+    Clone
+  </button>
+</div>

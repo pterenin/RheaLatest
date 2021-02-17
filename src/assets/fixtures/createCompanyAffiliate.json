@@ -1,0 +1,9 @@
+{
+  "data": {
+    "body": {},
+    "statusCode": "string",
+    "statusCodeValue": 1
+  },
+  "status": 200,
+  "ok": true
+}

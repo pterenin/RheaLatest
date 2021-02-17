@@ -1,0 +1,13 @@
+<div class="fadeInApp">
+  <ta-categorical-view
+    [data]="processingPurposeGroups"
+    [styleClass]="styleClass"
+    [showCheckboxes]="true"
+    (itemSelected)="processingPurposeUpdated($event)"
+    (itemDeleted)="processingPurposeUpdated($event)"
+    class="not-in-dropdown"
+    showCounts="true"
+    [enableCustomCategoryTag]="true"
+  >
+  </ta-categorical-view>
+</div>

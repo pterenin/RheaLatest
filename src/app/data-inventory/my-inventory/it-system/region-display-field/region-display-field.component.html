@@ -1,0 +1,23 @@
+<div
+  taButton
+  type="button"
+  taType="tags"
+  class="btn-block"
+  (click)="openModal()"
+  [ngClass]="{ 'disable-input': isDisabled === true }"
+>
+  <ta-tags
+    class="region-tag tag-close"
+    theme="dropdown"
+    *ngFor="let region of selectedRegions"
+  >
+    {{ region.region }} ({{ region.selectedCountryCount }})
+    <ta-icon
+      icon="close"
+      height="8"
+      color="#fff"
+      class="ta-tags-close"
+      (click)="removeRegion($event, region)"
+    ></ta-icon>
+  </ta-tags>
+</div>

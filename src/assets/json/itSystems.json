@@ -1,0 +1,146 @@
+[
+  {
+    "id": "00001",
+    "label": "Company Owned",
+    "items": [
+      {
+        "id": "001",
+        "label": "AM",
+        "tag": "internal",
+        "isSelected": false
+      },
+      {
+        "id": "002",
+        "label": "DFM",
+        "tag": "internal",
+        "isSelected": false
+      },
+      {
+        "id": "003",
+        "label": "Themis",
+        "tag": "internal",
+        "isSelected": false
+      },
+      {
+        "id": "004",
+        "label": "Iris",
+        "tag": "internal",
+        "isSelected": false
+      },
+      {
+        "id": "005",
+        "label": "Rhea",
+        "tag": "internal",
+        "isSelected": false
+      }
+    ]
+  },
+  {
+    "id": "00002",
+    "label": "Affiliates",
+    "items": [
+      {
+        "id": "011",
+        "label": "Dell",
+        "tag": "affiliate",
+        "isSelected": false
+      },
+      {
+        "id": "012",
+        "label": "IBM",
+        "tag": "affiliate",
+        "isSelected": false
+      },
+      {
+        "id": "013",
+        "label": "Samsung",
+        "tag": "affiliate",
+        "isSelected": false
+      },
+      {
+        "id": "014",
+        "label": "Nokia",
+        "tag": "affiliate",
+        "isSelected": false
+      },
+      {
+        "id": "015",
+        "label": "Panasonic",
+        "tag": "affiliate",
+        "isSelected": false
+      }
+    ]
+  },
+  {
+    "id": "00003",
+    "label": "Partners",
+    "items": [
+      {
+        "id": "021",
+        "label": "Asus",
+        "tag": "partner",
+        "isSelected": false
+      },
+      {
+        "id": "022",
+        "label": "Facebook",
+        "tag": "partner",
+        "isSelected": false
+      },
+      {
+        "id": "023",
+        "label": "Sony",
+        "tag": "partner",
+        "isSelected": false
+      },
+      {
+        "id": "024",
+        "label": "Toshiba",
+        "tag": "partner",
+        "isSelected": false
+      },
+      {
+        "id": "025",
+        "label": "LG",
+        "tag": "partner",
+        "isSelected": false
+      }
+    ]
+  },
+  {
+    "id": "00004",
+    "label": "Vendors",
+    "items": [
+      {
+        "id": "031",
+        "label": "Apple",
+        "tag": "vendor",
+        "isSelected": false
+      },
+      {
+        "id": "032",
+        "label": "Google",
+        "tag": "vendor",
+        "isSelected": false
+      },
+      {
+        "id": "033",
+        "label": "Microsoft",
+        "tag": "vendor",
+        "isSelected": false
+      },
+      {
+        "id": "034",
+        "label": "Oracle",
+        "tag": "vendor",
+        "isSelected": false
+      },
+      {
+        "id": "035",
+        "label": "Salesforce",
+        "tag": "vendor",
+        "isSelected": false
+      }
+    ]
+  }
+]

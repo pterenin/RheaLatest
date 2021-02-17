@@ -1,0 +1,23 @@
+@import 'src/styles/variables';
+
+ta-popover-window.location-tooltip {
+  .popover-body {
+    padding: 0.782rem 0;
+    ta-location-tooltip {
+      display: block;
+      max-height: 180px;
+      max-width: 268px;
+      width: 268px;
+      padding: 0 1rem;
+      overflow: auto;
+
+      .region {
+        top: 0;
+        z-index: 1;
+        background-color: #fff;
+        width: 100%;
+        padding: 0 0 0.2rem;
+      }
+    }
+  }
+}

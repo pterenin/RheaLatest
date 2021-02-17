@@ -1,0 +1,260 @@
+<!-- Breadcrumbs -->
+<ol class="breadcrumb mb-2" data-cy="bp-name-navigatino">
+  <li class="breadcrumb-item">
+    <a (click)="onClickStep('home')">
+      <!--- [i18n-tobeinternationalized] -->
+      Data Inventory Hub
+    </a>
+    <ta-icon height="8" icon="caret-right"></ta-icon>
+  </li>
+  <li class="breadcrumb-item">
+    <a (click)="onClickStep('home')" data-cy="top-nav-all-business-process">
+      <!--- [i18n-tobeinternationalized] -->
+      Business Processes
+    </a>
+    <ta-icon height="8" icon="caret-right"></ta-icon>
+  </li>
+  <li class="breadcrumb-item">
+    <strong data-cy="top-nav-business-process-name">{{ bpName }}</strong>
+  </li>
+</ol>
+
+<h5 class="mb-2">{{ bpName }}</h5>
+
+<!-- Navigation -->
+<div class="d-flex justify-content-end" *ngIf="currentRoute">
+  <div class="w-75">
+    <ul
+      role="tablist"
+      class="nav nav-segment justify-content-start"
+      data-cy="bp-wizard-navigation"
+    >
+      <li class="nav-item" *ngFor="let item of businessProcessNavigation">
+        <a
+          class="nav-link"
+          data-cy="bp-nav-step"
+          *ngIf="isVisible(item.slug)"
+          [class.active]="item.slug === currentRoute.slug"
+          (click)="onClickStep(item.slug)"
+        >
+          {{ item.name }}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="w-25 text-right"
+    *ngIf="licenses && licenses.RHEA_NEW_UI_STEPS_12_LICENSE === true"
+  >
+    <!--- [i18n-tobeinternationalized] -->
+    <button
+      *ngIf="licenses && licenses.RHEA_NEW_UI_STEPS_5_LICENSE"
+      taType="circle"
+      type="button"
+      class="ta-button btn btn-circle ml-2"
+      (click)="onClickView(dataFlowView.FLOWCHART)"
+      taButton
+      data-cy="bp-flowchart-button"
+      placement="bottom"
+      taTooltip="Open Flowchart"
+      tooltipTheme="light"
+      tooltipClass="ta-attachments-tags-tooltip"
+    >
+      <svg
+        width="14"
+        height="10"
+        viewBox="0 0 14 10"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M11.9947 6.00411C11.0862 6.00682 10.2942 6.62377 10.0677 7.50511H7.49947V2.5018H10.0677C10.3192 3.4776 11.2558 4.11383 12.2539 3.98684C13.2519 3.85985 14 3.00927 14 2.00147C14 0.99367 13.2519 0.143086 12.2539 0.0160993C11.2558 -0.110888 10.3192 0.525342 10.0677 1.50114H7.49947C6.948 1.50169 6.50108 1.94938 6.50053 2.5018V4.50312H3.93228C3.68077 3.52732 2.74416 2.89109 1.74612 3.01808C0.748084 3.14507 0 3.99565 0 5.00345C0 6.01125 0.748084 6.86184 1.74612 6.98882C2.74416 7.11581 3.68077 6.47958 3.93228 5.50378H6.50053V7.50511C6.50108 8.05753 6.948 8.50521 7.49947 8.50577H10.0677C10.329 9.51023 11.3147 10.1469 12.3359 9.9708C13.3571 9.79471 14.0736 8.86456 13.9846 7.83038C13.8956 6.79621 13.0309 6.00257 11.9947 6.00411ZM11.9947 1.00081C12.5463 1.00081 12.9936 1.44882 12.9936 2.00147C12.9936 2.55412 12.5463 3.00213 11.9947 3.00213C11.443 3.00213 10.9957 2.55412 10.9957 2.00147C10.9963 1.44905 11.4432 1.00136 11.9947 1.00081ZM2.00535 6.00411C1.45365 6.00411 1.00641 5.5561 1.00641 5.00345C1.00641 4.4508 1.45365 4.00279 2.00535 4.00279C2.55704 4.00279 3.00428 4.4508 3.00428 5.00345C3.00373 5.55587 2.55681 6.00356 2.00535 6.00411ZM11.9947 9.0061C11.443 9.0061 10.9957 8.55808 10.9957 8.00543C10.9957 7.45279 11.443 7.00477 11.9947 7.00477C12.5463 7.00477 12.9936 7.45279 12.9936 8.00543C12.993 8.55786 12.5461 9.00554 11.9947 9.0061Z"
+          fill="#595959"
+        />
+      </svg>
+    </button>
+    <!--- [i18n-tobeinternationalized] -->
+    <button
+      *ngIf="licenses && licenses.RHEA_NEW_UI_STEPS_5_LICENSE && isIE"
+      taType="circle"
+      type="button"
+      class="ta-button btn btn-circle ml-2"
+      (click)="onClickView(dataFlowView.MAP)"
+      taButton
+      data-cy="bp-map-button"
+      placement="bottom"
+      taTooltip="Open Map"
+      tooltipTheme="light"
+      tooltipClass="ta-attachments-tags-tooltip"
+    >
+      <svg
+        width="15"
+        height="14"
+        viewBox="0 0 15 14"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M4.93321 0C4.85136 0 4.77472 0.0222879 4.70903 0.0611255L0.222292 2.62497C0.0848321 2.70352 0 2.8497 0 3.00802V13.2754C0 13.4327 0.083717 13.578 0.219738 13.657C0.355759 13.7359 0.523516 13.7365 0.660061 13.6584L4.94704 11.2087L9.86051 13.6655C9.92207 13.6981 9.99228 13.7166 10.0668 13.7166C10.1489 13.7166 10.2258 13.6941 10.2917 13.655L14.7777 11.0916C14.9152 11.0131 15 10.8669 15 10.7086V0.441177C15 0.28391 14.9163 0.138535 14.7803 0.0595987C14.6442 -0.0193375 14.4765 -0.0198978 14.3399 0.0581282L10.053 2.50783L5.13945 0.0510744C5.0779 0.0184674 5.00771 0 4.93321 0ZM10.508 12.5152L14.1176 10.4525V1.2014L10.508 3.26407V12.5152ZM9.62563 3.28066L5.37439 1.15504V10.4359L9.62563 12.5615V3.28066ZM0.882353 3.26405L4.49203 1.20137V10.4525L0.882353 12.5152V3.26405Z"
+          fill="#595959"
+        />
+      </svg>
+    </button>
+    <!--- [i18n-tobeinternationalized] -->
+    <button
+      taType="circle"
+      type="button"
+      class="ta-button btn btn-circle ml-2"
+      (click)="openEditRevalidationDateModal()"
+      taButton
+      data-cy="bp-copy-button"
+      placement="bottom"
+      taTooltip="Edit Revalidation Date"
+      tooltipTheme="light"
+      tooltipClass="ta-attachments-tags-tooltip"
+    >
+      <svg
+        width="12"
+        height="13"
+        viewBox="0 0 12 13"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M11 1H9V0H8V1H4V0H3V1H1C0.4 1 0 1.4 0 2V12C0 12.6 0.4 13 1 13H11C11.6 13 12 12.6 12 12V2C12 1.4 11.6 1 11 1ZM11 12H1V5H11V12ZM11 4H1V2H3V3H4V2H8V3H9V2H11V4Z"
+          fill="#595959"
+        />
+      </svg>
+    </button>
+    <!--- [i18n-tobeinternationalized] -->
+    <button
+      #attachmentButton
+      taType="circle"
+      type="button"
+      class="ta-button btn btn-circle ml-2"
+      (click)="onCustomItemClick('attachments', 'true')"
+      taButton
+      data-cy="bp-attachments-button"
+      placement="bottom"
+      taTooltip="Notes & Attachments"
+      tooltipTheme="light"
+      tooltipClass="ta-attachments-tags-tooltip"
+    >
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M18.1206 13.4621L11.5379 6.87938C10.2384 5.67428 8.21868 5.71233 6.9655 6.9655C5.71233 8.21868 5.67428 10.2384 6.87938 11.5379L8.39846 13.057L9.11244 12.343L7.59335 10.8239C6.98373 10.2559 6.73279 9.40039 6.93897 8.59304C7.14515 7.7857 7.77557 7.15528 8.58292 6.9491C9.39026 6.74292 10.2458 6.99386 10.8138 7.60348L17.3965 14.1862C18.0061 14.7542 18.2571 15.6097 18.0509 16.4171C17.8447 17.2244 17.2143 17.8548 16.407 18.061C15.5996 18.2672 14.7441 18.0163 14.1761 17.4067L11.0721 14.3027C10.75 13.9824 10.6233 13.5148 10.7396 13.0758C10.8559 12.6368 11.1976 12.2932 11.6359 12.1745C12.0742 12.0557 12.5426 12.1798 12.8646 12.5L14.4697 14.1052L15.1837 13.3912C15.1837 13.3912 13.5532 11.7556 13.538 11.7506C12.6409 10.922 11.2495 10.9503 10.3866 11.8145C9.52377 12.6787 9.49776 14.0701 10.3277 14.966L13.4621 18.1206C14.7616 19.3257 16.7813 19.2877 18.0345 18.0345C19.2877 16.7813 19.3257 14.7616 18.1206 13.4621Z"
+          fill="#595959"
+        />
+      </svg>
+    </button>
+    <ta-badge
+      [values]="attachmentsCount$ | async"
+      *ngIf="attachmentsCount$ | async"
+      type="error"
+      class="badge-custom-nav-items align-top"
+    ></ta-badge>
+    <!--- [i18n-tobeinternationalized] -->
+    <button
+      #tagsButton
+      taType="circle"
+      type="button"
+      class="ta-button btn btn-circle ml-2"
+      (click)="onCustomItemClick('tags', 'true')"
+      taButton
+      data-cy="bp-tags-button"
+      placement="bottom"
+      taTooltip="Tags"
+      tooltipTheme="light"
+      tooltipClass="ta-attachments-tags-tooltip"
+    >
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M13.26 19C12.8623 18.9997 12.481 18.8414 12.2 18.56L5.44 11.805C5.15862 11.524 5.00035 11.1427 5 10.745V6.5C5 5.67157 5.67157 5 6.5 5H10.745C11.1427 5.00035 11.524 5.15862 11.805 5.44L18.56 12.195C18.8424 12.4765 19.0012 12.8588 19.0012 13.2575C19.0012 13.6562 18.8424 14.0385 18.56 14.32L14.32 18.56C14.039 18.8414 13.6577 18.9997 13.26 19ZM8 10C8 11.1046 8.89543 12 10 12C11.1046 12 12 11.1046 12 10C12 8.89543 11.1046 8 10 8C8.89543 8 8 8.89543 8 10ZM9 10C9 9.44772 9.44772 9 10 9C10.5523 9 11 9.44772 11 10C11 10.5523 10.5523 11 10 11C9.44772 11 9 10.5523 9 10ZM6 6.5C6 6.22386 6.22386 6 6.5 6H10.745C10.8786 6.00055 11.0065 6.05457 11.1 6.15L17.855 12.905C18.0489 13.1 18.0489 13.415 17.855 13.61L13.61 17.855C13.415 18.0489 13.1 18.0489 12.905 17.855L6.15 11.1C6.05457 11.0065 6.00055 10.8786 6 10.745V6.5Z"
+          fill="#595959"
+        />
+      </svg>
+    </button>
+    <ta-badge
+      [values]="tagsCount$ | async"
+      *ngIf="tagsCount$ | async"
+      type="error"
+      class="badge-custom-nav-items align-top"
+    ></ta-badge>
+    <!--- [i18n-tobeinternationalized] -->
+    <button
+      taType="circle"
+      type="button"
+      class="ta-button btn btn-circle ml-1"
+      (click)="copyBPIDtoClipboard()"
+      taButton
+      data-cy="bp-copy-button"
+      placement="bottom"
+      taTooltip="Copy Record Link"
+      tooltipTheme="light"
+      tooltipClass="ta-attachments-tags-tooltip"
+    >
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        style="top:5px; left:5px"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M10.5006 9.0057C9.74335 9.0095 9.02877 9.35669 8.55778 9.94962L4.90695 7.66722C5.04 7.23779 5.04 6.77815 4.90695 6.34873L8.55778 4.06633C9.32289 5.01372 10.6598 5.27108 11.7219 4.67545C12.7841 4.07981 13.2617 2.80489 12.8524 1.65799C12.443 0.511089 11.2661 -0.173299 10.0668 0.0381894C8.86758 0.249678 7.99576 1.29536 8.00342 2.5131C8.00577 2.73643 8.0394 2.95834 8.1033 3.17235L4.45247 5.45474C3.79184 4.62311 2.67746 4.30034 1.67464 4.65017C0.671815 5 0 5.94588 0 7.00797C0 8.07006 0.671815 9.01595 1.67464 9.36578C2.67746 9.71561 3.79184 9.39284 4.45247 8.5612L8.1033 10.8436C8.0394 11.0576 8.00577 11.2795 8.00342 11.5028C8.00342 12.882 9.12143 14 10.5006 14C11.8797 14 12.9977 12.882 12.9977 11.5028C12.9977 10.1237 11.8797 9.0057 10.5006 9.0057ZM10.5006 1.01481C11.3281 1.01481 11.9989 1.68562 11.9989 2.5131C11.9989 3.34058 11.3281 4.01139 10.5006 4.01139C9.67308 4.01139 9.00228 3.34058 9.00228 2.5131C9.00228 1.68562 9.67308 1.01481 10.5006 1.01481ZM2.50968 8.50627C1.6822 8.50627 1.01139 7.83546 1.01139 7.00797C1.01139 6.18049 1.6822 5.50968 2.50968 5.50968C3.33716 5.50968 4.00797 6.18049 4.00797 7.00797C4.00797 7.83546 3.33716 8.50627 2.50968 8.50627ZM10.5006 13.0011C9.67308 13.0011 9.00228 12.3303 9.00228 11.5028C9.00228 10.6754 9.67308 10.0046 10.5006 10.0046C11.3281 10.0046 11.9989 10.6754 11.9989 11.5028C11.9989 12.3303 11.3281 13.0011 10.5006 13.0011Z"
+          fill="#595959"
+        />
+      </svg>
+    </button>
+  </div>
+  <div
+    class="position-relative d-flex justify-content-start status-container"
+    style="width: 160px;"
+  >
+    <!--- [i18n-tobeinternationalized] -->
+    <form [formGroup]="statusForm" class="position-absolute" style="top: -5px">
+      <ta-dropdown-field
+        data-cy="bp-owner-status"
+        [options]="bpStatuses"
+        optionLabel="name"
+        [useInfiniteScroll]="true"
+        [selectedOption]="statusForm.get('status').value"
+        (selectedItemChanged)="bpStatusChange()"
+        formControlName="status"
+        [isDisabled]="isShowingSpinner"
+      >
+        <span
+          *ngIf="isShowingSpinner"
+          class="spinner-border spinner-border-sm ml-auto text-secondary"
+          role="status"
+          aria-hidden="true"
+        ></span
+      ></ta-dropdown-field>
+    </form>
+  </div>
+</div>

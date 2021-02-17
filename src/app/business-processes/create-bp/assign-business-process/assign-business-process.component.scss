@@ -1,0 +1,25 @@
+@import 'src/styles/variables';
+:host {
+  .modal-subheading {
+    font-size: $font-size-16;
+    color: $twilight-blue;
+  }
+
+  .disabled-radio-text {
+    color: $black;
+  }
+
+  .reviewer-dropdown {
+    display: block;
+    width: 400px;
+  }
+
+  .message,
+  #bp-name-assign {
+    width: 400px;
+  }
+
+  textarea {
+    height: 60px;
+  }
+}

@@ -1,0 +1,22 @@
+<div class="ta-datagrid-tools-search col" [class.showTags]="searchQuery">
+  <ta-icon-search
+    class="ico-search"
+    (click)="doSearch(taSearch.value)"
+  ></ta-icon-search>
+
+  <input
+    #taSearch
+    type="text"
+    class="form-control"
+    [attr.value]="searchQuery"
+    [placeholder]="searchPlaceholder"
+    (keyup)="onSearch($event, taSearch.value)"
+  />
+
+  <div class="ta-datagrid-tools-search-tags">
+    <span class="ta-tag primary"
+      >{{ searchQuery }}
+      <i (click)="clearSearch(taSearch)" class="ta ta-close ta-tag-close"></i
+    ></span>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="fadeInApp">
+  <ta-categorical-view
+    [data]="dataElementGroups"
+    [styleClass]="styleClass"
+    [showCheckboxes]="true"
+    (itemSelected)="dataElementUpdated($event)"
+    (itemDeleted)="dataElementUpdated($event)"
+    class="not-in-dropdown"
+    showCounts="true"
+    [enableCustomCategoryTag]="true"
+  >
+  </ta-categorical-view>
+</div>

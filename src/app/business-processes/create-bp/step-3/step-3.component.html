@@ -1,0 +1,108 @@
+<div class="fadeInApp">
+  <div class="record-details-container">
+    <h3 class="bp-title mb-4" data-cy="title-subjects">
+      <!-- [i18n-tobeinternationalized] -->
+      Select the data subjects and data recipients involved in this business
+      process
+    </h3>
+    <div class="sub-heading mb-0">
+      <ta-risk-field-indicator
+        [showIndicator]="showRiskFields"
+        class="align-bottom"
+      ></ta-risk-field-indicator>
+      <!--- [i18n-tobeinternationalized] -->
+      Data Subjects
+    </div>
+    <div>
+      <!--- [i18n-tobeinternationalized] -->
+      Select the people and groups&mdash;your data subjects&mdash;whose
+      information this business process uses.
+    </div>
+    <h3 class="bp-title mt-3" *ngIf="isLoading">
+      Loading...
+    </h3>
+    <div>
+      <!-- [i18n-tobeinternationalized] -->
+      <ta-selected-items-container
+        data-cy="bp-step-3-data-subjects"
+        #dataSubjectSelector
+        [showRiskFields]="false"
+        [reselectable]="true"
+        [isLoading]="isLoading"
+        [options]="getDataSubjectOptions()"
+        [useLocation]="true"
+        [data]="fullDataSubjectList"
+        [height]="containerHeight"
+        [locations]="locations"
+        [fullCountryList]="locationData"
+        [width]="badgeWidth"
+        [info]="false"
+        [close]="true"
+        [grouped]="true"
+        [emptyStateLink]="'Add'"
+        [emptyStateText]="'your first data subject'"
+        (allItemsDeleted)="deleteAll('Data Subject')"
+        (itemClicked)="edit($event, 'Data Subject')"
+        (groupDeleted)="deleteGroup($event, 'Data Subject')"
+        (itemDeleted)="delete($event, 'Data Subject')"
+        (itemAdded)="open($event, 'Data Subject')"
+        (itemAddingForbidden)="handleItemAddingForbidden()"
+      >
+      </ta-selected-items-container>
+
+      <div class="sub-heading mb-0 mt-4">
+        <ta-risk-field-indicator
+          [showIndicator]="showRiskFields"
+          class="align-bottom"
+        ></ta-risk-field-indicator>
+        <!--- [i18n-tobeinternationalized] -->
+        Data Recipients
+      </div>
+      <div>
+        <!--- [i18n-tobeinternationalized] -->
+        Select the people and groups&mdash;your data recipients&mdash;who have
+        access to information that this business process shares.
+      </div>
+
+      <!-- [i18n-tobeinternationalized] -->
+      <ta-selected-items-container
+        data-cy="bp-step-3-data-recipients"
+        #dataRecipientSelector
+        [showRiskFields]="false"
+        [reselectable]="true"
+        [useLocation]="true"
+        [isLoading]="isLoading"
+        [data]="fullDataRecipientList"
+        [height]="containerHeight"
+        [width]="badgeWidth"
+        [info]="false"
+        [close]="true"
+        [grouped]="true"
+        [emptyStateLink]="'Add'"
+        [emptyStateText]="'your first data recipient'"
+        [locations]="locations"
+        [fullCountryList]="locationData"
+        (allItemsDeleted)="deleteAll('Data Recipient')"
+        (itemClicked)="edit($event, 'Data Recipient')"
+        (groupDeleted)="deleteGroup($event, 'Data Recipient')"
+        (itemDeleted)="delete($event, 'Data Recipient')"
+        (itemAdded)="open($event, 'Data Recipient')"
+        (itemAddingForbidden)="handleItemAddingForbidden()"
+      >
+      </ta-selected-items-container>
+    </div>
+  </div>
+
+  <button
+    data-cy="next"
+    *taSlotView
+    taButton
+    type="button"
+    taType="primary"
+    class="page-next btn-lg"
+    (click)="onSubmit()"
+    [disabled]="isNavDisabled"
+  >
+    Next
+  </button>
+</div>

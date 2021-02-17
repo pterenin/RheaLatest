@@ -1,0 +1,19 @@
+@import 'src/styles/variables';
+
+ta-data-flow-record-icon {
+  height: 28px;
+  width: 28px;
+  border-radius: 100px;
+  border-width: 1px;
+  border-style: solid;
+  font-weight: 600;
+  &.ta-record-icon-sm {
+    height: 24px;
+    width: 24px;
+    font-size: $font-size-10;
+  }
+}
+
+.tooltip.record-icon-tooltip {
+  margin-top: -5px !important;
+}

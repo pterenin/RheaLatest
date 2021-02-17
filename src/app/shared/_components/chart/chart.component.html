@@ -1,0 +1,55 @@
+<div class="ta-chart-specs-container row">
+  <div class="col-24 d-flex">
+    <div
+      class="ta-chart-controls row d-flex justify-content-center align-items-center"
+    >
+      <div class="col-3">
+        <img
+          src="/assets/images/flow-chart/zoomin.svg"
+          (click)="makeZoom('In')"
+        />
+      </div>
+      <div class="col-3">
+        <img
+          src="/assets/images/flow-chart/zoomout.svg"
+          (click)="makeZoom('Out')"
+        />
+      </div>
+      <div class="col-3">
+        <img src="/assets/images/flow-chart/fit.svg" (click)="reset()" />
+      </div>
+      <div class="col-3">
+        <img src="/assets/images/flow-chart/pan.svg" (click)="makePan()" />
+      </div>
+    </div>
+
+    <div
+      class="ta-chart-conventions d-flex justify-content-center align-items-center"
+    >
+      <div class="ta-chart-convention-item yellow">
+        <div></div>
+        <!-- [i18n-tobeinternationalized] -->
+        <span>Data Subject</span>
+      </div>
+      <div class="ta-chart-convention-item violet">
+        <div></div>
+        <!-- [i18n-tobeinternationalized] -->
+        <span>System (3rd Party)</span>
+      </div>
+      <div class="ta-chart-convention-item green">
+        <div></div>
+        <!-- [i18n-tobeinternationalized] -->
+        <span>System (1st Party)</span>
+      </div>
+      <div class="ta-chart-convention-item red">
+        <div></div>
+        <!-- [i18n-tobeinternationalized] -->
+        <span>Data Recipient</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="ta-chart-container" #taChartContainer>
+  <!-- Here goes the implementation of the Chart -->
+</div>

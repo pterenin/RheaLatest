@@ -1,0 +1,15 @@
+{
+  "baseUrl": "http://localhost:4200",
+  "chromeWebSecurity": false,
+  "viewportWidth": 1480,
+  "viewportHeight": 1480,
+  "withCredentials": true,
+  "defaultCommandTimeout": 6000,
+  "requestTimeout": 10000,
+  "video": true,
+  "supportFile": "cypress/support/index.ts",
+  "retries": {
+    "runMode": 1,
+    "openMode": 1
+  }
+}

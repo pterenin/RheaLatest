@@ -1,0 +1,37 @@
+@import 'src/styles/variables';
+
+#main-container.platform-nav-collapsed {
+  ta-business-process-wizard-footer {
+    width: calc(100% - 60px);
+  }
+}
+
+#main-container.platform-nav-expanded {
+  ta-business-process-wizard-footer {
+    width: calc(100% - 224px);
+  }
+}
+
+.systems-selections {
+  .ta-breadcrumb-wrapper {
+    padding: 1rem 1rem 0.5rem;
+    background-color: $white;
+
+    .breadcrumb-item:nth-child(2),
+    .breadcrumb-item:nth-child(3) {
+      display: none;
+    }
+  }
+}
+
+ta-business-process-wizard {
+  display: block;
+
+  ta-business-process-wizard-footer {
+    transition: width 0.2s ease-out 0s;
+    position: fixed;
+    bottom: 0;
+    z-index: 11;
+    right: 0;
+  }
+}

@@ -1,0 +1,84 @@
+<form [formGroup]="stepFinalReviewForm" (ngSubmit)="onSubmit()" novalidate>
+  <div class="record-details-container">
+    <div class="row">
+      <div class="col">
+        <div class="review-step-section-container p-2">
+          <div class="final-review-header mb-3">
+            <!--- [i18n-tobeinternationalized] -->
+            Great Job!
+          </div>
+          <div class="final-review-header mb-3">
+            <!--- [i18n-tobeinternationalized] -->
+            Copy the link below to send this business process to a reviewer, and
+            update the status below to “In review.”
+          </div>
+          <div class="p-3 text-center mb-3">
+            <!--- [i18n-tobeinternationalized] -->
+            <a (click)="copyUrl()" class="link" role="link">
+              Click here to copy the link to this business process.
+            </a>
+          </div>
+        </div>
+        <div class="review-step-section-container mb-4">
+          <ta-accordion activeIds="assessment-table">
+            <ta-panel id="assessment-table">
+              <ng-template taPanelTitle>
+                <div class="sub-heading mb-2 mt-0 ">
+                  <!--- [i18n-tobeinternationalized] -->
+                  If reviewing this business process record, expand and complete
+                  the steps outlined.
+                </div>
+              </ng-template>
+              <ng-template taPanelContent>
+                <div class="accordion-content-table">
+                  <ol class="m-0 accordion-ol">
+                    <li class="review-step-text text-wrap">
+                      Review the business process
+                      {{ businessProcess.name }} (BP Record ID
+                      {{ businessProcess.identifier }}) and make any necessary
+                      updates.
+                      <a routerLink="../background">
+                        Click here to open page 1 of
+                        {{ businessProcess.name }} (BP Record ID
+                        {{ businessProcess.identifier }})</a
+                      >
+                      to begin your review
+                    </li>
+                    <li class="review-step-text">
+                      Select a legal basis for each processing purpose that this
+                      business process uses
+                    </li>
+                  </ol>
+                  <ta-review-table
+                    *ngIf="tableData"
+                    (tableChanged)="tableDataUpdated($event)"
+                    [tableDataInput]="tableData"
+                    [legalBasesInput]="legalBases"
+                  ></ta-review-table>
+                </div>
+              </ng-template>
+            </ta-panel>
+          </ta-accordion>
+        </div>
+
+        <div class="review-step-section-container p-2 pt-0">
+          <div class="sub-heading mb-2 mt-0">
+            <!--- [i18n-tobeinternationalized] -->
+            Update the status for this business process.
+          </div>
+          <div class="align-text-bottom">Status</div>
+          <div class="w-50">
+            <ta-dropdown-field
+              data-cy="business-process-status"
+              [options]="bpStatuses"
+              optionLabel="name"
+              [selectedOption]="stepFinalReviewForm.get('status').value"
+              formControlName="status"
+              class="d-block wp-100 mt-2"
+            ></ta-dropdown-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,22 @@
+ta-step-3 {
+  .ta-modal-location {
+    .modal-header {
+      padding-top: 19px !important;
+      padding-bottom: 19px !important;
+    }
+    .modal-footer {
+      padding-left: 12px !important;
+      padding-right: 12px !important;
+    }
+    .modal-body {
+      min-height: 436px;
+      padding-bottom: 0 !important;
+    }
+  }
+  .bpDataItemsSelect.dropdown-menu.show {
+    width: 550px;
+    .dropdown-item {
+      padding-right: 0.55rem !important;
+    }
+  }
+}

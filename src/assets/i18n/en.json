@@ -1,0 +1,60 @@
+{
+  "BUSINESS_PROCESS": {
+    "CREATE_BTN": "New Business Process"
+  },
+  "SETTINGS": {
+    "DATA_SUBJECTS": {
+      "TOAST_MESSAGES": {
+        "CATEGORY": {
+          "CREATED": "The @@category was successfully created",
+          "RENAMED": "The @@category was successfully renamed",
+          "ERROR_EXISTING_NAME": "A data subject category with the name '@@category' already exists",
+          "ERROR_CREATE": "Error in creating custom data subject category '@@category'",
+          "ERROR_UPDATE": "Error in updating custom data subject category '@@category'"
+        },
+        "ITEM": {
+          "CREATED": "The @@dataSubject (@@category) was successfully created",
+          "UPDATED": "The @@dataSubject (@@category) was successfully updated",
+          "ERROR_EXISTING_NAME": "A data subject with the name '@@dataSubject' already exists in category '@@category'",
+          "ERROR_CREATE": "Error in creating custom data subject '@@dataSubject' in category '@@category'",
+          "ERROR_UPDATE": "Error in updating custom data subject '@@dataSubject' in category '@@category'"
+        }
+      }
+    },
+    "DATA_ELEMENTS": {
+      "TOAST_MESSAGES": {
+        "CATEGORY": {
+          "CREATED": "The @@category was successfully created",
+          "RENAMED": "The @@category was successfully renamed",
+          "ERROR_EXISTING_NAME": "A data element category with the name '@@category' already exists"
+        },
+        "ITEM": {
+          "CREATED": "The @@dataElement (@@category) was successfully created",
+          "UPDATED": "The @@dataElement (@@category) was successfully updated"
+        }
+      }
+    },
+    "PROCESSING_PURPOSES": {
+      "TOAST_MESSAGES": {
+        "CATEGORY": {
+          "CREATED": "The @@category was successfully created",
+          "RENAMED": "The @@category was successfully renamed",
+          "ERROR_EXISTING_NAME": "A processing purpose category with the name '@@category' already exists"
+        },
+        "ITEM": {
+          "CREATED": "The @@processingPurpose (@@category) was successfully created",
+          "UPDATED": "The @@processingPurpose (@@category) was successfully updated",
+          "ERROR_EXISTING_NAME": "A processing purpose with name '@@processingPurpose' already exist in category '@@category'"
+        }
+      }
+    }
+  },
+  "FILE_ATTACHMENTS": {
+    "TOAST_MESSAGES": {
+      "ERROR_FORBIDDEN": "You do not have the access permissions needed to edit this record",
+      "ERROR_NOT_FOUND": "Record does not exist",
+      "ERROR_EXISTING_NAME": "A file with the name '@@fileName' already exists",
+      "ERROR": "Error occurred, '@@fileName' could not be uploaded."
+    }
+  }
+}

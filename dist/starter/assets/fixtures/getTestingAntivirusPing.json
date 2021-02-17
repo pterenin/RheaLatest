@@ -1,0 +1,9 @@
+{
+  "data": {
+    "hostName": "string",
+    "port": 1,
+    "result": "string"
+  },
+  "status": 200,
+  "ok": true
+}

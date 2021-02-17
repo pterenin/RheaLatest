@@ -1,0 +1,59 @@
+<ta-page-footer-nav [currentFormValidity]="true">
+  <div class="page-cancel">
+    <button
+      data-cy="cancel"
+      taButton
+      type="button"
+      taType="link"
+      class="btn-lg"
+      [disabled]="_isUploading"
+      (click)="onCancelChanges()"
+    >
+      <!--- [i18n-tobeinternationalized] -->
+      Cancel
+    </button>
+  </div>
+
+  <div class="page-finish">
+    <!-- set the ngif condition and disable save buttons below based on validity of form -->
+    <span *ngIf="!_isFormValid" class="text-danger mr-2">
+      <!-- [i18n-tobeinternationalized] -->
+      {{
+        _isUploading
+          ? 'Attachments are saving'
+          : 'One or more fields need attention'
+      }}
+    </span>
+    <button
+      data-cy="save-add-another"
+      *ngIf="false"
+      taButton
+      type="button"
+      taType="flat"
+      class="btn-lg mr-2"
+      [disabled]="!_isFormValid"
+      (click)="onSaveAndAddAnotherClicked()"
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      Save and add another
+    </button>
+    <button
+      data-cy="save"
+      taButton
+      type="button"
+      taType="primary"
+      [disabled]="!_isFormValid || isSaving"
+      (click)="onSaveClicked()"
+      class="btn-lg"
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      Save
+      <span
+        *ngIf="isSaving"
+        class="spinner-border spinner-border-sm ml-auto text-primary"
+        role="status"
+        aria-hidden="true"
+      ></span>
+    </button>
+  </div>
+</ta-page-footer-nav>

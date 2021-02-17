@@ -1,0 +1,34 @@
+<ta-steps
+  #taStep
+  *ngIf="!isFetching && !licenses.RHEA_NEW_UI_STEPS_12_LICENSE"
+  [activeStep]="2"
+>
+  <ta-step
+    *ngFor="let step of pageSteps; index as i"
+    (click)="taStep.setActiveStep(i + 1); navigate(step.url)"
+    [stepNumber]="i + 1"
+  >
+    {{ step.label }}
+    <ng-container *ngIf="step.label === pageSteps[1].label">
+      <span class="star">
+        &#11089;
+      </span>
+    </ng-container>
+  </ta-step>
+</ta-steps>
+
+<ta-business-process-wizard-header
+  style="margin-bottom:.5rem"
+  *ngIf="
+    !isFetching &&
+    licenses.RHEA_NEW_UI_STEPS_12_LICENSE &&
+    businessProcessNavigation[5]
+  "
+  [currentRoute]="businessProcessNavigation[5]"
+  [record]="record"
+  (isClickSteps)="navigate12Header($event)"
+></ta-business-process-wizard-header>
+
+<ta-review-step-container>
+  <router-outlet></router-outlet>
+</ta-review-step-container>

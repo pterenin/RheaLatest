@@ -1,0 +1,116 @@
+@import 'variables';
+@import '~@trustarc/ui-toolkit/scss/colors';
+
+.position-sticky {
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background-color: $white !important;
+}
+
+.ta-modal-details-data-flow {
+  .modal-body {
+    ta-tabset .nav-segment {
+      padding-left: 0;
+      .nav-link {
+        padding: 4px 16px 4px 32px;
+        display: flex;
+      }
+      .nav-link span {
+        float: left;
+        position: relative;
+      }
+    }
+    .ta-table-toolbar-search {
+      width: 72%;
+      border-right: none;
+    }
+    .ta-table-toolbar-btns {
+      justify-content: space-between;
+      width: 27%;
+      border-left: none;
+    }
+  }
+
+  .ta-table-head {
+    @extend .position-sticky;
+    z-index: 2;
+    background-color: $white;
+    top: 80px;
+    .ta-table-row {
+      display: flex;
+      ta-table-column.left-not-editable {
+        margin-left: 35px;
+      }
+      ta-table-column.left-editable {
+        margin-left: 17px !important;
+      }
+      .ta-table-cell {
+        padding: 0.4rem 1rem !important;
+        min-height: 32px;
+        text-align: left;
+        border-top: 0;
+        position: relative;
+        flex-basis: 0;
+        flex-grow: 1;
+        max-width: 100%;
+        &:first-child:not(.ta-not-first) {
+          max-width: 47px !important;
+          bottom: 13px;
+          margin-left: -9px;
+          left: 9px;
+        }
+      }
+    }
+  }
+
+  .ta-table-body.data-transfer-details-table {
+    max-height: 400px;
+    min-height: 200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    .ta-table-cell.ta-col-checkbox {
+      width: 47px !important;
+      flex-grow: inherit;
+      padding-left: 16px;
+    }
+    .ta-table-row {
+      .ta-table-cell {
+        padding: 0.4rem 1rem !important;
+        min-height: 32px;
+        text-align: left;
+        border-top: 0;
+        position: relative;
+        &:first-child:not(.ta-not-first) {
+          max-width: 47px;
+        }
+      }
+    }
+  }
+}
+
+.modal-header.skeleton {
+  display: block;
+}
+
+.custom-count {
+  color: $black;
+  left: 5px;
+  float: none !important;
+  width: auto;
+  white-space: nowrap;
+  border-radius: 9px;
+  background-color: $gallery-grey;
+  padding: 1px 0.4em;
+}
+
+.ta-system-name {
+  padding-right: 150px;
+  h3 {
+    max-width: 80%;
+  }
+}

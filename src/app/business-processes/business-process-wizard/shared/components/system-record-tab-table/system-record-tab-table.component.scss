@@ -1,0 +1,66 @@
+@import 'variables';
+
+ta-system-record-tab-table {
+  .custom-table {
+    .position-sticky {
+      position: -webkit-sticky;
+      position: -moz-sticky;
+      position: -ms-sticky;
+      position: -o-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 4;
+      background-color: $white !important;
+    }
+
+    ta-table {
+      @extend .position-sticky;
+      z-index: 2;
+      background-color: $white;
+      top: 100px;
+    }
+
+    .ta-table {
+      .ta-table-head {
+        .ta-table-cell {
+          &:first-child {
+            max-width: 47px;
+          }
+        }
+      }
+    }
+
+    .ta-table-row {
+      .ta-table-cell {
+        &:first-child {
+          max-width: 32px !important;
+        }
+      }
+    }
+
+    .column-title {
+      .ta-checkbox-lb {
+        top: -12px;
+      }
+    }
+
+    .custom-table-body.ta-table-body {
+      border-bottom: 1px solid $seashell-grey !important;
+      .ta-table-row {
+        display: flex;
+        margin-right: -1rem;
+        margin-left: -1rem;
+        .ta-table-cell {
+          padding: 0.4rem 1rem !important;
+          min-height: 32px;
+          text-align: left;
+          border-top: 0;
+          position: relative;
+          &:first-child {
+            max-width: 47px;
+          }
+        }
+      }
+    }
+  }
+}

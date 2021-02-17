@@ -1,0 +1,41 @@
+@import 'src/styles/variables';
+
+.selected-items-box {
+  border-radius: 3px;
+  border: $border-default-600;
+  background-color: $white;
+  padding: 0;
+  overflow: auto;
+  margin: 0 1px;
+  height: 288px;
+
+  .fadeInApp {
+    cursor: pointer;
+  }
+}
+
+.empty-image {
+  background-image: url('/assets/images/no-data.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  margin-top: -10px;
+}
+
+.empty-subtext {
+  position: relative;
+  top: 50%;
+  padding-top: 60px;
+}
+
+.disabled {
+  background-color: $gallery-grey;
+  border-color: $gallery-grey;
+  opacity: 0.5;
+  color: $silver-grey !important;
+  pointer-events: none;
+}

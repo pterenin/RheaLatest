@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59 (86127) - https://sketch.com -->
+    <title>risk-high</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="risk-/-likely-high">
+            <g id="risk-high">
+                <polygon fill="#D72000" points="16 16 8 0 0 16"></polygon>
+                <polygon id="Path" fill="#FFFFFF" points="9 12.4736842 7 12.4736842 7 10.7894737 9 10.7894737"></polygon>
+                <polygon id="Path" fill="#FFFFFF" points="7 9.10526316 7 4.05263158 9 4.05263158 9 9.10526316"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

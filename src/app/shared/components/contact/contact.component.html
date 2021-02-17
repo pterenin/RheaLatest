@@ -1,0 +1,217 @@
+<div class="modal-header">
+  <h4 class="modal-title">Contact</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="closeModal()"
+    [disabled]="isLoading"
+  >
+    <ta-icon [icon]="'close'"></ta-icon>
+  </button>
+</div>
+<form
+  [formGroup]="contactForm"
+  (ngSubmit)="onSubmit()"
+  autocomplete="off"
+  novalidate
+>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input
+            id="fullName"
+            taAutofocus
+            type="text"
+            class="form-control"
+            formControlName="fullName"
+            placeholder="Name"
+          />
+          <div
+            *ngIf="contactForm.controls.fullName.errors?.maxlength"
+            class="text-danger text-danger-multi-sibling"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            Name should be less than 256 characters.
+          </div>
+        </div>
+      </div>
+      <div class="col" *ngIf="useRoles">
+        <div class="form-group" id="contactRolesDropdown">
+          <ta-dropdown-field
+            label="Role *"
+            [placeholder]="'Select'"
+            [options]="roles"
+            optionLabel="name"
+            [selectedOption]="contactForm.get('role').value"
+            formControlName="role"
+          ></ta-dropdown-field>
+          <div
+            *ngIf="contactForm.touched && contactForm.controls.role.invalid"
+            class="text-danger"
+          >
+            <!--- [i18n-tobeinternationalized] -->
+            Role is required
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="text"
+            class="form-control"
+            placeholder="Email Address"
+            formControlName="email"
+            email
+          />
+          <div
+            *ngIf="contactForm.controls.email.errors?.pattern"
+            class="text-danger"
+          >
+            <!--- [i18n-tobeinternationalized] -->
+            Invalid email address
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input
+            id="phone"
+            type="text"
+            class="form-control"
+            formControlName="phone"
+            placeholder="123-456-7890"
+          />
+          <div
+            *ngIf="contactForm.controls.phone.errors?.maxlength"
+            class="text-danger text-danger-multi-sibling"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            Invalid phone number
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input
+            id="address"
+            type="text"
+            class="form-control"
+            placeholder="Contact's Address"
+            formControlName="address"
+          />
+          <div
+            *ngIf="contactForm.controls.address.errors?.maxlength"
+            class="text-danger text-danger-multi-sibling"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            Address should be less than 1025 characters
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label for="city">City</label>
+          <input
+            id="city"
+            type="text"
+            class="form-control"
+            placeholder="City"
+            formControlName="city"
+          />
+          <div
+            *ngIf="contactForm.controls.city.errors?.maxlength"
+            class="text-danger text-danger-multi-sibling"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            City name should be less than 129 characters
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="row">
+          <div class="col">
+            <div class="form-group" id="contactCountryDropdown">
+              <ta-dropdown-field
+                [isSearchable]="true"
+                label="Country"
+                placeholder="Select"
+                [options]="countries"
+                optionLabel="name"
+                [selectedOption]="contactForm.get('country').value"
+                formControlName="country"
+              ></ta-dropdown-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group" id="contactStateProvinceDropdown">
+          <ta-dropdown-field
+            [isSearchable]="true"
+            label="State/Province"
+            placeholder="Select"
+            [options]="stateOrProvinces"
+            optionLabel="name"
+            [selectedOption]="contactForm.get('stateOrProvince').value"
+            formControlName="stateOrProvince"
+            [isDisabled]="!contactForm.get('country').value"
+          ></ta-dropdown-field>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="zip">Zip Code</label>
+          <input
+            id="zip"
+            type="text"
+            class="form-control"
+            placeholder="Zip Code"
+            formControlName="zip"
+          />
+          <div
+            *ngIf="contactForm.controls.zip.errors?.maxlength"
+            class="text-danger text-danger-multi-sibling"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            Invalid ZIP code
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer footer-buttons">
+    <button
+      taButton
+      type="button"
+      id="cancel-contact-modal-button"
+      taType="secondary"
+      [disabled]="isLoading"
+      (click)="closeModal()"
+    >
+      Cancel
+    </button>
+    <button
+      taButton
+      id="save-contact-modal-button"
+      taType="primary"
+      [disabled]="!isContactFormValid || isLoading"
+    >
+      Save
+    </button>
+  </div>
+</form>

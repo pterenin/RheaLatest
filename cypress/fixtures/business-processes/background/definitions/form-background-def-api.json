@@ -1,0 +1,12 @@
+{
+  "putBackground": {
+    "method": "PUT",
+    "url": "api/hub/business-processes/{id}/background",
+    "alias": "@putBackground"
+  },
+  "getUsers": {
+    "method": "GET",
+    "url": "api/users",
+    "alias": "@getUsers"
+  }
+}

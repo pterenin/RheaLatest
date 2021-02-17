@@ -1,0 +1,22 @@
+@import 'src/styles/variables';
+
+ta-audit-accordion {
+  display: block;
+  ta-accordion .ta-accordion-header {
+    position: relative;
+    padding: 0;
+    ta-icon {
+      position: absolute;
+      right: 1rem;
+      top: 0.5rem;
+    }
+  }
+  .ta-accordion-body {
+    padding: 0 !important;
+  }
+  ta-audit-table {
+    box-shadow: $box-shadow;
+    border-radius: 4px;
+    display: block;
+  }
+}

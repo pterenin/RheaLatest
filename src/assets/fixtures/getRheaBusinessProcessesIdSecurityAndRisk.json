@@ -1,0 +1,19 @@
+{
+  "data": {
+    "additionalProcessingPurposeIds": ["string"],
+    "dataRetention": {
+      "description": "string",
+      "id": "string",
+      "summary": "string",
+      "type": "string",
+      "value": "string",
+      "version": 1
+    },
+    "id": "string",
+    "securityControlIds": ["string"],
+    "securityControlOther": "string",
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

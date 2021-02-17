@@ -1,0 +1,9 @@
+{
+  "data": {
+    "id": "string",
+    "processingPurposeIds": ["string"],
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

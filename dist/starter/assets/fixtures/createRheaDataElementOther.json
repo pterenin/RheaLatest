@@ -1,0 +1,11 @@
+{
+  "data": {
+    "category": "string",
+    "dataElement": "string",
+    "id": "string",
+    "type": "string",
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

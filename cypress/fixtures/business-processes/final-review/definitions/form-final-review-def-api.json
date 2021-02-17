@@ -1,0 +1,7 @@
+{
+  "postItSystem": {
+    "method": "PUT",
+    "url": "api/business-processes/{id}/approvals",
+    "alias": "@put-approvals"
+  }
+}

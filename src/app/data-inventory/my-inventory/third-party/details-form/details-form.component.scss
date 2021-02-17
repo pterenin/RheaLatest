@@ -1,0 +1,64 @@
+@import 'src/styles/variables';
+@import '../../../../../styles/record-details';
+
+.company-affiliate-details-container {
+  display: block;
+}
+
+.row {
+  margin-bottom: 10px;
+}
+
+.form-group {
+  position: relative;
+}
+
+.contact-info {
+  display: block;
+}
+
+.add-new-location-link {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.location-state-province-selectbox {
+  display: inline-block;
+  width: 88%;
+}
+
+.location-trash-icon {
+  float: right;
+}
+
+.dpo-or-legal-contact-title {
+  display: block;
+}
+
+.contact-row {
+  line-height: 12px;
+}
+
+.disabled {
+  div {
+    pointer-events: none;
+    cursor: not-allowed;
+
+    button {
+      color: $gray-500 !important;
+
+      i {
+        color: $gray-500 !important;
+      }
+    }
+  }
+}
+
+.my-8 {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.dropdown-menu-width-unset {
+  min-width: unset !important;
+}

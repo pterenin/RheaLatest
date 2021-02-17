@@ -1,0 +1,236 @@
+<div class="animated fadeIn" *ngIf="!isReady">
+  <span class="spinner-border spinner-border-sm ml-auto text-primary"></span>
+</div>
+<div class="animated fadeIn" *ngIf="isReady">
+  <div class="d-flex align-items-center">
+    <ta-search-field
+      class="mr-auto w-100 d-block"
+      placeholder="Search Hosting Locations by Country Name"
+      (searchValue)="onSearch($event)"
+    ></ta-search-field>
+
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-selected-system-record-filter
+      (applyClick)="applyFilterForm()"
+      (clearClick)="resetFilterForm()"
+      headerTitle="Filter by Geographical Area ({{
+        filterChecked?.length || 0
+      }})"
+      [isDirty]="isFiltersDirty()"
+    >
+      <form [formGroup]="filterForm" class="py-2">
+        <div
+          formArrayName="filters"
+          *ngFor="let item of filters.controls; let i = index"
+        >
+          <div [formGroupName]="i.toString()">
+            <ta-checkbox
+              formControlName="checked"
+              class="dropdown-item text-wrap px-3"
+            >
+              <span *ngIf="item.get('name').value !== 'EU'">
+                {{ item.get('name').value | replace: '_':' ' | titlecase }}
+              </span>
+              <span *ngIf="item.get('name').value === 'EU'">
+                {{ item.get('name').value }}
+              </span>
+            </ta-checkbox>
+          </div>
+        </div>
+      </form>
+    </ta-selected-system-record-filter>
+  </div>
+
+  <ng-container *ngIf="type === 'withDataFlow'">
+    <ng-container>
+      <!-- Summary Info -->
+      <div
+        class="d-flex align-items-center pt-4 pb-2 position-sticky"
+        style="top: 35px; z-index: 3"
+      >
+        <div
+          class="tab-main-content cursor-pointer"
+          (click)="isCollapsedAttached = !isCollapsedAttached"
+        >
+          <h3 class="h6 m-0">
+            <!-- [i18n-tobeinternationalized] -->
+            Hosting Locations on System Record ({{
+              getSelectedCountByGridId(gridIdAttached)
+            }}/{{ hostingLocationsProcessed?.length }})
+          </h3>
+          <p class="text-black-50 m-0">
+            <!-- [i18n-tobeinternationalized] -->
+            Deselect any hosting locations that are not used by this system in
+            this business process.
+          </p>
+        </div>
+        <button
+          class="ml-auto"
+          taButton
+          taType="circle"
+          *ngIf="hostingLocationsProcessed"
+          (click)="isCollapsedAttached = !isCollapsedAttached"
+        >
+          <ta-icon
+            [icon]="isCollapsedAttached ? 'chevron-down' : 'chevron-up'"
+          ></ta-icon>
+        </button>
+      </div>
+
+      <!-- List of attached data elements -->
+      <div [class.d-none]="isCollapsedAttached">
+        <ta-table
+          [taSelected]="true"
+          [id]="gridIdAttached"
+          [serverProcess]="false"
+          class="minimal mt-2 mb-4"
+        >
+          <ta-table-column>Country</ta-table-column>
+          <ta-table-column>Geographical Area</ta-table-column>
+          <ta-table-row
+            *ngFor="
+              let d of hostingLocationsProcessed
+                | searchBy: { name: searchValue }:false
+                | filterByIncludeArrayAndPath
+                  : filterCheckedRegions
+                  : 'globalRegion';
+              index as i
+            "
+            [taItem]="d"
+            [taSelected]="determineSelected(d.id)"
+          >
+            <ta-table-cell [taTruncate]="true">
+              {{ d.name }}
+            </ta-table-cell>
+            <ta-table-cell [taTruncate]="true">
+              {{
+                d.globalRegions | mapByPropertyPipe: 'name' | joinByPipe: ', '
+              }}
+            </ta-table-cell>
+          </ta-table-row>
+        </ta-table>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="type === 'withDataFlow' && dataAvailable">
+    <ng-container
+      *ngIf="
+        hostingLocationsAvailable
+          | filterOutByArrayAndPropertyPipe
+            : hostingLocationsProcessedIds
+            : 'id' as resultHostingLocationsAvailable
+      "
+    >
+      <!-- Summary Info -->
+      <div
+        class="d-flex align-items-center pt-4 pb-2 position-sticky"
+        style="top: 35px; z-index: 3"
+        *ngIf="dataAvailable"
+      >
+        <div
+          class="tab-main-content cursor-pointer"
+          (click)="isCollapsedAdditional = !isCollapsedAdditional"
+        >
+          <h3 class="h6 m-0">
+            <!-- [i18n-tobeinternationalized] -->
+            Additional Hosting Locations ({{
+              getSelectedCountByGridId(gridIdAvailable)
+            }}/{{ resultHostingLocationsAvailable?.length }})
+          </h3>
+          <p class="text-black-50 m-0">
+            <!-- [i18n-tobeinternationalized] -->
+            If there are additional hosting locations used by this system in
+            this business process, select them from the list below.
+          </p>
+        </div>
+        <button
+          class="ml-auto"
+          taButton
+          taType="circle"
+          (click)="isCollapsedAdditional = !isCollapsedAdditional"
+        >
+          <ta-icon
+            [icon]="isCollapsedAdditional ? 'chevron-down' : 'chevron-up'"
+          ></ta-icon>
+        </button>
+      </div>
+
+      <!-- List of available hosting locations -->
+      <div [class.d-none]="isCollapsedAdditional">
+        <ta-table
+          [taSelected]="true"
+          [id]="gridIdAvailable"
+          [serverProcess]="false"
+          class="minimal mt-2 mb-4"
+        >
+          <ta-table-column>Country</ta-table-column>
+          <ta-table-column>Geographical Area</ta-table-column>
+          <ta-table-row
+            *ngFor="
+              let d of resultHostingLocationsAvailable
+                | searchBy: { name: searchValue }:false
+                | filterByIncludeArrayAndPath
+                  : filterCheckedRegions
+                  : 'globalRegion';
+              index as i
+            "
+            [taItem]="d"
+          >
+            <ta-table-cell [taTruncate]="true">
+              {{ d.name }}
+            </ta-table-cell>
+            <ta-table-cell [taTruncate]="true">
+              {{
+                d.globalRegions | mapByPropertyPipe: 'name' | joinByPipe: ', '
+              }}
+            </ta-table-cell>
+          </ta-table-row>
+        </ta-table>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="itSystemReadOnly">
+    <!-- Summary Info -->
+    <div
+      class="d-flex align-items-center pt-4 pb-2 position-sticky"
+      style="top: 35px; z-index: 3"
+    >
+      <div
+        class="tab-main-content cursor-pointer"
+        (click)="isCollapsedAttached = !isCollapsedAttached"
+      >
+        <h3 class="h6 m-0">
+          <!-- [i18n-tobeinternationalized] -->
+          Hosting Locations on System Record ({{ itSystemReadOnly?.length }})
+        </h3>
+      </div>
+    </div>
+    <ta-table
+      [id]="gridIdSystemReadOnly"
+      [serverProcess]="false"
+      class="minimal mt-2 mb-4 table-system-read-only"
+    >
+      <ta-table-column>Country</ta-table-column>
+      <ta-table-column>Geographical Area</ta-table-column>
+      <ta-table-row
+        *ngFor="
+          let d of itSystemReadOnly
+            | searchBy: { countryName: searchValue }:false
+            | filterByIncludeArrayAndPath
+              : filterCheckedRegions
+              : 'globalRegionId';
+          index as i
+        "
+      >
+        <ta-table-cell [taTruncate]="true">
+          {{ d.countryName }}
+        </ta-table-cell>
+        <ta-table-cell [taTruncate]="true">
+          {{ d.globalRegionId | replace: '_':' ' | titlecase }}
+        </ta-table-cell>
+      </ta-table-row>
+    </ta-table>
+  </ng-container>
+</div>

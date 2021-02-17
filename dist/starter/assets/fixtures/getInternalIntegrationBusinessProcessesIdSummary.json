@@ -1,0 +1,39 @@
+{
+  "data": {
+    "businessProcessId": "string",
+    "confidentialDataCollected": true,
+    "countOfDataElementsCollected": 1,
+    "countOfDataSubjectsCollected": 1,
+    "dataCollectionCountries": ["string"],
+    "dataFlow": {
+      "drtNodes": "",
+      "dstNodes": "",
+      "id": "string",
+      "isDetails": "",
+      "isNodes": "",
+      "version": 1
+    },
+    "dataObtainedFromThirdParties": true,
+    "dataRelatedToEU": true,
+    "dataRelatedToNaturalIndividuals": true,
+    "dataRetentionType": "string",
+    "dataRetentionValue": "string",
+    "dataTransferMechanismsIntlBetweenOrgs": true,
+    "dataTransferMechanismsIntlWithinOrg": true,
+    "highRiskProcessing": true,
+    "isOrgDCorDP": true,
+    "jointControllers": ["string"],
+    "legalBasisForProcessing": ["string"],
+    "organization": {},
+    "organizationsInvolved": true,
+    "otherDataElementsCollected": true,
+    "otherProcessingPurposes": ["string"],
+    "processingPurposes": ["string"],
+    "sensitiveDataCollected": true,
+    "stakeholders": ["string"],
+    "systemsInvolved": true,
+    "vendorsInvolved": true
+  },
+  "status": 200,
+  "ok": true
+}

@@ -1,0 +1,105 @@
+<div taDropdown [placement]="dropdownAlignment" #selectorDropdown>
+  <button
+    taButton
+    taDropdownToggle
+    type="button"
+    taType="dropdown"
+    id="async-categorical-dropdown"
+    class="w-100"
+  >
+    <span
+      [ngClass]="{
+        'placeholder-text': getDisplayText() === placeholder,
+        'd-block text-truncate': true
+      }"
+      >{{ getDisplayText() }}</span
+    >
+  </button>
+  <div taDropdownMenu>
+    <ta-dropdown-search
+      data-cy="categorical-dropdown-search"
+      id="async-category-search-field"
+      (onSearch)="onSearch($event)"
+    ></ta-dropdown-search>
+    <ta-dropdown-category *ngIf="categoryList.length > 0">
+      <ta-dropdown-menus id="async-category-menu">
+        <button
+          *ngFor="let category of categoryList"
+          class="dropdown-menu-item position-relative"
+          [attr.id]="getElementId('async-category-selection', category.id)"
+          [class.selected]="category.id == _selectedCategoryId"
+          (click)="onSelectCategory(category.id)"
+        >
+          <span
+            [innerHTML]="getCategoryText(category.id)"
+            data-cy="categorical-dropdown-categories"
+          ></span>
+          <ta-icon class="caret-right" icon="caret-right"></ta-icon>
+        </button>
+        <button
+          *ngIf="isAddNewItemLink"
+          class="dropdown-menu-item position-relative link"
+          type="button"
+          (click)="onAddNewItem()"
+        >
+          {{ addNewItemLinkLabel }}
+        </button>
+      </ta-dropdown-menus>
+      <ta-dropdown-items>
+        <ta-dropdown-scroll
+          id="async-item-menu-scroll"
+          *ngIf="_selectedCategoryId"
+          class="w-100"
+          [scrollHeight]="200"
+        >
+          <button
+            *ngFor="let item of getItemsFor(_selectedCategoryId)"
+            class="dropdown-item text-wrap"
+            [id]="getElementId('async-item-selection', item.id)"
+            [class.selected]="isSelected(item.id)"
+            (click)="onSelectItem(item)"
+          >
+            <span
+              data-cy="categorical-dropdown-category-items"
+              [innerHTML]="getItemText(item.id)"
+            ></span>
+          </button>
+        </ta-dropdown-scroll>
+      </ta-dropdown-items>
+    </ta-dropdown-category>
+    <ta-dropdown-category *ngIf="isAddNewItemLinkAtBottom">
+      <div class="p-2" *ngIf="categoryList.length === 0">
+        <p class="mb-1" *ngIf="searchTerm.length > 0">
+          <span class="text-black-50">No available owner for </span
+          ><strong>‘{{ searchTerm }}’</strong>.
+        </p>
+        <p class="mb-0">
+          Add it as a
+          <a href="#" (click)="startAddingNewEntity($event, 'THIRD_PARTY')"
+            >New Third Party</a
+          >
+          or
+          <a
+            href="#"
+            (click)="startAddingNewEntity($event, 'COMPANY_AFFILIATE')"
+            >New Company Affiliate</a
+          >
+        </p>
+      </div>
+      <div class="p-2" *ngIf="categoryList.length > 0">
+        <p class="mb-0">
+          Add
+          <a href="#" (click)="startAddingNewEntity($event, 'THIRD_PARTY')"
+            >New Third Party</a
+          >
+          Record or
+          <a
+            href="#"
+            (click)="startAddingNewEntity($event, 'COMPANY_AFFILIATE')"
+            >New Company Affiliate</a
+          >
+        </p>
+      </div>
+    </ta-dropdown-category>
+  </div>
+</div>

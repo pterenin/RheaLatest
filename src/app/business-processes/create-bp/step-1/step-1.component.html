@@ -1,0 +1,159 @@
+<div class="fadeInApp step-1-container">
+  <ta-business-process-wizard-header
+    *ngIf="licenses.RHEA_NEW_UI_STEPS_12_LICENSE"
+    [record]="bpRecord"
+    [currentRoute]="businessProcessNavigation[0]"
+    (isClickSteps)="navigate($event)"
+  ></ta-business-process-wizard-header>
+
+  <form [formGroup]="step1Form" (ngSubmit)="onSubmit()">
+    <div class="record-details-container">
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <h3 class="bp-title mb-4" data-cy="title-background">
+              <!-- [i18n-tobeinternationalized] -->
+              Provide details about this business process by completing the
+              fields below.
+            </h3>
+          </div>
+          <div class="form-group">
+            <!-- [i18n-tobeinternationalized] -->
+            <label for="bpName">Name of business process* </label>
+            <input
+              data-cy="process-name"
+              id="bpName"
+              type="text"
+              formControlName="name"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  (bpName.invalid && bpName.touched) ||
+                  (bpName.invalid && triggerShowError)
+              }"
+              name="bpName"
+              placeholder="Enter Name of business process..."
+            />
+            <div
+              *ngIf="
+                (bpName.invalid && bpName.touched) ||
+                (bpName.invalid && triggerShowError)
+              "
+              class="text-danger text-danger-multi-sibling"
+            >
+              <!-- [i18n-tobeinternationalized] -->
+              This field is required.
+            </div>
+            <div
+              *ngIf="bpName.errors?.maxlength"
+              class="text-danger text-danger-multi-sibling"
+            >
+              <!-- [i18n-tobeinternationalized] -->
+              The name must be less than 255 characters.
+            </div>
+          </div>
+          <div class="form-group w-50">
+            <!-- [i18n-tobeinternationalized] -->
+            <ta-dropdown-field
+              data-cy="people-range"
+              class="small-dropdown"
+              [showRiskFields]="showRiskFields"
+              label="Select a range of people whom this business process involves."
+              [options]="dataSubjectVolumes"
+              optionLabel="name"
+              [selectedOption]="step1Form.get('dataSubjectVolume').value"
+              formControlName="dataSubjectVolume"
+            ></ta-dropdown-field>
+          </div>
+          <div class="form-group">
+            <!-- [i18n-tobeinternationalized] -->
+            <label for="description"
+              >Describe briefly this business process.</label
+            >
+            <textarea
+              data-cy="description"
+              formControlName="description"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': bpDescription.invalid && bpDescription.touched
+              }"
+              id="description"
+              name="description"
+              rows="5"
+            ></textarea>
+            <div *ngIf="bpDescription.errors?.maxlength" class="text-danger">
+              <!-- [i18n-tobeinternationalized] -->
+              The description must be less than 1024 characters.
+            </div>
+          </div>
+          <p class="sub-heading mb-2 mt-4">
+            <!-- [i18n-tobeinternationalized] -->
+            Specify the notes & attachments
+          </p>
+          <div class="form-group">
+            <!-- [i18n-tobeinternationalized] -->
+            <label for="notes">Notes</label>
+            <textarea
+              data-cy="notes"
+              formControlName="notes"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': bpNotes.invalid && bpNotes.touched
+              }"
+              id="notes"
+              name="notes"
+              rows="5"
+            ></textarea>
+            <div *ngIf="bpNotes.errors?.maxlength" class="text-danger">
+              <!-- [i18n-tobeinternationalized]  -->
+              The notes must be less than 1024 characters.
+            </div>
+          </div>
+          <ta-base-record-file-upload
+            [formGroup]="fileFormsGroup"
+            [isDeletingFile]="isDeletingFile"
+          ></ta-base-record-file-upload>
+          <p class="sub-heading mb-2 mt-4">
+            <!-- [i18n-tobeinternationalized] -->
+            Specify the tags
+          </p>
+          <div class="form-group">
+            <ta-tags-selector
+              [formGroup]="tagFormsGroup"
+              [baseDomainId]="businessProcessId"
+              [baseDomainType]="baseDomainTypeEnum.BusinessProcess"
+              (selectedTagsChange)="selectedTagsChange($event)"
+              [lastElementPlacementTop]="true"
+            >
+            </ta-tags-selector>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *taSlotView>
+      <span
+        *ngIf="!step1Form.valid && (bpName.touched || triggerShowError)"
+        class="text-danger mr-2"
+      >
+        <!-- [i18n-tobeinternationalized] -->
+        One or more fields need attention
+      </span>
+      <button
+        data-cy="next"
+        taButton
+        type="submit"
+        taType="primary"
+        class="page-next btn-lg"
+        [ngClass]="{
+          'page-next': true,
+          'not-allowed': !step1Form.valid || isNextButtonDisabled
+        }"
+        (click)="onSubmit()"
+        [disabled]="!step1Form.valid || isNextButtonDisabled"
+      >
+        <!-- [i18n-tobeinternationalized] -->
+        Next
+      </button>
+    </div>
+  </form>
+</div>

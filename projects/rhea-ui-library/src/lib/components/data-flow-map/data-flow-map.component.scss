@@ -1,0 +1,11 @@
+@import 'src/styles/variables';
+
+ta-data-flow-map {
+  .mapContainer {
+    min-height: 0px !important;
+    height: calc(100vh - 214px) !important;
+  }
+  .spacer {
+    position: relative;
+  }
+}

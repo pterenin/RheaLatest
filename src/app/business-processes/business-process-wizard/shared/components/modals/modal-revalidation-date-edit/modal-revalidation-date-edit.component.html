@@ -1,0 +1,358 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="revalidation-date-edit-title" taAutoFocus>
+    <!--- [i18n-tobeinternationalized] -->
+    Edit Revalidation Date
+  </h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <ta-icon icon="close"></ta-icon>
+  </button>
+</div>
+<div class="modal-body pb-0">
+  <div class="container">
+    <div class="row mb-3">
+      <div class="col">
+        <p class="mb-1">
+          <!-- [i18n-tobeinternationalized] -->
+          Date
+        </p>
+        <div #datepickerDropdown taDropdown class="d-inline-block w-100">
+          <button
+            taButton
+            taType="dropdown"
+            id="revalidation-date-edit-dropdown-date"
+            class="w-100"
+            taDropdownToggle
+          >
+            {{ getRevalidationDate() }}
+          </button>
+          <div
+            (click)="$event.stopPropagation()"
+            taDropdownMenu
+            aria-labelledby="revalidation-date-edit-dropdown-date"
+            [attr.id]="'revalidation-date-edit-dropdown-date-menu'"
+          >
+            <ta-datepicker
+              [attr.id]="'revalidation-date-edit-datepicker'"
+              [(ngModel)]="revalidationDateModel"
+              [minDate]="minDate"
+              (navigate)="date = $event.next"
+              (select)="date = $event; datepickerDropdown.close()"
+              [footerTemplate]="footerTemplate"
+            ></ta-datepicker>
+            <ng-template #footerTemplate>
+              <hr class="my-0" />
+              <button
+                taButton
+                taType="flat"
+                class="m-2"
+                (click)="clearDate(); datepickerDropdown.close()"
+              >
+                <!-- [i18n-tobeinternationalized] -->
+                Clear
+              </button>
+              <button
+                taButton
+                taType="primary"
+                class="m-2 float-right"
+                (click)="selectToday(); datepickerDropdown.close()"
+              >
+                <!-- [i18n-tobeinternationalized] -->
+                Today
+              </button>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <p class="mb-1">
+          <!-- [i18n-tobeinternationalized] -->
+          Recurrence
+        </p>
+        <div taDropdown class="d-inline-block w-100">
+          <button
+            taButton
+            taType="dropdown"
+            id="revalidation-date-edit-dropdown-recurrence"
+            class="w-100"
+            taDropdownToggle
+          >
+            {{ selectedOptionRecurrence?.name || 'Select' }}
+          </button>
+          <div
+            taDropdownMenu
+            aria-labelledby="revalidation-date-edit-dropdown-recurrence"
+          >
+            <button
+              class="dropdown-item"
+              *ngFor="let opt of optionsRecurrence"
+              (click)="selectRecurrence(opt)"
+            >
+              {{ opt.name }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col">
+        <p class="mb-1">
+          <!-- [i18n-tobeinternationalized] -->
+          Notification Type
+          <span class="required">*</span>
+          <!-- [i18n-tobeinternationalized] -->
+          <ta-icon
+            [icon]="iconTypeTooltip"
+            taTooltip="Notifications are sent at 12am CST"
+            tooltipTextAlign="left"
+            height="12"
+            container="body"
+            class="position-relative"
+            style="top: -2px; left: 5px;"
+            placement="right"
+            color="#595959"
+            tooltipTheme="light"
+          ></ta-icon>
+        </p>
+        <div taDropdown autoClose="outside" class="d-inline-block w-100">
+          <div
+            taButton
+            taDropdownToggle
+            taType="tags"
+            class="w-100"
+            id="revalidation-date-edit-notification-type"
+          >
+            <ng-container *ngFor="let option of optionsNotificationType">
+              <ta-tags
+                *ngIf="option.checked"
+                theme="secondary"
+                showClose="true"
+                (click)="$event.stopPropagation()"
+                (onClose)="option.checked = false"
+              >
+                {{ option.name }}
+              </ta-tags>
+            </ng-container>
+          </div>
+          <div
+            taDropdownMenu
+            aria-labelledby="revalidation-date-edit-notification-type"
+          >
+            <ta-checkbox
+              *ngFor="let option of optionsNotificationType"
+              class="dropdown-item"
+              [(ngModel)]="option.checked"
+            >
+              {{ option.name }}</ta-checkbox
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col">
+        <p class="mb-1">
+          <!-- [i18n-tobeinternationalized] -->
+          Notification Timing
+          <span class="required">*</span>
+        </p>
+        <div taDropdown autoClose="outside" class="d-inline-block w-100">
+          <div
+            taButton
+            taDropdownToggle
+            taType="tags"
+            class="w-100"
+            id="revalidation-date-edit-notification-timing"
+          >
+            <ng-container *ngFor="let option of optionsNotificationTiming">
+              <ta-tags
+                *ngIf="option.checked"
+                theme="secondary"
+                showClose="true"
+                (click)="$event.stopPropagation()"
+                (onClose)="option.checked = false"
+              >
+                {{ option.name }}
+              </ta-tags>
+            </ng-container>
+          </div>
+          <div
+            taDropdownMenu
+            aria-labelledby="revalidation-date-edit-notification-timing"
+          >
+            <ta-checkbox
+              *ngFor="let option of optionsNotificationTiming"
+              class="dropdown-item"
+              [(ngModel)]="option.checked"
+            >
+              {{ option.name }}</ta-checkbox
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col">
+        <label for="revalidation-date-comment" class="mb-1">
+          <!-- [i18n-tobeinternationalized] -->
+          Comments
+        </label>
+        <textarea
+          class="w-100 comment-area"
+          name="comments"
+          id="revalidation-date-comment"
+          rows="3"
+          placeholder=" Write your comments here."
+          [(ngModel)]="comment"
+        ></textarea>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col">
+        <div class="d-flex justify-content-between">
+          <h4 class="mb-0">
+            <!-- [i18n-tobeinternationalized] -->
+            Contacts
+          </h4>
+          <div class="">
+            <p class="text-contact mb-0">
+              <!-- [i18n-tobeinternationalized] -->
+              You can add a maximum of 15 contacts only.
+              <span>
+                <button
+                  class="mx-2"
+                  taButton
+                  taType="circle"
+                  taTooltip="Delete"
+                  (click)="deleteContacts()"
+                  [disabled]="isDeleteDisabled()"
+                >
+                  <ta-icon icon="delete"></ta-icon>
+                </button>
+                <div
+                  #usersDropdown
+                  taDropdown
+                  autoClose="outside"
+                  placement="bottom-right"
+                  class="d-inline-block mr-1"
+                >
+                  <button
+                    class="mr-0"
+                    taButton
+                    taType="circle"
+                    taTooltip="Add"
+                    taDropdownToggle
+                    id="revalidation-date-edit-contacts-add"
+                  >
+                    <ta-icon icon="plus-circle"></ta-icon>
+                  </button>
+                  <div
+                    taDropdownMenu
+                    class="dropdown-menu-contacts-add"
+                    aria-labelledby="revalidation-date-edit-contacts-add"
+                  >
+                    <ta-dropdown-search
+                      [placeholder]="'Search System Users'"
+                      (onSearch)="onSearchUsers($event)"
+                    ></ta-dropdown-search>
+                    <ta-dropdown-scroll
+                      scrollHeight="268"
+                      (scroll)="onScroll($event)"
+                    >
+                      <ta-checkbox
+                        *ngFor="let user of totalUsers"
+                        class="dropdown-item"
+                        [(ngModel)]="user.checked"
+                        (change)="onPickUser(user)"
+                      >
+                        {{ user.name }}
+                      </ta-checkbox>
+                    </ta-dropdown-scroll>
+                  </div>
+                </div>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col" *ngIf="contacts.length > 0">
+        <ta-table
+          [id]="gridID"
+          [serverProcess]="false"
+          [filter]="false"
+          [taSelected]="true"
+          class="ta-table-wrapper-modal-revalidation-date-contacts mb-3"
+        >
+          <ta-table-column [taField]="'fullName'">
+            <!-- [i18n-tobeinternationalized] -->
+            Name
+          </ta-table-column>
+          <ta-table-column [taField]="'email'">
+            <!-- [i18n-tobeinternationalized] -->
+            Email
+          </ta-table-column>
+
+          <ta-table-row
+            *ngFor="let contact of contacts; index as i"
+            [taItem]="contact"
+          >
+            <ta-table-cell>{{ contact.fullName }}</ta-table-cell>
+            <ta-table-cell>{{ contact.email }}</ta-table-cell>
+          </ta-table-row>
+        </ta-table>
+      </div>
+      <div class="col" *ngIf="contacts.length === 0">
+        <div
+          class="d-flex justify-content-center align-items-center flex-column"
+        >
+          <div
+            class="d-flex justify-content-center align-items-center flex-column"
+          >
+            <div class="image-container"></div>
+            <span class="text-contact mb-4">
+              <!-- [i18n-tobeinternationalized] -->
+              No contacts added yet.
+            </span>
+          </div>
+          <button
+            class="mt-n1"
+            taButton
+            taType="secondary"
+            id="revalidation-date-edit-add-contact"
+            aria-label="revalidation-date-edit-add-contact"
+            type="button"
+            (click)="$event.stopPropagation(); usersDropdown.open()"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            Add Contact
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="d-flex w-100">
+    <button
+      taButton
+      taType="flat"
+      class="mr-auto btn-lg"
+      data-dismiss="modal"
+      (click)="dismiss()"
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      Cancel
+    </button>
+    <button
+      taButton
+      taType="primary"
+      class="btn-lg"
+      (click)="submit()"
+      [disabled]="isSaveDisabled()"
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      Save
+    </button>
+  </div>
+</div>

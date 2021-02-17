@@ -1,0 +1,13 @@
+@import 'src/styles/variables';
+
+ta-system-record-add-company-affiliate-component {
+}
+
+:host {
+  .sub-heading {
+    font-size: $font-size-14;
+    font-weight: 500;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+}

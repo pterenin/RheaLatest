@@ -1,0 +1,51 @@
+{
+  "data": {
+    "processName": "e2e-BP-Step7(6 new) final review",
+    "title": "Final Review",
+    "status": "Publish",
+    "processingPurposesLegalBasis": [
+      {
+        "processingPurpose": {
+          "searchPrefix": "Advertising compliance",
+          "category": "Advertising"
+        },
+        "legalBasis": {
+          "searchPrefix": "Contract",
+          "category": "STANDARD"
+        }
+      },
+      {
+        "processingPurpose": {
+          "searchPrefix": "Clinical research",
+          "category": "Health Care"
+        },
+        "legalBasis": {
+          "searchPrefix": "Public interest",
+          "category": "STANDARD"
+        }
+      },
+      {
+        "processingPurpose": {
+          "searchPrefix": "Auditing",
+          "category": "Corporate"
+        },
+        "legalBasis": {
+          "searchPrefix": "Legal claims",
+          "category": "SPECIAL"
+        }
+      },
+      {
+        "processingPurpose": {
+          "searchPrefix": "Capital management",
+          "category": "Finance"
+        },
+        "legalBasis": {
+          "searchPrefix": "Legal obligation",
+          "category": "STANDARD"
+        }
+      }
+    ]
+  },
+  "status": 200,
+  "ok": true
+}

@@ -1,0 +1,106 @@
+<div class="modal-header">
+  <!--- [i18n-tobeinternationalized] --->
+  <h4 class="modal-title">Custom Data Element</h4>
+  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+    <i class="ta ta-close"></i>
+  </button>
+</div>
+<form [formGroup]="customElementForm" (ngSubmit)="onSubmit()">
+  <div class="modal-body row ml-0 mr-0">
+    <div class="form-group ml-3 form-wrapper">
+      <div class="row mt-2 ml-0 mr-0">
+        <!--- [i18n-tobeinternationalized] --->
+        <label for="name">Data Element Name*</label>
+        <input
+          taAutofocus
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          formControlName="name"
+          placeholder="Enter Custom Data Element Name"
+        />
+        <div *ngIf="name.errors?.required && name.touched" class="text-danger">
+          <!-- [i18n-tobeinternationalized] -->
+          This field is required.
+        </div>
+      </div>
+      <div class="row mt-4 ml-0 mr-0">
+        <ng-template #levelTipContent>
+          <div class="tooltip-content">
+            <!-- TODO: RHEA-1019 Add Data Classification Level Tool Tip Text -->
+          </div>
+        </ng-template>
+        <!--- [i18n-tobeinternationalized] --->
+        <label for="level">Data Classification Level*</label>
+        <ta-dropdown-field
+          [options]="levelList"
+          [selectedOption]="level.value"
+          (dropdownOpenChanged)="onLevelTouched()"
+          formControlName="level"
+          class="w-100"
+        ></ta-dropdown-field>
+        <div
+          *ngIf="level.errors?.required && level.touched"
+          class="text-danger"
+        >
+          <!-- [i18n-tobeinternationalized] -->
+          This field is required.
+        </div>
+      </div>
+      <div class="row mt-4 ml-0 mr-0">
+        <!--- [i18n-tobeinternationalized] --->
+        <label for="level">Data Element Category*</label>
+        <ta-dropdown-field
+          [options]="categoryOptionList"
+          optionLabel="category"
+          [selectedOption]="category.value"
+          formControlName="category"
+          [isSearchable]="true"
+          [useInfiniteScroll]="true"
+          (infiniteListChanged)="requestForInfiniteList($event)"
+          [viewPortHeight]="250"
+          class="w-100"
+        ></ta-dropdown-field>
+        <div
+          *ngIf="category.errors?.required && category.touched"
+          class="text-danger"
+        >
+          <!-- [i18n-tobeinternationalized] -->
+          This field is required.
+        </div>
+      </div>
+    </div>
+    <div class="mt-2 mb-3 ml-4 level-wrapper">
+      <div class="row ml-0 mr-0 level-title">Data Classification Levels</div>
+      <div
+        class="row mt-3 ml-0 mr-0"
+        *ngFor="let level of dataClassificationLevels"
+      >
+        {{ level }}
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer justify-content-between">
+    <button
+      taButton
+      type="button"
+      taType="secondary"
+      data-dismiss="modal"
+      id="modal-cancel"
+      (click)="activeModal.dismiss('Cancel')"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Cancel
+    </button>
+    <button
+      taButton
+      taType="primary"
+      id="modal-submit"
+      [disabled]="!customElementForm.valid"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Save
+    </button>
+  </div>
+</form>

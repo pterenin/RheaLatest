@@ -1,0 +1,19 @@
+@import 'src/styles/variables';
+
+#file-upload {
+  border: 2px dashed $gray-600;
+  border-radius: 4px;
+  text-align: center;
+  padding: 20px 10px;
+  &.dragging-over {
+    background: zeplin-lighten($blue, 0.1);
+    border: 2px dashed rgba(0, 0, 0, 0.3);
+  }
+  label {
+    cursor: pointer;
+    margin-bottom: 0;
+  }
+  input[type='file'] {
+    display: none;
+  }
+}

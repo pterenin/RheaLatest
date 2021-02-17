@@ -1,0 +1,11 @@
+{
+  "data": {
+    "accountId": "string",
+    "id": "string",
+    "userRoleAuthorities": "",
+    "userRoleName": "string",
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

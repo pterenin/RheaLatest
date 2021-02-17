@@ -1,0 +1,30 @@
+{
+  "processName": {
+    "selector": "[data-cy='process-name']",
+    "alias": "@process-name"
+  },
+  "title": {
+    "selector": "[data-cy='title-owner']",
+    "alias": "@title-owner"
+  },
+  "entity": {
+    "selector": "[data-cy='entity']",
+    "alias": "@entity"
+  },
+  "entityRole": {
+    "selector": "[data-cy='entity-role']",
+    "alias": "@entity-role"
+  },
+  "fullName": {
+    "selector": "[data-cy='full-name']",
+    "alias": "@full-name"
+  },
+  "email": {
+    "selector": "[data-cy='email']",
+    "alias": "@email"
+  },
+  "department": {
+    "selector": "[data-cy='department']",
+    "alias": "@department"
+  }
+}

@@ -1,0 +1,191 @@
+<div
+  #dropdownHierarchyRef
+  taDropdown
+  autoClose="outside"
+  class="ta-dropdown-hierarchy"
+  [placement]="['bottom', 'top', 'auto']"
+>
+  <button
+    type="button"
+    taButton
+    class="ta-dropdown-hierarchy-btn-toggle"
+    taType="dropdown"
+    *ngIf="tagGroupForm && !(isMultiSelect && tagGroupForm)"
+    taDropdownToggle
+  >
+    {{ !isMultiSelect ? tagGroupForm.get('selected').value?.tag : '' }}
+  </button>
+
+  <div
+    class="w-100"
+    *ngIf="isMultiSelect && tagGroupForm"
+    taButton
+    taDropdownToggle
+    taType="tags"
+  >
+    <ta-tags
+      class="dropdown-hierarchy-multi-tags"
+      *ngFor="let selection of tagGroupForm.get('selected').value"
+      (onClose)="removeTagFromSelection(selection, tagGroupForm)"
+      [showClose]="true"
+    >
+      {{ selection.tag }}
+    </ta-tags>
+  </div>
+
+  <div taDropdownMenu aria-labelledby="dropdownBasic1">
+    <div>
+      <div *ngIf="dropdownHierarchyView && tagGroupForm">
+        <div class="ta-dropdown-hierarchy-title">
+          <ta-icon
+            (click)="
+              navigateDropdownHierarchy(option, 'up'); $event.stopPropagation()
+            "
+            class="caret-left"
+            icon="caret-left"
+            style="cursor: pointer;"
+          ></ta-icon>
+          <p>
+            {{ dropdownHierarchyTitle }}
+          </p>
+        </div>
+
+        <div class="ta-dropdown-hierarchy-searchbox">
+          <ta-dropdown-search (onSearch)="onDropdownHierarchySearch($event)">
+          </ta-dropdown-search>
+        </div>
+        <ta-dropdown-scroll [scrollHeight]="70">
+          <div class="dropdown-item d-flex" *ngIf="isMultiSelect">
+            <ta-checkbox
+              class="d-flex"
+              [checked]="isFullSelection()"
+              [indeterminate]="isIndeterminateSelection()"
+              (change)="handleSelectAll($event)"
+            ></ta-checkbox>
+            <p class="m-0 p-0">
+              Select All ({{ getActiveSelectionCount() }}/{{
+                dropdownActiveOptions.length
+              }})
+            </p>
+          </div>
+          <div
+            class="dropdown-item"
+            *ngIf="!isMultiSelect"
+            (click)="handleNoneSelection()"
+          >
+            <p class="m-0 p-0">
+              None
+            </p>
+          </div>
+          <div
+            class="ta-dropdown-hierarchy-menu-item d-flex"
+            *ngFor="
+              let option of dropdownHierarchyList
+                | searchFilter: dropdownHierarchySearchFilter
+            "
+          >
+            <div class="dropdown-item d-flex">
+              <ta-checkbox
+                *ngIf="isMultiSelect"
+                class="d-flex"
+                [checked]="option.selected"
+                (change)="handleCheckbox($event, option)"
+              ></ta-checkbox>
+
+              <p
+                class="flex-fill m-0 p-0"
+                (click)="
+                  !isMultiSelect &&
+                    handleDropdownHierarchyChange($event, option, tagGroupForm)
+                "
+              >
+                {{ option.tag }}
+              </p>
+
+              <ta-icon
+                *ngIf="option.children.length"
+                (click)="
+                  navigateDropdownHierarchy(option, 'down');
+                  $event.stopPropagation()
+                "
+                class="caret-right"
+                icon="caret-right"
+              ></ta-icon>
+            </div>
+          </div>
+        </ta-dropdown-scroll>
+      </div>
+
+      <div *ngIf="!dropdownHierarchyView && tagGroupForm">
+        <div class="ta-dropdown-hierarchy-searchbox">
+          <ta-dropdown-search (onSearch)="onDropdownHierarchySearch($event)">
+          </ta-dropdown-search>
+        </div>
+        <ta-dropdown-scroll [scrollHeight]="70">
+          <div class="ta-dropdown-hierarchy-menu-item">
+            <div
+              class="dropdown-item"
+              *ngIf="!isMultiSelect"
+              (click)="handleNoneSelection()"
+            >
+              <p class="m-0 p-0">
+                None
+              </p>
+            </div>
+          </div>
+          <div class="ta-dropdown-hierarchy-menu-item">
+            <div *ngIf="isMultiSelect" class="dropdown-item d-flex">
+              <ta-checkbox
+                class="d-flex"
+                [checked]="isFullSelection()"
+                [indeterminate]="isIndeterminateSelection()"
+                (change)="handleSelectAll($event)"
+              ></ta-checkbox>
+              <p class="m-0 p-0">
+                Select All ({{ getActiveSelectionCount() }}/{{
+                  dropdownActiveOptions.length
+                }})
+              </p>
+            </div>
+          </div>
+          <div
+            class="ta-dropdown-hierarchy-menu-item d-flex"
+            *ngFor="
+              let option of tagGroupForm.get('values').value
+                | nonselected: tagGroupForm.get('selected').value:isMultiSelect
+                | searchFilter: dropdownHierarchySearchFilter
+            "
+          >
+            <div class="dropdown-item d-flex">
+              <ta-checkbox
+                *ngIf="isMultiSelect"
+                class="d-flex"
+                (change)="handleCheckbox($event, option)"
+                [checked]="option.selected"
+              ></ta-checkbox>
+
+              <p
+                class="flex-fill m-0 p-0"
+                (click)="
+                  !isMultiSelect &&
+                    handleDropdownHierarchyChange($event, option, tagGroupForm)
+                "
+              >
+                {{ option.tag }}
+              </p>
+              <ta-icon
+                *ngIf="option.children.length"
+                (click)="
+                  navigateDropdownHierarchy(option, 'down');
+                  $event.stopPropagation()
+                "
+                class="caret-right"
+                icon="caret-right"
+              ></ta-icon>
+            </div>
+          </div>
+        </ta-dropdown-scroll>
+      </div>
+    </div>
+  </div>
+</div>

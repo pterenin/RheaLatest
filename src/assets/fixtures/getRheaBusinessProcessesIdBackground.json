@@ -1,0 +1,20 @@
+{
+  "data": {
+    "dataSubjectVolume": {
+      "highRisk": true,
+      "id": "string",
+      "lowerBound": 1,
+      "name": "string",
+      "upperBound": 1
+    },
+    "description": "string",
+    "id": "string",
+    "name": "string",
+    "notes": "string",
+    "processingPurposes": "",
+    "tags": "",
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

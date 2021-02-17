@@ -1,0 +1,18 @@
+<div class="multi-countries">
+  <ng-container *ngFor="let location of getSelectedLocations()">
+    <strong class="d-inline-block mb-1 position-sticky region">
+      {{ location.name }} ({{
+        location.countries.length + '/' + location.total
+      }})
+    </strong>
+    <div
+      class="location-countries mb-1 d-flex"
+      *ngFor="let country of location.countries"
+    >
+      <div class="d-inline-block" style="width: 20%;">
+        {{ country.threeLetterCode }}
+      </div>
+      <div class="country-name" style="width: 80%;">{{ country.name }}</div>
+    </div>
+  </ng-container>
+</div>

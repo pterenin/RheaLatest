@@ -1,0 +1,19 @@
+<div
+  class="rounded-circle d-flex align-items-center justify-content-center border expand-chevron position-absolute"
+  role="button"
+  (click)="toggleStandard.emit()"
+  data-cy="collapse-expand-build-data-flow"
+>
+  <ta-icon
+    *ngIf="isStandardView"
+    icon="caret-left"
+    height="9"
+    width="6"
+  ></ta-icon>
+  <ta-icon
+    *ngIf="!isStandardView"
+    icon="caret-right"
+    height="9"
+    width="6"
+  ></ta-icon>
+</div>

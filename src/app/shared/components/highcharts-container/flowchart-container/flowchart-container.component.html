@@ -1,0 +1,240 @@
+<div
+  [taPopover]="popBody"
+  [popoverTitle]="popTitle"
+  [placement]="tooltipPlacement"
+  triggers="manual:manual"
+  #p="taPopover"
+  [autoClose]="false"
+  container="body"
+></div>
+
+<highcharts-chart id="flowChart" class="flowchartContainer"></highcharts-chart>
+<div class="panzoomControllers d-flex justify-content-center flex-column">
+  <a
+    class="panzoomIcon"
+    (click)="zoomInChart()"
+    placement="right"
+    taTooltip="Zoom in"
+    tooltipTheme="light"
+  >
+    <ta-icon icon="plus" [color]="panIconColor"></ta-icon>
+  </a>
+  <a
+    class="panzoomIcon"
+    (click)="zoomOutChart()"
+    placement="right"
+    taTooltip="Zoom out"
+    tooltipTheme="light"
+  >
+    <ta-icon icon="minus" height="10" [color]="panIconColor"></ta-icon>
+  </a>
+  <a
+    class="panzoomIcon"
+    (click)="resetZoomChart()"
+    placement="right"
+    taTooltip="Zoom to fit"
+    tooltipTheme="light"
+  >
+    <ta-icon icon="zoom-to-fit" [color]="panIconColor"></ta-icon>
+  </a>
+  <a
+    class="panzoomIcon"
+    (click)="tooglePanChart()"
+    [ngClass]="isPanEnabled ? 'active' : ''"
+    placement="right"
+    taTooltip="Pan"
+    tooltipTheme="light"
+  >
+    <ta-icon icon="hand-grab" [color]="panIconDisableColor"></ta-icon>
+  </a>
+</div>
+<div class="noconnectionNodes">
+  <div class="d-flex">
+    <ng-container
+      *ngFor="
+        let entity of Entities;
+        let node;
+        of: noConnectionDataNodes[entity.type].data
+      "
+    >
+      <div class="w-25 text-center">
+        <ng-container
+          *ngFor="let node of noConnectionDataNodes[entity.type].data"
+        >
+          <div
+            class="nodeBadge d-flex justify-content-center align-items-center mb-2"
+            [ngStyle]="{ 'border-color': entity.value.color }"
+            [taTooltip]="node.name"
+            container="body"
+            tooltipTextAlign="left"
+            [placement]="['top', 'auto']"
+            tooltipTheme="light"
+            style="cursor: default;"
+          >
+            <span class="text-truncate d-block w-auto" style="max-width: 80%;">
+              {{ node.name }}
+            </span>
+            <span class="text-truncate d-block pl-1">
+              ({{ node.locationIds ? node.locationIds.length : 0 }})
+            </span>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<div class="flowchartLegends d-flex align-items-center justify-content-center">
+  <div class="legendItem d-inline-flex" *ngFor="let entity of Entities">
+    <span
+      class="legendColor align-middle"
+      [ngStyle]="{ 'background-color': entity.value.color }"
+    ></span>
+    <span class="align-middle">{{ entity.value.name }}</span>
+  </div>
+</div>
+<ng-template #popTitle>
+  <div
+    (mouseenter)="mouseEnteredPopoverTitle()"
+    (mouseleave)="mouseLeftPopoverTitle()"
+  >
+    <div class="flowPopoverTitle">
+      <a (click)="swapPopoverPath()" *ngIf="reversePopoverBodyContent !== null">
+        <span class="swappableTitle">
+          {{ popoverTitleFromContent }}
+          <span *ngIf="popoverTitleFromLocation" class="small-tag country">
+            {{ popoverTitleFromLocation }}
+          </span>
+          <img src="assets/images/right-line-arrow.80px.svg" />
+          {{ popoverTitleToContent }}
+          <span
+            *ngIf="
+              popoverTitleToLocation &&
+              popoverTitleToContent !== 'Multiple Entities'
+            "
+            class="small-tag country"
+          >
+            {{ popoverTitleToLocation }}
+          </span>
+        </span>
+      </a>
+
+      <div *ngIf="reversePopoverBodyContent === null">
+        <span>{{ popoverTitleFromContent }}</span>
+        <span *ngIf="popoverTitleFromLocation" class="small-tag country">
+          {{ popoverTitleFromLocation }}
+        </span>
+        <span *ngIf="isLinePopover">
+          <img
+            [attr.src]="
+              'assets/images/' +
+              popoverTitleLineDirection +
+              '-line-arrow.80px.svg'
+            "
+          />
+        </span>
+        <span *ngIf="!isLinePopover">
+          <img src="assets/images/arrow-line-arrow.80px.svg" />
+        </span>
+        <span>{{ popoverTitleToContent }}</span>
+        <span
+          *ngIf="
+            popoverTitleToLocation &&
+            popoverTitleToContent !== 'Multiple Entities'
+          "
+          class="small-tag country"
+        >
+          {{ popoverTitleToLocation }}
+        </span>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #popBody>
+  <div
+    class="flowPopoverContentContainer"
+    (mouseenter)="mouseEnteredPopoverBody()"
+    (mouseleave)="mouseLeftPopoverBody()"
+  >
+    <ta-tabset>
+      <!--- [i18n-tobeinternationalized] -->
+      <ta-tab>
+        <ng-template taTabTitle>
+          Locations
+          <ta-badge
+            [values]="popoverSelectedLocations.length"
+            class="count-badge"
+          ></ta-badge>
+        </ng-template>
+        <ng-template taTabContent>
+          <div class="flowPopoverBody">
+            <ta-accordion>
+              <div *ngFor="let region of fullCountryList; index as i">
+                <ta-panel *ngIf="region.selected">
+                  <ng-template taPanelTitle>
+                    <div class="ta-panel-title">
+                      <!--- [i18n-tobeinternationalized] -->
+                      {{ region.name }} ({{ region.countriesSelected }} /
+                      {{ region.countries.length }})
+                    </div>
+                  </ng-template>
+                  <ng-template taPanelContent>
+                    <ol>
+                      <ng-container
+                        *ngFor="let country of region.countries; index as i"
+                      >
+                        <li *ngIf="country.selected">
+                          <p>
+                            <span class="threeLetterCode">{{
+                              country.threeLetterCode
+                            }}</span
+                            >{{ country.name }}
+                          </p>
+                        </li>
+                      </ng-container>
+                    </ol>
+                  </ng-template>
+                </ta-panel>
+              </div>
+            </ta-accordion>
+          </div>
+        </ng-template>
+      </ta-tab>
+      <!--- [i18n-tobeinternationalized] -->
+      <ta-tab>
+        <ng-template taTabTitle>
+          Data Elements
+          <ta-badge
+            [values]="popoverBodyContentDataElements.length"
+            class="count-badge"
+          ></ta-badge>
+        </ng-template>
+        <ng-template taTabContent>
+          <div class="flowPopoverBody">
+            <div
+              *ngFor="
+                let dataElement of popoverBodyContentDataElements;
+                index as i
+              "
+            >
+              <span class="flowPopoverBody-index">{{ i + 1 + ' ' }}</span
+              ><span class="flowPopoverBody-element">{{ dataElement }}</span>
+            </div>
+          </div>
+        </ng-template>
+      </ta-tab>
+    </ta-tabset>
+
+    <div class="popoverTransferSaleOfDataSection" *ngIf="isLinePopover">
+      <hr />
+
+      <!--- [i18n-tobeinternationalized] -->
+      <div class="transferSaleOfDataText">
+        Is this transfer a sale of data?
+      </div>
+      <div class="flowPopoverToggleSwitch">
+        {{ popoverSaleOfData ? 'Yes' : 'No' }}
+      </div>
+    </div>
+  </div>
+</ng-template>

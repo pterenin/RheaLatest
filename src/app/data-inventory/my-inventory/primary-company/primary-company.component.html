@@ -1,0 +1,76 @@
+<div class="record-details-container mt-10">
+  <div class="heading">
+    <!-- [i18n-tobeinternationalized] -->
+    Primary Company Entity
+    <button
+      class="float-right"
+      taButton
+      type="button"
+      taType="flat"
+      (click)="onEditCompanyProfile()"
+    >
+      Edit Full Company Profile
+    </button>
+  </div>
+  <ta-tabset-guarded type="ta">
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-tab-guarded
+      title="Details"
+      id="details"
+      [disabled]="!isCurrentFormValid"
+    >
+      <ng-template taTabContent>
+        <!-- [i18n-tobeinternationalized] -->
+        <div class="sub-heading">Details</div>
+        <ta-primary-company-details
+          #canDeactivateTab
+          [showRiskFields]="showRiskFields"
+          (detailsLoaded)="onDetailsLoaded($event)"
+        ></ta-primary-company-details>
+      </ng-template>
+    </ta-tab-guarded>
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-tab-guarded title="Attachments" [disabled]="!isCurrentFormValid">
+      <ng-template taTabContent>
+        <!-- [i18n-tobeinternationalized] -->
+        <div class="sub-heading">Attachments</div>
+        <ta-inventory-attachments
+          #canDeactivateTab
+          [baseDomainId]="baseDomainId"
+          (updateValidity)="updateValidity($event)"
+          (updateUploading)="updateUploading($event)"
+        ></ta-inventory-attachments>
+      </ng-template>
+    </ta-tab-guarded>
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-tab-guarded title="Tags" id="tags" [disabled]="!isCurrentFormValid">
+      <ng-template taTabContent>
+        <!-- [i18n-tobeinternationalized] -->
+        <div class="sub-heading">Tags</div>
+        <ta-inventory-tags
+          #canDeactivateTab
+          [baseDomainId]="baseDomainId"
+          [baseDomainType]="baseDomainType"
+        ></ta-inventory-tags>
+      </ng-template>
+    </ta-tab-guarded>
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-tab-guarded title="Assessments" [disabled]="!isCurrentFormValid">
+      <ng-template taTabContent>
+        <ta-assessments
+          type="data-inventory"
+          [recordId]="baseDomainId"
+        ></ta-assessments>
+        <ta-audit-accordion></ta-audit-accordion>
+      </ng-template>
+    </ta-tab-guarded>
+  </ta-tabset-guarded>
+</div>
+
+<ta-data-inventory-footer
+  [isFormValid]="isCurrentFormValid"
+  [isUploading]="isUploading"
+  [allowAddAnother]="false"
+  (entitySaved)="saveAndNavigateToDataInventory()"
+>
+</ta-data-inventory-footer>

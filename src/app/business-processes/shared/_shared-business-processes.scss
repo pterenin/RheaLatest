@@ -1,0 +1,12 @@
+@import 'src/styles/variables';
+
+ta-review-bp,
+ta-create-bp {
+  padding-bottom: 60px;
+  display: block;
+
+  ta-steps {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}

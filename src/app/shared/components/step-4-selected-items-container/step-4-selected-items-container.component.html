@@ -1,0 +1,65 @@
+<!-- [i18n-tobeinternationalized] -->
+<ta-async-categorical-dropdown
+  data-cy="bp-step-4-select-system"
+  #asyncDropdown
+  [categoryLoaders]="categoryLoaders"
+  [isMultiSelect]="true"
+  [mapContentItem]="mapContentItem"
+  [selectedItems]="disallowedItems"
+  [isAddNewItemLink]="true"
+  [addNewItemLinkLabel]="'Add new System'"
+  [placeholder]="'Select'"
+  (itemSelected)="onDropdownItemClicked($event)"
+  (loadFinished)="onRequestListLoaded($event)"
+  (addNewItem)="onAddNewSystem()"
+></ta-async-categorical-dropdown>
+
+<button
+  taButton
+  taType="circle"
+  class="remove-all-icon"
+  type="button"
+  container="body"
+  [taTooltip]="clearAllTooltip"
+  [disabled]="getSelectedDataItems().length == 0"
+  (click)="clearAllDataItems()"
+>
+  <ta-icon icon="delete"></ta-icon>
+</button>
+
+<div class="selected-items-box" [style.height]="height">
+  <div *ngIf="getSelectedDataItems().length; else emptystate">
+    <div
+      *ngFor="let dataItem of getSelectedDataItems(); let i = index"
+      class="fadeInApp"
+      [style.animation-delay]="150 * i + 'ms'"
+    >
+      <ta-label-badge
+        [data]="dataItem"
+        [info]="info"
+        [tagText]="dataItem.tag"
+        [subItem]="dataItem.subItem"
+        [close]="close"
+        [grouped]="false"
+        (removeFromList)="removeFromList(dataItem)"
+        (showInfoTooltip)="showInfoTooltip(dataItem)"
+        (click)="onItemClick(dataItem)"
+      ></ta-label-badge>
+    </div>
+  </div>
+</div>
+
+<ng-template #emptystate>
+  <div class="empty-image">
+    <!-- [i18n-tobeinternationalized] -->
+    <div class="empty-subtext">
+      <span
+        class="add-link"
+        (click)="$event.stopPropagation(); asyncDropdown.openDropdown()"
+      >
+        Add
+      </span>
+      your first System
+    </div>
+  </div>
+</ng-template>

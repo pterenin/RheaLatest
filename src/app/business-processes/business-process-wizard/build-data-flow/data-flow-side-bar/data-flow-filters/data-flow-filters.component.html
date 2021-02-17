@@ -1,0 +1,35 @@
+<div>
+  <button
+    class="position-relative"
+    taButton
+    taType="circle"
+    type="button"
+    [placement]="['right-top', 'bottom-right', 'auto']"
+    [taPopover]="popFilterContent"
+    [popoverTitle]="popFilterTitle"
+    #popItSystemNodesFilter="taPopover"
+    popoverClass="search-filter-popover animated fadeIn"
+    autoClose="outside"
+    container="body"
+  >
+    <span
+      *ngIf="isFilterDirty"
+      class="filter-indicator position-absolute d-block"
+    ></span>
+    <ta-icon icon="filter"></ta-icon>
+  </button>
+</div>
+
+<ng-template #popFilterTitle>
+  <!-- [i18n-tobeinternationalized]-->
+  Filter ({{ totalFilters || 0 }})
+</ng-template>
+<ng-template #popFilterContent>
+  <ta-system-record-filter
+    [sortingPlaceholder]="getSortingPlaceholder()"
+    [fetchingType]="'single'"
+    [filtersFormValue]="filtersFormValue"
+    (filtersApplied)="applySelectedFilter($event)"
+    (filtersUpdated)="onFilterUpdated($event)"
+  ></ta-system-record-filter>
+</ng-template>

@@ -1,0 +1,191 @@
+<div>
+  <div class="sub-heading mt-3">
+    {{ header }}
+  </div>
+  <form [formGroup]="detailsForm" novalidate>
+    <div class="row">
+      <div class="col col-6">
+        <label for="emailAddress" class="data-label">
+          <!-- [i18n-tobeinternationalized] -->
+          Email Address
+        </label>
+        <input
+          id="emailAddress"
+          type="text"
+          name="emailAddress"
+          placeholder="Enter Email Address"
+          formControlName="emailAddress"
+          class="form-control"
+          data-cy="email-address"
+        />
+        <div data-cy="email-address-error-message" *ngIf="detailsForm.controls.emailAddress.errors?.pattern" class="text-danger">
+           <!--- [i18n-tobeinternationalized] -->
+          Invalid email address
+        </div>
+      </div>
+      <div class="col col-6">
+        <label for="phoneNumber" class="data-label">
+          <!-- [i18n-tobeinternationalized] -->
+          Phone Number
+        </label>
+        <input
+          id="phoneNumber"
+          type="text"
+          name="phoneNumber"
+          placeholder="Enter Phone Number"
+          formControlName="phoneNumber"
+          class="form-control"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-12">
+        <label for="address" class="data-label">
+          <!-- [i18n-tobeinternationalized] -->
+          Address
+        </label>
+        <input
+          id="address"
+          type="text"
+          name="address"
+          placeholder="Enter Address"
+          formControlName="address"
+          class="form-control"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-6">
+        <label for="city" class="data-label">
+          <!-- [i18n-tobeinternationalized] -->
+          City
+        </label>
+        <input
+          id="city"
+          type="text"
+          name="city"
+          placeholder="Enter City"
+          formControlName="city"
+          class="form-control"
+        />
+      </div>
+      <div class="col col-3">
+        <label for="headquarters-form-state-province" class="data-label">
+          <!-- [i18n-tobeinternationalized] -->
+          State/Province
+        </label>
+        <div
+          taDropdown
+          #stateOrProvinceDropdown="taDropdown"
+          autoClose="outside"
+          class="d-inline-block mr-1 w-100"
+        >
+          <button
+            taButton
+            taType="dropdown"
+            id="headquarters-form-state-province"
+            class="w-100 form-control"
+            taDropdownToggle
+            [disabled]="
+              !selectedCountry ||
+              selectedCountry?.stateOrProvinces?.length === 0
+            "
+          >
+            {{ selectedStateOrProvince?.name || 'Select' }}
+          </button>
+          <div
+            taDropdownMenu
+            aria-labelledby="headquarters-form-state-province"
+          >
+            <ta-dropdown-search
+              (onSearch)="onSearchProvince($event)"
+            ></ta-dropdown-search>
+            <ta-dropdown-scroll scrollHeight="178">
+              <ng-container
+                *ngFor="
+                  let stateOrProvince of selectedCountry?.stateOrProvinces
+                    | searchInCollectionByPathsArray
+                      : searchTermStateOrProvince
+                      : ['name']
+                "
+              >
+                <button
+                  class="dropdown-item"
+                  (click)="
+                    handleStateOrProvinceSelection(stateOrProvince);
+                    stateOrProvinceDropdown.close()
+                  "
+                >
+                  {{ stateOrProvince?.name }}
+                </button>
+              </ng-container>
+            </ta-dropdown-scroll>
+          </div>
+        </div>
+      </div>
+      <div class="col col-3">
+        <label for="zipCode" class="data-label">
+          <!-- [i18n-tobeinternationalized] -->
+          Zip Code
+        </label>
+        <input
+          id="zipCode"
+          type="text"
+          name="zipCode"
+          placeholder="Enter Zip Code"
+          formControlName="zipCode"
+          class="form-control"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col col-6">
+        <label for="headquarters-form-country" class="data-label">
+          <!-- [i18n-tobeinternationalized] -->
+          Country
+        </label>
+        <div
+          taDropdown
+          #countryDropdown="taDropdown"
+          autoClose="outside"
+          class="d-inline-block mr-1 w-100"
+        >
+          <button
+            taButton
+            taType="dropdown"
+            id="headquarters-form-country"
+            class="w-100 form-control"
+            taDropdownToggle
+          >
+            {{ selectedCountry?.name || 'Select' }}
+          </button>
+          <div taDropdownMenu aria-labelledby="headquarters-form-country">
+            <ta-dropdown-search
+              (onSearch)="onSearchCountry($event)"
+            ></ta-dropdown-search>
+            <ta-dropdown-scroll scrollHeight="178">
+              <ng-container
+                *ngFor="
+                  let country of allCountries
+                    | searchInCollectionByPathsArray
+                      : searchTermCountry
+                      : ['name'];
+                  let i = index
+                "
+              >
+                <button
+                  class="dropdown-item"
+                  (click)="
+                    handleCountrySelection(country); countryDropdown.close()
+                  "
+                >
+                  {{ country.name }}
+                </button>
+              </ng-container>
+            </ta-dropdown-scroll>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

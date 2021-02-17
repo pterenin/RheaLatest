@@ -1,0 +1,71 @@
+<div class="d-flex flex-column state-content">
+  <div class="d-flex align-items-center state-header p-3">
+    <button
+      type="button"
+      class="mr-2"
+      taButton
+      taType="circle"
+      (click)="navigateBack()"
+    >
+      <ta-icon icon="arrow-left"></ta-icon>
+    </button>
+    <div class="state-country-title w-100 d-flex">
+      <span class="h6 mb-0 mt-0 d-block mr-auto">
+        {{ selectedCountry.name }}
+      </span>
+      <span class="d-block text-black-50">
+        Selected {{ selectedIds.length }} of {{ stateList.length }}
+        States/Provinces
+      </span>
+    </div>
+  </div>
+  <section class="search-items pb-3">
+    <div class="d-flex bd-highlight search-container py-2 px-4">
+      <ta-search-field
+        class="d-block w-100"
+        placeholder="Search States/Province of {{ selectedCountry.name }}"
+        (searchValue)="onSearchChange($event)"
+      ></ta-search-field>
+    </div>
+    <div class="d-flex bd-highlight state-toolbar py-1 px-4">
+      <ta-checkbox
+        class="select-all mr-2"
+        [checked]="selectedIds.length === stateList.length"
+        (click)="selectAll($event)"
+        [indeterminate]="isIndeterminate()"
+      >
+        Select all states
+      </ta-checkbox>
+      <div
+        id="clear-all"
+        class="clear-all link bd-highlight"
+        (click)="clearAll()"
+      >
+        Clear all
+      </div>
+    </div>
+    <div class="d-flex flex-wrap px-4 state-list">
+      <div
+        class="py-1 state-wrapper"
+        *ngFor="let state of stateListDisplay; let i = index"
+      >
+        <ta-checkbox
+          (change)="onItemChange(state)"
+          [(ngModel)]="state.selected"
+          class="state"
+        >
+          <span
+            placement="top-left"
+            [taTooltip]="state.name"
+            tooltipClass="animated fadeIn"
+            tooltipTheme="light"
+            container="body"
+            tooltipTextAlign="left"
+          >
+            {{ state.name }}
+          </span>
+        </ta-checkbox>
+      </div>
+    </div>
+  </section>
+</div>

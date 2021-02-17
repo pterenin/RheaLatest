@@ -1,0 +1,76 @@
+<div class="fadeInApp">
+  <form [formGroup]="detailsForm" novalidate data-cy="bp-wizard-form-details">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <!-- [i18n-tobeinternationalized] label-->
+          <label for="bpName" class="data-label">
+            Business Process Record Name
+            <span Class="text-danger">*</span>
+          </label>
+          <!-- [i18n-tobeinternationalized] placeholder-->
+          <input
+            data-cy="process-name"
+            id="bpName"
+            type="text"
+            class="form-control"
+            name="bpName"
+            formControlName="name"
+            placeholder="Enter Name of Business Process"
+          />
+          <div
+            class="text-danger text-danger-multi-sibling"
+            *ngIf="name.errors?.required"
+          >
+            <!-- [i18n-tobeinternationalized] label-->
+            This field is required.
+          </div>
+          <div
+            class="text-danger text-danger-multi-sibling"
+            *ngIf="name.errors?.maxlength"
+          >
+            <!-- [i18n-tobeinternationalized] label-->
+            The name must be less than 255 characters.
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <!-- [i18n-tobeinternationalized] label-->
+          <ta-dropdown-field
+            data-cy="people-range"
+            class="small-dropdown"
+            label="Range of People Involved"
+            [options]="dataSubjectVolumes"
+            optionLabel="name"
+            formControlName="dataSubjectVolume"
+            [selectedOption]="detailsForm.get('dataSubjectVolume').value"
+          ></ta-dropdown-field>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label for="description" class="data-label">Description</label>
+          <textarea
+            data-cy="description"
+            class="form-control"
+            id="description"
+            name="description"
+            placeholder="Write a description about this business process."
+            rows="5"
+            formControlName="description"
+          ></textarea>
+          <div
+            class="text-danger text-danger-multi-sibling"
+            *ngIf="description.errors?.maxlength"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            The description must be less than 1024 characters.
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

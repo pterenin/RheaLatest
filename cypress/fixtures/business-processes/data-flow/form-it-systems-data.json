@@ -1,0 +1,14 @@
+{
+  "data": {
+    "processName": "e2e-BP-Step5",
+    "title": "e2e BP Step5",
+    "systems": [
+      {
+        "searchPrefix": "%",
+        "category": "Vendor"
+      }
+    ]
+  },
+  "status": 200,
+  "ok": true
+}

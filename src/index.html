@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base href="/" />
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="truste-aaa-clientid" content="rhea-client" />
+    <meta name="truste-aaa-callback" content="onSignInCallback" />
+    <meta name="truste-aaa-topheadercontainer" content="topHeaderContainer" />
+    <meta name="truste-aaa-signin" content="auto" />
+    <meta name="truste-aaa-includegwtheader" content="true" />
+    <meta name="truste-aaa-heap" content="true" />
+    <meta name="truste-aaa-topheadercontainer" content="aaaIframesContainer" />
+    <meta name="truste-aaa-includegwtheader" content="false" />
+    <meta name="truste-aaa-includeplatformnav" content="true" />
+
+    <title>TrustArc Compliance</title>
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <script type="text/javascript" src="assets/scripts/config.js?v=1"></script>
+    <style>
+      body {
+        overflow: hidden !important;
+        padding-top: 0 !important;
+        margin: 0;
+      }
+
+      .platform-nav-placeholder {
+        background: #fafbfc;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+      .platform-nav-placeholder > .platform-nav-placeholder__header {
+        background: #fff;
+        border-bottom: 1px solid #f1f1f1;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 64px;
+      }
+
+      .platform-nav-placeholder > .platform-nav-placeholder__sidenav {
+        background: #032946;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 64px;
+      }
+
+      .platform-nav-placeholder > .platform-nav-placeholder__app-container {
+        background: #fff;
+        border: 1px solid #f1f1f1;
+        height: calc(100vh - 85px);
+        margin-top: 74px;
+        margin-left: 90px;
+        width: calc(100vw - 100px);
+      }
+
+      #main-container {
+        display: none;
+      }
+
+      .main-content {
+        overflow: auto;
+        overflow-y: scroll;
+        height: calc(100vh - 64px);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Platform Navigation Custom Element -->
+    <ta-platform-navigation>
+      <div class="platform-nav-placeholder">
+        <div class="platform-nav-placeholder__header"></div>
+        <div class="platform-nav-placeholder__sidenav"></div>
+        <div class="platform-nav-placeholder__app-container"></div>
+      </div>
+    </ta-platform-navigation>
+
+    <!-- App Container -->
+    <div id="main-container" role="main">
+      <div class="main-container-inner">
+        <div class="main-content">
+          <ta-root></ta-root>
+        </div>
+      </div>
+    </div>
+
+    <div id="aaaIframesContainer" style="display: none !important;"></div>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+<button
+  taButton
+  type="button"
+  taType="circle"
+  id="bpFilter"
+  (click)="expandFilterViewToggle()"
+  (keydown.esc)="closeFilterView()"
+>
+  <i class="ta ta-filter"></i>
+</button>
+<div *ngIf="expandFilterView">
+  <div class="card">
+    <div class="card-body">filters go here</div>
+  </div>
+</div>

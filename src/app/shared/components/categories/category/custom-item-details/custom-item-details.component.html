@@ -1,0 +1,92 @@
+<ta-page-wrapper [full]="true">
+  <!--- [i18n-tobeinternationalized] -->
+  <ta-table [id]="gridID" [taExpandable]="true" class="ta-table-wrapper-border">
+    <ta-table-toolbar>
+      <div class="d-flex">
+        <!-- Header button should place here -->
+        <button
+          *ngIf="isAdmin()"
+          [disabled]="pageSelectedLinkedRecords.length === 0"
+          taButton
+          type="button"
+          taType="circle"
+          class="btn-unlink ml-auto"
+          [ngClass]="
+            pageSelectedLinkedRecords.length === 0 ? 'defaultCursor' : ''
+          "
+          (click)="unlinkCustomItems(pageSelectedLinkedRecords)"
+        >
+          <!-- RHEA-1064: Missing unlink icon -->
+          <!-- <ta-icon icon="unlink" color="currentColor"></ta-icon> -->
+          <img
+            *ngIf="this.pageSelectedLinkedRecords.length > 0"
+            src="assets/images/unlink.svg"
+          />
+          <img
+            *ngIf="this.pageSelectedLinkedRecords.length === 0"
+            src="assets/images/unlink-disabled.svg"
+          />
+        </button>
+      </div>
+    </ta-table-toolbar>
+    <ta-table-column taField="name" [taWidth]="300"
+      >Business Process</ta-table-column
+    >
+    <!--- [i18n-tobeinternationalized] -->
+    <ta-table-column [taWidth]="300">
+      <!-- Checkbox should place here -->
+      <ta-checkbox
+        *ngIf="isAdmin()"
+        class="col-checkbox"
+        [indeterminate]="headerCBIndeterminate"
+        (ngModelChange)="toggleHeaderCB($event)"
+        [(ngModel)]="headerCBStage"
+      ></ta-checkbox>
+      Linked Record
+    </ta-table-column>
+    <!--- [i18n-tobeinternationalized] -->
+    <ta-table-column>Type</ta-table-column>
+    <ta-table-row
+      *ngFor="let item of tableData; index as i"
+      [taItem]="item"
+      #tableRow
+    >
+      <ta-table-cell>
+        {{ item.name }}
+      </ta-table-cell>
+      <ta-table-cell></ta-table-cell>
+      <ta-table-cell></ta-table-cell>
+      <ta-table-row-detail [id]="'dataElementRowDetail_' + i">
+        <div class="ta-table-row" *ngFor="let linked of item.linkedRecords">
+          <div class="ta-table-cell ta-table-fix-width"></div>
+          <div class="ta-table-cell ta-table-fix-width">
+            <!-- Checkbox should place here -->
+            <ta-checkbox
+              *ngIf="isAdmin()"
+              class="col-checkbox"
+              (ngModelChange)="onSelectedLinked($event, linked)"
+              [(ngModel)]="linked.selected"
+            ></ta-checkbox>
+            {{ linked.name }}
+          </div>
+          <div class="ta-table-cell">
+            {{ linked.type | entityType }}
+          </div>
+        </div>
+      </ta-table-row-detail>
+    </ta-table-row>
+    <ta-table-footer>
+      <ta-pagination
+        *ngIf="tableData.length > 0"
+        [collectionSize]="totalRows"
+        [pageSize]="maxRows"
+        [page]="page"
+        [maxSize]="1"
+        [ellipses]="true"
+        showingType="full"
+        (pageChange)="onChangePage($event)"
+        (onChangePageSize)="onChangeMax($event)"
+      ></ta-pagination>
+    </ta-table-footer>
+  </ta-table>
+</ta-page-wrapper>

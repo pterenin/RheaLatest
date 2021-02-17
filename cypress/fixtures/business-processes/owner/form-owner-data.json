@@ -1,0 +1,12 @@
+{
+  "data": {
+    "processName": "e2e-BP-Owner",
+    "entity": "good company",
+    "entityRole": "Data Controller & Data Processor",
+    "fullName": "e2e Business Process",
+    "email": "rhea-dev+cypress.admin@trustarc.com",
+    "department": "IT"
+  },
+  "status": 200,
+  "ok": true
+}

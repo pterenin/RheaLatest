@@ -1,0 +1,12 @@
+{
+  "putItSystemNodes": {
+    "method": "POST",
+    "url": "api/data-flows/it-system-nodes/business-process-id/${id}",
+    "alias": "@putItSystemNodes"
+  },
+  "getDataTransfersMap": {
+    "method": "GET",
+    "url": "api/data-flows/data-transfers-map/business-process-id/${id}",
+    "alias": "@getDataTransfersMap"
+  }
+}

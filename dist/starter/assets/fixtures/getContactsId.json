@@ -1,0 +1,21 @@
+{
+  "data": {
+    "address": "string",
+    "city": "string",
+    "email": "string",
+    "fullName": "string",
+    "id": "string",
+    "location": {
+      "countryId": "string",
+      "globalRegionId": "string",
+      "id": "string",
+      "stateOrProvinceId": "string",
+      "version": 1
+    },
+    "phone": "string",
+    "version": 1,
+    "zip": "string"
+  },
+  "status": 200,
+  "ok": true
+}

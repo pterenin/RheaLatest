@@ -1,0 +1,69 @@
+@import 'src/styles/variables';
+
+ta-system-transfers {
+  .line {
+    padding-right: 12px;
+    padding-left: 12px;
+    color: #ddd;
+  }
+
+  .text-black-50 {
+    color: $scorpion-grey !important;
+    &:last-of-type {
+      padding-left: 10px !important;
+    }
+  }
+
+  ta-tabset {
+    .nav-tabs {
+      @extend .position-sticky;
+    }
+  }
+
+  #data-transfer-buttons {
+    button {
+      max-height: 32px;
+      padding: 5px !important;
+    }
+  }
+
+  .dt-icon {
+    width: 15px;
+    height: 15px;
+    background: $orange-default;
+    margin: 0 10px;
+    border-radius: 2px;
+    &.ds-icon {
+      background: $orange-light;
+    }
+    &.s-icon {
+      background: $purple-default;
+      position: relative;
+      &:after {
+        content: '';
+        position: absolute;
+        width: 50%;
+        height: 100%;
+        top: 0;
+        right: 0;
+        background: $apple-green;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+      }
+    }
+    &.dr-icon {
+      background: $orange-default;
+    }
+  }
+
+  .position-sticky {
+    position: -webkit-sticky;
+    position: -moz-sticky;
+    position: -ms-sticky;
+    position: -o-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 4;
+    background-color: $white !important;
+  }
+}

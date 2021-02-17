@@ -1,0 +1,103 @@
+<div [class]="styleClass">
+  <div class="row no-gutters">
+    <div class="col col-left">
+      <div class="categorical-management-search-wrapper">
+        <input
+          type="text"
+          id="{{ idPrefix + 'search' }}"
+          class="form-control"
+          [placeholder]="placeHolder"
+          [(ngModel)]="searchString"
+          (input)="onSearch()"
+        />
+      </div>
+    </div>
+    <div class="col text-right categorical-management-toolbars">
+      <!-- Add Buttons Inside Here -->
+      <ng-content></ng-content>
+    </div>
+  </div>
+  <div class="categorical-management-container">
+    <div class="row no-gutters">
+      <div class="col col-left">
+        <p class="categorical-title">
+          {{ type == 'data-elements' ? 'Data Element Categories' : '' }}
+        </p>
+      </div>
+      <div class="col col-right">
+        <p class="categorical-title">
+          {{ type == 'data-elements' ? 'Data Elements' : '' }}
+        </p>
+      </div>
+    </div>
+    <div class="categorical-management row no-gutters">
+      <div class="col col-left">
+        <section>
+          <div *ngFor="let category of categories">
+            <div
+              (click)="changeSelectedCategory($event, category)"
+              id="category_{{ category.id }}"
+              class="dropdown-menu-item"
+              *ngIf="category && !category.hidden"
+              [ngClass]="{ selected: selectedCategory.id === category.id }"
+              [attr.title]="getCategoryLabel(category)"
+              role="button"
+            >
+              <span [innerHTML]="getCategoryLabel(category)"> </span>
+              <ta-badge
+                *ngIf="category.isCustom"
+                [values]="'CUSTOM'"
+                type="custom"
+              ></ta-badge>
+              <div class="categorical-item-tools">
+                <!-- Add item tools inside here -->
+                <ng-container *ngIf="category.isCustom">
+                  <i class="ta ta-edit" (click)="onEditCategory(category)"></i>
+                  <i
+                    class="ta ta-trash"
+                    (click)="onDeleteCategory(category)"
+                  ></i>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="col col-right">
+        <section>
+          <div *ngIf="selectedCategory">
+            <ng-container *ngFor="let item of selectedCategory.items">
+              <div
+                id="item_{{ item.id }}"
+                *ngIf="item && !item.hidden"
+                class="dropdown-menu-item-child"
+              >
+                <span class="item" role="button">
+                  <span [innerHTML]="getItemLabel(item)"></span>
+                  <ta-badge
+                    *ngIf="item.isCustom"
+                    [values]="'CUSTOM'"
+                    type="custom"
+                  ></ta-badge>
+                  <div class="categorical-item-tools">
+                    <!-- Add item tools inside here -->
+                    <ng-container *ngIf="item.isCustom">
+                      <i
+                        class="ta ta-edit"
+                        (click)="onEditItem(item, selectedCategory)"
+                      ></i>
+                      <i
+                        class="ta ta-trash"
+                        (click)="onDeleteItem(item, selectedCategory)"
+                      ></i>
+                    </ng-container>
+                  </div>
+                </span>
+              </div>
+            </ng-container>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

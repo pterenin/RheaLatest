@@ -1,0 +1,11 @@
+ta-highcharts-container {
+  display: block;
+  padding-top: 0.5rem;
+  ta-tabset {
+    // width: 654px;
+    .tab-pane {
+      padding-top: 1rem;
+      min-height: 880px;
+    }
+  }
+}

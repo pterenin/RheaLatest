@@ -1,0 +1,16 @@
+@import 'src/styles/variables';
+
+.no-attachments {
+  height: 68px;
+  background-color: $white;
+  border-radius: 4px;
+}
+
+.attachments-frame {
+  margin-bottom: 75px;
+}
+
+:host ::ng-deep #file-upload.drop-zone {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}

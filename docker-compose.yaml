@@ -1,0 +1,89 @@
+version: '3'
+
+services:
+  rhea-ui:
+    container_name: rhea-ui
+    environment:
+      - API_ENDPOINT=${API_ENDPOINT:?Must specify API_ENDPOINT variable in the docker-compose environment file}
+      - FORCE_HTTPS=false
+    depends_on:
+      - rhea-api
+    image: ${RHEA_UI_IMAGE}
+    ports:
+      - '4200:4200/tcp'
+    networks:
+      - rhea-net
+
+  rhea-api:
+    container_name: rhea-api
+    depends_on:
+      - rhea-db
+      - rhea-elasticsearch
+    image: ${RHEA_API_IMAGE}
+    environment:
+      JAVA_OPTS: >-
+        -Dspring.h2.console.enabled=false
+        -Dspring.profiles.active=withauth,witham,migration
+        -Dspring.datasource.url=jdbc:postgresql://rhea-db:5432/tim
+        -Dspring.datasource.username=tim
+        -Dspring.datasource.password=tim
+        -Dneo4j.url=http://rhea-neo4j:8080/
+        -Dspring.jpa.properties.hibernate.search.default.elasticsearch.host=http://rhea-elasticsearch:9200
+        -Dserver.context-path=/api
+    ports:
+      - '8080:8080/tcp'
+    networks:
+      - rhea-net
+
+  rhea-db:
+    container_name: rhea-db
+    image: postgres:9.6.3-alpine
+    environment:
+      POSTGRES_USER: tim
+      POSTGRES_PASSWORD: tim
+      POSTGRES_DB: tim
+    ports:
+      - 5432:5432
+    networks:
+      - rhea-net
+
+  rhea-elasticsearch:
+    container_name: rhea-elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.0
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: 'false'
+      xpack.monitoring.enabled: 'false'
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - rhea-net
+
+  rhea-neo4j-db:
+    container_name: rhea-neo4j-db
+    image: neo4j:3.5.5
+    ports:
+      - 7474:7474
+      - 7687:7687
+    environment:
+      NEO4J_AUTH: 'neo4j/Neo4j'
+    networks:
+      - rhea-net
+
+  rhea-neo4j-app:
+    depends_on:
+      - rhea-neo4j-db
+    container_name: rhea-neo4j-app
+    image: ${RHEA_NEO4J_IMAGE}
+    environment:
+      JAVA_OPTS: >-
+        -Dspring.data.neo4j.uri=bolt://rhea-neo4j-db:7687
+    ports:
+      - '8081:8080/tcp'
+    networks:
+      - rhea-net
+
+networks:
+  rhea-net: {}
+

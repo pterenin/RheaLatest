@@ -1,0 +1,15 @@
+@import '../../../../styles/record-details';
+@import 'src/styles/variables';
+ta-primary-company {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 60px;
+  left: 0;
+  background-color: #ffffff;
+  overflow-y: auto;
+}
+
+.mt-10 {
+  margin-top: 100px;
+}

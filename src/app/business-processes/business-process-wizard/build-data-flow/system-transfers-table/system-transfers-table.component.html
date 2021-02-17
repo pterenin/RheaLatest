@@ -1,0 +1,264 @@
+<div class="system-transfer-table">
+  <div class="d-flex align-items-center pl-3">
+    <ta-search-field
+      class="mr-auto w-100 d-block"
+      [placeholder]="searchPlaceholder || 'Search'"
+      [prefixValue]="recordType"
+      (searchValue)="onSearch($event)"
+    ></ta-search-field>
+    <ta-popover-filter-wrapper
+      (applyClick)="applyFilterForm()"
+      (clearClick)="resetFilterForm()"
+      [isDirty]="isDirty()"
+      [headerTitle]="getFilterHeaderTitle()"
+      contentWidth="400px"
+    >
+      <ta-popover-filter-body
+        #filterBody
+        [filterData]="filtersDataMapped"
+        [gridId]="gridId"
+      ></ta-popover-filter-body>
+    </ta-popover-filter-wrapper>
+  </div>
+
+  <ng-container
+    *ngIf="
+      transfersData
+        | dataFlowPipe
+          : recordType
+          : dataFlowFilters
+          : searchTerm
+          : 'filter' as filteredTransferData
+    "
+  >
+    <ta-table
+      [id]="gridId"
+      [serverProcess]="false"
+      class="minimal mt-2 mb-4 row"
+    >
+      <ta-table-column class="col"
+        ><ta-checkbox
+          (click)="allFiltersClick($event, filteredTransferData)"
+          [checked]="isAllSelected(filteredTransferData)"
+          [indeterminate]="isIndeterminate(filteredTransferData)"
+          data-cy="select-all-data-transfer"
+        ></ta-checkbox
+      ></ta-table-column>
+      <ta-table-column [taField]="'name'">
+        <!--- [i18n-tobeinternationalized] -->
+        Name
+      </ta-table-column>
+      <ta-table-column
+        class="col"
+        [taField]="'category'"
+        *ngIf="recordType !== dataFlowTableType.SYSTEM"
+      >
+        <!--- [i18n-tobeinternationalized] -->
+        Category
+      </ta-table-column>
+      <ta-table-column
+        class="col"
+        [taField]="'legalEntityName'"
+        *ngIf="recordType === dataFlowTableType.SYSTEM"
+      >
+        <!--- [i18n-tobeinternationalized] -->
+        Owned By
+      </ta-table-column>
+      <ta-table-column
+        class="col"
+        [taField]="'location'"
+        *ngIf="recordType === dataFlowTableType.SYSTEM"
+      >
+        <!--- [i18n-tobeinternationalized] -->
+        Hosting Location
+      </ta-table-column>
+      <ta-table-column
+        class="col"
+        *ngIf="recordType === dataFlowTableType.DATA_SUBJECT"
+      >
+        <!--- [i18n-tobeinternationalized] -->
+        Locations
+      </ta-table-column>
+      <ta-table-column
+        class="col"
+        *ngIf="recordType === dataFlowTableType.DATA_RECIPIENT"
+      >
+        <!--- [i18n-tobeinternationalized] -->
+        Locations
+      </ta-table-column>
+      <ta-table-column class="col" [taField]="'dataElements'">
+        <!--- [i18n-tobeinternationalized] -->
+        Data Elements
+      </ta-table-column>
+      <ta-table-column
+        class="col"
+        [taField]="'processingPurposes'"
+        *ngIf="recordType !== dataFlowTableType.DATA_SUBJECT"
+      >
+        <!--- [i18n-tobeinternationalized] -->
+        Processing Purposes
+      </ta-table-column>
+      <ta-table-column class="col sale-of-data">
+        <!--- [i18n-tobeinternationalized] -->
+        Sale of Data
+      </ta-table-column>
+      <ta-table-column class="col"></ta-table-column>
+    </ta-table>
+
+    <!-- The table body is custom made.
+      `ta-table` is too slow to render a big list
+      Using `ta-table` only for table header to reuse its sort functionality.
+    -->
+    <div class="ta-table-body data-transfer-table">
+      <div
+        class="ta-table-row row"
+        *ngFor="let transferData of filteredTransferData; let i = index"
+      >
+        <div class="ta-table-cell col ta-col-checkbox align-items-top">
+          <ta-checkbox
+            [(ngModel)]="transferData.mapped"
+            (change)="updateSelected()"
+          ></ta-checkbox>
+        </div>
+        <div class="ta-table-cell col align-items-top">
+          <div class="w-100 text-truncate">
+            {{ transferData.name }}
+          </div>
+        </div>
+        <div
+          class="ta-table-cell col align-items-top"
+          *ngIf="recordType !== dataFlowTableType.SYSTEM"
+        >
+          <div class="w-100 text-truncate">
+            {{ transferData.category }}
+          </div>
+        </div>
+        <div
+          class="ta-table-cell col align-items-top"
+          *ngIf="recordType === dataFlowTableType.SYSTEM"
+        >
+          <div class="w-100 text-truncate">
+            {{ transferData.legalEntityName }}
+          </div>
+        </div>
+        <div
+          class="ta-table-cell col align-items-top"
+          *ngIf="recordType === dataFlowTableType.SYSTEM"
+        >
+          <div class="w-100 text-truncate">
+            {{
+              [transferData.location]
+                | locationPipe
+                  : 'stringify-simple'
+                  : null
+                  : { fieldCountry: 'label', fieldRegion: 'region' }
+            }}
+          </div>
+        </div>
+        <div
+          class="ta-table-cell col align-items-top"
+          *ngIf="recordType === dataFlowTableType.DATA_SUBJECT"
+        >
+          <div class="w-100 text-truncate">
+            {{
+              transferData.locations
+                | locationPipe
+                  : 'stringify-simple'
+                  : null
+                  : { fieldCountry: 'label', fieldRegion: 'region' }
+            }}
+          </div>
+        </div>
+        <div
+          class="ta-table-cell col align-items-top"
+          *ngIf="recordType === dataFlowTableType.DATA_RECIPIENT"
+        >
+          <div class="w-100 text-truncate">
+            {{
+              transferData.locations
+                | locationPipe
+                  : 'stringify-simple'
+                  : null
+                  : { fieldCountry: 'label', fieldRegion: 'region' }
+            }}
+          </div>
+        </div>
+        <div class="ta-table-cell col align-items-top">
+          <div class="w-100 text-truncate">
+            {{
+              transferData.dataElements ? transferData.dataElements.length : '-'
+            }}
+          </div>
+        </div>
+        <div
+          class="ta-table-cell col align-items-top"
+          *ngIf="recordType !== dataFlowTableType.DATA_SUBJECT"
+        >
+          <div class="w-100 text-truncate">
+            {{
+              transferData.processingPurposes
+                ? transferData.processingPurposes.length
+                : '-'
+            }}
+          </div>
+        </div>
+
+        <div
+          class="ta-table-cell sale-of-data col align-items-top"
+          [ngClass]="{ disabled: !transferData.mapped }"
+        >
+          <div class="w-100 text-truncate" style="padding-left: 20px;">
+            <ta-toggleswitch
+              theme="secondary"
+              type="icon"
+              [(ngModel)]="transferData.saleOfData"
+              (click)="updateSelected()"
+            ></ta-toggleswitch>
+          </div>
+        </div>
+        <div class="ta-table-cell col d-flex justify-content-end">
+          <div class="d-flex justify-content-between actions">
+            <a
+              *ngIf="
+                transferData.mapped &&
+                (recordType === dataFlowTableType.DATA_SUBJECT ||
+                  recordType === dataFlowTableType.DATA_RECIPIENT)
+              "
+              href="#"
+              role="button"
+              class="tool-button tool-button-copy mr-2"
+              (click)="cloneRow($event, transferData, i)"
+            >
+              <ta-icon
+                icon="copy"
+                [placement]="['bottom-right']"
+                tooltipClass="tooltip-record-options mt-2"
+                taTooltip="Clone"
+                container="body"
+                tooltipTheme="light"
+                tooltipTextAlign="right"
+              ></ta-icon>
+            </a>
+            <a
+              *ngIf="transferData.mapped"
+              href="#"
+              role="button"
+              class="tool-button tool-button-edit mr-2"
+              (click)="showDetails($event, transferData)"
+            >
+              <ta-icon
+                icon="edit"
+                [placement]="['bottom-right']"
+                tooltipClass="tooltip-record-options mt-2"
+                taTooltip="Edit"
+                container="body"
+                tooltipTheme="light"
+                tooltipTextAlign="right"
+              ></ta-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

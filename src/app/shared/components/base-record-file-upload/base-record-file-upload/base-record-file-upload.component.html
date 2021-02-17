@@ -1,0 +1,89 @@
+<form [formGroup]="fileUploadFormGroup">
+  <div class="form-group">
+    <span
+      *ngIf="isDeletingFile"
+      class="spinner-border spinner-border-sm ml-auto text-secondary"
+      role="deleting"
+      aria-hidden="true"
+    ></span>
+    <ta-file-upload
+      class="d-block"
+      text="Drag & drop your files to attach or"
+      linkText="browse files"
+      (fileSelected)="addFileForm($event)"
+      *ngIf="!isDeletingFile"
+    ></ta-file-upload>
+  </div>
+  <div class="form-group">
+    <span class="file-attachment-summary">
+      <!-- [i18n-tobeinternationalized] -->
+      Files attached to this record ({{ countOfUploadedFiles | async }})
+    </span>
+    <span
+      class="file-attachment-summary"
+      *ngIf="(countOfFilesPendingUpload | async) > 0"
+      >, files currently uploading ({{ countOfFilesPendingUpload | async }})
+    </span>
+  </div>
+  <div class="form-group" *ngIf="(countOfUploadedFiles | async) === 0">
+    <div class="blank-area text-center">
+      <!-- [i18n-tobeinternationalized] -->
+      <span>No Files Attached</span>
+    </div>
+  </div>
+  <ng-container
+    formArrayName="fileForms"
+    *ngFor="
+      let fileControl of fileUploadFormGroup.get('fileForms')['controls'];
+      let i = index
+    "
+  >
+    <div class="form-group d-block" *ngIf="isFileStatusVisible(fileControl)">
+      <div [formGroupName]="i" class="d-block">
+        <button
+          title="Delete this file"
+          taButton
+          taType="circle"
+          (click)="deleteFile(fileControl, i)"
+          [disabled]="isFileStatusPendingUpload(fileControl)"
+          type="button"
+          class="remove-file"
+        >
+          <ta-icon icon="delete"></ta-icon>
+        </button>
+
+        <span>
+          <label
+            for="{{ fileControl.get('id').value }}"
+            class="file-name"
+            (click)="downloadFileFrom(fileControl)"
+            >{{ fileControl.get('fileName').value }}</label
+          >
+          {{ isFileStatusPendingUpload(fileControl) ? 'Uploading...' : '' }}
+        </span>
+
+        <input
+          id="{{ fileControl.get('id').value }}"
+          type="text"
+          name="{{ fileControl.get('id').value }}"
+          formControlName="comment"
+          class="form-control"
+          placeholder="Comment for this attachment..."
+        />
+        <div
+          *ngIf="fileControl.get('comment').errors?.maxlength"
+          class="text-danger"
+        >
+          The comment must be less than 1024 characters.
+        </div>
+      </div>
+      <div *ngIf="isFileStatusError(fileControl)" class="text-danger">
+        {{
+          fileControl.get('errorMessage').value
+            ? fileControl.get('errorMessage').value
+            : 'This file could not be uploaded. Make sure this is a valid file, and less than 16MB.'
+        }}
+      </div>
+    </div>
+  </ng-container>
+</form>

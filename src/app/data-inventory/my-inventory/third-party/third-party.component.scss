@@ -1,0 +1,10 @@
+@import '../../../../styles/record-details';
+@import 'src/styles/variables';
+
+ta-third-party {
+  ta-data-inventory-footer {
+    .btn-flat {
+      display: none;
+    }
+  }
+}

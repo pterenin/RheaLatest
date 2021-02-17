@@ -1,0 +1,113 @@
+@import 'src/styles/variables';
+
+.position-sticky {
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background-color: $white !important;
+}
+
+ta-data-inventory-card {
+  .card-wrapper {
+    height: 351px;
+    max-height: 351px;
+    overflow: visible;
+    .card {
+      position: inherit;
+    }
+    .card-header {
+      height: 81px;
+      max-height: 81px;
+    }
+    .card-body {
+      padding: 0 0 5px;
+    }
+    .card-filter {
+    }
+    .header-text {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .sub-header-text {
+      font-size: 14px;
+      color: $gray-800;
+    }
+    .category-name {
+      padding: 0 1rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 16px;
+    }
+    .image-container {
+      position: absolute;
+      height: calc(100% - 170px);
+      width: 100%;
+      top: 123px;
+      background-color: $white;
+      background-position-x: center;
+      background-position-y: center;
+      background-repeat: no-repeat;
+      z-index: 9;
+    }
+    .sub-image-text {
+      position: absolute;
+      top: 270px;
+      font-size: 12px;
+      line-height: 16px;
+      text-align: center;
+      color: $gray-800;
+      z-index: 10;
+    }
+    .selected-count {
+      color: $gray-600;
+      position: relative;
+      width: auto;
+      white-space: nowrap;
+      padding-right: 16px;
+      margin-right: 10px;
+
+      &:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        height: 42px;
+        transform: translateY(-50%);
+        border-right: 1px solid $seashell-grey;
+      }
+    }
+    .data-inventory-table {
+      border: none !important;
+      border-radius: 0 !important;
+
+      .ta-table-toolbar-btns,
+      .ta-table-toolbar-columns {
+        border-left: 1px solid $white;
+      }
+      .ta-table-toolbar-btns {
+        display: flex;
+        width: 100%;
+      }
+      .ta-table-toolbar-search {
+        width: 173px;
+      }
+      .ta-table {
+        .ta-table-head {
+          .ta-table-cell {
+            &:first-child {
+              max-width: 47px;
+              .ta-checkbox-layout .ta-checkbox-lb {
+                top: -10px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

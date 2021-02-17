@@ -1,0 +1,34 @@
+{
+  "processName": {
+    "selector": "[data-cy='process-name']",
+    "alias": "@process-name"
+  },
+  "title": {
+    "selector": "[data-cy='title-security-risk']",
+    "alias": "@title-security-risk"
+  },
+  "securityControlOther": {
+    "selector": "[data-cy='other']",
+    "alias": "@security-control-other"
+  },
+  "securityControlOtherName": {
+    "selector": "[data-cy='other-name']",
+    "alias": "@security-control-other-name"
+  },
+  "retentionPeriod": {
+    "selector": "[data-cy='retention-period']",
+    "alias": "@retention-period"
+  },
+  "retentionPeriodUnit": {
+    "selector": "[data-cy='retention-period-unit']",
+    "alias": "@retention-period-unit"
+  },
+  "selectProcessingPurposes": {
+    "selector": "[data-cy='processing-purposes-selection-dropdown']",
+    "alias": "@processing-purposes-selection-dropDown"
+  },
+  "selectDataElements": {
+    "selector": "[data-cy='data-elements-selection-dropdown']",
+    "alias": "@data-elements-selection-dropDown"
+  }
+}

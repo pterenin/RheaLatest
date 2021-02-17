@@ -1,0 +1,19 @@
+<div>
+  <button
+    taButton
+    taType="circle"
+    *ngIf="!isSearchVisible"
+    (click)="toggleSearch()"
+  >
+    <ta-icon icon="search"></ta-icon>
+  </button>
+  <ta-search-field
+    *ngIf="isSearchVisible"
+    id="search-selected-records-component"
+    class="d-flex align-items-center animated fadeIn"
+    placeholder="Search System Records"
+    [alwaysShowClear]="true"
+    (searchValue)="searchItSystemRecordsFilters($event)"
+    (clearValue)="clearSearchItSystemRecords()"
+  ></ta-search-field>
+</div>

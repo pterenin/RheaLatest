@@ -1,0 +1,410 @@
+<div class="animated fadeIn" *ngIf="!isReady">
+  <span class="spinner-border spinner-border-sm ml-auto text-primary"></span>
+</div>
+<div class="animated fadeIn" *ngIf="isReady">
+  <p *ngIf="isInvalid()" class="text-danger">
+    <!-- [i18n-tobeinternationalized] -->
+    *At least one (1) location is required for each Data Subjects added.
+  </p>
+  <div class="d-flex align-items-center">
+    <ta-search-field
+      class="mr-auto w-100 d-block"
+      placeholder="Search Data Subjects by Name"
+      (searchValue)="onSearch($event)"
+    ></ta-search-field>
+
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-selected-system-record-filter
+      (applyClick)="applyFilterForm()"
+      (clearClick)="resetFilterForm()"
+      [isDirty]="isCategoriesDirty() || isCountriesDirty()"
+      headerTitle="Filters ({{
+        (filterCheckedCategories?.length || 0) +
+          (filterCheckedCountries?.length || 0)
+      }})"
+      contentWidth="500px"
+    >
+      <form [formGroup]="filterForm">
+        <div class="d-flex">
+          <div class="w-50 border-right py-2">
+            <button
+              class="dropdown-menu-item text-truncate px-3"
+              [class.selected]="isSelectFilterColumn === 'categories'"
+              (click)="selectFilterColumn('categories')"
+            >
+              Categories ({{ filterCheckedCategories?.length || 0 }})
+              <ta-icon class="caret-right" icon="caret-right"></ta-icon>
+            </button>
+            <button
+              class="dropdown-menu-item text-truncate px-3"
+              [class.selected]="isSelectFilterColumn === 'locations'"
+              (click)="selectFilterColumn('locations')"
+            >
+              Country ({{ filterCheckedCountries?.length || 0 }})
+              <ta-icon class="caret-right" icon="caret-right"></ta-icon>
+            </button>
+          </div>
+          <div
+            class="w-50 border-right overflow-auto py-2"
+            style="max-height: 250px;"
+          >
+            <ng-container *ngIf="isSelectFilterColumn === 'categories'">
+              <div
+                formArrayName="categories"
+                *ngFor="let item of categories.controls; let i = index"
+              >
+                <div [formGroupName]="i.toString()">
+                  <ta-checkbox
+                    formControlName="checked"
+                    class="dropdown-item text-wrap px-3"
+                  >
+                    {{ item.get('name').value }}
+                  </ta-checkbox>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="isSelectFilterColumn === 'locations'">
+              <div
+                formArrayName="countries"
+                *ngFor="let item of countries.controls; let i = index"
+              >
+                <div [formGroupName]="i.toString()">
+                  <ta-checkbox
+                    formControlName="checked"
+                    class="dropdown-item text-wrap px-3"
+                  >
+                    {{ item.get('name').value }}
+                  </ta-checkbox>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </form>
+    </ta-selected-system-record-filter>
+  </div>
+
+  <ng-container *ngIf="type === 'withDataFlow'">
+    <ng-container>
+      <!-- Summary Info -->
+      <div
+        class="d-flex align-items-center pt-4 pb-2 position-sticky"
+        style="top: 35px; z-index: 3"
+      >
+        <div
+          class="tab-main-content cursor-pointer"
+          (click)="isCollapsedAttached = !isCollapsedAttached"
+        >
+          <h3 class="h6 m-0">
+            <!-- [i18n-tobeinternationalized] -->
+            Data Subjects on System record ({{
+              getSelectedCountByGridId(gridIdAttached)
+            }}/{{ dataSubjectsProcessed?.length }})
+          </h3>
+          <p class="text-black-50 m-0">
+            <!-- [i18n-tobeinternationalized] -->
+            Deselect data subjects that do not send information to this System
+            in this business process record.
+          </p>
+        </div>
+        <button
+          class="ml-auto"
+          taButton
+          taType="circle"
+          *ngIf="dataSubjectsProcessed"
+          (click)="isCollapsedAttached = !isCollapsedAttached"
+        >
+          <ta-icon
+            [icon]="isCollapsedAttached ? 'chevron-down' : 'chevron-up'"
+          ></ta-icon>
+        </button>
+      </div>
+
+      <!-- List of attached data elements -->
+      <div [class.d-none]="isCollapsedAttached">
+        <ta-table
+          [taSelected]="true"
+          [id]="gridIdAttached"
+          [serverProcess]="false"
+          class="minimal mt-2 mb-4"
+        >
+          <ta-table-column>Name</ta-table-column>
+          <ta-table-column>Category</ta-table-column>
+          <ta-table-column>
+            Locations
+            <span
+              *ngIf="isMissingLocations(gridIdAttached)"
+              class="filter-indicator position-absolute d-block"
+            ></span>
+          </ta-table-column>
+          <ta-table-row
+            *ngFor="
+              let d of dataSubjectsProcessed
+                | searchBy
+                  : { dataSubject: searchValue, dataSubjectType: searchValue }
+                  : false
+                | filterByIncludeArrayAndPath
+                  : filterCheckedCategoryNames
+                  : 'category'
+                | filterByIncludeArrayInArrayAndPath
+                  : filterCheckedLocationIds
+                  : 'locationIds';
+              index as i
+            "
+            [taItem]="d"
+            [taSelected]="determineSelectedByProperty(d, 'entityId')"
+          >
+            <ta-table-cell [taTruncate]="true">
+              {{ d.dataSubjectType || d.dataSubject }}
+            </ta-table-cell>
+            <ta-table-cell [taTruncate]="true">
+              {{ d.category.categoryName || d.category }}
+            </ta-table-cell>
+            <ta-table-cell>
+              <ng-container>
+                <span
+                  *ngIf="d.locationIds?.length > 0"
+                  [ngClass]="{
+                    'cursor-pointer link-hover': isSelected(
+                      d,
+                      gridIdAttached,
+                      'entityId'
+                    )
+                  }"
+                  (click)="
+                    isSelected(d, gridIdAttached, 'entityId')
+                      ? editLocations(d)
+                      : null
+                  "
+                >
+                  {{
+                    d.locationIds
+                      | locationPipe
+                        : 'lookup'
+                        : allHostingLocations
+                        : 'countriesOnly'
+                  }}
+                </span>
+              </ng-container>
+              <ng-container *ngIf="d.locationIds?.length === 0">
+                <span
+                  *ngIf="!isSelected(d, gridIdAttached, 'entityId')"
+                  class="text-black-50"
+                >
+                  <!-- [i18n-tobeinternationalized] -->
+                  No locations
+                </span>
+                <button
+                  *ngIf="isSelected(d, gridIdAttached, 'entityId')"
+                  taButton
+                  class="m-0 p-0 border-0 text-left"
+                  taType="flat"
+                  (click)="editLocations(d)"
+                >
+                  <!-- [i18n-tobeinternationalized] -->
+                  Add Location
+                </button>
+              </ng-container>
+            </ta-table-cell>
+          </ta-table-row>
+        </ta-table>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="type === 'withDataFlow' && dataAvailable">
+    <ng-container
+      *ngIf="
+        dataSubjectsAvailable
+          | filterOutByArrayAndPropertyPipe
+            : dataSubjectsProcessedIds
+            : 'id' as resultDataSubjectsAvailable
+      "
+    >
+      <!-- Summary Info -->
+      <div
+        class="d-flex align-items-center pt-4 pb-2 position-sticky"
+        style="top: 35px; z-index: 3"
+        *ngIf="dataAvailable"
+      >
+        <div
+          class="tab-main-content cursor-pointer"
+          (click)="isCollapsedAdditional = !isCollapsedAdditional"
+        >
+          <h3 class="h6 m-0">
+            <!-- [i18n-tobeinternationalized] -->
+            Additional Data Subjects ({{
+              getSelectedCountByGridId(gridIdAvailable)
+            }}/{{
+              (
+                resultDataSubjectsAvailable
+                | searchBy: { dataSubject: searchValue }:false
+                | filterByIncludeArrayAndPath
+                  : filterCheckedCategoryNames
+                  : 'category.categoryName'
+                | filterByIncludeArrayInArrayAndPath
+                  : filterCheckedLocationIds
+                  : 'locationIds'
+              )?.length
+            }})
+          </h3>
+          <p class="text-black-50 m-0">
+            <!-- [i18n-tobeinternationalized] -->
+            Select any additional data subjects that send information to this
+            System in this business process record.
+          </p>
+        </div>
+        <button
+          class="ml-auto"
+          taButton
+          taType="circle"
+          (click)="isCollapsedAdditional = !isCollapsedAdditional"
+        >
+          <ta-icon
+            [icon]="isCollapsedAdditional ? 'chevron-down' : 'chevron-up'"
+          ></ta-icon>
+        </button>
+      </div>
+
+      <!-- List of available data subjects -->
+      <div [class.d-none]="isCollapsedAdditional">
+        <ta-table
+          [taSelected]="true"
+          [id]="gridIdAvailable"
+          [serverProcess]="false"
+          class="minimal mt-2 mb-4"
+        >
+          <ta-table-column>Name</ta-table-column>
+          <ta-table-column>Category</ta-table-column>
+          <ta-table-column>
+            Locations
+            <span
+              *ngIf="isMissingLocations(gridIdAvailable)"
+              class="filter-indicator position-absolute d-block"
+            ></span>
+          </ta-table-column>
+          <ta-table-row
+            *ngFor="
+              let d of resultDataSubjectsAvailable
+                | searchBy: { dataSubject: searchValue }:false
+                | filterByIncludeArrayAndPath
+                  : filterCheckedCategoryNames
+                  : 'category.categoryName'
+                | filterByIncludeArrayInArrayAndPath
+                  : filterCheckedLocationIds
+                  : 'locationIds';
+              index as i
+            "
+            [taItem]="d"
+          >
+            <ta-table-cell [taTruncate]="true">
+              {{ d.dataSubject }}
+            </ta-table-cell>
+            <ta-table-cell [taTruncate]="true">
+              {{ d.category.categoryName }}
+            </ta-table-cell>
+            <ta-table-cell>
+              <ng-container>
+                <span
+                  *ngIf="d.locationIds?.length > 0"
+                  [ngClass]="{
+                    'cursor-pointer link-hover': isSelected(
+                      d,
+                      gridIdAvailable,
+                      'id'
+                    )
+                  }"
+                  (click)="
+                    isSelected(d, gridIdAvailable, 'id')
+                      ? editLocations(d)
+                      : null
+                  "
+                >
+                  {{
+                    d.locationIds
+                      | locationPipe
+                        : 'lookup'
+                        : allHostingLocations
+                        : 'countriesOnly'
+                  }}
+                </span>
+              </ng-container>
+              <ng-container
+                *ngIf="!d.locationIds || d.locationIds?.length === 0"
+              >
+                <span
+                  *ngIf="!isSelected(d, gridIdAvailable, 'id')"
+                  class="text-black-50"
+                >
+                  <!-- [i18n-tobeinternationalized] -->
+                  No locations
+                </span>
+                <button
+                  *ngIf="isSelected(d, gridIdAvailable, 'id')"
+                  taButton
+                  class="m-0 p-0 border-0 text-left"
+                  taType="flat"
+                  (click)="editLocations(d)"
+                >
+                  <!-- [i18n-tobeinternationalized] -->
+                  Add locations
+                </button>
+              </ng-container>
+            </ta-table-cell>
+          </ta-table-row>
+        </ta-table>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="itSystemReadOnly">
+    <!-- Summary Info -->
+    <div
+      class="d-flex align-items-center pt-4 pb-2 position-sticky"
+      style="top: 35px; z-index: 3"
+    >
+      <div
+        class="tab-main-content cursor-pointer"
+        (click)="isCollapsedAttached = !isCollapsedAttached"
+      >
+        <h3 class="h6 m-0">
+          <!-- [i18n-tobeinternationalized] -->
+          Data Subjects on System record ({{ itSystemReadOnly?.length }})
+        </h3>
+      </div>
+    </div>
+    <ta-table
+      [id]="gridIdSystemReadOnly"
+      [serverProcess]="false"
+      class="minimal mt-2 mb-4 table-system-read-only"
+    >
+      <ta-table-column>Name</ta-table-column>
+      <ta-table-column>Category</ta-table-column>
+      <ta-table-column>Location</ta-table-column>
+      <ta-table-row
+        *ngFor="
+          let d of itSystemReadOnly
+            | searchBy: { dataSubject: searchValue }:false
+            | filterByIncludeArrayAndPath
+              : filterCheckedCategoryNames
+              : 'category.categoryName'
+            | filterByIncludeArrayInArrayAndPath
+              : filterCheckedLocationIds
+              : 'locations'
+              : 'id';
+          index as i
+        "
+      >
+        <ta-table-cell [taTruncate]="true">
+          {{ d.dataSubject }}
+        </ta-table-cell>
+        <ta-table-cell [taTruncate]="true">
+          {{ d.category.categoryName }}
+        </ta-table-cell>
+        <ta-table-cell>
+          {{ d.locations | locationPipe: 'map-group':null:'countryName' }}
+        </ta-table-cell>
+      </ta-table-row>
+    </ta-table>
+  </ng-container>
+</div>

@@ -1,0 +1,17 @@
+@import 'src/styles/variables';
+
+.ta-modal-custom-data-subject {
+  .modal-dialog {
+    max-width: 746px !important;
+    max-height: 380px !important;
+    margin-top: 102px;
+    .modal-content {
+      background-color: $white;
+
+      #modal-cancel,
+      #modal-submit {
+        width: 94px;
+      }
+    }
+  }
+}

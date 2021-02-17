@@ -1,0 +1,42 @@
+{
+  "data": {
+    "contact": {
+      "address": "string",
+      "city": "string",
+      "email": "string",
+      "fullName": "string",
+      "id": "string",
+      "location": {
+        "countryId": "string",
+        "globalRegionId": "string",
+        "id": "string",
+        "stateOrProvinceId": "string",
+        "version": 1
+      },
+      "phone": "string",
+      "version": 1,
+      "zip": "string"
+    },
+    "created": "string",
+    "dataSubjectTypeIds": ["string"],
+    "dataSubjectVolume": {
+      "highRisk": true,
+      "id": "string",
+      "lowerBound": 1,
+      "name": "string",
+      "upperBound": 1
+    },
+    "description": "string",
+    "id": "string",
+    "identifier": "string",
+    "legalEntity": {},
+    "locations": "",
+    "name": "string",
+    "notes": "string",
+    "ownerId": "string",
+    "ownerName": "string",
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

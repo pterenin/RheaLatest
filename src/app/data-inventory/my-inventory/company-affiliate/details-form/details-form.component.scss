@@ -1,0 +1,60 @@
+@import 'src/styles/variables';
+@import '../../../../../styles/record-details';
+
+:host {
+  .company-affiliate-details-container {
+    display: block;
+  }
+
+  .row {
+    margin-bottom: 10px;
+  }
+
+  .form-group {
+    position: relative;
+  }
+
+  .contact-info {
+    display: block;
+  }
+
+  .location-state-province-selectbox {
+    display: inline-block;
+    width: 88%;
+  }
+
+  .location-trash-icon {
+    float: right;
+  }
+
+  .contact-area {
+    min-height: 120px;
+    background-color: $white;
+    border: $border-default-600;
+    border-radius: $border-radius;
+    .btn-actions {
+      z-index: 1;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+    &:hover {
+      background-color: $gray-200;
+    }
+  }
+
+  .add-new-location-link {
+    display: inline-block;
+    margin-left: 5px;
+  }
+
+  .contact-row {
+    line-height: 12px;
+  }
+
+  .details-form-selected-items-container {
+    display: block !important;
+    margin-top: -15px;
+    min-width: 100%;
+  }
+}

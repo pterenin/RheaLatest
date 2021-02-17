@@ -1,0 +1,62 @@
+@import 'src/styles/_variables.scss';
+@import 'src/styles/variables';
+
+ta-map-container {
+  .highcharts-reset-zoom {
+    display: none;
+  }
+  .mapContainer {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: $border-radius;
+    border: $border-default;
+    min-height: 861px;
+    &.grab {
+      cursor: grab;
+    }
+    * {
+      opacity: 1 !important;
+    }
+  }
+
+  .preloader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    background: $seashell-grey;
+
+    .w-25 {
+      max-width: 166px;
+    }
+  }
+
+  .preloader-hide {
+    display: block;
+    animation: fadeOut 500ms;
+    animation-fill-mode: forwards;
+    animation-delay: 1000ms;
+  }
+  ta-progressbar .progress {
+    background-color: white !important;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  99% {
+    opacity: 0.01;
+    width: 100%;
+    height: 100%;
+  }
+  100% {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+}

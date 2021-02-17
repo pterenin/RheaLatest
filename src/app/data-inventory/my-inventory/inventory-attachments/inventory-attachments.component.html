@@ -1,0 +1,23 @@
+<div class="fadeInApp">
+  <div class="attachments-frame">
+    <form class="navbar-form-custom" [formGroup]="attachmentsFormsGroup">
+      <ta-base-record-file-upload
+        [formGroup]="attachmentsFormsGroup"
+        [isDeletingFile]="isDeletingFile"
+      ></ta-base-record-file-upload>
+    </form>
+  </div>
+  <div *taSlotView>
+    <button
+      taButton
+      type="submit"
+      taType="primary"
+      class="page-next btn-lg"
+      [ngClass]="{ 'page-next': true }"
+      routerLink="/data-inventory"
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      Save
+    </button>
+  </div>
+</div>

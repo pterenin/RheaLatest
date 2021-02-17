@@ -1,0 +1,11 @@
+@import 'src/styles/variables';
+:host {
+  .reviewer-dropdown {
+    display: block;
+    width: 300px;
+  }
+
+  .message {
+    width: 400px;
+  }
+}

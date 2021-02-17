@@ -1,0 +1,40 @@
+@import 'src/styles/variables';
+
+#main-container.platform-nav-collapsed {
+  ta-page-footer-nav {
+    width: calc(100% - 60px);
+  }
+}
+
+#main-container.platform-nav-expanded {
+  ta-page-footer-nav {
+    width: calc(100% - 224px);
+  }
+}
+
+ta-page-footer-nav {
+  padding: 1rem;
+  background-color: $white;
+  border-top: $border-default;
+  transition: width 0.2s ease-out 0s;
+  bottom: 0;
+  display: block;
+  height: 72px;
+  right: 0;
+  position: fixed;
+  z-index: 10;
+
+  .stepper {
+    top: 2px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+  }
+
+  .nav-buttons {
+    div {
+      display: inline;
+    }
+  }
+}

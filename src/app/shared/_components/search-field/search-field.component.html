@@ -1,0 +1,39 @@
+<label [attr.for]="composeAttributeValue()" class="m-0 p-0">
+  <ta-icon
+    icon="search"
+    color="#777777"
+    class="position-relative"
+    style="top: -1px"
+  ></ta-icon>
+</label>
+
+<div class="d-inline-block" [class.w-100]="alwaysShowClear">
+  <form [formGroup]="searchForm">
+    <input
+      #search
+      [attr.id]="composeAttributeValue()"
+      [attr.placeholder]="alwaysShowClear ? placeholder : null"
+      [class.w-100]="alwaysShowClear"
+      formControlName="searchInput"
+      class="form-control border-0 py-0 search-field pr-0"
+      size="3"
+    />
+  </form>
+</div>
+
+<label
+  class="search-custom-placeholder"
+  [innerText]="placeholder"
+  *ngIf="!alwaysShowClear && !showClear"
+  [attr.for]="composeAttributeValue()"
+></label>
+
+<ta-icon
+  icon="clear"
+  color="#CCCCCC"
+  class="position-relative"
+  height="12"
+  (click)="searchClear()"
+  *ngIf="alwaysShowClear || showClear"
+  style="top: -1px; cursor: pointer"
+></ta-icon>

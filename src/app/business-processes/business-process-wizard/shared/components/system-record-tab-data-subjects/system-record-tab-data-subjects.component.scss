@@ -1,0 +1,13 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  .filter-indicator {
+    height: 4px;
+    width: 4px;
+    background-color: $red;
+    top: 11px;
+    left: 71px;
+    border-radius: 100px;
+  }
+}

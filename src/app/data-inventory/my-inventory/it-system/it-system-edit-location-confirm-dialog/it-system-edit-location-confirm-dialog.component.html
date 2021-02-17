@@ -1,0 +1,51 @@
+<div class="modal-header">
+  <!--- [i18n-tobeinternationalized] --->
+  <h4 class="modal-title" id="modal-basic-title">
+    <!--- [i18n-tobeinternationalized] --->
+    Confirm Changes
+  </h4>
+  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+    <i class="ta ta-close"></i>
+  </button>
+</div>
+<div class="modal-body">
+  <p>
+    <!--- [i18n-tobeinternationalized] --->
+    Your changes to system hosting location may impact these business processes
+  </p>
+
+  <ul>
+    <li *ngFor="let record of bpRecords">
+      {{ record.bpName }} - {{ record.bpId }}
+    </li>
+  </ul>
+</div>
+
+<div class="modal-footer">
+  <div class="action-buttons">
+    <button
+      taButton
+      type="button"
+      taType="secondary"
+      class="mr-2"
+      data-dismiss="modal"
+      id="modal-cancel"
+      (click)="activeModal.dismiss('Cancel')"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Cancel
+    </button>
+
+    <button
+      taButton
+      type="button"
+      taType="primary"
+      id="modal-submit"
+      (click)="onSubmit()"
+      [disabled]="false"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Confirm
+    </button>
+  </div>
+</div>

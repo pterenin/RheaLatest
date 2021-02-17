@@ -1,0 +1,18 @@
+{
+  "data": {
+    "created": "string",
+    "dataElements": "",
+    "description": "string",
+    "id": "string",
+    "identifier": "string",
+    "locations": "",
+    "name": "string",
+    "notes": "string",
+    "ownerId": "string",
+    "ownerName": "string",
+    "processingPurpose": "",
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

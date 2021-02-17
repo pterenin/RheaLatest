@@ -1,0 +1,92 @@
+@import 'src/styles/variables';
+ta-build-data-flow {
+  #build-data-flow {
+    padding-bottom: 57px;
+    transition: padding 0.2s ease-out 0s;
+    padding-left: 264px;
+    &.is-not-standard-view {
+      padding-left: 14px;
+    }
+
+    #data-flow-content {
+      height: calc(100vh - 165px - 83px);
+      overflow-y: scroll;
+      overflow-x: hidden;
+      background-color: $white;
+      border-radius: $border-radius;
+      border: $border-default;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+      &.data-flowchart {
+        height: calc(100vh - 165px - 51px) !important;
+      }
+    }
+
+    .side-bar-top {
+      display: flex;
+      max-height: calc(100vh - 430px);
+      overflow-x: hidden;
+      flex-direction: column;
+      .side-bar-top-buttons {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        border-bottom: $border-default;
+        ta-system-record-item-list-component {
+          ul {
+            margin-bottom: 0 !important;
+            display: flex;
+            li {
+              width: 50%;
+            }
+          }
+        }
+      }
+      .panel-divider {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        font-weight: 600;
+        font-size: $font-size-14;
+        line-height: 18px;
+        height: 50px;
+        border-top: $border-default;
+        border-bottom: $border-default;
+      }
+      #search-container {
+        border-bottom: $border-default;
+        min-height: 50px;
+        position: relative;
+        width: 100%;
+        strong {
+          font-size: $font-size-14;
+          font-weight: 600 !important;
+        }
+        .expand-chevron {
+          height: 20px;
+          width: 20px;
+          top: 14px;
+          right: -10px;
+          background-color: $white;
+          cursor: pointer;
+          &:hover {
+            background-color: $gray-300;
+          }
+          ta-icon {
+            position: relative;
+            top: -2px;
+          }
+        }
+      }
+    }
+    .side-bar-bottom {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+    }
+    .data-flow-map {
+      background-color: $seashell-grey !important;
+      overflow: hidden !important;
+    }
+  }
+}

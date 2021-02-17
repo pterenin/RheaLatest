@@ -1,0 +1,46 @@
+@import 'src/styles/variables';
+
+:host {
+  .container-fluid {
+    max-width: 1355px;
+    margin: auto;
+    padding-bottom: 60px;
+  }
+  .right-alligned {
+    text-align: right;
+  }
+
+  .no-it-systems {
+    text-align: center;
+    width: 100%;
+    img {
+      width: 272px;
+    }
+    div {
+      margin: auto;
+      width: 680px;
+      padding-top: 40px;
+      display: block;
+      p {
+        margin-top: 20px;
+        font-size: $font-size-14;
+        em {
+          font-style: normal;
+          color: $nice-blue;
+          cursor: pointer;
+        }
+      }
+      span {
+        font-size: $font-size-base;
+        color: $gray-700;
+        padding: 0 100px;
+        float: left;
+      }
+    }
+  }
+  .ta-label-badge-clickable {
+    .col-6 {
+      // max-width: 654px;
+    }
+  }
+}

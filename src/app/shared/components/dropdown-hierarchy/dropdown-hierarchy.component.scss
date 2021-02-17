@@ -1,0 +1,46 @@
+@import '../../../../styles/variables';
+
+.ta-dropdown-hierarchy {
+  font-size: $font-size-14;
+
+  .dropdown-item {
+    cursor: pointer;
+  }
+
+  i {
+    cursor: pointer;
+    display: inline;
+    font-size: $font-size-14;
+  }
+
+  .ta-dropdown-hierarchy-title {
+    padding: 2px 7px;
+    border-bottom: solid 1px $gray-500;
+
+    p {
+      text-transform: uppercase;
+      font-weight: bold;
+      color: $gray-700;
+      margin: 0px;
+      padding: 0 0 5px 12px;
+      padding-left: 12px;
+      display: inline-block;
+    }
+  }
+
+  .ta-dropdown-hierarchy-btn-toggle {
+    min-height: 32px;
+    width: 100%;
+  }
+
+  .ta-chevron-down {
+    color: $gray-500 !important;
+  }
+
+  .ta-chevron-left {
+    margin-top: 2px;
+    float: left;
+    font-size: $font-size-16;
+    color: $turquoise-blue;
+  }
+}

@@ -1,0 +1,9 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  min-width: $max-width;
+  position: relative;
+  z-index: 100;
+  height: 72px;
+}

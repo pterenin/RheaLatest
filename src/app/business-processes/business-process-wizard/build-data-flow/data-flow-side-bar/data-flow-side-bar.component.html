@@ -1,0 +1,30 @@
+<aside
+  id="system-selection-sidebar"
+  class="position-absolute"
+  [class.is-not-standard-view]="!isStandardView"
+  [class.is-expanded-view]="isExpandedView"
+>
+  <!-- SEARCH THIS SHOULD BE COMPONENT -->
+  <div id="filter-container" class="d-flex pr-3 pl-3 align-items-center">
+    <div class="mr-auto">
+      <strong class="animated fadeIn">
+        <!-- [i18n-tobeinternationalized] -->
+        Preview Data Flow
+      </strong>
+    </div>
+    <div class="text-right animated fadeIn">
+      <ta-data-flow-expand-view
+        *ngIf="!isSearchVisible"
+        [isExpandedView]="isExpandedView"
+        (toggleExpandedView)="toggleExpanded()"
+      ></ta-data-flow-expand-view>
+    </div>
+  </div>
+  <div id="sidebar-accordion-container">
+    <ng-content></ng-content>
+  </div>
+  <ta-data-flow-collapse-view
+    [isStandardView]="isStandardView"
+    (toggleStandard)="toggleStandard()"
+  ></ta-data-flow-collapse-view>
+</aside>

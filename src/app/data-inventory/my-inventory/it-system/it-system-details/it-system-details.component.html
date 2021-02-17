@@ -1,0 +1,331 @@
+<div class="fadeInApp">
+  <form [formGroup]="itSystemDetailsForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <!-- [i18n-tobeinternationalized] -->
+          <label for="itSystemName" class="data-label"
+            >System
+            <span
+              [ngClass]="{
+                'text-danger': iconRequiredColor === 'red',
+                'font-color-default': iconRequiredColor === 'default'
+              }"
+              >*</span
+            >
+          </label>
+          <!-- [i18n-tobeinternationalized] -->
+          <input
+            data-cy="system-name"
+            id="itSystemName"
+            type="text"
+            formControlName="name"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': itSystemName.invalid && itSystemName.touched
+            }"
+            name="itSystemName"
+            placeholder="Enter Name of System"
+          />
+          <div
+            *ngIf="itSystemName.errors?.required && itSystemName.touched"
+            class="text-danger text-danger-multi-sibling"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            This field is required.
+          </div>
+          <div
+            *ngIf="itSystemName.errors?.maxlength"
+            class="text-danger text-danger-multi-sibling"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            The name must be less than 255 characters.
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <ta-risk-field-indicator
+          [showIndicator]="showRiskFields"
+        ></ta-risk-field-indicator>
+        <!--- [i18n-tobeinternationalized] --->
+        <label for="industrySector" class="data-label"
+          >Owned By
+          <span
+            [ngClass]="{
+              'text-danger': iconRequiredColor === 'red',
+              'font-color-default': iconRequiredColor === 'default'
+            }"
+            >*</span
+          >
+          <ng-template #ownedByTipContent>
+            <div class="tooltip-content">
+              <!-- [i18n-tobeinternationalized] -->
+              <strong>Company Entities:</strong>
+              <span>
+                <!-- [i18n-tobeinternationalized] -->
+                Primary Entity or Company Affiliate
+              </span>
+              <!-- [i18n-tobeinternationalized] -->
+              <strong>Third Parties:</strong>
+              <span>
+                <!-- [i18n-tobeinternationalized] -->
+                Vendors or Partners
+              </span>
+            </div>
+          </ng-template>
+          <ta-icon
+            [icon]="iconTypeTooltip"
+            [taTooltip]="ownedByTipContent"
+            tooltipTextAlign="left"
+            height="12"
+            container="body"
+            class="position-relative"
+            style="top: -2px; left: 5px;"
+            placement="bottom-left"
+            color="#595959"
+            tooltipTheme="light"
+          ></ta-icon>
+        </label>
+        <div data-cy="owned-by" id="ownedBy">
+          <ta-async-categorical-dropdown
+            #asyncDropdown
+            [isAddNewItemLinkAtBottom]="isAddNewItemLinkAtBottom"
+            [categoryLoaders]="categoryLoaders"
+            [dropdownAlignment]="['bottom-left', 'bottom-right', 'top-right']"
+            [isMultiSelect]="false"
+            [mapContentItem]="mapContentItem"
+            [selectedItems]="selectedLegalEntity ? [selectedLegalEntity] : []"
+            (itemSelected)="
+              selectLegalEntity($event); asyncDropdown.selectorDropdown.close()
+            "
+            (addNewEntity)="handleAddNewEntity($event)"
+            [class]="categoricalDropdownClass"
+          ></ta-async-categorical-dropdown>
+        </div>
+        <div
+          *ngIf="legalEntity.errors?.required && legalEntity.touched"
+          class="text-danger text-danger-multi-sibling"
+        >
+          <!-- [i18n-tobeinternationalized] -->
+          This field is required.
+        </div>
+      </div>
+    </div>
+    <!-- [i18n-tobeinternationalized] -->
+    <div class="form-group">
+      <!-- [i18n-tobeinternationalized] -->
+      <label for="description" class="data-label">Description</label>
+      <textarea
+        data-cy="description"
+        formControlName="description"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid':
+            itSystemDescription.invalid && itSystemDescription.touched
+        }"
+        id="description"
+        name="description"
+        placeholder="Add a description for this System"
+        rows="3"
+      ></textarea>
+      <div *ngIf="itSystemDescription.errors?.maxlength" class="text-danger">
+        <!-- [i18n-tobeinternationalized] -->
+        The description must be less than 1024 characters.
+      </div>
+    </div>
+    <ta-input-location
+      data-cy="hosting-locations"
+      header="Where is this System hosted?"
+      [iconRequiredColor]="iconRequiredColor"
+      [iconTypeTooltip]="iconTypeTooltip"
+      [showRiskFields]="showRiskFields"
+      [allCountries]="allCountries"
+      [locations]="itSystemDetailsData?.locations"
+      (locationChanges)="locationChanges($event)"
+      (toggleDisabled)="toggleDisabledLocation($event)"
+      class="d-block mt-4"
+    ></ta-input-location>
+    <!-- [i18n-tobeinternationalized] -->
+    <ta-input-individual-type
+      #inputIndividualType
+      data-cy="data-subjects"
+      [header]="'Whose information is being processed by this System'"
+      [redesign]="redesign"
+      (toggleDisabled)="toggleDisabledSubjectType($event)"
+      [iconTypeTooltip]="iconTypeTooltip"
+      [showRiskFields]="showRiskFields"
+      [individualTypes]="individualTypes"
+      [fullCountriesList]="fullCountriesList"
+      [dataSubjectsWithLocations]="dataSubjectsWithLocations"
+      (dataSubjectLocationsChanges)="onDataSubjectLocationsChanges($event)"
+    ></ta-input-individual-type>
+
+    <div
+      class="form-group data-subject-record w-50"
+      id="dataSubjectVolumeRecords"
+    >
+      <ta-dropdown-field
+        data-cy="volume-of-data-subject-records"
+        [options]="dataSubjectVolumes"
+        [selectedOption]="getFormValue('dataSubjectVolume')"
+        optionLabel="name"
+        formControlName="dataSubjectVolume"
+      >
+        <ta-risk-field-indicator
+          [showIndicator]="showRiskFields"
+        ></ta-risk-field-indicator>
+        <label class="data-label">
+          <!-- [i18n-tobeinternationalized] -->
+          Volume of Data Subject Records
+          <!-- [i18n-tobeinternationalized] -->
+          <ta-icon
+            [icon]="iconTypeTooltip"
+            tooltipTextAlign="left"
+            taTooltip="Select the volume of data subject records processed by this System"
+            height="12"
+            container="body"
+            class="position-relative"
+            style="top: -2px; left: 5px;"
+            placement="bottom-left"
+            color="#595959"
+            tooltipTheme="light"
+          ></ta-icon>
+        </label>
+      </ta-dropdown-field>
+    </div>
+    <!-- Retention Period -->
+    <div class="form-group data-subject-record w-100">
+      <ta-retention-period
+        (retentionPeriodChanges)="handleRetentionPeriodChange($event)"
+        [retentionPeriodData]="retentionPeriodData"
+      ></ta-retention-period>
+    </div>
+
+    <!-- Contacts -->
+
+    <ng-container *ngIf="systemContacts?.length > 0">
+      <div class="row" *ngFor="let contact of systemContacts">
+        <div class="col">
+          <div class="contact-area position-relative mb-2">
+            <div class="btn-actions w-100">
+              <button
+                class="float-right"
+                taButton
+                taType="circle"
+                (click)="deleteContact(contact)"
+              >
+                <ta-icon icon="delete"></ta-icon>
+              </button>
+              <button
+                class="mr-1 float-right"
+                taButton
+                taType="circle"
+                (click)="editContact(contact)"
+              >
+                <ta-icon icon="edit"></ta-icon>
+              </button>
+            </div>
+            <div class="pt-3 pb-2 px-3">
+              <div class="row contact-row">
+                <div class="col text-wrap text-break">
+                  <strong>{{ contact?.fullName || '' }}</strong>
+                </div>
+                <div class="col text-wrap text-break">
+                  {{ getCityState(contact) }}
+                </div>
+              </div>
+              <div class="row contact-row">
+                <div class="col">
+                  {{ contact?.email || '' }}
+                </div>
+                <div class="col">
+                  {{ getCountryName(contact) }}
+                </div>
+              </div>
+              <div class="row contact-row">
+                <div class="col">
+                  {{ contact?.phone || '' }}
+                </div>
+                <div class="col">
+                  {{ contact?.address || '' }}
+                </div>
+              </div>
+              <div class="row contact-row">
+                <div class="col"></div>
+                <div class="col">
+                  {{ contact?.zip || '' }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2 mb-3">
+        <div class="col">
+          <div class="w-100">
+            <a
+              class="add-new-location-link ml-0"
+              *ngIf="systemContacts?.length !== 3"
+              (click)="createNewContact()"
+            >
+              <!-- [i18n-tobeinternationalized] -->
+              Add New Contact
+            </a>
+            <span class="text-gray-600" *ngIf="systemContacts?.length === 3">
+              <!-- [i18n-tobeinternationalized] -->
+              Add New Contact
+            </span>
+            <span class="ml-2" *ngIf="systemContacts?.length === 3">
+              <!-- [i18n-tobeinternationalized] -->
+              Only 3 contacts can be added.
+            </span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div
+      class="sub-heading dpo-or-legal-contact-title mt-4"
+      *ngIf="systemContacts.length === 0"
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      Contact
+      <div class="w-100 contact-info">
+        <!-- [i18n-tobeinternationalized] -->
+        You haven't added an external contact.
+        <a
+          class="add-new-location-link"
+          *ngIf="!contact"
+          (click)="createNewContact()"
+        >
+          <!-- [i18n-tobeinternationalized] -->
+          Create New Contact
+        </a>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="form-group">
+      <label for="notes" class="sub-heading">
+        <!-- [i18n-tobeinternationalized] -->
+        Notes
+      </label>
+      <!-- [i18n-tobeinternationalized] -->
+      <textarea
+        data-cy="notes"
+        formControlName="notes"
+        class="form-control"
+        placeholder="Add comments, notes"
+        [ngClass]="{
+          'is-invalid': notes.invalid && notes.touched
+        }"
+        id="notes"
+        name="notes"
+        rows="5"
+      ></textarea>
+      <div *ngIf="notes.errors?.maxlength" class="text-danger">
+        <!-- [i18n-tobeinternationalized] -->
+        The notes must be less than 1024 characters.
+      </div>
+    </div>
+  </form>
+</div>

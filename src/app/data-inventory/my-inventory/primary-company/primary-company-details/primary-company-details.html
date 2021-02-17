@@ -1,0 +1,157 @@
+<div class="fadeInApp">
+  <form [formGroup]="detailsForm">
+    <div>
+      <div class="row form-group">
+        <div class="col details-info" *ngIf="details">
+          <div class="row">
+            <div class="col">
+              <!-- [i18n-tobeinternationalized]-->
+              <label class="d-block font-weight-bold">Company Name</label>
+              {{ details.companyName || '--' }}
+            </div>
+            <div class="col">
+              <!-- [i18n-tobeinternationalized]-->
+              <label class="d-block font-weight-bold">Entity Type</label>
+              {{ details.entityType || '--' }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <ta-risk-field-indicator
+                [showIndicator]="showRiskFields"
+              ></ta-risk-field-indicator>
+              <!-- [i18n-tobeinternationalized]-->
+              <label class="d-block font-weight-bold">Country</label>
+              {{ details.country || '--' }}
+            </div>
+            <div class="col">
+              <!-- [i18n-tobeinternationalized]-->
+              <label class="d-block font-weight-bold">State/Province</label>
+              {{ details.stateOrProvince || '--' }}
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col">
+              <!-- [i18n-tobeinternationalized]-->
+              <label class="d-block font-weight-bold">Industry Sector</label>
+              <div *ngIf="details.industrySectors">
+                <div
+                  *ngFor="let industry of details.industrySectors"
+                  class="industry-title"
+                >
+                  {{ industry || '--' }}
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  !details.industrySectors ||
+                  details.industrySectors.length == 0
+                "
+              >
+                --
+              </div>
+            </div>
+            <div class="col">
+              <!-- [i18n-tobeinternationalized]-->
+              <label class="d-block font-weight-bold"
+                >Data Controller or Processor</label
+              >
+              {{ details.dataControllerOrProcessor || '--' }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- [i18n-tobeinternationalized] -->
+      <div class="sub-heading">Contacts</div>
+      <ng-container
+        *ngIf="details && details.contacts && details.contacts.length"
+      >
+        <div class="row" *ngFor="let contact of details.contacts">
+          <div class="col">
+            <div class="contact-area position-relative">
+              <div class="pt-3 pb-2 px-3">
+                <div class="row contact-row">
+                  <div class="col text-wrap text-break">
+                    <strong>{{ contact?.fullName || '--' }}</strong>
+                  </div>
+                  <div class="col text-wrap text-break">
+                    {{ getCityState(contact) }}
+                  </div>
+                </div>
+                <div class="row contact-row">
+                  <div class="col">
+                    <!-- [i18n-tobeinternationalized]-->
+                    {{ contact?.email || '--' }}
+                  </div>
+                  <div class="col">
+                    <!-- [i18n-tobeinternationalized]-->
+                    {{ contact.country || '--' }}
+                  </div>
+                </div>
+                <div class="row contact-row">
+                  <div class="col">
+                    <!-- [i18n-tobeinternationalized]-->
+                    {{ contact?.phone || '--' }}
+                  </div>
+                  <div class="col">
+                    <!-- [i18n-tobeinternationalized]-->
+                    {{ contact?.address || '--' }}
+                  </div>
+                </div>
+                <div class="row contact-row">
+                  <div class="col">
+                    <!-- [i18n-tobeinternationalized]-->
+                    {{ contact.role || '--' }}
+                  </div>
+                  <div class="col">
+                    <!-- [i18n-tobeinternationalized]-->
+                    {{ contact?.zip || '--' }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <!-- [i18n-tobeinternationalized] -->
+      <div class="sub-heading mb-2">Notes</div>
+      <div class="row form-group">
+        <!-- [i18n-tobeinternationalized] -->
+        <div class="col-12">
+          <textarea
+            formControlName="notes"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': notes.invalid && notes.touched
+            }"
+            id="notes"
+            name="notes"
+            placeholder="Add comments, notes."
+            rows="5"
+          ></textarea>
+          <div *ngIf="notes.errors?.maxlength" class="text-danger">
+            <!-- [i18n-tobeinternationalized] -->
+            The notes must be less than 1024 characters.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *taSlotView>
+      <button
+        taButton
+        type="submit"
+        taType="primary"
+        class="page-next btn-lg"
+        [ngClass]="{
+          'page-next': true,
+          'not-allowed': detailsForm.invalid || isNextButtonDisabled
+        }"
+        (click)="onSubmit()"
+        [disabled]="detailsForm.invalid || isNextButtonDisabled"
+      >
+        <!-- [i18n-tobeinternationalized] -->
+        Save
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,36 @@
+<ta-page-wrapper [full]="true">
+  <h2 class="page-header">
+    <!--- [i18n-tobeinternationalized] -->
+    {{ businessProcess?.name }}
+    <span class="text-gray">/ {{ businessProcess?.identifier }}</span>
+
+    <button
+      class="float-right mr-1"
+      taButton
+      taType="circle"
+      (click)="editBp()">
+      <i class="ta ta-edit"></i>
+    </button>
+  </h2>
+  <!--- [i18n-tobeinternationalized] -->
+  <div class="sub-heading">Description</div>
+  <!--- [i18n-tobeinternationalized] -->
+  {{ businessProcess?.description }}
+  <ta-accordion activeIds="assessmentsPanel">
+    <ta-panel id="assessmentsPanel">
+      <ng-template taPanelTitle>
+        <div class="sub-heading mb-2 mt-0 ">
+          <!--- [i18n-tobeinternationalized] -->
+          Assessments ({{ totalAssessments }})
+        </div>
+      </ng-template>
+      <ng-template taPanelContent>
+        <ta-assessments
+          type="business-process"
+          [recordId]="baseDomainId"
+          (finishedLoad)="finishedLoadAssessments($event)"></ta-assessments>
+      </ng-template>
+    </ta-panel>
+  </ta-accordion>
+  <ta-audit-accordion></ta-audit-accordion>
+</ta-page-wrapper>

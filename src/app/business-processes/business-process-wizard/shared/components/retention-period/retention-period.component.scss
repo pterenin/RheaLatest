@@ -1,0 +1,24 @@
+ta-retention-period {
+  .retention-period-wrapper {
+    min-height: unset;
+    overflow: visible;
+    .card {
+      position: inherit;
+    }
+    input {
+      height: 32px;
+    }
+    .retention-period-value-default {
+      width: 40%;
+    }
+    .retention-period-units-default {
+      width: 55%;
+    }
+    .retention-period-units-other-default {
+      width: 50%;
+    }
+    .retention-period-btn-clear-default {
+      width: 5%;
+    }
+  }
+}

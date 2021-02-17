@@ -1,0 +1,86 @@
+<div *ngIf="type === 'data-inventory'" class="sub-heading">
+  <!-- [i18n-tobeinternationalized] -->
+  <div class="d-flex justify-content-between">
+    Assessments
+    <!-- [i18n-tobeinternationalized] -->
+    <a
+      target="_blank"
+      [href]="buildAssessmentUrl"
+      class="link"
+      *ngIf="buildAssessmentUrl"
+      >Create Assessment</a
+    >
+  </div>
+</div>
+<div [ngClass]="['assessments', type]">
+  <div
+    *ngIf="type === 'business-process' && buildAssessmentUrl"
+    class="assessments-more"
+  >
+    <div taDropdown class="d-inline-block" placement="bottom-right">
+      <a
+        class="dropdown-toggle"
+        href="#"
+        (click)="$event.preventDefault()"
+        role="button"
+        id="assesmentsMore"
+        taDropdownToggle
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <ta-icon icon="more" height="10"></ta-icon>
+      </a>
+      <div taDropdownMenu>
+        <a
+          [href]="viewAssessmentsUrl"
+          target="_blank"
+          class="dropdown-item"
+          id="view-link"
+        >
+          View Assessments
+        </a>
+        <!--- [i18n-tobeinternationalized] -->
+        <a
+          [href]="buildAssessmentUrl"
+          target="_blank"
+          class="dropdown-item"
+          id="create-link"
+        >
+          Create Assessment
+        </a>
+        <!--- [i18n-tobeinternationalized] -->
+      </div>
+    </div>
+  </div>
+
+  <div class="ta-assessments-wrapper" *ngFor="let count of counts">
+    <div class="fadeInApp">
+      <div *ngIf="type === 'data-inventory'" class="ta-assessments-text">
+        <a
+          *ngIf="count.count > 0 && buildAssessmentUrl"
+          target="_blank"
+          [href]="count.ref"
+        >
+          {{ count.count }}
+        </a>
+        <span *ngIf="count.count === 0 || !buildAssessmentUrl">
+          {{ count.count }}
+        </span>
+      </div>
+      <div class="ta-assessments-label-text">{{ count.status }}</div>
+      <div *ngIf="type === 'business-process'" class="ta-assessments-text">
+        <a
+          *ngIf="count.count > 0 && buildAssessmentUrl"
+          target="_blank"
+          [href]="count.ref"
+        >
+          {{ count.count }}
+        </a>
+        <span *ngIf="count.count === 0 || !buildAssessmentUrl">
+          {{ count.count }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

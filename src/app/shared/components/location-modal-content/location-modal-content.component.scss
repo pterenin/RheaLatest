@@ -1,0 +1,36 @@
+@import 'src/styles/variables';
+
+ta-location-modal-content {
+  background-color: $white;
+
+  .title {
+    color: zeplin-lighten($blue, 0.9);
+    font-size: $font-size-18;
+  }
+
+  .modal-note {
+    font-size: $font-size-12;
+    color: $gray-700;
+  }
+
+  .dat-dst-locations {
+    .regions {
+      background-color: $white;
+      margin: 0;
+      padding: 0;
+      max-height: 700px;
+    }
+  }
+}
+
+.ta-modal-location-redesign {
+  .modal-dialog-centered {
+    // Serve as custom width for modal
+    max-width: 600px !important;
+    .state-content {
+      // Force state component to be
+      // the same height of location component
+      height: 448px !important;
+    }
+  }
+}

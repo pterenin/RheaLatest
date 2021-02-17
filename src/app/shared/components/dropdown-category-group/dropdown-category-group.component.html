@@ -1,0 +1,63 @@
+<div #dropdown taDropdown autoclose="outside" class="d-inline-block w-100">
+  <div
+    class="w-100 dropdown-toggle"
+    taButton
+    taType="dropdown"
+    id="dropdownBasic1"
+    taDropdownToggle
+  >
+    <span *ngIf="!selectionExists" class="dropdown-placeholder">
+      Select
+    </span>
+    <div *ngIf="selectionExists" class="tags-container">
+      <ta-tags
+        *ngFor="let item of allItems | dropdownCategoryGroupItemSelected: item"
+        (click)="$event.stopPropagation()"
+        (onClose)="onClose(item)"
+        [showClose]="true"
+      >
+        {{ item.text }}
+      </ta-tags>
+    </div>
+  </div>
+  <div taDropdownMenu aria-labelledby="dropdownBasic1">
+    <ta-dropdown-search (onSearch)="onSearch($event)"></ta-dropdown-search>
+    <ta-dropdown-category>
+      <ta-dropdown-menus>
+        <ta-dropdown-scroll [scrollHeight]="158">
+          <button
+            *ngFor="let group of groups"
+            [class.selected]="selectedGroup.group == group.group"
+            class="dropdown-menu-item"
+            (click)="onSelectedGroup(group)"
+          >
+            {{ group.group }}
+            <ta-icon class="caret-right" icon="caret-right"></ta-icon>
+          </button>
+        </ta-dropdown-scroll>
+      </ta-dropdown-menus>
+      <ta-dropdown-items>
+        <ta-dropdown-scroll [scrollHeight]="158">
+          <ta-checkbox
+            [indeterminate]="isIndeterminate(items)"
+            [checked]="shouldSelectAll(items)"
+            (change)="toggleSelectAll($event, items)"
+            class="dropdown-item"
+          >
+            Select All ({{ selectedItemsCount(items) }} of {{ items.length }})
+          </ta-checkbox>
+          <ta-checkbox
+            *ngFor="
+              let item of items | dropdownCategoryGroupSearchFilter: filterTerm
+            "
+            [checked]="item.selected"
+            class="dropdown-item"
+            (change)="onSelectedItem($event, item)"
+          >
+            {{ item.text }}
+          </ta-checkbox>
+        </ta-dropdown-scroll>
+      </ta-dropdown-items>
+    </ta-dropdown-category>
+  </div>
+</div>

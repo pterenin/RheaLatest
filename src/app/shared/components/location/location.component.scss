@@ -1,0 +1,131 @@
+@import 'src/styles/variables';
+
+$border-grey: zeplin-lighten($gray-700, 0.25);
+
+ta-location .ta-accordion-header ta-icon {
+  pointer-events: none;
+}
+
+ta-location {
+  .regions {
+    padding: 10px;
+    border: solid 1px $gray-300;
+    border-radius: 2px;
+    max-height: 290px;
+    height: 290px;
+    overflow-x: auto;
+    background-color: $white;
+  }
+
+  .countries {
+    padding-left: 20px;
+
+    .row {
+      margin-top: 5px;
+      width: 100%;
+    }
+
+    .row:first-child {
+      margin-top: 0px;
+    }
+  }
+
+  .flag {
+    margin-left: 5px;
+  }
+
+  .country-name {
+    margin-left: 5px;
+    display: inline;
+  }
+
+  .three-letter-code {
+    width: 39px;
+    height: 18px;
+    border-radius: 9px;
+    background-color: $gray-400;
+    text-align: center;
+    display: inline-block;
+    color: #595959;
+  }
+
+  .regions .ta-accordion-header {
+    border-bottom: none;
+  }
+
+  .ta-accordion .ta-accordion-header h5 {
+    border-bottom: 0px;
+  }
+
+  .btn-link {
+    text-decoration: none !important;
+  }
+
+  .ta-accordion-header.card-header.collapsed {
+    border-bottom: none;
+  }
+
+  .regions .card-body {
+    padding: 5px 0 0 0;
+  }
+
+  .flex-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .accordion-title {
+    font-weight: 500;
+  }
+
+  .countries {
+    .state-link {
+      position: absolute;
+      right: -15px;
+    }
+  }
+
+  ta-tabset {
+    .tab-pane > .countries {
+      height: 420px;
+      overflow-y: scroll;
+      padding-bottom: 1rem;
+      padding-left: 0;
+    }
+
+    .nav-link {
+      padding: 0.4rem 0.6rem !important;
+      border-left-width: 2px !important;
+      &.active {
+        background-color: $gray-200;
+      }
+      span {
+        font-weight: normal;
+      }
+    }
+
+    .w-25 {
+      width: 30% !important;
+    }
+
+    .w-70 {
+      width: 70% !important;
+    }
+
+    .modal-location-selected-indicator {
+      @extend .three-letter-code;
+      width: unset;
+      height: 15px;
+      color: $gray-800;
+      font-weight: 500;
+      font-size: $font-size-10;
+    }
+
+    .selected-locations {
+      &:hover {
+        background-color: $gray-200;
+      }
+    }
+  }
+}

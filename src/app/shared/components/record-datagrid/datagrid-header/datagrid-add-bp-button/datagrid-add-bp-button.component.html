@@ -1,0 +1,30 @@
+<div taDropdown class="d-inline-block" placement="bottom-right">
+  <button
+    taButton
+    type="button"
+    taType="primary"
+    id="addDropdown"
+    taDropdownToggle
+  >
+    Add New
+  </button>
+  <div taDropdownMenu aria-labelledby="addDropdown">
+    <button
+      type="button"
+      class="dropdown-item ml-0"
+      (click)="onClickCreateBusinessProcess()"
+      [disabled]="createBusinessProcessButtonDisabledFlag"
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      {{ 'BUSINESS_PROCESS.CREATE_BTN' | translate }}
+    </button>
+    <button
+      type="button"
+      class="dropdown-item ml-0"
+      (click)="assignNewBusinessProcessClicked()"
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      Assign New Business Process
+    </button>
+  </div>
+</div>

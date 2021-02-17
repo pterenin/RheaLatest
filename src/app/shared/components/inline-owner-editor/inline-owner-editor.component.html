@@ -1,0 +1,85 @@
+<div
+  #displayPopOver="taPopover"
+  triggers="'manual'"
+  [placement]="['bottom-left', 'top-left']"
+  [taPopover]="namesHoverContent"
+  [autoClose]="false"
+  [disablePopover]="flatNames.length < 1"
+  container="body"
+  (mouseenter)="triggerPopover(displayPopOver)"
+  (mouseleave)="closePopovers()"
+  popoverClass="inline-owner-popover-styles"
+>
+  <span class="d-inline" *ngIf="flatNames.length > 0">
+    {{ flatNames | multipleStringPipe: 'stringify' }}
+  </span>
+  <ta-icon
+    *ngIf="!(flatNames && flatNames.length === 0)"
+    icon="edit"
+    class="edit-icon float-right"
+    (click)="
+      closePopovers();
+      $event.stopPropagation();
+      openDropdown.emit(editingDropdown);
+      this.toggleEditMode(true)
+    "
+  >
+  </ta-icon>
+</div>
+
+<div
+  taDropdown
+  #editingDropdown="taDropdown"
+  class="owner-edit-popover"
+  [style.width]="'313px'"
+>
+  <ta-icon
+    id="dropdownManual"
+    taDropdownAnchor
+    (focus)="editingDropdown.open()"
+  >
+  </ta-icon>
+  <div taDropdownMenu aria-labelledby="dropdownManual" class="edit-container">
+    <div [formGroup]="form" class="edit-body">
+      <div
+        formArrayName="formGroupsArray"
+        class="px-2 pt-1 pb-2"
+        *ngFor="let inlineForm of inlineFormsArray.controls; let i = index"
+      >
+        <div [formGroup]="inlineForm">
+          <input class="form-control" formControlName="name" />
+        </div>
+      </div>
+    </div>
+    <div class="action-buttons d-flex flex-row justify-content-end">
+      <button
+        class="mr-1 btn-sm  ta-table-button"
+        taButton
+        taType="flat"
+        (click)="toggleEditMode(false); editingDropdown.close()"
+      >
+        <!--- [i18n-tobeinternationalized] -->
+        Cancel
+      </button>
+      <button
+        class="btn-sm ta-table-button"
+        taButton
+        taType="primary"
+        [disabled]="!(form.valid && form.dirty)"
+        (click)="onSave(); editingDropdown.close()"
+      >
+        <!--- [i18n-tobeinternationalized] -->
+        Save
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- On hover Display of Contents -->
+<ng-template #namesHoverContent>
+  <div *ngIf="flatNames && flatNames.length > 0" (mouseleave)="closePopovers()">
+    <div class="mb-1 text-truncate" *ngFor="let name of flatNames">
+      {{ name }}
+    </div>
+  </div>
+</ng-template>

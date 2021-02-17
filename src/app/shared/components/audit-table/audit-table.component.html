@@ -1,0 +1,31 @@
+<ta-table [id]="gridId" class="ta-table-wrapper-border">
+  <!--- [i18n-tobeinternationalized] -->
+  <ta-table-column taField="commitDate" [taWidth]="160"
+    >Timestamp </ta-table-column
+  ><!--- [i18n-tobeinternationalized] -->
+  <ta-table-column taField="change">Activity </ta-table-column
+  ><!--- [i18n-tobeinternationalized] -->
+  <ta-table-column taField="author" [taWidth]="150">User </ta-table-column
+  ><!--- [i18n-tobeinternationalized] -->
+  <ta-table-row *ngFor="let item of tableData" [taItem]="item">
+    <ta-table-cell>{{
+      item.commitDate | date: 'MM-dd-yyyy, hh:mm a'
+    }}</ta-table-cell>
+    <ta-table-cell>{{ item.change }}</ta-table-cell>
+    <ta-table-cell class="audit-author text-wrap text-break">{{
+      item.author
+    }}</ta-table-cell>
+  </ta-table-row>
+  <ta-table-footer>
+    <ta-pagination
+      [collectionSize]="totalRows"
+      [pageSize]="maxRows"
+      [page]="page"
+      showingType="full"
+      [maxSize]="5"
+      [rotate]="true"
+      (onChangePageSize)="onChangePageSize($event)"
+      (pageChange)="onChangePage($event)"
+    ></ta-pagination>
+  </ta-table-footer>
+</ta-table>

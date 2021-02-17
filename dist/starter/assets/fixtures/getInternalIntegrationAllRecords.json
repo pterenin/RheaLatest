@@ -1,0 +1,15 @@
+{
+  "data": {
+    "content": "",
+    "first": true,
+    "last": true,
+    "number": 1,
+    "numberOfElements": 1,
+    "size": 1,
+    "sort": {},
+    "totalElements": 1,
+    "totalPages": 1
+  },
+  "status": 200,
+  "ok": true
+}

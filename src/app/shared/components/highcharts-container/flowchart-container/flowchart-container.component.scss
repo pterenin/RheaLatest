@@ -1,0 +1,297 @@
+@import '../../../../../styles/_variables.scss';
+
+$background-grey: zeplin-lighten($gray-700, 0.1);
+$border-grey: zeplin-lighten($gray-700, 0.25);
+$tabset-grey: zeplin-lighten($gray-700, 0.9);
+
+.flowchartContainer {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 660px;
+  border-radius: $border-radius;
+  border: $border-default;
+  border-bottom: transparent;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+
+  * {
+    font-size: 12px;
+  }
+
+  tspan {
+    font-size: 10px;
+  }
+
+  .nodeEntity tspan {
+    font-size: 9px;
+  }
+}
+
+.ta-accordion {
+  ol {
+    padding-left: 30px;
+    margin: 0;
+
+    li {
+      padding: 1px 5px 1px 0;
+      font-size: $font-size-12;
+
+      p {
+        margin: 0;
+        padding: 0;
+
+        .threeLetterCode {
+          padding: 0 5px 0 0;
+        }
+      }
+    }
+  }
+
+  .card-body {
+    padding: 0 21px;
+    margin: 0;
+  }
+
+  .card-header {
+    padding: 0 0 0 10px;
+    margin: 0;
+  }
+
+  .ta-accordion-header h5 {
+    border-bottom: none !important;
+    padding: 0;
+    margin: 0;
+
+    ::before {
+      display: none !important;
+    }
+  }
+
+  .ta-panel-title {
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+ta-flowchart-container {
+  .ta-accordion {
+    font-size: 0.5em;
+  }
+
+  ta-tooltip-window {
+    .tooltip-inner {
+      min-width: 78px;
+      padding: 0.375rem 5px;
+      letter-spacing: normal !important;
+    }
+  }
+
+  .popover-body {
+    min-height: 200px;
+    background: $white;
+    border: none;
+    padding: 0;
+  }
+}
+
+.popover {
+  max-width: none;
+}
+
+.flowPopoverBody {
+  display: block;
+  overflow: auto;
+  height: 160px;
+  margin-top: 2px;
+  margin-right: -10px;
+  width: 350px;
+
+  .flowPopoverBody-index {
+    float: left;
+  }
+  .flowPopoverBody-element {
+    width: calc(100% - 24px);
+    margin-left: 8px;
+    display: inline-block;
+  }
+}
+
+.flowPopoverBody2 {
+  display: block;
+  overflow: scroll;
+  min-height: 102px;
+}
+
+.flowPopoverContentContainer {
+  padding: 0 0 10px 0;
+  .tab-pane {
+    padding: 0;
+  }
+  .ta-accordion-body {
+    padding: 10px 0 0;
+  }
+}
+
+.popover-header .flowPopoverTitle {
+  display: inline-block;
+}
+
+.flowPopoverContentTitleText {
+  display: inline-block;
+  width: 100px;
+  height: 17px;
+}
+
+.popoverTransferSaleOfDataSection {
+  width: 100%;
+  height: 30px;
+  pointer-events: none;
+}
+
+.transferSaleOfDataText {
+  display: inline;
+}
+
+.flowPopoverToggleSwitch {
+  display: block;
+  float: right;
+}
+
+.flowPopoverHorizontalRule {
+  width: 100%;
+}
+
+.popoverTitleText {
+  color: $pumpkin-orange;
+}
+
+.flowPopoverCloseIcon {
+  display: inline-block;
+  right: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.swappableTitle {
+  color: $twilight-blue;
+}
+
+.highcharts-svg-pan-zoom_viewport {
+  > rect,
+  > path,
+  > text,
+  > g {
+    transition: 150ms;
+  }
+}
+
+.dimmed {
+  .highcharts-svg-pan-zoom_viewport {
+    > rect,
+    > path,
+    > text,
+    > g {
+      opacity: 0.2;
+    }
+
+    > .chartHover {
+      opacity: 1;
+    }
+  }
+}
+
+.panzoomControllers {
+  width: 32px;
+  border-radius: 24px;
+  background-color: $gray-400;
+  height: 152px;
+  position: relative;
+  margin: -165px 0 15px 1rem;
+  text-align: center;
+  padding: 4px 0 4px;
+
+  .panzoomIcon {
+    width: 100%;
+    margin-bottom: 12px;
+
+    svg {
+      width: 14px;
+    }
+
+    &:hover svg,
+    &.active svg {
+      color: $twilight-blue;
+    }
+  }
+}
+
+.flowchartLegends {
+  width: 100%;
+  margin-top: 24px;
+  text-align: center;
+
+  .legendItem {
+    color: $black;
+    padding-right: 24px;
+
+    span {
+      line-height: 15px;
+      font-weight: 500;
+    }
+
+    .legendColor {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+    }
+  }
+}
+
+ta-popover-window.popover-flowchart {
+  .small-tag.country {
+    margin-left: 5px;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    font-size: $font-size-12 !important;
+    background-color: zeplin-lighten($gray-700, 0.22) !important;
+    color: zeplin-lighten($black, 0.535);
+    border-radius: 2px;
+    height: 17px;
+    padding: 0 5px;
+    line-height: 17px;
+    display: inline-block;
+  }
+  .popover-body {
+    padding: 0 10px 10px 10px;
+  }
+  hr {
+    margin-top: 3px;
+  }
+}
+
+.noconnectionNodes {
+  width: 100%;
+  height: 210px;
+  padding: 24px;
+  border-radius: 3px;
+  background-color: $gray-400;
+  margin-top: -5px;
+  border: $border-default;
+  border-top: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  overflow: auto;
+}
+
+.nodeBadge {
+  width: 145px;
+  height: 32px;
+  border-radius: 4px;
+  border: solid 1px $twilight-blue;
+  background-color: $white;
+  color: $black;
+  padding-left: 9px;
+  padding-right: 9px;
+}

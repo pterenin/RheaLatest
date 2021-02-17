@@ -1,0 +1,46 @@
+{
+  "data": {
+    "businessStructureResponse": {
+      "businessStructure": "string",
+      "id": "string",
+      "version": 1
+    },
+    "companyProfileEditUrl": "string",
+    "contactResponse": {
+      "address": "string",
+      "city": "string",
+      "email": "string",
+      "fullName": "string",
+      "id": "string",
+      "location": {
+        "countryId": "string",
+        "globalRegionId": "string",
+        "id": "string",
+        "stateOrProvinceId": "string",
+        "version": 1
+      },
+      "phone": "string",
+      "version": 1,
+      "zip": "string"
+    },
+    "contactType": {
+      "companyEntityUse": true,
+      "id": "string",
+      "type": "string",
+      "version": 1
+    },
+    "created": "string",
+    "dataControllerOrProcessor": "string",
+    "id": "string",
+    "industrySectors": "",
+    "locations": "",
+    "name": "string",
+    "notes": "string",
+    "ownerId": "string",
+    "ownerName": "string",
+    "type": "string",
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

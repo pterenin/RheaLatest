@@ -1,0 +1,73 @@
+<div class="modal-header justify-content-center border-0">
+  <div
+    class="rounded-circle mt-3"
+    [ngClass]="{
+      'delete-icon-background': type === 'delete',
+      'default-icon-background': type !== 'delete'
+    }"
+  >
+    <div
+      class="d-flex h-100 text-center align-items-center justify-content-center"
+    >
+      <ta-icon
+        [icon]="icon"
+        color="#0082FF"
+        height="24"
+        width="24"
+        taAutoFocus
+      ></ta-icon>
+    </div>
+  </div>
+</div>
+<div class="modal-body pt-0">
+  <div class="modal-title text-wrap" [innerHtml]="title"></div>
+  <div class="modal-description" [innerHtml]="description"></div>
+  <div
+    class="modal-scroll mt-3 border"
+    style="max-height: 240px;"
+    *ngIf="items"
+  >
+    <ta-table>
+      <ta-table-column class="table-column-empty"></ta-table-column>
+      <ta-table-row *ngFor="let item of items">
+        <ta-table-cell
+          container="body"
+          placement="bottom-right"
+          [taTooltip]="item"
+          tooltipTheme="light"
+          [taTruncate]="true"
+          >{{ item }}</ta-table-cell
+        >
+      </ta-table-row>
+    </ta-table>
+  </div>
+</div>
+<div class="modal-footer border-0">
+  <div class="pb-4 px-2 d-flex w-100">
+    <button
+      taButton
+      taType="flat"
+      class="mr-auto btn-lg border-0"
+      data-dismiss="modal"
+      (click)="dismiss()"
+    >
+      {{ btnLabelCancel }}
+    </button>
+    <button
+      taButton
+      taType="primary"
+      class="btn-lg"
+      [ngClass]="{ 'btn-danger': type === 'delete' }"
+      [disabled]="btnDisableConfirm"
+      (click)="submit()"
+    >
+      {{ btnLabelConfirm }}
+      <span
+        *ngIf="showSpinner"
+        class="spinner-border spinner-border-sm ml-auto text-secondary"
+        role="status"
+        aria-hidden="true"
+      ></span>
+    </button>
+  </div>
+</div>

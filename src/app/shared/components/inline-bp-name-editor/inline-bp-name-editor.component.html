@@ -1,0 +1,59 @@
+<div class="d-flex justify-content-between">
+  <span class="link text-truncate mr-2" (click)="editRecord($event)">
+    {{ name }}
+  </span>
+  <ta-icon icon="edit" (click)="openEditingDropdown()"></ta-icon>
+</div>
+<div
+  taDropdown
+  #editingDropDown="taDropdown"
+  class="bp-name-edit-popover"
+  [style.width]="'313px'"
+  (openChange)="handleOpenChange($event)"
+>
+  <ta-icon
+    id="dropdownBpNameEdit"
+    taDropdownAnchor
+    (click)="openEditingDropdown()"
+  >
+  </ta-icon>
+  <div
+    taDropdownMenu
+    aria-labelledby="dropdownBpNameEdit"
+    class="edit-container"
+  >
+    <form [formGroup]="form">
+      <div class="w-100 px-2 pt-1 pb-2">
+        <label [attr.for]="businessProcessId" class="w-100">
+          <input
+            [attr.id]="businessProcessId"
+            type="text"
+            class="w-100 form-control"
+            formControlName="name"
+          />
+        </label>
+      </div>
+    </form>
+    <div class="action-buttons d-flex flex-row justify-content-end">
+      <button
+        class="mr-1 btn-sm  ta-table-button"
+        taButton
+        taType="flat"
+        (click)="editingDropDown.close(); restoreFormInitialState()"
+      >
+        <!--- [i18n-tobeinternationalized] -->
+        Cancel
+      </button>
+      <button
+        class="btn-sm ta-table-button"
+        taButton
+        taType="primary"
+        [disabled]="form.invalid || notChanged"
+        (click)="handleSave($event); editingDropDown.close()"
+      >
+        <!--- [i18n-tobeinternationalized] -->
+        Save
+      </button>
+    </div>
+  </div>
+</div>

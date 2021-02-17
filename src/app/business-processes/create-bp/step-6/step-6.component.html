@@ -1,0 +1,325 @@
+<div class="fadeInApp" *ngIf="rightSecurityControls?.controls">
+  <ta-business-process-wizard-header
+    style="margin-bottom:1.5rem;"
+    *ngIf="!isFetching && licenses.RHEA_NEW_UI_STEPS_12_LICENSE"
+    [currentRoute]="businessProcessNavigation[4]"
+    [record]="record"
+    (isClickSteps)="navigate($event)"
+  ></ta-business-process-wizard-header>
+
+  <form [formGroup]="step6Form">
+    <div class="step-wrapper">
+      <div class="row mb-4">
+        <div class="col">
+          <h3 class="bp-title" data-cy="title-security-risk">
+            <!-- [i18n-tobeinternationalized] -->
+            Complete the security &amp; retention period to finish this business
+            process
+          </h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="sub-heading">
+            <!-- [i18n-tobeinternationalized] -->
+            Identify the security controls that are in place for this business
+            process
+            <ta-icon
+              icon="information-circle"
+              taTooltip="These security controls are from security frameworks, such as NIST and ISO. They map to GDPR Article 32 and the TrustArc DPIA."
+              height="12"
+              container="body"
+              class="position-relative"
+              style="top: -2px; left: 5px;"
+              placement="bottom-left"
+              color="#595959"
+              tooltipTheme="light"
+            ></ta-icon>
+          </div>
+          <p>Select all that apply</p>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <!-- rendering needs to wait until left and right SecurityControls have controls so keep the ngIfs-->
+        <div
+          class="col"
+          *ngIf="leftSecurityControls"
+          formArrayName="leftSecurityControls"
+        >
+          <div
+            *ngFor="
+              let control of leftSecurityControls.controls;
+              index as leftSecurityControlIndex
+            "
+            [formGroupName]="leftSecurityControlIndex"
+            class="mb-1 form-group"
+          >
+            <ta-checkbox formControlName="checked">
+              <!-- [i18n-tobeinternationalized] -->
+              <span [attr.data-cy]="control.value.securityControl">{{
+                control.value.securityControl
+              }}</span>
+            </ta-checkbox>
+          </div>
+        </div>
+        <!-- rendering needs to wait until left and right SecurityControls have controls so keep the ngIfs-->
+        <div class="col">
+          <div
+            *ngIf="rightSecurityControls"
+            formArrayName="rightSecurityControls"
+          >
+            <div
+              *ngFor="
+                let control of rightSecurityControls.controls;
+                index as rightSecurityControlIndex
+              "
+              [formGroupName]="rightSecurityControlIndex"
+              class="mb-1 form-group"
+            >
+              <ta-checkbox formControlName="checked">
+                <!-- [i18n-tobeinternationalized] -->
+                <span [attr.data-cy]="control.value.securityControl">{{
+                  control.value.securityControl
+                }}</span>
+              </ta-checkbox>
+            </div>
+          </div>
+          <div class="mb-1 form-group">
+            <!-- [i18n-tobeinternationalized] -->
+            <div class="d-flex align-items-center">
+              <ta-checkbox
+                class="w-25"
+                formControlName="securityControlOtherFlg"
+              >
+                <span data-cy="other">
+                  Other
+                </span>
+              </ta-checkbox>
+              <div class="w-80">
+                <input
+                  type="text"
+                  class="form-control align-left input-other"
+                  formControlName="securityControlOther"
+                  placeholder="Enter other..."
+                  data-cy="other-name"
+                />
+                <span
+                  class="text-danger align-left"
+                  *ngIf="!step6Form.get('securityControlOther').valid"
+                >
+                  <!-- [i18n-tobeinternationalized] -->
+                  Maximum character limit of 255 exceeded.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col">
+          <div class="sub-heading mb-1">
+            <!-- [i18n-tobeinternationalized] -->
+            Enter the retention period that is appropriate for this business
+            process.
+          </div>
+          <div class="normal-text mb-1">Period</div>
+          <div class="d-flex align-items-center mb-1">
+            <div
+              class="period-length mr-2 w-{{
+                step6Form.get('units').value === 'Other' ? '30' : '40'
+              }}"
+            >
+              <input
+                type="text"
+                formControlName="periodLength"
+                class="form-control"
+                placeholder="Enter period..."
+                data-cy="retention-period"
+              />
+            </div>
+            <div
+              class="dropdown-wrapper w-{{
+                step6Form.get('units').value === 'Other' ? '40' : '60'
+              }}"
+            >
+              <ta-dropdown-field
+                [options]="options"
+                [selectedOption]="step6Form.get('units').value"
+                formControlName="units"
+                data-cy="retention-period-unit"
+              ></ta-dropdown-field>
+            </div>
+            <div
+              *ngIf="step6Form.get('units').value === 'Other'"
+              class="description w-30 ml-2"
+            >
+              <input
+                type="text"
+                formControlName="description"
+                class="form-control"
+                placeholder="Enter other..."
+              />
+            </div>
+            <div class="reset-button pl-2">
+              <button taButton taType="circle" (click)="resetForm()">
+                <ta-icon icon="refresh"></ta-icon>
+              </button>
+            </div>
+          </div>
+          <span
+            class="text-danger d-block"
+            *ngIf="
+              step6Form.get('periodLength').value &&
+              step6Form.get('periodLength').value.length > 20
+            "
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            Period length must be less than 20 characters long.
+          </span>
+          <span
+            class="text-danger d-block"
+            *ngIf="
+              !step6Form.get('periodLength').value &&
+              step6Form.get('units').value &&
+              step6Form.get('units').value !== 'Other'
+            "
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            Period length must be set if a non-other period unit is entered.
+          </span>
+          <span
+            class="text-danger d-block"
+            *ngIf="
+              step6Form.get('periodLength').errors &&
+              step6Form.get('periodLength').errors.pattern
+            "
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            Period length may only contain numbers.
+          </span>
+          <span
+            class="text-danger d-block"
+            *ngIf="
+              step6Form.get('periodLength').value &&
+              !step6Form.get('units').value
+            "
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            Period length must be accompanied by units of measure.
+          </span>
+          <span
+            class="text-danger d-block"
+            *ngIf="
+              !step6Form.get('description').value &&
+              step6Form.get('units').value === 'Other'
+            "
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            A description must be set if the 'Other' period unit is selected.
+          </span>
+          <span
+            class="text-danger d-block"
+            *ngIf="
+              step6Form.get('description').value &&
+              step6Form.get('units').value === 'Other' &&
+              step6Form.get('description').value.length > 1024
+            "
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            A period description must be less than 1024 characters.
+          </span>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col">
+          <div class="sub-heading mb-1">
+            <ta-risk-field-indicator
+              [showIndicator]="showRiskFields"
+              class="align-bottom"
+            ></ta-risk-field-indicator>
+            <!-- [i18n-tobeinternationalized] -->
+            Processing purposes
+            <ta-badge
+              *ngIf="selectedProcessingPurposeIds"
+              [values]="selectedProcessingPurposeIds.length"
+            ></ta-badge>
+          </div>
+          <!-- [i18n-tobeinternationalized] -->
+          <p class="mb-1">
+            Add any processing purposes that you would like to associate with
+            this business process
+          </p>
+          <!-- [i18n-tobeinternationalized] -->
+          <ta-selected-items-container
+            data-cy="processing-purposes-selection-dropdown"
+            #processingPurposesField
+            [showCustomTag]="true"
+            class="step6-selector"
+            height="132px"
+            autoClose="outside"
+            [close]="true"
+            [data]="processingPurposesList"
+            [showCounts]="true"
+            [emptyStateLink]="'Add'"
+            [emptyStateText]="'processing purposes'"
+            [useCheckboxes]="true"
+            (selectionChanged)="processingPurposesChanged($event)"
+          >
+          </ta-selected-items-container>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="sub-heading mb-1">
+            <ta-risk-field-indicator
+              [showIndicator]="showRiskFields"
+              class="align-bottom"
+            ></ta-risk-field-indicator>
+            <!-- [i18n-tobeinternationalized] -->
+            Data elements
+            <ta-badge
+              *ngIf="selectedDataElementIds"
+              [values]="selectedDataElementIds.length"
+            ></ta-badge>
+          </div>
+          <p class="mb-1">
+            <!-- [i18n-tobeinternationalized] -->
+            Add any additional data elements you would further like to associate
+            with this business process
+          </p>
+          <!-- [i18n-tobeinternationalized] -->
+          <ta-selected-items-container
+            data-cy="data-elements-selection-dropdown"
+            #dataElementsField
+            [showCustomTag]="true"
+            class="step6-selector"
+            height="132px"
+            autoClose="outside"
+            [close]="true"
+            [data]="dataElementsList"
+            [showCounts]="true"
+            [emptyStateLink]="'Add'"
+            [emptyStateText]="'data elements'"
+            [useCheckboxes]="true"
+            (selectionChanged)="dataElementsChanged($event)"
+          ></ta-selected-items-container>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div>
+    <button
+      data-cy="next"
+      *taSlotView
+      taButton
+      type="button"
+      taType="primary"
+      class="page-next btn-lg"
+      routerLink="../review"
+      [disabled]="!step6Form.valid"
+    >
+      Next
+    </button>
+  </div>
+</div>

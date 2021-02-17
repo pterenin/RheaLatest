@@ -1,0 +1,88 @@
+<div class="data-flow-item-selectect mb-2 mt-2">
+  <div #thisDrop="taDropdown" taDropdown [open]="open">
+    <button
+      taButton
+      taType="dropdown"
+      id="dropdownBasic1"
+      class="w-100"
+      taDropdownToggle
+      data-cy="data-flow-dropdown-open-button"
+    >
+      {{ text }}
+    </button>
+    <div
+      taDropdownMenu
+      aria-labelledby="dropdownBasic1"
+      [ngClass]="{ 'three-level': isThreeLevel() }"
+    >
+      <ta-dropdown-search
+        data-cy="categorical-view-search-input"
+        (onSearch)="onSearch($event)"
+      ></ta-dropdown-search>
+
+      <ta-dropdown-category data-cy="categories">
+        <!-- GROUPS-->
+        <ta-dropdown-menus>
+          <button
+            *ngFor="let group of groups"
+            class="dropdown-menu-item"
+            [ngClass]="{
+              selected: selectedGroup.id === group.id
+            }"
+            (click)="onSelectedGroup(group)"
+          >
+            <span [innerHTML]="getCategoryLabel(group)"></span>
+            <ta-icon icon="caret-right" height="10"></ta-icon>
+          </button>
+        </ta-dropdown-menus>
+
+        <!-- SECOND MENUE FOR 3-LEVEL DROPDOWN -->
+        <ta-dropdown-menus *ngIf="isThreeLevel()">
+          <button
+            *ngFor="let subGroup of selectedGroup.subCategories"
+            class="dropdown-menu-item"
+            [ngClass]="{
+              selected: selectedSubGroup.id === subGroup.id
+            }"
+            (click)="onSelectSubGroup(subGroup)"
+          >
+            <span [innerHTML]="getCategoryLabel(subGroup)"></span>
+            <ta-icon icon="caret-right" height="10"></ta-icon>
+          </button>
+        </ta-dropdown-menus>
+
+        <!-- ITEMS -->
+        <ta-dropdown-items data-cy="categories-items" *ngIf="isFetching">
+          <div class="spinner-container">
+            <span
+              class="spinner-border spinner-border-sm mr-2 text-primary"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          </div>
+        </ta-dropdown-items>
+        <ta-dropdown-items data-cy="categories-items" *ngIf="!isFetching">
+          <ta-dropdown-scroll scrollHeight="300">
+            <button
+              *ngFor="let item of items"
+              class="dropdown-item"
+              [ngClass]="{ hidden: item.hidden }"
+              (click)="thisDrop.close(); onSelectedItem(item)"
+            >
+              <ta-data-flow-dropdown-label
+                [item]="item"
+                [searchValue]="searchValue"
+                [locationDatas]="locationDatas"
+                [direction]="direction"
+                [hasRHEA_NEW_UI_STEPS_34_LICENSE]="
+                  hasRHEA_NEW_UI_STEPS_34_LICENSE
+                "
+                (triggerLocationTooltip)="triggerLocationTooltip($event)"
+              ></ta-data-flow-dropdown-label>
+            </button>
+          </ta-dropdown-scroll>
+        </ta-dropdown-items>
+      </ta-dropdown-category>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+@import 'src/styles/variables';
+
+.breadcrumb-wrapper {
+  margin: 0 20px;
+  margin-bottom: 12px;
+  padding: 20px 0;
+  display: flex;
+  border-bottom: 1px solid $silver-grey;
+  a {
+    text-decoration: none;
+    color: #595959;
+    &:hover {
+      color: #0052cc;
+    }
+  }
+}
+
+::ng-deep .badge-custom {
+  background-color: $amethyst;
+  text-transform: uppercase;
+  margin-left: 5px;
+  height: 16px;
+  width: 58px;
+}
+
+.icon-wrapper {
+  margin: 0 10px;
+}

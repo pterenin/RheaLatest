@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <h4 class="modal-title confirm-unlinking" id="modal-basic-title" taAutofocus>
+    Confirm Unlinking
+  </h4>
+  <button type="button" class="close" aria-label="Close" (click)="onCancel()">
+    <i class="ta ta-close"></i>
+  </button>
+</div>
+<!--- [i18n-tobeinternationalized] -->
+<div class="modal-body">
+  {{ contentStart }} {{ contentEnd }}
+  <div class="modal-scroll">
+    <div class="category-list">
+      {{ getCategories() }}
+    </div>
+  </div>
+</div>
+<div class="modal-footer align-items-start justify-content-end">
+  <button
+    taButton
+    type="button"
+    id="confirm-unlink-cancel"
+    taType="secondary"
+    class="mr-3"
+    data-dismiss="modal"
+    [disabled]="disabled"
+    (click)="onCancel()"
+  >
+    <!--- [i18n-tobeinternationalized] --->
+    Cancel
+  </button>
+  <button
+    taButton
+    id="confirm-unlink-button"
+    [taType]="redButton ? 'danger' : 'primary'"
+    type="button"
+    [disabled]="disabled"
+    (click)="onUnlink()"
+  >
+    <!--- [i18n-tobeinternationalized] --->
+    Unlink
+  </button>
+</div>

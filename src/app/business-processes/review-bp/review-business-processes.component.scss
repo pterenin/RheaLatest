@@ -1,0 +1,40 @@
+@import 'src/styles/variables';
+@import '../../../styles/record-details';
+@import '../shared/shared-business-processes';
+
+ta-review-bp ta-page-nav ta-page-nav-default.active:before {
+  content: '\2605';
+  font-size: $font-size-18;
+  padding-top: 1px;
+}
+
+ta-review-bp {
+  ta-steps {
+    display: block;
+    overflow: hidden;
+    min-height: 58px;
+    padding: 15px 0;
+    position: relative;
+    z-index: 0;
+    justify-content: center;
+    text-align: center;
+    margin: 1rem auto 0;
+    .ta-step.active .ta-step-label {
+      font-weight: normal;
+    }
+
+    .active {
+      position: relative;
+      .ta-step-num {
+        font-size: 0;
+      }
+      .star {
+        font-size: 24px;
+        position: absolute;
+        top: 11px;
+        left: 3px;
+        color: $white;
+      }
+    }
+  }
+}

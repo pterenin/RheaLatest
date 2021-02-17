@@ -1,0 +1,426 @@
+<div class="fadeInApp">
+  <form [formGroup]="thirdPartyDetailsForm">
+    <div class="company-affiliate-details-container">
+      <div class="row form-group">
+        <div class="col">
+          <label for="vendorName" class="data-label">
+            <!-- [i18n-tobeinternationalized] -->
+            Name of Third Party
+            <span
+              [ngClass]="{
+                'text-danger': iconRequiredColor === 'red',
+                'font-color-default': iconRequiredColor === 'default'
+              }"
+              >*</span
+            >
+          </label>
+          <input
+            id="vendorName"
+            type="text"
+            formControlName="vendorName"
+            placeholder="Name"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': vendorName.invalid && vendorName.touched
+            }"
+            name="vendorName"
+          />
+          <div
+            *ngIf="
+              vendorName.invalid &&
+              vendorName.touched &&
+              !vendorName.errors?.maxlength
+            "
+            class="text-danger text-danger-multi-sibling"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            This field is required.
+          </div>
+          <div
+            *ngIf="vendorName.errors?.maxlength"
+            class="text-danger text-danger-multi-sibling"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            The name must be less than 255 characters.
+          </div>
+        </div>
+        <div class="col" id="vendorOrPartner">
+          <ta-risk-field-indicator
+            [showIndicator]="showRiskFields"
+          ></ta-risk-field-indicator>
+          <label for="vendorOrPartner" class="data-label">
+            <!-- [i18n-tobeinternationalized] -->
+            Type of Third Party
+            <span
+              [ngClass]="{
+                'text-danger': iconRequiredColor === 'red',
+                'font-color-default': iconRequiredColor === 'default'
+              }"
+              >*</span
+            ></label
+          >
+          <!-- [i18n-tobeinternationalized] -->
+          <ta-dropdown-field
+            [options]="vendorOrPartners"
+            optionLabel="name"
+            [selectedOption]="
+              thirdPartyDetailsForm.get('vendorOrPartner').value
+            "
+            formControlName="vendorOrPartner"
+            [ngClass]="{
+              'is-invalid': vendorOrPartner.invalid
+            }"
+            placeholder="Select type of Third Party"
+            (dropdownOpenChanged)="onDropdownTouched($event, 'vendorOrPartner')"
+          ></ta-dropdown-field>
+          <div
+            *ngIf="
+              thirdPartyDetailsForm.get('vendorOrPartner').invalid &&
+              thirdPartyDetailsForm.get('vendorOrPartner').touched
+            "
+            class="text-danger text-danger-multi-sibling"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            This field is required.
+          </div>
+        </div>
+      </div>
+      <div
+        formArrayName="ccpaQuestionIds"
+        class="row form-group"
+        *ngIf="
+          thirdPartyDetailsForm.value.vendorOrPartner?.id ===
+          thirdPartyType.VENDOR
+        "
+      >
+        <div
+          class="col"
+          *ngFor="let question of ccpaQuestions; let i = index"
+          id="{{ 'vendorCertificatesAndAgreements-' + i }}"
+        >
+          <div class="form-check form-check-inline">
+            <ta-checkbox
+              [formControl]="ccpaQuestionIdsFormArray.controls[i]"
+              [valueChecked]="question.id"
+              valueUnChecked=""
+              class="my-8"
+            >
+              <!-- [i18n-tobeinternationalized] -->
+              {{ question.question }}
+            </ta-checkbox>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="showCustomEntityInput()">
+        <div class="col">
+          <label for="customEntityType" class="data-label">
+            <!-- [i18n-tobeinternationalized] -->
+            Custom Entity Type
+          </label>
+          <input
+            id="customEntityType"
+            type="text"
+            formControlName="customEntityType"
+            placeholder="customEntityType"
+            class="form-control"
+            name="customEntityType"
+          />
+        </div>
+      </div>
+      <div class="row" *ngIf="customEntityTypeHasErrors()">
+        <div class="col">
+          <div class="text-danger text-danger-multi-sibling">
+            <!-- [i18n-tobeinternationalized] -->
+            The type must be less than 20 characters.
+          </div>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col">
+          <label for="industrySector" class="data-label">
+            <!-- [i18n-tobeinternationalized] -->
+            Industry Sector
+          </label>
+          <div
+            aria-labelledby="thirdPartyIndustrySectorDetailsItemsSelect"
+            id="industrySector"
+          >
+            <ta-dropdown-category-multiple
+              *ngIf="thirdPartyDataLoaded; else dropdownLoader"
+              [isSearchable]="true"
+              [options]="industrySectors"
+              formControlName="industrySectors"
+            ></ta-dropdown-category-multiple>
+          </div>
+        </div>
+        <div class="col" id="controllerOrProcessor">
+          <!-- [i18n-tobeinternationalized] -->
+          <label for="dataControllerOrProcessor" class="data-label">
+            <!-- [i18n-tobeinternationalized] -->
+            Data Controller or Processor
+            <ng-template #controllerProcessorTipContent>
+              <!-- [i18n-tobeinternationalized] -->
+              The data controller is the person (or business) who determines the
+              purposes for which, and the way in which, personal data is
+              processed. By contrast, a data processor is anyone who processes
+              personal data on behalf of the data controller (excluding the data
+              controller's own employees)
+            </ng-template>
+            <ta-icon
+              [icon]="iconTypeTooltip"
+              [taTooltip]="controllerProcessorTipContent"
+              tooltipTextAlign="left"
+              height="12"
+              container="body"
+              class="position-relative"
+              style="top: -2px; left: 5px;"
+              placement="bottom-left"
+              color="#595959"
+              tooltipTheme="light"
+            ></ta-icon>
+          </label>
+          <ta-dropdown-field
+            [options]="dataControllerOrProcessors"
+            optionLabel="name"
+            [selectedOption]="
+              thirdPartyDetailsForm.get('dataControllerOrProcessor').value
+            "
+            formControlName="dataControllerOrProcessor"
+            [class.disabled]="isDataControllerOrProcessorDisabled"
+            placeholder="Select Controller or Processor"
+          ></ta-dropdown-field>
+        </div>
+      </div>
+      <div
+        *ngIf="
+          thirdPartyResponseType === 'VENDOR' ||
+          thirdPartyDetailsForm.value.vendorOrPartner?.id ===
+            thirdPartyType.VENDOR
+        "
+        class="row mb-4"
+      >
+        <div
+          *ngIf="thirdPartyDataLoaded; else dropdownLoader"
+          class="col-6"
+          id="companyEntities"
+        >
+          <label for="companyEntityResponses" class="data-label">
+            <!-- [i18n-tobeinternationalized] -->
+            Select the organizations responsible for managing this third party
+            relationship
+          </label>
+          <ta-dropdown-category-group
+            [categories]="
+              thirdPartyDetailsForm.get('companyEntityResponses').value
+            "
+            (selection)="managingEntitiesSelectionChange($event)"
+            (deselection)="managingEntitiesSelectionChange($event)"
+          >
+          </ta-dropdown-category-group>
+        </div>
+      </div>
+
+      <ta-input-location
+        header="Location"
+        [iconRequiredColor]="'red'"
+        [showRiskFields]="showRiskFields"
+        [allCountries]="allCountries"
+        [locations]="selectedLocations"
+        (locationChanges)="locationChanges($event)"
+        class="d-block mb-4"
+      ></ta-input-location>
+
+      <!-- [i18n-tobeinternationalized] -->
+      <div class="sub-heading position-relative" style="margin-top: -7px;">
+        <!-- [i18n-tobeinternationalized] -->
+        Contract Date
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="startDate" class="data-label">Start Date</label>
+          <div class="form-group">
+            <div class="input-group">
+              <div taDropdown class="d-inline-block w-100" autoClose="outside">
+                <button
+                  taButton
+                  type="button"
+                  taType="dropdown"
+                  id="dropdownBasic1"
+                  taDropdownToggle
+                  class="w-100"
+                >
+                  <span
+                    [ngClass]="{
+                      'placeholder-text': !selectedStartDate
+                    }"
+                  >
+                    {{
+                      selectedStartDate
+                        ? (selectedStartDate | date: 'yyyy-MM-dd')
+                        : 'Select Date'
+                    }}
+                  </span>
+                </button>
+                <div
+                  class="p-0 dropdown-menu-width-unset"
+                  taDropdownMenu
+                  aria-labelledby="dropdownBasic1"
+                  id="startDate"
+                >
+                  <ta-datepicker
+                    (select)="onStartDateSelect($event)"
+                    formControlName="startDate"
+                  ></ta-datepicker>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            *ngIf="isExpirationDateLessThanStartDate()"
+            class="text-danger text-danger-multi-sibling"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            Expiration Date cannot be less than or equal to Start Date.
+          </div>
+        </div>
+        <div class="col">
+          <label for="expirationDate" class="data-label">Expiration Date</label>
+          <!-- [i18n-tobeinternationalized] -->
+          <div class="form-group">
+            <div class="input-group">
+              <div taDropdown class="d-inline-block w-100" autoClose="outside">
+                <button
+                  taButton
+                  type="button"
+                  taType="dropdown"
+                  id="dropdownBasic2"
+                  taDropdownToggle
+                  class="w-100"
+                >
+                  <span
+                    [ngClass]="{
+                      'placeholder-text': !selectedExpirationDate
+                    }"
+                  >
+                    {{
+                      selectedExpirationDate
+                        ? (selectedExpirationDate | date: 'yyyy-MM-dd')
+                        : 'Select Date'
+                    }}
+                  </span>
+                </button>
+                <div
+                  class="p-0 dropdown-menu-width-unset"
+                  taDropdownMenu
+                  aria-labelledby="dropdownBasic1"
+                >
+                  <ta-datepicker
+                    (select)="onExpirationDateSelect($event)"
+                    formControlName="expirationDate"
+                    id="expirationDate"
+                  ></ta-datepicker>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--  Contact -->
+      <div
+        class="sub-heading dpo-or-legal-contact-title mt-0"
+        id="editContactButton"
+      >
+        <!-- [i18n-tobeinternationalized] -->
+        Contact
+        <a class="update-contact-link" *ngIf="contact" (click)="editContact()">
+          <!-- [i18n-tobeinternationalized] -->
+          Edit Contact
+        </a>
+      </div>
+      <div class="row form-group mb-4">
+        <div class="col contact-info" *ngIf="contact">
+          <div class="row contact-row">
+            <div class="col text-wrap text-break" *ngIf="contact.fullName">
+              {{ contact.fullName || '' }}
+            </div>
+          </div>
+          <div class="row contact-row" *ngIf="contact.email">
+            <div class="col text-wrap text-break">
+              {{ contact.email || '' }}
+            </div>
+          </div>
+          <div class="row contact-row" *ngIf="contact.phone">
+            <div class="col text-wrap text-break">
+              {{ contact.phone || '' }}
+            </div>
+          </div>
+        </div>
+        <div class="col contact-info" *ngIf="contact">
+          <div class="row contact-row">
+            <div class="col text-wrap text-break" *ngIf="contact.address">
+              {{ contact.address || '' }}
+            </div>
+          </div>
+          <div class="row contact-row" *ngIf="contact.cityStateZip">
+            <div class="col text-wrap text-break">
+              {{ contact.cityStateZip }}
+            </div>
+          </div>
+          <div class="row contact-row" *ngIf="contact.country">
+            <div class="col text-wrap text-break">
+              {{ contact.country.name || '' }}
+            </div>
+          </div>
+        </div>
+        <div class="col contact-info" *ngIf="!contact">
+          <!-- [i18n-tobeinternationalized] -->
+          You haven't added an external contact.
+          <a
+            class="add-new-location-link"
+            *ngIf="!contact"
+            (click)="createNewContact()"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            Create New Contact
+          </a>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div class="sub-heading">
+        <!-- [i18n-tobeinternationalized] -->
+        Notes
+      </div>
+      <div class="row form-group">
+        <!-- [i18n-tobeinternationalized] -->
+        <div class="col-12">
+          <textarea
+            formControlName="notes"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': notes.invalid && notes.touched
+            }"
+            id="notes"
+            name="notes"
+            placeholder="Add comments, notes."
+            rows="5"
+            id="notes"
+          ></textarea>
+          <div *ngIf="notes.errors?.maxlength" class="text-danger">
+            <!-- [i18n-tobeinternationalized] -->
+            The notes must be less than 1024 characters.
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<ng-template #dropdownLoader>
+  <ta-dropdown-field
+    [options]="[]"
+    [isSearchable]="false"
+    placeholder="Loading..."
+  ></ta-dropdown-field>
+</ng-template>

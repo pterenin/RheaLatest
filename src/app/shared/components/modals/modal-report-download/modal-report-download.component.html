@@ -1,0 +1,54 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="revalidation-date-edit-title" taAutoFocus>
+    <!--- [i18n-tobeinternationalized] -->
+    Download Report
+  </h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <ta-icon icon="close"></ta-icon>
+  </button>
+</div>
+<div class="modal-body pb-0">
+  <div class="container">
+    <div class="row mb-3">
+      <div class="col">
+        <!-- [i18n-tobeinternationalized] -->
+        <p>Include the following in the {{ reportName }} Report:</p>
+        <div class="mb-2">
+          <ta-checkbox [(ngModel)]="dataFlowOptions.includeDataFlowChart">
+            <!-- [i18n-tobeinternationalized] -->
+            Data Flow Chart
+          </ta-checkbox>
+        </div>
+        <div class="mb-2">
+          <ta-checkbox [(ngModel)]="dataFlowOptions.includeGlobalMap">
+            Global Map
+          </ta-checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="d-flex w-100">
+    <button
+      taButton
+      taType="flat"
+      class="mr-auto btn-lg"
+      data-dismiss="modal"
+      (click)="dismiss()"
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      Cancel
+    </button>
+    <button
+      taButton
+      taType="primary"
+      class="btn-lg"
+      (click)="submit()"
+      [disabled]="false"
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      Run Report
+    </button>
+  </div>
+</div>

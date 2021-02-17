@@ -1,0 +1,22 @@
+@import 'src/styles/variables';
+
+:host {
+  display: inline-block;
+  .data-inventory-card-filter-dropdown-menu {
+    padding: 0;
+    .data-inventory-card-filter-header {
+      font-weight: 500;
+      border-bottom: $border-default;
+    }
+    .data-inventory-card-filter-content {
+      max-height: 250px;
+      overflow-y: auto;
+    }
+    .data-inventory-card-filter-footer {
+      border-top: $border-default;
+      .btn {
+        min-width: 55px !important;
+      }
+    }
+  }
+}

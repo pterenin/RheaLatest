@@ -1,0 +1,30 @@
+<div class="custom-table">
+  <ta-table [id]="gridId" [serverProcess]="false" class="minimal mt-2">
+    <ta-table-column class="col">
+      <ta-checkbox
+        (click)="allFiltersClick($event)"
+        [checked]="isAllSelected()"
+        [indeterminate]="isIndeterminate()"
+      ></ta-checkbox>
+    </ta-table-column>
+    <ta-table-column class="col">{{ col1Name }}</ta-table-column>
+    <ta-table-column class="col">{{ col2Name }}</ta-table-column>
+  </ta-table>
+  <div class="ta-table-body custom-table-body mb-4">
+    <div class="ta-table-row row" *ngFor="let d of data">
+      <div class="ta-table-cell col ta-col-checkbox align-items-top">
+        <ta-checkbox [(ngModel)]="d.isSelected"></ta-checkbox>
+      </div>
+      <div class="ta-table-cell col align-items-top">
+        <div class="w-100 text-truncate">
+          {{ d[col1Field] }}
+        </div>
+      </div>
+      <div class="ta-table-cell col align-items-top">
+        <div class="w-100 text-truncate">
+          {{ d[col2Field] }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

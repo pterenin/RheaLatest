@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59 (86127) - https://sketch.com -->
+    <title>risk-no</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="risk-/-unlikely">
+            <g id="risk-no">
+                <circle id="Oval" fill="#5FC323" cx="8" cy="8" r="8"></circle>
+                <g id="Group-2" transform="translate(6.857143, 3.428571)" fill="#FFFFFF">
+                    <polygon id="Path" points="2.14285714 8.68421053 0.142857143 8.68421053 0.142857143 7 2.14285714 7"></polygon>
+                    <polygon id="Path" points="0.142857143 5.05263158 0.142857143 0 2.14285714 0 2.14285714 5.05263158"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

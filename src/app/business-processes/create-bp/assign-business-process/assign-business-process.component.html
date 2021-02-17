@@ -1,0 +1,151 @@
+<div class="modal-header">
+  <!--- [i18n-tobeinternationalized] --->
+  <h4 class="modal-title" id="modal-basic-title">
+    Assign New Business Process
+  </h4>
+  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+    <i class="ta ta-close"></i>
+  </button>
+</div>
+<form [formGroup]="bpAssignForm" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+    <!--- [i18n-tobeinternationalized] --->
+    <!-- TODO: TIMF-4771 -->
+    <div *ngIf="false" class="modal-subheading mb-1">
+      Select the task to assign
+    </div>
+    <!-- TODO: TIMF-4771 -->
+    <div *ngIf="false" class="form-check form-check-inline mb-2 mr-3">
+      <ta-radio
+        group="radioGr"
+        value="create-and-assign"
+        formControlName="status"
+        id="create-and-assign"
+      >
+        <!--- [i18n-tobeinternationalized] --->
+        Create new business process
+      </ta-radio>
+    </div>
+    <!-- TODO: TIMF-4771 -->
+    <div *ngIf="false" class="form-check form-check-inline mb-2">
+      <ta-radio
+        group="radioGr"
+        value="review-selected"
+        formControlName="status"
+        id="review"
+        [disabled]="disableReviewOption"
+        [ngClass]="{
+          'disabled-radio-text': disableReviewOption
+        }"
+      >
+        <!--- [i18n-tobeinternationalized] --->
+        Review selected business process
+      </ta-radio>
+    </div>
+    <!--- [i18n-tobeinternationalized] --->
+    <div class="form-group" (click)="assignee.markAsTouched()">
+      <ta-dropdown-field
+        taAutofocus
+        class="reviewer-dropdown mb-2"
+        [label]="'Assign to *'"
+        [placeholder]="'Select user...'"
+        [options]="assignees"
+        [selectedOption]="bpAssignForm.get('assignee').value"
+        formControlName="assignee"
+        optionLabel="label"
+        [isSearchable]="true"
+        (searchChanged)="onUserSearchChanged($event)"
+      ></ta-dropdown-field>
+      <div *ngIf="assignee.invalid && assignee.touched" class="text-danger">
+        <!-- [i18n-tobeinternationalized] -->
+        This field is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <!--- [i18n-tobeinternationalized] --->
+      <label for="message">Message to assignee</label>
+      <textarea
+        class="form-control message mb-4"
+        rows="5"
+        id="message"
+        name="message"
+        formControlName="message"
+      ></textarea>
+      <div *ngIf="message.errors?.maxlength" class="text-danger">
+        <!-- [i18n-tobeinternationalized] -->
+        The message must be less than 1024 characters.
+      </div>
+    </div>
+    <div
+      formGroupName="businessProcessForm"
+      *ngIf="bpAssignForm.get('status').value === 'create-and-assign'"
+    >
+      <div class="modal-subheading mb-1">Business process to assign</div>
+      <div class="form-group">
+        <label for="bpName">Business process name *</label>
+        <input
+          type="text"
+          id="bp-name-assign"
+          formControlName="bpName"
+          class="form-control"
+          name="bpName"
+          placeholder=""
+        />
+        <div
+          *ngIf="!bpName.errors?.maxlength && bpName.invalid && bpName.touched"
+          class="text-danger"
+        >
+          <!-- [i18n-tobeinternationalized] -->
+          This field is required.
+        </div>
+        <div *ngIf="bpName.errors?.maxlength" class="text-danger">
+          <!-- [i18n-tobeinternationalized] -->
+          The name must be less than 255 characters.
+        </div>
+      </div>
+
+      <div class="form-group mt-2">
+        <!--- [i18n-tobeinternationalized] --->
+        <label for="bpDescription">Business process description</label>
+        <textarea
+          class="form-control message mb-4"
+          rows="5"
+          id="bpDescription"
+          name="bpDescription"
+          formControlName="bpDescription"
+        ></textarea>
+        <div *ngIf="bpDescription.errors?.maxlength" class="text-danger">
+          <!-- [i18n-tobeinternationalized] -->
+          The description must be less than 1024 characters.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer align-items-start justify-content-start">
+    <button
+      taButton
+      type="button"
+      taType="secondary"
+      class="mr-auto"
+      data-dismiss="modal"
+      id="modal-cancel"
+      (click)="activeModal.dismiss('Cancel')"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Cancel
+    </button>
+    <button
+      taButton
+      type="button"
+      taType="primary"
+      id="modal-submit"
+      (click)="onSubmit()"
+      bpAssignForm
+      [disabled]="!bpAssignForm.valid"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Assign
+    </button>
+  </div>
+</form>

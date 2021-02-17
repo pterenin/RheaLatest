@@ -1,0 +1,89 @@
+<ng-template #popTitle>
+  <div class="row">
+    <div class="col-sm-3">{{ data.sendingEntity.name }}</div>
+    <div class="col-sm-4">
+      <img src="assets/images/arrow-line-arrow.80px.svg" />
+    </div>
+    <div class="col-sm-3">
+      {{ data.receivingEntity.name }}
+    </div>
+    <div class="col-sm-2">
+      <i class="ta ta-close" (click)="p.close()"></i>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #popContent>
+  <div class="content">
+    <ta-tabset>
+      <!-- [i18n-tobeinternationalized] -->
+      <ta-tab title="Sending">
+        <ng-template taTabContent>
+          <!-- [i18n-tobeinternationalized] -->
+          <div class="info-tab-heading">DATA ELEMENTS</div>
+          <div>
+            <ol class="data-elements-list">
+              <li
+                class="data-element"
+                *ngFor="
+                  let value of dataElementsObjectToArray(data.sendingEntity);
+                  let i = index
+                "
+              >
+                {{ value }}
+              </li>
+            </ol>
+          </div>
+        </ng-template>
+      </ta-tab>
+      <!-- [i18n-tobeinternationalized] -->
+      <ta-tab title="Receiving">
+        <ng-template taTabContent>
+          <!-- [i18n-tobeinternationalized] -->
+          <div class="info-tab-heading">DATA ELEMENTS</div>
+          <div>
+            <ol class="data-elements-list">
+              <li
+                class="data-element"
+                *ngFor="
+                  let value of dataElementsObjectToArray(data.receivingEntity);
+                  let i = index
+                "
+              >
+                {{ value }}
+              </li>
+            </ol>
+          </div>
+        </ng-template>
+      </ta-tab>
+    </ta-tabset>
+  </div>
+  <div class="footer">
+    <div class="row">
+      <div class="col-sm-9">
+        <!-- [i18n-tobeinternationalized] -->
+        Is this transfer a sale of data?
+      </div>
+      <div class="col-sm-3">
+        <ta-toggleswitch
+          theme="secondary"
+          type="icon"
+          [(ngModel)]="data.isSaleOfData"
+          (ngModelChange)="changeSaleOfData($event)"
+        ></ta-toggleswitch>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<div
+  [taPopover]="popContent"
+  [popoverTitle]="popTitle"
+  popoverClass="info-modal"
+  [placement]="location"
+  triggers="mouseenter"
+  autoClose="outside"
+  #p="taPopover"
+>
+  <ng-content></ng-content>
+</div>

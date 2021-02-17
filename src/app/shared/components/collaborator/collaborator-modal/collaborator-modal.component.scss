@@ -1,0 +1,14 @@
+@import 'src/styles/variables';
+.ta-modal-collaborator {
+  .modal-dialog {
+    .modal-content {
+      background-color: $white;
+    }
+    .modal-description {
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 30px;
+    }
+  }
+}

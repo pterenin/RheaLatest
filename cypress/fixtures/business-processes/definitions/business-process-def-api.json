@@ -1,0 +1,22 @@
+{
+  "create": {
+    "method": "POST",
+    "url": "api/business-processes",
+    "alias": "@create"
+  },
+  "read": {
+    "method": "GET",
+    "url": "",
+    "alias": ""
+  },
+  "update": {
+    "method": "PUT",
+    "url": "business-process/${body.id}/background",
+    "alias": ""
+  },
+  "delete": {
+    "method": "DELETE",
+    "url": "api/base-records/records",
+    "alias": "@delete"
+  }
+}

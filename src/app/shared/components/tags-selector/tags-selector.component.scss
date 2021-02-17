@@ -1,0 +1,37 @@
+@import '../../../../styles/variables';
+
+.ta-dropdown-hierarchy {
+  i {
+    cursor: pointer;
+    display: inline;
+    color: $turquoise-blue;
+  }
+
+  .ta-dropdown-hierarchy-menu {
+    padding: 2px 0 0 0;
+    min-height: 100px;
+    max-height: 120px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .ta-dropdown-hierarchy-title {
+    padding: 2px 7px;
+    border-bottom: solid 1px $gray-500;
+
+    p {
+      text-transform: uppercase;
+      font-weight: bold;
+      color: $gray-700;
+      margin: 0px;
+      padding: 0 0 5px 12px;
+      padding-left: 12px;
+      display: inline-block;
+    }
+  }
+
+  .ta-dropdown-hierarchy-btn-toggle {
+    width: 100%;
+  }
+}

@@ -1,0 +1,204 @@
+<div
+  [taPopover]="popContent"
+  [popoverTitle]="popTitle"
+  #popover="taPopover"
+  triggers="manual"
+  [autoClose]="false"
+  placement="right"
+  popoverClass="info-modal fadeInApp duration-300 popover-data-flow"
+></div>
+
+<ng-template #popTitle>
+  <div class="d-flex align-items-center">
+    <h3 class="bp-title m-0 p-0 text-left overflow">
+      {{ popoverData ? popoverData.item.label : 'Loading...' }}
+    </h3>
+    <div class="d-flex flex-fill bp-title flex-badge-header ml-2">
+      <ta-tags *ngIf="location" class="mr-2" style="font-weight: normal">
+        {{ location }}
+      </ta-tags>
+      <ta-tags
+        *ngIf="popoverData"
+        [theme]="'inverted-' + getLabelDetailsByTag(popoverData.item.tag)"
+        style="max-width: 300px; font-weight: normal;"
+      >
+        {{ popoverData.item.tag | replace: '_':' ' | titlecase }}
+      </ta-tags>
+    </div>
+    <i
+      class="ta ta-close header-x"
+      (click)="close()"
+      id="close-popover-flow"
+    ></i>
+  </div>
+</ng-template>
+
+<ng-template #popContent>
+  <section class="popover-section">
+    <ta-tabset *ngIf="popoverData">
+      <ta-tab>
+        <ng-template taTabTitle>
+          Locations
+          <ta-badge
+            [values]="selectedLocationsCount"
+            class="count-badge"
+          ></ta-badge
+        ></ng-template>
+        <ng-template taTabContent>
+          <div class="pt-3 pb-2" *ngIf="!popoverData.item.isItSystem">
+            <!-- [i18n-tobeinternationalized] -->
+
+            Select the countries where this
+            {{
+              registryInputEntityTypeDisplayValue
+                ? registryInputEntityTypeDisplayValue
+                : 'entity'
+            }}
+            is located (multiple allowed)*
+          </div>
+          <div class="pt-3 pb-2" *ngIf="popoverData.item.isItSystem">
+            <!-- [i18n-tobeinternationalized] -->
+            The location below is sending data
+          </div>
+          <input
+            type="text"
+            placeholder="Search"
+            class="locationSearch"
+            (input)="onSearchChange($event.target.value)"
+          />
+          <ta-location
+            #taLocationComponent
+            [locations]="globalRegionsForDisplay"
+            [isReadOnly]="popoverData.item.isItSystem"
+            (countSelectedLocations)="updateSelectedLocationCount($event)"
+            (itemsSelected)="editSelectedCountries($event, changeToSystemModal)"
+          ></ta-location>
+        </ng-template>
+      </ta-tab>
+      <ta-tab>
+        <!-- [i18n-tobeinternationalized] -->
+        <ng-template taTabTitle>
+          Data Elements
+          <ta-badge
+            [values]="countSelectedDataElements"
+            class="count-badge"
+          ></ta-badge>
+        </ng-template>
+        <ng-template taTabContent>
+          <!-- [i18n-tobeinternationalized] -->
+          <div class="dataelement-description inline-div pt-3 pb-2">
+            Select the data elements this {{ entityType }} is
+            <span class="font-weight-bold">{{ getIdentifierTitle() }}*</span>
+          </div>
+          <div>
+            <ta-categorical-view
+              class="not-in-dropdown"
+              [(data)]="dataElementsForDisplay"
+              [showCheckboxes]="true"
+              [showCounts]="true"
+              [selectFirstCategory]="false"
+              (selections)="onDataElementSelect($event, changeToSystemModal)"
+            ></ta-categorical-view>
+          </div>
+        </ng-template>
+      </ta-tab>
+      <!-- [i18n-tobeinternationalized] -->
+      <ta-tab *ngIf="!isDataSubject()">
+        <!-- [i18n-tobeinternationalized] -->
+        <ng-template taTabTitle>
+          Processing Purposes
+          <ta-badge
+            [values]="countSelectedProcessingPurposes"
+            class="count-badge"
+          ></ta-badge>
+        </ng-template>
+        <ng-template taTabContent>
+          <!-- [i18n-tobeinternationalized] -->
+          <div class="dataelement-description inline-div pt-3 pb-2">
+            Select the processing purposes this {{ entityType }} is
+            <span class="font-weight-bold">{{ getIdentifierTitle() }}*</span>
+          </div>
+          <div>
+            <ta-categorical-view
+              class="not-in-dropdown"
+              [data]="processingPurposesForDisplay"
+              [showCheckboxes]="true"
+              [showCounts]="true"
+              [selectFirstCategory]="false"
+              (selections)="
+                onProcessingPurposeSelect($event, changeToSystemModal)
+              "
+            ></ta-categorical-view>
+          </div>
+        </ng-template>
+      </ta-tab>
+    </ta-tabset>
+  </section>
+  <div class="footer d-flex p-3 align-items-center">
+    <div class="mr-auto">
+      <!-- [i18n-tobeinternationalized] -->
+      Is this transfer a sale of data?
+      <ta-toggleswitch
+        *ngIf="popoverData"
+        theme="secondary"
+        type="icon"
+        [(ngModel)]="popoverData.edge.saleOfData"
+      ></ta-toggleswitch>
+    </div>
+    <div class="footer-buttons">
+      <button
+        taButton
+        type="button"
+        taType="secondary"
+        class="mr-auto"
+        style="min-width: unset"
+        data-dismiss="modal"
+        id="modal-cancel"
+        (click)="close()"
+      >
+        <!--- [i18n-tobeinternationalized] --->
+        Cancel
+      </button>
+      <button
+        taButton
+        type="button"
+        taType="primary"
+        class="mr-auto"
+        data-dismiss="modal"
+        style="min-width: unset"
+        [disabled]="selectedLocationsCount === 0"
+        id="modal-save"
+        (click)="saveData()"
+      >
+        <!--- [i18n-tobeinternationalized] --->
+        Save
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #changeToSystemModal let-modal>
+  <div class="change-to-system-modal text-center">
+    <div class="content">
+      <img src="assets/images/help.svg" />
+      <h5>
+        You've selected additional data that is not on the system record.
+        <!-- [i18n-tobeinternationalized] -->
+      </h5>
+      <p>
+        <small>
+          Do you want to update your system record to include this data?
+          <!-- [i18n-tobeinternationalized] -->
+        </small>
+      </p>
+    </div>
+    <div class="action-buttons d-flex justify-content-between">
+      <button taButton taType="flat" (click)="modal.dismiss('Cancel')">
+        Cancel
+      </button>
+      <button taButton taType="primary" (click)="modal.close('Update')">
+        Update Record
+      </button>
+    </div>
+  </div>
+</ng-template>

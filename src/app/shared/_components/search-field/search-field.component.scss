@@ -1,0 +1,17 @@
+@import 'src/styles/variables';
+
+:host {
+  display: inline-block;
+  position: relative;
+  .search-field {
+    width: auto;
+    min-width: 10px;
+  }
+  .search-custom-placeholder {
+    position: absolute;
+    left: 27px;
+    top: 7px;
+    color: $gray-700;
+    cursor: pointer;
+  }
+}

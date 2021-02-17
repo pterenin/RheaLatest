@@ -1,0 +1,33 @@
+<div class="ta-arrow-container">
+  <img src="/assets/images/empty_systems_arrow.svg" alt="empty-systems" />
+</div>
+<div
+  id="no-system-record-selected"
+  class="d-flex justify-content-center align-items-center animated fadeIn"
+>
+  <div class="text-center">
+    <strong class="d-block mt-5">
+      <!-- [i18n-tobeinternationalized] -->
+      Start by selecting Systems from the section labeled "Available" in the
+      left column.
+    </strong>
+    <span class="d-block text-black-50">
+      <!-- [i18n-tobeinternationalized] -->
+      selected Systems will be moved to the "Added" section, allowing you to
+      configure each
+    </span>
+    <span class="d-block text-black-50">
+      <!-- [i18n-tobeinternationalized] -->
+      or
+    </span>
+    <button
+      class="mt-1"
+      taButton
+      taType="secondary"
+      (click)="handleAddSystem()"
+    >
+      <!-- [i18n-tobeinternationalized] -->
+      Add New System Record
+    </button>
+  </div>
+</div>

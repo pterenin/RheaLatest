@@ -1,0 +1,218 @@
+<div class="card-wrapper card rounded-lg">
+  <div class="card-header d-flex text-truncate">
+    <div class="w-100" data-cy="title-data-inventory-card">
+      <p class="header-text mb-0">
+        {{ title }}
+        <ta-badge [values]="rowsData.length"></ta-badge>
+      </p>
+      <span class="sub-header-text">
+        {{ subtitle }}
+      </span>
+    </div>
+  </div>
+  <div class="card-body">
+    <ta-table
+      [id]="gridID"
+      [serverProcess]="false"
+      [filter]="false"
+      class="compact data-inventory-table"
+    >
+      <ta-table-search
+        [taPlaceholder]="'Search'"
+        [taSearch]="''"
+        (onSearch)="onTableSearch($event)"
+      ></ta-table-search>
+      <ta-table-toolbar>
+        <!-- Left toolbar -->
+        <div class="d-flex align-items-center w-100">
+          <!-- Category filter -->
+          <ta-data-inventory-card-filter
+            (applyClick)="applyFilterForm()"
+            (clearClick)="resetFilterFormToState(false)"
+            headerTitle="Filter by Category"
+            [closeOnClear]="false"
+            [counter]="getFilterFormCounter()"
+            [isDirty]="isFiltersDirty()"
+            class="card-filter"
+          >
+            <form [formGroup]="filterForm" class="py-2">
+              <div
+                formArrayName="filters"
+                *ngFor="let control of filters.controls; let i = index"
+              >
+                <div [formGroupName]="i.toString()">
+                  <ta-checkbox
+                    formControlName="checked"
+                    class="dropdown-item text-wrap px-3"
+                  >
+                    {{ control.get('name').value }}
+                  </ta-checkbox>
+                </div>
+              </div>
+            </form>
+          </ta-data-inventory-card-filter>
+        </div>
+        <!-- Right toolbar -->
+        <div class="d-flex align-items-center justify-content-end w-100">
+          <!-- Selected info -->
+          <span class="selected-count">{{ getSelectedCounterString() }}</span>
+
+          <!-- Delete button -->
+          <button
+            class="mr-2"
+            taButton
+            taType="circle"
+            taTooltip="Delete"
+            [disabled]="isDeleteDisabled()"
+            (click)="deleteSelectedRows()"
+          >
+            <ta-icon icon="delete"></ta-icon>
+          </button>
+
+          <!-- Add button -->
+          <ta-data-inventory-card-add
+            #cardAddDropdown
+            (searchUpdated)="onAddFormSearch($event)"
+            [searchPlaceholder]="getSearchPlaceholderByType(type)"
+            contentWidth="500px"
+          >
+            <ng-container *ngIf="data">
+              <form [formGroup]="form">
+                <div class="d-flex">
+                  <div
+                    class="w-50 border-right overflow-auto py-2"
+                    style="height: 198px;"
+                  >
+                    <ng-container
+                      *ngFor="
+                        let id of categoryIds
+                          | categoryFormSearchFilterByProperties
+                            : form
+                            : ['name', 'category']
+                            : addFormSearchString;
+                        let i = index
+                      "
+                    >
+                      <button
+                        class="dropdown-menu-item text-truncate px-3"
+                        [class.selected]="selectedCategoryId === id"
+                        [hidden]="determineCategoryVisibility(id)"
+                        (click)="selectCategory(id)"
+                      >
+                        {{ id | valueByKeyMap: categoryMap }}
+                        <ta-icon
+                          class="caret-right"
+                          icon="caret-right"
+                        ></ta-icon>
+                      </button>
+                    </ng-container>
+                  </div>
+                  <div
+                    class="w-50 border-right overflow-auto py-2"
+                    style="height: 198px;"
+                  >
+                    <ng-container>
+                      <p class="category-name">
+                        {{ selectedCategoryId | valueByKeyMap: categoryMap }}
+                      </p>
+                      <ta-checkbox
+                        [indeterminate]="
+                          isIndeterminateForCategory(selectedCategoryId)
+                        "
+                        [checked]="isCheckedForCategory(selectedCategoryId)"
+                        (change)="
+                          selectAllForCategory($event, selectedCategoryId)
+                        "
+                        class="dropdown-item text-wrap px-3"
+                      >
+                        {{ getCounterStringForCategory(selectedCategoryId) }}
+                      </ta-checkbox>
+                      <ng-container
+                        [formArrayName]="selectedCategoryId"
+                        *ngFor="
+                          let control of this.form.get(selectedCategoryId)
+                            .controls;
+                          let i = index
+                        "
+                      >
+                        <div *ngIf="!control.get('hidden').value">
+                          <div [formGroupName]="i">
+                            <ta-checkbox
+                              [hidden]="control.get('hidden').value"
+                              (change)="
+                                handleItemCheckboxChange($event, control)
+                              "
+                              formControlName="checked"
+                              class="dropdown-item text-wrap px-3"
+                            >
+                              {{ control.get('name').value }}
+                            </ta-checkbox>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </div>
+              </form>
+            </ng-container>
+          </ta-data-inventory-card-add>
+        </div>
+      </ta-table-toolbar>
+
+      <!-- Table content -->
+      <ta-table-column class="col">
+        <ta-checkbox
+          (click)="allFiltersClick($event)"
+          [checked]="isAllSelected()"
+          [indeterminate]="isIndeterminate()"
+        ></ta-checkbox>
+      </ta-table-column>
+      <ta-table-column class="col" [taField]="columnsSettings[0]?.sortBy">
+        {{ columnsSettings[0]?.name }}
+      </ta-table-column>
+      <ta-table-column class="col" [taField]="columnsSettings[1]?.sortBy">
+        {{ columnsSettings[1]?.name }}
+      </ta-table-column>
+      <ta-table-column class="col" [taWidth]="50"></ta-table-column>
+    </ta-table>
+
+    <!-- With data -->
+    <ta-data-inventory-card-table-body
+      *ngIf="rowsData.length > 0"
+      [data]="
+        rowsData
+          | filterByIncludeArrayAndPath: filterChecked:'categoryId':true
+          | tableSearchFilterPipe: ['name', 'category']:tableSearchString
+      "
+      [col1Field]="'name'"
+      [col2Field]="'category'"
+      (rowDeleted)="deleteRowById($event)"
+      (rowChecked)="handleRowCheckboxChange($event)"
+    ></ta-data-inventory-card-table-body>
+
+    <!-- No data -->
+    <ng-container *ngIf="rowsData.length === 0">
+      <div
+        class="d-flex justify-content-center align-items-center flex-column"
+        data-cy="di-card-data-empty"
+      >
+        <div
+          class="d-flex justify-content-center align-items-center flex-column"
+        >
+          <div
+            class="image-container"
+            [ngStyle]="{ 'background-image': 'url(' + image + ')' }"
+          ></div>
+          <span class="sub-image-text mb-4">
+            {{ subImageString }}
+            <span class="" *ngIf="subImageStringBtnType === 'link'">
+              <a href="#" (click)="cardAddDropdown.openDropdown($event)">
+                {{ subImageStringBtnText }}</a
+              >.
+            </span>
+          </span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

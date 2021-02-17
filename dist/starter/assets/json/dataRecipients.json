@@ -1,0 +1,65 @@
+[
+  {
+    "id": "00001",
+    "label": "Category 1",
+    "items": [
+      {
+        "id": "001",
+        "label": "HR Manager",
+        "isSelected": false
+      },
+      {
+        "id": "002",
+        "label": "Hiring Manager",
+        "isSelected": false
+      },
+      {
+        "id": "003",
+        "label": "Accounting",
+        "isSelected": false
+      }
+    ]
+  },
+  {
+    "id": "00002",
+    "label": "Category 2",
+    "items": [
+      {
+        "id": "001",
+        "label": "Marketing",
+        "isSelected": false
+      },
+      {
+        "id": "002",
+        "label": "Advertising",
+        "isSelected": false
+      },
+      {
+        "id": "003",
+        "label": "Budgeting",
+        "isSelected": false
+      }
+    ]
+  },
+  {
+    "id": "00003",
+    "label": "Category 3",
+    "items": [
+      {
+        "id": "001",
+        "label": "Insurance provider",
+        "isSelected": false
+      },
+      {
+        "id": "002",
+        "label": "Hospital",
+        "isSelected": false
+      },
+      {
+        "id": "003",
+        "label": "Collection Agency",
+        "isSelected": false
+      }
+    ]
+  }
+]

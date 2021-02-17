@@ -1,0 +1,114 @@
+<ta-table
+  *ngIf="tableData$ | async"
+  [id]="tableId"
+  class="ta-table-wrapper-border"
+  (onSort)="onSort($event)"
+  [serverProcess]="false"
+>
+  <!--- [i18n-tobeinternationalized] -->
+  <ta-table-column taWidth="160" taField="category">Category</ta-table-column>
+  <!--- [i18n-tobeinternationalized] -->
+  <ta-table-column taWidth="260" taField="processingPurpose">
+    Processing Purpose
+  </ta-table-column>
+  <!--- [i18n-tobeinternationalized] -->
+  <ta-table-column taField="legalBasis.label">Legal Basis</ta-table-column>
+
+  <ng-container
+    *ngFor="
+      let item of tableData$
+        | async
+        | sortBy: sortOrder:sortProperty:sortProperty
+        | paginate: currentPage - 1:pageSize;
+      index as i
+    "
+  >
+    <ta-table-row
+      [taItem]="item"
+      [attr.data-cy]="item.category + ' ' + item.processingPurpose"
+    >
+      <ta-table-cell>
+        {{ item.category }}
+        <ta-badge
+          *ngIf="item.isCustom"
+          values="Custom"
+          type="custom"
+        ></ta-badge>
+      </ta-table-cell>
+      <ta-table-cell>
+        {{ item.processingPurpose }}
+        <ta-badge
+          *ngIf="item.isCustom"
+          values="Custom"
+          type="custom"
+        ></ta-badge>
+      </ta-table-cell>
+      <ta-table-cell>
+        <div
+          [taPopover]="popContent"
+          [autoClose]="'outside'"
+          [popoverClass]="legalBasisPopoverStyleClass"
+          container="body"
+          [placement]="['bottom-right', 'top-right']"
+          (shown)="popOverProcessingPurpose(item.processingPurposeId)"
+        >
+          <button
+            taButton
+            taType="dropdown"
+            data-cy="select-legal-basis"
+            type="button"
+            class="w-100 d-block custom-dropDownButton "
+          >
+            <span
+              class="text-truncate mr-1 placeholder-text d-block"
+              container="body"
+              placement="right-bottom"
+              tooltipTheme="light"
+              [taTooltip]="
+                item && item.legalBasis && item.legalBasis.label
+                  ? item.legalBasis.label
+                  : ''
+              "
+              [innerText]="
+                item && item.legalBasis && item.legalBasis.label
+                  ? item.legalBasis.label
+                  : 'Select'
+              "
+            >
+            </span>
+          </button>
+        </div>
+      </ta-table-cell>
+    </ta-table-row>
+  </ng-container>
+
+  <ta-table-footer>
+    <ta-pagination
+      *ngIf="(tableData$ | async)?.length > 0"
+      [collectionSize]="(tableData$ | async)?.length"
+      [pageSize]="pageSize"
+      [(page)]="currentPage"
+      [maxSize]="1"
+      [rotate]="true"
+      [boundaryLinks]="true"
+      showingType="full"
+      [ellipses]="true"
+      (pageChange)="onChangePage($event)"
+      (onChangePageSize)="onChangeMax($event)"
+    ></ta-pagination>
+  </ta-table-footer>
+</ta-table>
+<ng-template #popContent>
+  <ta-categorical-view
+    #categoricalViewComponent
+    [data]="legalBasisOptions"
+    (itemSelected)="selectLegalBasis($event)"
+    idPrefix="legalBasis"
+    placeHolder="Search"
+    [openByDefault]="true"
+    [styleClass]="legalBasisStyleClass"
+    [showCategoryItemCount]="false"
+    reselectable="true"
+    class="not-in-dropdown border-0"
+  ></ta-categorical-view>
+</ng-template>

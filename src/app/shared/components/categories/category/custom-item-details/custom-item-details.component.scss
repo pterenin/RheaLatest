@@ -1,0 +1,59 @@
+:host ::ng-deep {
+  .defaultCursor {
+    cursor: default;
+  }
+
+  .btn-unlink {
+    img {
+      position: relative;
+      top: -1px;
+    }
+  }
+  .ta-table-toolbars {
+    .ta-table-toolbar-btns {
+      width: 100%;
+    }
+  }
+  .ta-table {
+    .ta-table-row-detail {
+      display: block;
+      max-height: 402px;
+      overflow: auto;
+      visibility: visible;
+      opacity: 1;
+      transition: visibility 0s, opacity 0.5s linear;
+      height: auto;
+      &.ta-table-cell-hidden {
+        display: block !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+      }
+      & > .ta-table-cell {
+        padding: 0 !important;
+      }
+      .ta-table-row:last-of-type {
+        .ta-table-cell {
+          border-bottom: 0px !important;
+        }
+      }
+    }
+    .ta-table-fix-width {
+      max-width: 300px;
+    }
+    .ta-table-row {
+      .ta-table-fix-width {
+        &:nth-of-type(1) {
+          max-width: 323px;
+        }
+      }
+    }
+  }
+  .col-checkbox {
+    .ta-checkbox-layout {
+      .ta-checkbox-lb {
+        top: -12px;
+      }
+    }
+  }
+}

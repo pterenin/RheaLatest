@@ -1,0 +1,11 @@
+{
+  "data": {
+    "comment": "string",
+    "fileName": "string",
+    "id": "string",
+    "uploadDate": "string",
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

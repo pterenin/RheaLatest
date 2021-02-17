@@ -1,0 +1,7 @@
+{
+  "data": {
+    "authorities": ["string"]
+  },
+  "status": 200,
+  "ok": true
+}

@@ -1,0 +1,13 @@
+{
+  "data": {
+    "category": "string",
+    "dataElement": "string",
+    "highRiskTypes": "",
+    "id": "string",
+    "isCustom": true,
+    "type": "string",
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

@@ -1,0 +1,13 @@
+$progress-bar: #12b4dd; // THESE NEED TO VALIDATE TO UX NOT EXIST IN COLOR CHART
+$progress-bar-background: #e8ecef; // THESE NEED TO VALIDATE TO UX NOT EXIST IN COLOR CHART
+
+ta-progressbar {
+  display: block;
+  .progress {
+    background-color: $progress-bar-background;
+    border-radius: 20px;
+    .progress-bar {
+      background-color: $progress-bar !important;
+    }
+  }
+}

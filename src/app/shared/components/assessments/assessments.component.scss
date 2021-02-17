@@ -1,0 +1,38 @@
+@import 'src/styles/variables';
+
+.ta-assessments-wrapper {
+  margin-bottom: 15px;
+}
+.ta-assessments-text {
+  display: flex;
+  font-size: $font-size-base;
+}
+.ta-assessments-label-text {
+  display: flex;
+  font-size: $font-size-base;
+  font-weight: 600;
+}
+
+.assessments {
+  &.business-process {
+    width: 13.4375rem;
+    border: solid 1px zeplin-lighten($black, 0.2);
+    padding: 1.25rem;
+    position: relative;
+    .assessments-more {
+      position: absolute;
+      right: 1rem;
+      top: 0.3125rem;
+      font-size: $font-size-18;
+      color: zeplin-lighten($black, 0.2);
+    }
+    .ta-assessments-wrapper {
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+      .ta-assessments-label-text {
+        font-weight: bold;
+      }
+    }
+  }
+}

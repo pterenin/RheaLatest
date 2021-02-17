@@ -1,0 +1,317 @@
+@import 'src/styles/variables';
+
+.owner-popover-styles {
+  margin-left: -16px;
+  min-width: 313px;
+  max-width: 313px;
+  .popover-body {
+    min-height: 0;
+    max-height: 239px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+}
+
+.owner-edit-popover {
+  margin-left: -16px;
+  min-width: 313px;
+  max-width: 313px;
+  .edit-body {
+    min-height: 0;
+    max-height: 239px;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+}
+
+.tags-table-cell.tags-cell:hover {
+  ta-inline-tag-editor {
+    .tag-hover {
+      .edit-icon {
+        opacity: 1 !important;
+      }
+    }
+  }
+}
+
+.tags-table-cell {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+
+  &:hover {
+    background-color: $gray-300;
+  }
+}
+
+.highlight {
+  background-color: $gray-300;
+}
+.tag-pop-content {
+  width: 255px;
+  height: 225px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+ta-popover-window.tag-pop-content {
+  margin-top: 20px !important;
+}
+
+.tag-item-trunc {
+  display: inline-block;
+  width: 45px;
+  max-width: 45px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tag-item {
+  display: inline-block;
+  width: 100%;
+}
+
+.tag-more {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+ta-modal-confirmation-basic {
+  width: 512px;
+}
+
+.empty-records {
+  padding: 16px;
+  text-align: center;
+  background-color: $white;
+  min-height: 460px;
+  position: relative;
+  top: -18px;
+  .content-container {
+    margin-top: 88px;
+    margin-bottom: 144px;
+
+    p {
+      margin-top: 32px;
+      margin-bottom: 14px;
+      font-size: 0.875rem;
+    }
+  }
+}
+
+ta-record-datagrid {
+  display: block;
+
+  .description-header {
+    display: inline-block;
+    font-weight: 600;
+    margin-left: 70px;
+    padding-left: 8px;
+    min-width: 108px;
+    max-width: 108px;
+    width: 108px;
+  }
+
+  .description {
+    padding-left: 8px;
+  }
+
+  .tags-container {
+    padding: 0.8rem 1rem 0.6rem !important;
+
+    ta-tags {
+      min-width: 81px;
+    }
+  }
+
+  .ta-datagrid tbody tr.ta-datagrid-child-row td {
+    background: $white;
+    border: none !important;
+    border-top: 1px solid zeplin-lighten($gray-700, 0.25) !important;
+  }
+
+  .ta-table-toolbars .ta-table-toolbar-btns button:not(:first-child) {
+    margin-left: 5px;
+  }
+
+  th.ta-col-model-identifier {
+    width: 108px;
+  }
+
+  .ta-datagrid tbody td[colspan] {
+    background: $white;
+    padding-top: 0px !important;
+  }
+
+  .ta-datagrid-footer-tools {
+    border-top: 1px solid zeplin-lighten($gray-700, 0.25);
+  }
+
+  .ta-table-dropdown-more,
+  .ta-table-dropdown {
+    position: static;
+    .dropdown-menu.show {
+      top: 50px !important;
+    }
+    &.dropup {
+      .dropdown-menu.show {
+        top: unset !important;
+        bottom: 50px !important;
+      }
+    }
+  }
+
+  .ta-table-dropdown-more {
+    .dropdown-menu.show {
+      margin-left: 16px;
+    }
+  }
+
+  .ta-table-dropdown {
+    .dropdown-menu.show {
+      left: -20px !important;
+      width: calc(100% + 20px);
+    }
+  }
+
+  .ta-table-dropdown-calendar {
+    .dropdown-menu.show {
+      left: -80px !important;
+      width: calc(100% + 80px);
+    }
+  }
+
+  .data-record-name {
+    .dropdown-menu.show {
+      left: 0 !important;
+    }
+  }
+
+  .data-record-name,
+  .data-record-status,
+  .data-record-owner,
+  .data-record-revalidation-date {
+    ta-icon {
+      opacity: 0;
+      transition: 300ms;
+      &:hover {
+        color: $blue;
+      }
+      &.ta-icon-badge {
+        opacity: 1;
+      }
+    }
+    &:hover {
+      background-color: $gray-300;
+      ta-icon {
+        opacity: 1;
+      }
+    }
+  }
+  .ta-table-cell-tools {
+    &:hover {
+      background-color: $gray-300;
+    }
+  }
+  .ta-table-input {
+    height: 32px;
+  }
+  .ta-table-button {
+    min-width: 56px;
+  }
+  .dropdown-item:active,
+  .dropdown-item.active {
+    background-color: $gray-400 !important;
+    color: $body-color !important;
+  }
+  .draft-record-badge {
+    color: $gray-600;
+  }
+  .in_review-record-badge {
+    color: $orange;
+  }
+  .revise-record-badge {
+    color: $violet;
+  }
+  .publish-record-badge {
+    color: $apple-green;
+  }
+  .ta-table-toolbar-btns {
+    border-left: none !important;
+  }
+}
+
+.ta-table-toolbar-filter {
+  border-right: none !important;
+}
+
+.selected-count {
+  color: $scorpion-grey;
+  position: relative;
+  width: auto;
+  white-space: nowrap;
+  padding-right: 16px;
+  margin-right: 10px;
+
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    height: 47px;
+    transform: translateY(-50%);
+    border-right: 1px solid $seashell-grey;
+  }
+}
+
+.toolbar-btn-bordered-right {
+  padding-right: 10px;
+  margin-right: 10px;
+
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    height: 47px;
+    transform: translateY(-50%);
+    border-right: 1px solid $seashell-grey;
+  }
+}
+
+.column-config-dropdown {
+  width: 200px;
+
+  .column-config-dropdown-header {
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0 10px;
+  }
+}
+
+.text-break {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.custom-popover-styles {
+  .popover-body {
+    min-height: 0;
+  }
+}
+
+.risk-popover-body {
+  font-size: $font-size-12;
+  cursor: pointer;
+}
+
+.menu-border-line {
+  color: zeplin-lighten($gray-700, 0.25);
+  margin: 10px 0 10px;
+}
+
+.record-datagrid-tooltip {
+  margin-top: -2px !important;
+}

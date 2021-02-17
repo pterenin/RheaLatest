@@ -1,0 +1,18 @@
+{
+  "processName": {
+    "selector": "[data-cy='process-name']",
+    "alias": "@process-name"
+  },
+  "title": {
+    "selector": "[data-cy='title-it-systems']",
+    "alias": "@title-it-systems"
+  },
+  "selectSystem": {
+    "selector": "[data-cy='bp-step-4-select-system']",
+    "alias": "@select-system-step-4"
+  },
+  "modalAddItSystem": {
+    "selector": "ta-add-it-system",
+    "alias": "@ta-add-it-system"
+  }
+}

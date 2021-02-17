@@ -1,0 +1,19 @@
+{
+  "processName": {
+    "selector": "[data-cy='process-name']",
+    "alias": "@process-name"
+  },
+  "title": {
+    "selector": "[data-cy='title-security-risk']",
+    "alias": "@title-security-risk"
+  },
+
+  "processingPurposesLegalBasis": {
+    "selector": "[data-cy='select-legal-basis']",
+    "alias": "@processing-purposes-legal-basis"
+  },
+  "status": {
+    "selector": "[data-cy='business-process-status']",
+    "alias": "@business-process-status"
+  }
+}

@@ -1,0 +1,122 @@
+<div class="modal-header">
+  <!--- [i18n-tobeinternationalized] --->
+  <h4 class="modal-title">Custom Processing Purpose</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="dismissModal()"
+  >
+    <i class="ta ta-close"></i>
+  </button>
+</div>
+<form [formGroup]="customProcessingPurposeForm" (ngSubmit)="onSubmit()">
+  <!-- Modal body/content -->
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <!-- [i18n-tobeinternationalized] -->
+          <label for="ppName" class="data-label"
+            >Processing Purpose Name*</label
+          >
+          <!-- [i18n-tobeinternationalized] -->
+          <input
+            taAutoFocus
+            id="ppName"
+            type="text"
+            formControlName="ppName"
+            class="form-control"
+            name="ppName"
+          />
+          <div
+            *ngIf="name.errors?.required && customProcessingPurposeForm.touched"
+            class="text-danger"
+          >
+            <!-- [i18n-tobeinternationalized] -->
+            This field is required.
+          </div>
+          <div *ngIf="name.errors?.maxlength" class="text-danger">
+            <!-- [i18n-tobeinternationalized] -->
+            The name must be less than 255 characters.
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <!--- [i18n-tobeinternationalized] --->
+        <label for="ppCategory" class="data-label"
+          >Processing Purpose Category*</label
+        >
+        <ta-dropdown-field
+          id="ppCategory"
+          [options]="categoryOptionList"
+          optionLabel="label"
+          [selectedOption]="category.value"
+          formControlName="ppCategory"
+          [isSearchable]="true"
+          [useInfiniteScroll]="true"
+          (infiniteListChanged)="requestForInfiniteList($event)"
+          [viewPortHeight]="250"
+          class="w-100"
+        ></ta-dropdown-field>
+        <div
+          *ngIf="
+            category.errors?.required && customProcessingPurposeForm.touched
+          "
+          class="text-danger"
+        >
+          <!-- [i18n-tobeinternationalized] -->
+          This field is required.
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <!--- [i18n-tobeinternationalized] --->
+        <label for="ppInvolves" class="data-label"
+          >Does this processing purpose involve any of the following*</label
+        >
+        <div aria-labelledby="thirdPartyIndustrySectorDetailsItemsSelect">
+          <ta-dropdown-checkbox-multiple
+            id="ppInvolves"
+            [options]="highRiskFactorCategories"
+            [optionLabel]="'name'"
+            formControlName="ppInvolves"
+          ></ta-dropdown-checkbox-multiple>
+        </div>
+        <div
+          *ngIf="
+            factors.errors?.required && customProcessingPurposeForm.touched
+          "
+          class="text-danger"
+        >
+          <!-- [i18n-tobeinternationalized] -->
+          This field is required.
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal footer-->
+  <div class="modal-footer justify-content-between">
+    <button
+      taButton
+      type="button"
+      taType="secondary"
+      data-dismiss="modal"
+      id="modal-cancel"
+      (click)="activeModal.dismiss('Cancel')"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Cancel
+    </button>
+    <button
+      taButton
+      taType="primary"
+      id="modal-submit"
+      [disabled]="!customProcessingPurposeForm.valid"
+    >
+      <!--- [i18n-tobeinternationalized] --->
+      Save
+    </button>
+  </div>
+</form>

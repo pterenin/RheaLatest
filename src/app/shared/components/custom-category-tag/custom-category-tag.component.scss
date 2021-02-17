@@ -1,0 +1,17 @@
+@import 'src/styles/variables';
+
+ta-custom-category-tag {
+  ta-tags.custom-category {
+    line-height: normal;
+    min-width: 0px;
+    padding: 2px 6px;
+    border-radius: 12px;
+    text-align: center;
+    background-color: zeplin-lighten($purple, 0.3);
+    border: none;
+
+    div {
+      line-height: normal;
+    }
+  }
+}

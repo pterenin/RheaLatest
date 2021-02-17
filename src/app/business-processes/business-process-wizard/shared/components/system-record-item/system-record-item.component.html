@@ -1,0 +1,36 @@
+<div
+  class="d-flex align-items-center record-item"
+  (click)="onClick(item)"
+  [ngClass]="{ selected: isSelected(item) }"
+>
+  <div class="justify-content-start mr-2">
+    <ta-record-icon
+      [type]="(item || {})[fieldEntityType] || 'OTHER'"
+    ></ta-record-icon>
+  </div>
+  <div class="justify-content-start record-item-names">
+    <p class="mb-0">
+      <strong data-cy="system-name">
+        <!--- [i18n-tobeinternationalized] --->
+        {{ (item || {})[fieldName] || 'Untitled' }}
+      </strong>
+      <span *ngIf="withIcon" class="position-relative">
+        <ta-icon
+          class="icon"
+          *ngIf="(item || {})[fieldMapped]"
+          [icon]="iconType"
+          [color]="isSelected(item) ? colorIconTwo : colorIconOne"
+        ></ta-icon>
+      </span>
+    </p>
+    <p class="mb-0 text-truncate">
+      <small>
+        <!--- [i18n-tobeinternationalized] --->
+        Owned by {{ (item || {})[fieldEntityName] || '&#45;&#45;' }}
+        <span *ngIf="withLocation">
+          | {{ (item || {})[fieldLocationName] }}</span
+        >
+      </small>
+    </p>
+  </div>
+</div>

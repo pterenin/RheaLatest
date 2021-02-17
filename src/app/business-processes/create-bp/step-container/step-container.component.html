@@ -1,0 +1,35 @@
+<ng-content select="router-outlet"></ng-content>
+
+<ta-page-footer-nav [currentFormValidity]="true">
+  <span *ngIf="pageSteps && pageSteps.length" class="stepper">
+    Step {{ selectedStep + 1 }} of {{ pageSteps.length }}
+  </span>
+
+  <button
+    data-cy="exit"
+    taButton
+    type="button"
+    taType="link"
+    class="page-cancel btn-lg"
+    routerLink="/business-process"
+  >
+    <!--- [i18n-tobeinternationalized] -->
+    Exit
+  </button>
+
+  <button
+    data-cy="back"
+    taButton
+    id="stepContainerPrev"
+    type="button"
+    [disabled]="currentUrl === 'background'"
+    taType="secondary"
+    class="page-prev btn-lg mr-2"
+    *ngIf="!isDataFlowPage()"
+    (click)="navigateToNewUrl(-1)"
+  >
+    <!--- [i18n-tobeinternationalized] -->
+    Back
+  </button>
+  <div *taSlotContainer class="page-next"></div>
+</ta-page-footer-nav>

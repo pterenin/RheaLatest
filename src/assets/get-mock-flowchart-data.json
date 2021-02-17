@@ -1,0 +1,240 @@
+{
+  "ID Hash 1": {
+    "type": "DATA_SUBJECT",
+    "name": "1 DS Test Entity",
+    "location": "us",
+    "legalEntityType": null,
+    "role": "P",
+    "dataTransfers": {
+      "sending": [
+        {
+          "id": "ID Hash 2",
+          "saleOfData": false,
+          "dataElements": ["test element 1", "test element 2"]
+        },
+        {
+          "id": "ID Hash 4",
+          "saleOfData": true,
+          "dataElements": ["test element 1", "test element 2"]
+        }
+      ],
+      "receiving": [
+        {
+          "id": "ID Hash 3",
+          "saleOfData": false,
+          "dataElements": ["test element 5", "test element 6"]
+        },
+        {
+          "id": "ID Hash 4",
+          "saleOfData": false,
+          "dataElements": ["test element 7", "test element 8"]
+        },
+        {
+          "id": "ID Hash 5",
+          "saleOfData": true,
+          "dataElements": ["test element 1"]
+        }
+      ]
+    }
+  },
+  "ID Hash 2": {
+    "type": "IT_SYSTEM_1ST_PARTY",
+    "name": "2 IT1 Test Entity",
+    "location": "us",
+    "role": "C",
+    "legalEntityType": "Vendor",
+    "dataTransfers": {
+      "sending": [
+        {
+          "id": "ID Hash 3",
+          "saleOfData": false,
+          "dataElements": [
+            "test element 3",
+            "test element 4",
+            "test element 5",
+            "test element 6",
+            "test element 7",
+            "test element 8",
+            "test element 9",
+            "test element 10"
+          ]
+        },
+        {
+          "id": "ID Hash 8",
+          "saleOfData": false,
+          "dataElements": ["test element 8"]
+        }
+      ],
+      "receiving": [
+        {
+          "id": "ID Hash 1",
+          "saleOfData": false,
+          "dataElements": ["test element 1", "test element 2"]
+        },
+        {
+          "id": "ID Hash 4",
+          "saleOfData": false,
+          "dataElements": ["test element 2"]
+        },
+        {
+          "id": "ID Hash 5",
+          "saleOfData": true,
+          "dataElements": ["test element 2"]
+        }
+      ]
+    }
+  },
+  "ID Hash 3": {
+    "type": "IT_SYSTEM_3RD_PARTY",
+    "name": "3 IT3 Test Entity",
+    "location": "us",
+    "legalEntityType": "Partner",
+    "role": "J",
+    "dataTransfers": {
+      "sending": [
+        {
+          "id": "ID Hash 1",
+          "saleOfData": true,
+          "dataElements": ["test element 5", "test element 6"]
+        },
+        {
+          "id": "ID Hash 4",
+          "saleOfData": false,
+          "dataElements": ["test element 7", "test element 8"]
+        }
+      ],
+      "receiving": [
+        {
+          "id": "ID Hash 2",
+          "saleOfData": false,
+          "dataElements": [
+            "test element 3",
+            "test element 4",
+            "test element 5",
+            "test element 6",
+            "test element 7",
+            "test element 8",
+            "test element 9",
+            "test element 10"
+          ]
+        },
+        {
+          "id": "ID Hash 4",
+          "saleOfData": true,
+          "dataElements": ["test element 3"]
+        }
+      ]
+    }
+  },
+  "ID Hash 4": {
+    "type": "DATA_RECIPIENT",
+    "name": "4 DR Test Entity",
+    "location": "us",
+    "legalEntityType": null,
+    "role": "J",
+    "dataTransfers": {
+      "sending": [
+        {
+          "id": "ID Hash 1",
+          "saleOfData": true,
+          "dataElements": ["test element 7", "test element 8"]
+        },
+        {
+          "id": "ID Hash 2",
+          "saleOfData": true,
+          "dataElements": ["test element 2"]
+        },
+        {
+          "id": "ID Hash 3",
+          "saleOfData": true,
+          "dataElements": ["test element 3"]
+        }
+      ],
+      "receiving": [
+        {
+          "id": "ID Hash 3",
+          "saleOfData": false,
+          "dataElements": ["test element 7", "test element 8"]
+        },
+        {
+          "id": "ID Hash 1",
+          "saleOfData": true,
+          "dataElements": ["test element 1", "test element 2"]
+        }
+      ]
+    }
+  },
+  "ID Hash 5": {
+    "type": "DATA_SUBJECT",
+    "name": "5 DS Test Entity",
+    "location": "us",
+    "legalEntityType": null,
+    "role": "J",
+    "dataTransfers": {
+      "sending": [
+        {
+          "id": "ID Hash 1",
+          "saleOfData": true,
+          "dataElements": ["test element 1"]
+        },
+        {
+          "id": "ID Hash 2",
+          "saleOfData": true,
+          "dataElements": ["test element 2"]
+        }
+      ],
+      "receiving": []
+    }
+  },
+  "ID Hash 6": {
+    "type": "DATA_SUBJECT",
+    "name": "6 DS Test Entity",
+    "location": "us",
+    "legalEntityType": null,
+    "role": "J",
+    "dataTransfers": {
+      "sending": [
+        {
+          "id": "ID Hash 7",
+          "saleOfData": false,
+          "dataElements": ["test element 1"]
+        }
+      ],
+      "receiving": []
+    }
+  },
+  "ID Hash 7": {
+    "type": "DATA_RECIPIENT",
+    "name": "7 DS Test Entity",
+    "location": "us",
+    "legalEntityType": null,
+    "role": "J",
+    "dataTransfers": {
+      "sending": [],
+      "receiving": [
+        {
+          "id": "ID Hash 6",
+          "saleOfData": false,
+          "dataElements": ["test element 1"]
+        }
+      ]
+    }
+  },
+  "ID Hash 8": {
+    "type": "DATA_RECIPIENT",
+    "name": "8 DS Test Entity",
+    "location": "us",
+    "legalEntityType": null,
+    "role": "J",
+    "dataTransfers": {
+      "sending": [],
+      "receiving": [
+        {
+          "id": "ID Hash 2",
+          "saleOfData": false,
+          "dataElements": ["test element 2"]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "processName": {
+    "selector": "[data-cy='process-name']",
+    "alias": "@process-name"
+  },
+  "title": {
+    "selector": "[data-cy='title-data-flow']",
+    "alias": "@title-data-flow"
+  },
+  "selectDataSubject": {
+    "selector": "[data-cy='bp-step-5-data-subjects']",
+    "alias": "@bp-data-flow-data-subjects"
+  },
+  "selectDataRecipient": {
+    "selector": "[data-cy='bp-step-5-data-recipients']",
+    "alias": "@bp-data-flow-data-recipients"
+  },
+  "notes": {
+    "selector": "[data-cy='notes']",
+    "alias": "@bp-data-flow-notes"
+  }
+}

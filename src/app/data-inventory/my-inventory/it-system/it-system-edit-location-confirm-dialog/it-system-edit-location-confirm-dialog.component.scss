@@ -1,0 +1,29 @@
+@import 'src/styles/variables';
+
+.modal-header {
+  background-color: $white;
+
+  button {
+    outline: none;
+    outline-color: transparent;
+  }
+}
+
+.modal-body {
+  width: 100%;
+  min-height: 105px;
+  background-color: $white;
+
+  ul {
+    padding: 0;
+    margin: 0;
+
+    li {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      color: $blue;
+      text-transform: uppercase;
+    }
+  }
+}

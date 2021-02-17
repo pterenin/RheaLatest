@@ -1,0 +1,19 @@
+@import 'src/styles/variables';
+@import '../../../styles/record-details';
+@import '../shared/shared-business-processes';
+
+ta-steps {
+  display: block;
+  overflow: hidden;
+  min-height: 58px;
+  padding: 15px 0;
+  position: relative;
+  z-index: 0;
+  justify-content: center;
+  text-align: center;
+  margin: 0 auto;
+
+  .ta-step.active .ta-step-label {
+    font-weight: normal;
+  }
+}

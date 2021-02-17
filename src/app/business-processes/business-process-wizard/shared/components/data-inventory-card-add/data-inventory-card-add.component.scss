@@ -1,0 +1,20 @@
+@import 'src/styles/variables';
+
+:host {
+  display: inline-block;
+  .data-inventory-card-add-dropdown-menu {
+    padding: 0;
+    .data-inventory-card-add-search {
+      top: unset;
+      border-bottom: $border-default;
+    }
+    .data-inventory-card-add-content {
+    }
+    .data-inventory-card-add-footer {
+      border-top: $border-default;
+      .btn {
+        min-width: 55px !important;
+      }
+    }
+  }
+}

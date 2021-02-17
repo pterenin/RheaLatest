@@ -1,0 +1,118 @@
+{
+  "data": {
+    "created": "string",
+    "dataFlowProcessingPurposesIds": ["string"],
+    "dataRecipientTypes": "",
+    "dataSubjectTypes": "",
+    "dataSubjectVolume": {
+      "highRisk": true,
+      "id": "string",
+      "lowerBound": 1,
+      "name": "string",
+      "upperBound": 1
+    },
+    "description": "string",
+    "id": "string",
+    "identifier": "string",
+    "itSystems": "",
+    "name": "string",
+    "notes": "string",
+    "ownerId": "string",
+    "ownerName": "string",
+    "owningCompanyEntity": {
+      "attachments": "",
+      "baseRecordAssessments": "",
+      "businessStructure": {
+        "businessStructure": "string",
+        "countryCode": "string",
+        "countryName": "string",
+        "id": "string",
+        "version": 1
+      },
+      "contact": {
+        "aaaUserId": "string",
+        "address": "string",
+        "city": "string",
+        "email": "string",
+        "fullName": "string",
+        "id": "string",
+        "location": {
+          "country": {},
+          "globalRegion": {},
+          "id": "string",
+          "stateOrProvince": {},
+          "version": 1
+        },
+        "phone": "string",
+        "version": 1,
+        "zip": "string"
+      },
+      "contactType": {
+        "companyEntityUse": true,
+        "id": "string",
+        "type": "string",
+        "version": 1
+      },
+      "created": "string",
+      "createdBy": {
+        "dimAccount": {
+          "id": "string"
+        },
+        "id": "string"
+      },
+      "createdByUser": {
+        "dimAccount": {
+          "id": "string"
+        },
+        "email": "string",
+        "firstName": "string",
+        "id": "string",
+        "lastName": "string",
+        "status": "string",
+        "version": 1
+      },
+      "description": "string",
+      "entityRole": "string",
+      "entityType": "string",
+      "id": "string",
+      "identifier": "string",
+      "industrySectors": "",
+      "internalId": "string",
+      "lastModified": "string",
+      "lastModifiedBy": {
+        "dimAccount": {
+          "id": "string"
+        },
+        "id": "string"
+      },
+      "linkedBPCount": 1,
+      "locations": "",
+      "name": "string",
+      "notes": "string",
+      "owner": {
+        "dimAccount": {
+          "id": "string"
+        },
+        "id": "string"
+      },
+      "recordType": "string",
+      "rheaDataRetention": {
+        "description": "string",
+        "id": "string",
+        "summary": "string",
+        "type": "string",
+        "value": "string",
+        "version": 1
+      },
+      "tags": "",
+      "version": 1,
+      "viewed": ""
+    },
+    "processingPurposeLegalBasisAssociations": "",
+    "role": "string",
+    "status": "string",
+    "version": 1
+  },
+  "status": 200,
+  "ok": true
+}

@@ -1,0 +1,686 @@
+{
+  "content": [
+    {
+      "id": "f30459cb-139e-450d-bd46-ca475514b25c",
+      "identifier": "BIS0000003",
+      "name": "TrustArc",
+      "contact": {
+        "firstName": "Franchesca",
+        "lastName": "Lamme",
+        "email": "jamal_korczynski@gmail.com"
+      },
+      "description": " Victor lots neaped. The swells lark please. Savannah slap o'er.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "IT SYSTEM",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "b8e22ede-7eca-4675-93c0-03e510d686cf",
+      "identifier": "BIS0000019",
+      "name": "Slack",
+      "contact": {
+        "firstName": "Thersa",
+        "lastName": "Davirro",
+        "email": "slaramie@laramie.org"
+      },
+      "description": " Yvette worst sole. The phone licht waur. Jeff tough.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "IT SYSTEM",
+      "businessProcesses": [
+        {
+          "id": "57843g30",
+          "name": "My Business Process"
+        }
+      ],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "2c68bf61-c220-49b1-a643-81335afaff0c",
+      "identifier": "BIS0000032",
+      "name": "Jira",
+      "contact": {
+        "firstName": "Karina",
+        "lastName": "Cortesi",
+        "email": "bsandblom@gmail.com"
+      },
+      "description": " The warks clean brief. Ingrid trim. The grasp aft.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "COMPANY AFFILIATE",
+      "businessProcesses": [
+        {
+          "id": "4hi495hs",
+          "name": "My Business Process 1"
+        },
+        {
+          "id": "82heg42j",
+          "name": "My Business Process 2"
+        }
+      ],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "2e1964ec-55e8-47b4-881e-f1944e8a8eea",
+      "identifier": "BIS0000008",
+      "name": "Square Inc",
+      "contact": {
+        "firstName": "Mi",
+        "lastName": "Richan",
+        "email": "anastacia@yahoo.com"
+      },
+      "description": " The pub since fold. Enrique same rathe. Katina tough crocked.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "VENDOR",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "d9235507-6514-4353-8fe7-818ef0f476f4",
+      "identifier": "BIS0000021",
+      "name": "Apple",
+      "contact": {
+        "firstName": "Polly",
+        "lastName": "Sandusky",
+        "email": "eleni_vanscoik@gmail.com"
+      },
+      "description": " The serfs yeah ninth. Marva far. Violet thru sleek.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "IT SYSTEM",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "75a3d615-9fea-40d2-b1cf-9158bd82608b",
+      "identifier": "BIS0000027",
+      "name": "Samsung",
+      "contact": {
+        "firstName": "Ligia",
+        "lastName": "Reiber",
+        "email": "rozella.ostrosky@ostrosky.com"
+      },
+      "description": " Bryan sith wide. Angelia less o'er. Tanisha left sear.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "COMPANY AFFILIATE",
+      "businessProcesses": [
+        {
+          "id": "4hi495hs",
+          "name": "My Business Process 1"
+        },
+        {
+          "id": "82heg42j",
+          "name": "My Business Process 2"
+        },
+        {
+          "id": "9fh482h4",
+          "name": "My Business Process 3"
+        }
+      ],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "6b49bcc2-8794-41bf-b05c-6f05a9e39847",
+      "identifier": "BIS0000013",
+      "name": "Salesforce",
+      "contact": {
+        "firstName": "Paulene",
+        "lastName": "Rhule",
+        "email": "dean_ketelsen@gmail.com"
+      },
+      "description": " Faith why. The shroffs lowse yeah. The hins o'er sedged.",
+      "lastModified": 1550686964768,
+      "rules": false,
+      "type": "VENDOR",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "75a75bcf-5124-47b1-ba3e-0debce9b29a6",
+      "identifier": "BIS0000016",
+      "name": "Malibu Enterprises",
+      "contact": {
+        "firstName": "Jenise",
+        "lastName": "Dulle",
+        "email": "loreta.timenez@hotmail.com"
+      },
+      "description": " The dongs eighth shrill. The soughs foul next. The wrap scant tongued.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "IT SYSTEM",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "82ad9d34-4a2a-4dae-bf9d-20e91c4cdf23",
+      "identifier": "BIS0000023",
+      "name": "Roboto Industries",
+      "contact": {
+        "firstName": "Craig",
+        "lastName": "Cua",
+        "email": "mtromblay@yahoo.com"
+      },
+      "description": " Marvin tails next. Traci swith brave. Jodi left crank.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "COMPANY AFFILIATE",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "a883822f-f261-47c1-8353-9f99ceec27f5",
+      "identifier": "BIS0000028",
+      "name": "Power Office",
+      "contact": {
+        "firstName": "Celeste",
+        "lastName": "Korando",
+        "email": "javier@osmer.com.au"
+      },
+      "description": " Cody smash cheesed. Mayra flush. Vickie though thin.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "IT SYSTEM",
+      "businessProcesses": [
+        {
+          "id": "4hi495hs",
+          "name": "My Business Process 1"
+        },
+        {
+          "id": "82heg42j",
+          "name": "My Business Process 2"
+        },
+        {
+          "id": "9fh482h4",
+          "name": "My Business Process 3"
+        },
+        {
+          "id": "2hd473hw",
+          "name": "My Business Process 4"
+        }
+      ],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "69562add-6f8d-45d1-94c3-7aebc2f7d0ef",
+      "identifier": "BIS0000007",
+      "name": "Fujito Corp",
+      "contact": {
+        "firstName": "Tamra",
+        "lastName": "Kenfield",
+        "email": "paloi@hotmail.com"
+      },
+      "description": " Jorge needs the scow. Kelley fain ult. The laze left.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "IT SYSTEM",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "329dc295-abbb-491b-94fa-dc1a1ed9241f",
+      "identifier": "BIS0000002",
+      "name": "Shoes R Us",
+      "contact": {
+        "firstName": "Lonna",
+        "lastName": "Diestel",
+        "email": "gracia@melnyk.com"
+      },
+      "description": " Marianne once het. The claims when less. The scythe that broke.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "VENDOR",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "2fe75606-888f-4e9d-b9d1-875deb299697",
+      "identifier": "BIS0000029",
+      "name": "Pied Piper LLC",
+      "contact": {
+        "firstName": "Sherita",
+        "lastName": "Saras",
+        "email": "roselle.estell@hotmail.com"
+      },
+      "description": " Taylor o'er slap. Johnny dang clean. Ronald hence.",
+      "lastModified": 1550686964768,
+      "rules": false,
+      "type": "COMPANY AFFILIATE",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "7dd8caf2-10b1-4c60-991b-9bd81ea32854",
+      "identifier": "BIS0000041",
+      "name": "Matsumoto Corp",
+      "contact": {
+        "firstName": "William",
+        "lastName": "Cilento",
+        "email": "swisenbaker@wisenbaker.net.au"
+      },
+      "description": " The soots wham finned. Shanna nay the luke. The ponts worse yeah.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "IT SYSTEM",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "fbf88a8d-6684-41ee-a463-1cc9b8bc5cf1",
+      "identifier": "BIS0000030",
+      "name": "Toshiba Bank",
+      "contact": {
+        "firstName": "Marylou",
+        "lastName": "Lofts",
+        "email": "ronna_mittler@hotmail.com"
+      },
+      "description": " Alisa chock. Sheena plunk days. The grief scarce lowse.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "IT SYSTEM",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "77ebeea9-88eb-48a2-ba8d-f212a62448dc",
+      "identifier": "BIS0000042",
+      "name": "AMD",
+      "contact": {
+        "firstName": "Casey",
+        "lastName": "Dondero",
+        "email": "novella_degroot@degroot.org"
+      },
+      "description": " The snuff some bland. Lynette yes wee. The qoph smack much.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "COMPANY AFFILIATE",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "d3b2384f-4eaa-4a34-8e3d-04522042daea",
+      "identifier": "BIS0000020",
+      "name": "Nike Runner",
+      "contact": {
+        "firstName": "Brande",
+        "lastName": "Cutlip",
+        "email": "reuben.mccorrison@hotmail.com"
+      },
+      "description": " Johnnie please. Melba aft shed. The thuds natch slier.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "VENDOR",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "f1db9b4e-8b09-42ba-ad59-4f9101e271fb",
+      "identifier": "BIS0000010",
+      "name": "Google Cloud",
+      "contact": {
+        "firstName": "Shawn",
+        "lastName": "Vugteveen",
+        "email": "evangelina@aol.com"
+      },
+      "description": " Lela incog sweer. Virgil why. The slam all kept.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "IT SYSTEM",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "7db860ba-511c-4377-9f4e-11326fdca8f1",
+      "identifier": "BIS0000005",
+      "name": "Intel",
+      "contact": {
+        "firstName": "Coral",
+        "lastName": "Brennick",
+        "email": "rosalind.persechino@aol.com"
+      },
+      "description": " The bleeds e'er. The clonk near. The wane flush.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "VENDOR",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "5871ec2d-8c40-4fa3-9488-7eae88b10797",
+      "identifier": "BIS0000004",
+      "name": "Canon",
+      "contact": {
+        "firstName": "Sylvia",
+        "lastName": "Cousey",
+        "email": "fletcher.flosi@yahoo.com"
+      },
+      "description": " The queer whiles backed. The moits lest. Leanna heads fumed.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "IT SYSTEM",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "07d07ae8-f563-4e37-aea9-2bc3ebac387b",
+      "identifier": "BIS0000006",
+      "name": "AWS",
+      "contact": {
+        "firstName": "Owen",
+        "lastName": "Jentzen",
+        "email": "silva.riviere@riviere.org"
+      },
+      "description": " The disk like sear. The twirl darned. Rowena due.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "VENDOR",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "29aa072e-39ae-46ed-a369-68e69eac62ac",
+      "identifier": "BIS0000012",
+      "name": "Adobe Workbench",
+      "contact": {
+        "firstName": "Mertie",
+        "lastName": "Kazeck",
+        "email": "shawnee@yahoo.com"
+      },
+      "description": " The scene thru. The alfa plumb curst. Jacklyn plunk darn.",
+      "lastModified": 1550686964768,
+      "rules": false,
+      "type": "COMPANY AFFILIATE",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "41c94a68-7956-4374-8436-e60a74559a3b",
+      "identifier": "BIS0000035",
+      "name": "Skype",
+      "contact": {
+        "firstName": "Vannessa",
+        "lastName": "Land",
+        "email": "ellen.fajen@aol.com"
+      },
+      "description": " Marcy where wired. Gary super well. Tamika nights gey.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "IT SYSTEM",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "458e3e0d-ab0c-47f5-9a30-b6742ae78df8",
+      "identifier": "BIS0000037",
+      "name": "Nokia",
+      "contact": {
+        "firstName": "Reena",
+        "lastName": "Maisto",
+        "email": "jesusita@druck.net.au"
+      },
+      "description": " The ceorls lots grooved. Agnes nigh. Jamie left flown.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "VENDOR",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "b4cbd154-db0b-40f9-b238-ba016919a8f2",
+      "identifier": "BIS0000011",
+      "name": "Errikson IT Solutions",
+      "contact": {
+        "firstName": "Rochell",
+        "lastName": "Wetherby",
+        "email": "gcarris@hotmail.com"
+      },
+      "description": " The clot all dryer. Misty wham darned. Jeanie smack manned.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "IT SYSTEM",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "97f7ef3b-909c-40e9-acca-d98673306cec",
+      "identifier": "BIS0000015",
+      "name": "Sony",
+      "contact": {
+        "firstName": "Brigette",
+        "lastName": "Breckenstein",
+        "email": "tlembke@lembke.org"
+      },
+      "description": " Earlene sith. Christie lark toed. Roxanne sheer eft.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "VENDOR",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "f61f521f-5025-443d-a9c1-061873c955f6",
+      "identifier": "BIS0000031",
+      "name": "AT&T",
+      "contact": {
+        "firstName": "Helaine",
+        "lastName": "Halter",
+        "email": "alonzo_polek@polek.net.au"
+      },
+      "description": " Dominique fore. The bines fain thence. Lois nay.",
+      "lastModified": 1550686964768,
+      "rules": false,
+      "type": "IT SYSTEM",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "3f4660d1-e733-4f79-b525-ab2d2d5513fb",
+      "identifier": "BIS0000040",
+      "name": "PayPal",
+      "contact": {
+        "firstName": "Rosamond",
+        "lastName": "Amlin",
+        "email": "terina_wildeboer@wildeboer.com.au"
+      },
+      "description": " Stacy plunk way. The glint fresh mair. The spite cool e'er.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "COMPANY AFFILIATE",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "a07aeaa8-7f50-4bea-b7b0-a29edcb6df6a",
+      "identifier": "BIS0000009",
+      "name": "IBM",
+      "contact": {
+        "firstName": "Elinore",
+        "lastName": "Fulda",
+        "email": "irving@hotmail.com"
+      },
+      "description": " Shawn yon quaint. Janet thwart plumb. Ava fain.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "VENDOR",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "2bf62d5c-0ad9-42e7-84fe-1124cf230e25",
+      "identifier": "BIS0000034",
+      "name": "Microsoft",
+      "contact": {
+        "firstName": "Horace",
+        "lastName": "Knapp",
+        "email": "sharee_maile@aol.com"
+      },
+      "description": " The brawls through dooms. Steven fore sere. Maxine yet thrice.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "IT SYSTEM",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "c736c4ec-6fd6-4256-8bb7-978a4cceb129",
+      "identifier": "BIS0000026",
+      "name": "Tesla",
+      "contact": {
+        "firstName": "Jaime",
+        "lastName": "Wasurick",
+        "email": "renea@hotmail.com"
+      },
+      "description": " The jots mair. Mallory quite swith. Susie swith some.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "IT SYSTEM",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "072a9d22-11e3-40a0-8083-890ab258b3fa",
+      "identifier": "BIS0000039",
+      "name": "Trello",
+      "contact": {
+        "firstName": "Coral",
+        "lastName": "Brennick",
+        "email": "chandra.lagos@lagos.org"
+      },
+      "description": " Julian laigh. The gust oft yes. Keith how oft.",
+      "lastModified": 1550686964768,
+      "rules": false,
+      "type": "VENDOR",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "b5ebe51b-8604-4f76-b1a4-78f5b024491d",
+      "identifier": "BIS0000033",
+      "name": "Oracle",
+      "contact": {
+        "firstName": "Jillian",
+        "lastName": "Hailstone",
+        "email": "aileen_menez@menez.net.au"
+      },
+      "description": " Candy vite sore. Elvira tenth trim. The crack prompt pouched.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "COMPANY AFFILIATE",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "f592b83b-96b8-4e16-ad86-71bba7369282",
+      "identifier": "BIS0000036",
+      "name": "SAP",
+      "contact": {
+        "firstName": "Loren",
+        "lastName": "Asar",
+        "email": "tori@tepley.net.au"
+      },
+      "description": " The rule else. Barbara dang eighth. The lyre scarce loth.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "COMPANY AFFILIATE",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    },
+    {
+      "id": "b9acadde-0751-4262-a117-0add1f78ab3a",
+      "identifier": "BIS0000025",
+      "name": "Indeed",
+      "contact": {
+        "firstName": "Dahlia",
+        "lastName": "Tummons",
+        "email": "shaunna.rodamis@yahoo.com"
+      },
+      "description": " The hests whiles Joan. The arms yeah though. The fids ton.",
+      "lastModified": 1550686964768,
+      "rules": true,
+      "type": "IT SYSTEM",
+      "businessProcesses": [],
+      "owner": {
+        "fullName": "Test"
+      }
+    }
+  ],
+  "first": true,
+  "last": true,
+  "totalElements": 35,
+  "totalPages": 1,
+  "sort": null,
+  "numberOfElements": 35,
+  "size": 100,
+  "number": 0
+}

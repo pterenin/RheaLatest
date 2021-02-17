@@ -1,0 +1,73 @@
+@import 'src/styles/variables';
+
+:host {
+  label {
+    white-space: nowrap;
+  }
+
+  .disable-input {
+    background-color: $gray-400;
+    pointer-events: none;
+  }
+
+  .no-options-match {
+    cursor: default;
+  }
+
+  .dropdownItem {
+    width: 100%;
+    height: 100%;
+  }
+
+  virtual-scroller {
+    min-height: 100px;
+  }
+
+  .text-wrapper {
+    max-width: 95%;
+  }
+
+  .dropdown-toggle {
+    white-space: normal;
+    &.disabled-active-style:active {
+      background-color: $white !important;
+    }
+    .ta-tags {
+      top: 0;
+      margin: 2px 0 3px;
+    }
+  }
+
+  .ta-chevron-down {
+    position: absolute;
+    top: 3px;
+    right: 11.25px;
+    font-size: 1.25em;
+  }
+
+  &.multiple-value-dropdown {
+    .placeholder-text {
+      padding-left: 0.65rem;
+      position: relative;
+      top: 1px;
+    }
+    .multiple-tags-wrapper {
+      max-height: 122px;
+      width: 100%;
+      overflow: auto;
+      display: block;
+      min-height: 30px;
+    }
+  }
+}
+
+/* TEMP FIXED */
+::ng-deep .ta-tags-close {
+  float: none !important;
+  line-height: 0 !important;
+  font-size: 18px !important;
+  margin: 0 !important;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+}
